@@ -1,0 +1,3 @@
+FUNCTION-POOL ZABS_FG_ORDER_MASS_TECO.      "MESSAGE-ID ..
+
+* INCLUDE LZABS_FG_ORDER_MASS_TECOD...       " Local class definition

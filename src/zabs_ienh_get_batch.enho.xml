@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Get Batch number</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>ENHO</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>ZABS_IENH_PR_UPDATE_ITEMS</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>ENHO</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>ZABS_IENH_PR_UPDATE_ITEMS</ORG_MAIN_NAME>
+    <PROGRAMNAME>ZABS_IENH_PR_UPDATE_ITEMS</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>ZABS_IENH_PR_UPDATE_ITEMS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\IC:/AGRI/LFMPRMF0C\SE:END\EN:ZABS_IENH_PR_UPDATE_ITEMS\FO:CHECK_BATCH\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:lv_boxq        TYPE ZABS_DEL_SBOXQ,</item>
+      <item>     lv_batch       TYPE ZABS_DEL_HBATCH,</item>
+      <item>     lv_charg_mask  TYPE charg_d VALUE &apos;ZZ%&apos;,</item>
+      <item>     lv_charg_nxt   TYPE charg_d.</item>
+      <item/>
+      <item>      IF lwa_pritm-zzsboxq IS NOT INITIAL.</item>
+      <item>        lv_boxq = lwa_pritm-zzsboxq.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item> IF gs_variables-document_mode EQ c_mode_change AND</item>
+      <item>    lwa_pritm-pritm IS NOT INITIAL and</item>
+      <item>    lwa_pritm-zzhbatch IS INITIAL.</item>
+      <item/>
+      <item>   SELECT charg</item>
+      <item>    FROM mch1</item>
+      <item>    INTO TABLE @DATA(lt_nxt_charg)</item>
+      <item>   WHERE charg LIKE @lv_charg_mask.</item>
+      <item/>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    DELETE lt_nxt_charg WHERE charg+2(8) CN &apos;0123456789&apos;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SORT lt_nxt_charg BY charg DESCENDING.</item>
+      <item>  READ TABLE lt_nxt_charg INTO DATA(ls_nxt_charg) INDEX 1.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_charg_nxt = ls_nxt_charg.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_charg_nxt IS INITIAL.</item>
+      <item>    lv_charg_nxt = &apos;ZZ&apos;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  DATA(lv_nmber) = lv_charg_nxt+2(8).</item>
+      <item>  IF lv_nmber CO &apos; 0123456789&apos;.</item>
+      <item>    ADD 1 TO lv_nmber.</item>
+      <item>    UNPACK lv_nmber TO lv_nmber.</item>
+      <item>    lv_charg_nxt = &apos;ZZ&apos; &amp;&amp; lv_nmber.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  lwa_pritm-zzhbatch = lv_charg_nxt.</item>
+      <item> ENDIF.</item>
+      <item/>
+      <item>lv_batch = lwa_pritm-zzhbatch.</item>
+      <item/>
+     </SOURCE>
+     <PARENT_FULL_NAME>%ENCLOSING_ENHANCEMENT%</PARENT_FULL_NAME>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEBB9AF85F54D6C0493</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEBB9AF85F54D6C0493</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>026</LENGTH>
+       <TEXT>Get Batch number</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_GET_BATCH</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEBB9AF85F54D6C0493</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

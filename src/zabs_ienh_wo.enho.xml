@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Work Order enhancements</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMWOM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMWOM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMWOM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMWOM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMWOM\FO:GET_TASK_DATA\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lt_tplnr_new  TYPE /agri/t_gltplnr,</item>
+      <item>        lwa_woitm_new TYPE /agri/s_fmwoitm,</item>
+      <item>        lwa_fphdr_new TYPE /agri/s_fmfphdr,</item>
+      <item>        lwa_fpitm_new TYPE /agri/s_fmfpitm,</item>
+      <item>        lt_fphdr_new  TYPE /agri/t_fmfphdr,</item>
+      <item>        lt_fpitm_new  TYPE /agri/t_fmfpitm,</item>
+      <item/>
+      <item>        lv_gangcd_new TYPE /agri/s_fmfphdr-gangcd.</item>
+      <item/>
+      <item>  CLEAR: gs_wodoc_infocus.</item>
+      <item>  SELECT tplnr_fl</item>
+      <item>            FROM /agri/glflot</item>
+      <item>            INTO TABLE lt_tplnr_new</item>
+      <item>           WHERE tplnr_fl IN so_strno</item>
+      <item>             AND stort    IN so_stort.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    IF p_equnr IS NOT INITIAL.</item>
+      <item>     SELECT tplnr_fl</item>
+      <item>       FROM /agri/fmirflo</item>
+      <item>       INTO TABLE lt_tplnr_new</item>
+      <item>        FOR ALL ENTRIES IN lt_tplnr_new</item>
+      <item>      WHERE equnr EQ p_equnr</item>
+      <item>        AND tplnr_fl EQ lt_tplnr_new-tplnr_fl.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>   IF lt_tplnr_new IS NOT INITIAL.</item>
+      <item>    SELECT * FROM /agri/fmfphdr</item>
+      <item>      INTO CORRESPONDING FIELDS OF TABLE lt_fphdr_new</item>
+      <item>       FOR ALL ENTRIES IN lt_tplnr_new   &quot;#EC CI_NO_TRANSFORM</item>
+      <item>     WHERE aufnr    IN so_aufnr</item>
+      <item>       AND autyp    EQ c_document_category-task_order</item>
+      <item>       AND matnr    EQ p_matnr</item>
+      <item>       AND tplnr_fl EQ lt_tplnr_new-tplnr_fl</item>
+      <item>*       AND cmnum    EQ p_cmnum</item>
+      <item>       AND cmnum    IN so_cmnum</item>
+      <item>       AND class    EQ gs_tfmwotyp-class</item>
+      <item>       AND verid    EQ p_verid</item>
+      <item>       AND iwerk    EQ p_iwerk</item>
+      <item>       AND gstrp    IN so_gstrp</item>
+      <item>       AND gltrp    IN so_gltrp</item>
+      <item>*       and gangcd   eq p_gang</item>
+      <item>       AND gangcd   IN so_gang</item>
+      <item>       AND tecom    EQ space.</item>
+      <item>    IF lt_fphdr_new[] IS NOT INITIAL.</item>
+      <item>*---check all task orders belong to single gang/team.</item>
+      <item>*      IF so_gang IS NOT INITIAL.</item>
+      <item>*        DELETE lt_fphdr_new WHERE gangcd NOT IN so_gang.</item>
+      <item>*      ENDIF.</item>
+      <item/>
+      <item>*-- Select FMFPITM details</item>
+      <item>      SELECT * FROM /agri/fmfpitm</item>
+      <item>      INTO CORRESPONDING FIELDS OF TABLE lt_fpitm_new</item>
+      <item>      FOR ALL ENTRIES IN lt_fphdr_new</item>
+      <item>      WHERE aufnr = lt_fphdr_new-aufnr.</item>
+      <item/>
+      <item>    ENDIF.</item>
+      <item>   ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item>  IF lt_fphdr_new IS INITIAL.</item>
+      <item>    MESSAGE s004(/agri/fmwo).</item>
+      <item>  ELSE.</item>
+      <item>    gs_wodoc_infocus-wonum = TEXT-004.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-wonum = TEXT-004.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-updkz = c_updkz_new.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-matnr = p_matnr.</item>
+      <item>*    gs_wodoc_infocus-x-wohdr-cmnum = p_cmnum.</item>
+      <item>    IF gs_tfmwotyp-sappl EQ c_special_appl-chemical.</item>
+      <item>      READ TABLE so_cmnum INDEX 1.</item>
+      <item>      gs_wodoc_infocus-x-wohdr-cmnum = so_cmnum-low.</item>
+      <item>    ENDIF.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-wotyp = p_wotyp.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-sappl = gs_tfmwotyp-sappl.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-iwerk = p_iwerk.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-verid = p_verid.</item>
+      <item>    gs_wodoc_infocus-x-wohdr-stort = so_stort-low.</item>
+      <item>    IF so_gang IS NOT INITIAL.</item>
+      <item>      gs_wodoc_infocus-x-wohdr-gangcd = so_gang-low.</item>
+      <item>    ENDIF.</item>
+      <item>    LOOP AT lt_fphdr_new INTO lwa_fphdr_new.</item>
+      <item>      MOVE-CORRESPONDING lwa_fphdr_new TO lwa_woitm_new.</item>
+      <item>      lwa_woitm_new-wonum = gs_wodoc_infocus-x-wohdr-wonum.</item>
+      <item>      lwa_woitm_new-updkz = gs_wodoc_infocus-x-wohdr-updkz.</item>
+      <item>      APPEND lwa_woitm_new TO gs_wodoc_infocus-x-woitm.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  RETURN.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEA8FD495BF0680C183</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA8FD495BF0680C183</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>035</LENGTH>
+       <TEXT>Work Order enhancements</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA8FD495BF0680C183</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>035</LENGTH>
+       <TEXT>Aprimoramentos de Ordem de Trabalho</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_WO</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEA8FD495BF0680C183</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

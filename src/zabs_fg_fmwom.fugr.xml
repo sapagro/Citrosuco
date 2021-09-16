@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Work Order Creation</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZABS_FG_FMWOMF01</SOBJ_NAME>
+    <SOBJ_NAME>LZABS_FG_FMWOMTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZABS_FG_FMWOM</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZABS_FM_ORDER_DBUPDATE</FUNCNAME>
+     <SHORT_TEXT>Orders database Update</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IT_ORDHDR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_TTY_ORDHDR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_ORDITM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_TTY_ORDITM</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_ORDCNF</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_TTY_ORDCNF</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_ORDCON</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_TTY_ORDCON</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_ORDGRP</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_TTY_ORDGRP</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>EV_ORDNO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/FMFPNUM</TYP>
+      </RSCHA>
+     </CHANGING>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ESP1_MESSAGE_TAB_TYPE</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IT_ORDHDR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Header</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_ORDITM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Item</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_ORDCNF</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Confirmations</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_ORDCON</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Consumptions</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_ORDGRP</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Group</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Process Log Message</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EV_ORDNO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Number</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZABS_FM_WO_CONF</FUNCNAME>
+     <SHORT_TEXT>Work Order Confirmations</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IS_WOCONF</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_STR_OCNF</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_WOCON</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZABS_TTY_WO_CON</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/T_GPROLOG</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IS_WOCONF</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Work Order Confirmations</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_WOCON</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table Type for Work order Consumptions</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Process Log Message</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZABS_FM_WO_CREATION</FUNCNAME>
+     <SHORT_TEXT>Work Order Creation</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_FARM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>IWERK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EQUNR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>EQUNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DATE</PARAMETER>
+       <DEFAULT>SY-DATUM</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <TYP>/AGRI/T_GPROLOG</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>EV_ORDNO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/FMFPNUM</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_FARM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Maintenance Planning Plant</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EQUNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Equipment Number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Process Log Message</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EV_ORDNO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Number</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Nv.</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

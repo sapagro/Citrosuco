@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+    <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000002</LENG>
+    <OUTPUTLEN>000002</OUTPUTLEN>
+    <VALEXI>X</VALEXI>
+    <DDTEXT>User Role</DDTEXT>
+   </DD01V>
+   <DD07V_TAB>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>LE</DOMVALUE_L>
+     <DDTEXT>Leader</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>IN</DOMVALUE_L>
+     <DDTEXT>In-Charge</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0003</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>IA</DOMVALUE_L>
+     <DDTEXT>In-Charge (Adm)</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>LD</DOMVALUE_L>
+     <DDTEXT>Loader</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0005</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>BN</DOMVALUE_L>
+     <DDTEXT>Bin Operator</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0006</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>01</DOMVALUE_L>
+     <DDTEXT>Apontador 1</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0007</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>02</DOMVALUE_L>
+     <DDTEXT>Apontador 2</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0008</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>03</DOMVALUE_L>
+     <DDTEXT>Apontador 3</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0009</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>04</DOMVALUE_L>
+     <DDTEXT>Apontador 4</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0010</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>05</DOMVALUE_L>
+     <DDTEXT>Apontador 5</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0011</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>06</DOMVALUE_L>
+     <DDTEXT>Apontador 6</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0012</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>07</DOMVALUE_L>
+     <DDTEXT>Apontador 7</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0013</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>08</DOMVALUE_L>
+     <DDTEXT>Apontador 8</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0014</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>09</DOMVALUE_L>
+     <DDTEXT>Apontador 9</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0015</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>10</DOMVALUE_L>
+     <DDTEXT>Apontador 10</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0016</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>11</DOMVALUE_L>
+     <DDTEXT>Apontador 11</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0017</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>12</DOMVALUE_L>
+     <DDTEXT>Apontador 12</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0018</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>13</DOMVALUE_L>
+     <DDTEXT>Apontador 13</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0019</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>14</DOMVALUE_L>
+     <DDTEXT>Apontador 14</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0020</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>15</DOMVALUE_L>
+     <DDTEXT>Apontador 15</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZABS_DOM_UROLE</DOMNAME>
+     <VALPOS>0021</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>EQ</DOMVALUE_L>
+     <DDTEXT>Equipment</DDTEXT>
+    </DD07V>
+   </DD07V_TAB>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD01_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Cargo do usuário</DDTEXT>
+    </item>
+   </DD01_TEXTS>
+   <DD07_TEXTS>
+    <item>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>LE</DOMVALUE_L>
+     <DDTEXT>Líder</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>IN</DOMVALUE_L>
+     <DDTEXT>Encarregado</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0003</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>IA</DOMVALUE_L>
+     <DDTEXT>Encarregado (Adm)</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>LD</DOMVALUE_L>
+     <DDTEXT>Carregador</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0005</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>BN</DOMVALUE_L>
+     <DDTEXT>Bin</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0006</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>01</DOMVALUE_L>
+     <DDTEXT>Apontador 1</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0007</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>02</DOMVALUE_L>
+     <DDTEXT>Apontador 2</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0008</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>03</DOMVALUE_L>
+     <DDTEXT>Apontador 3</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0009</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>04</DOMVALUE_L>
+     <DDTEXT>Apontador 4</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0010</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>05</DOMVALUE_L>
+     <DDTEXT>Apontador 5</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0011</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>06</DOMVALUE_L>
+     <DDTEXT>Apontador 6</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0012</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>07</DOMVALUE_L>
+     <DDTEXT>Apontador 7</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0013</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>08</DOMVALUE_L>
+     <DDTEXT>Apontador 8</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0014</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>09</DOMVALUE_L>
+     <DDTEXT>Apontador 9</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0015</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>10</DOMVALUE_L>
+     <DDTEXT>Apontador 10</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0016</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>11</DOMVALUE_L>
+     <DDTEXT>Apontador 11</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0017</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>12</DOMVALUE_L>
+     <DDTEXT>Apontador 12</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0018</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>13</DOMVALUE_L>
+     <DDTEXT>Apontador 13</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0019</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>14</DOMVALUE_L>
+     <DDTEXT>Apontador 14</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0020</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>15</DOMVALUE_L>
+     <DDTEXT>Apontador 15</DDTEXT>
+    </item>
+    <item>
+     <VALPOS>0021</VALPOS>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DOMVALUE_L>EQ</DOMVALUE_L>
+     <DDTEXT>Equipamento</DDTEXT>
+    </item>
+   </DD07_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

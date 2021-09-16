@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/model/json/JSONModel","sap/ui/Device","sap/ui/model/odata/v2/ODataModel"],function(e,a,n){"use strict";return{createDeviceModel:function(){var n=new e(a);n.setDefaultBindingMode("OneWay");return n},callBackEnd:function(){var e=new +
+n("/sap/opu/odata/sap/ZFARM_AGRIPLAN_SRV/");return e}}});                                                                                                                                                                                                      

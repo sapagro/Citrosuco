@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_K4VAL</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>ZABS_DOM_KVAL</DOMNAME>
+    <HEADLEN>55</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>40</SCRLEN3>
+    <DDTEXT>Key4 Value</DDTEXT>
+    <REPTEXT>Key4 Value</REPTEXT>
+    <SCRTEXT_S>Key4 Value</SCRTEXT_S>
+    <SCRTEXT_M>Key4 Value</SCRTEXT_M>
+    <SCRTEXT_L>Key4 Value</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Valor da Chave 4</DDTEXT>
+     <REPTEXT>Valor da Chave 4</REPTEXT>
+     <SCRTEXT_S>Valor Chv4</SCRTEXT_S>
+     <SCRTEXT_M>Valor da Chave 4</SCRTEXT_M>
+     <SCRTEXT_L>Valor da Chave 4</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

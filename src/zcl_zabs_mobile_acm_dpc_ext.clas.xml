@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Data Provider Secondary Class</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>New</ENTRY>
+     <LENGTH>13</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Lotes com carimbos diferentes não podem ser misturados. Você quer continuar?</ENTRY>
+     <LENGTH>108</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Variedades diferentes não podem ser misturadas</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Accomplishment is scheduled for processing</ENTRY>
+     <LENGTH>100</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Error in Accomplishment processing</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>No data Found</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>Lotes com variedades diferentes não podem ser misturados</ENTRY>
+     <LENGTH>112</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>você vai misturar carimbos diferentes. Você deseja continuar?</ENTRY>
+     <LENGTH>122</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Nv.</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Lotes com Carimbos diferentes não podem ser misturados</ENTRY>
+       <LENGTH>108</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Você vai misturar muitas variedades diferentes. Você deseja continuar?</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>A realização está programada para processamento</ENTRY>
+       <LENGTH>100</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Erro no processamento de realização</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Nenhum dado encontrado</ENTRY>
+       <LENGTH>44</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Lotes com variedades diferentes não podem ser misturados</ENTRY>
+       <LENGTH>112</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>você vai misturar carimbos diferentes. Você deseja continuar?</ENTRY>
+       <LENGTH>122</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <I18N_LINES>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+   </I18N_LINES>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>ACCOM_CREATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Accomplishment Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>ACCOM_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Accomplishment Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>ADD_MESSAGES_TO_MSG_CONTAINER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add messages to Container</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>BATCH_CREATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create Batch</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>BATCH_EXTRACT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Batch Extract</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>BATCH_UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Batch Update</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>BIN_EXTRACT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Bin Extract</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>CREATE_ACCOMPLISHMENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create Accomplishment</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>FETCH_CARIMBO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Fetch Carimbo</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCBAGGRPCLOSED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Acc Bag Group Closed</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCBAGGRPCLOSED</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Acc Bag Group Closed</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCBATCH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Acc Batch</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCOMPLISHMENT_ITEMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Accomplishment items</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCOMPLISH_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the data required to create the Accomplishment sheet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCOM_ITEMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Accomplishment Items</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCOM_ITEMS</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Accomplishment Items</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCOM_ITEMS_REP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Accomplishment Items Report</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACTIVITIES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Activities</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_BAGGROUP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Bag Group</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_DELTA_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Delta Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EMPLOYEE_ROLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Employee number and Role</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EVENT_JUSTIFICATIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Event Justifications</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_FARMS_LOADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Farms  Loader</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_FARM_TERRAINS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Terrains under the farms</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_INTRBATCH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Internal Batch</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_LEADER_FARMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Farms of Leaders</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_LOADBAGGROUP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>LoadBag Group</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_LOADER_FARMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Loader Farms</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TRANTYP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Trans Type</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TURMA_HEADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Turmas for the Leader/In-Charge</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TURMA_ITEMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get the Turma Items</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_USR_ROLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>User Role</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>INTERNAL_PLATE_EXTRACT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Internal License Plate Extract</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOBILE_ACM_DPC_EXT</CLSNAME>
+     <CMPNAME>POPULATE_ACCOMPLISHMENT_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Populate Accomplishment header</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

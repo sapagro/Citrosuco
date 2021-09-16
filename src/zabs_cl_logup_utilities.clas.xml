@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Utilities for log and file uploading</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>ADD_INITIAL_MSG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Adds initial messages to log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Adds message to log instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>ALT_SAVE_LOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Alternative save for log instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>CREATE_LOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Creates log instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>DISPLAY_LOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Displays standard log with all records</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>DOWNLOAD_ERRORS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Downloads all records from log instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>GET_LOCAL_PATH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Gets local path for uploading</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>GET_MAND_FIELDS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Gets mandatory fields for uploading</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>GET_SERVER_PATH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Gets server path for uploading</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>SAVE_LOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Saves recorded logs to display in SLG1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>STRUCTURE_BUILD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Builds structure based on Excel Upload</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>UPLOAD_INFO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Uploads selected file</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZABS_CL_LOGUP_UTILITIES</CLSNAME>
+     <CMPNAME>VALIDATE_MAND_FIELDS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Validates mandatory fields for uploading</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

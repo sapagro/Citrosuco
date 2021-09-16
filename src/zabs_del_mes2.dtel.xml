@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_MES2</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>MENGE</DOMNAME>
+    <HEADLEN>09</HEADLEN>
+    <SCRLEN1>09</SCRLEN1>
+    <SCRLEN2>09</SCRLEN2>
+    <SCRLEN3>09</SCRLEN3>
+    <DDTEXT>Fevereiro</DDTEXT>
+    <REPTEXT>Fevereiro</REPTEXT>
+    <SCRTEXT_S>Fevereiro</SCRTEXT_S>
+    <SCRTEXT_M>Fevereiro</SCRTEXT_M>
+    <SCRTEXT_L>Fevereiro</SCRTEXT_L>
+    <DTELMASTER>P</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Fevereiro</DDTEXT>
+     <REPTEXT>Fevereiro</REPTEXT>
+     <SCRTEXT_S>Fevereiro</SCRTEXT_S>
+     <SCRTEXT_M>Fevereiro</SCRTEXT_M>
+     <SCRTEXT_L>Fevereiro</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

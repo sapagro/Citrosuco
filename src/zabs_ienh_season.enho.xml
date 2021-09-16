@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Selecionar Safra</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>ENHO</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>ZABS_IENH_FCODE_CANCEL</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>ENHO</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>ZABS_IENH_FCODE_CANCEL</ORG_MAIN_NAME>
+    <PROGRAMNAME>ZABS_IENH_FCODE_CANCEL</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>ZABS_IENH_FCODE_CANCEL</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\IC:/AGRI/LGLMDMF0F\SE:END\EN:ZABS_IENH_FCODE_CANCEL\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  FCODE_SEASON</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM fcode_season.</item>
+      <item/>
+      <item>  DATA: lv_aslvl TYPE /agri/s_glmdhdr-aslvl.</item>
+      <item/>
+      <item>  CLEAR: gv_answer_x, gv_safra_x.</item>
+      <item/>
+      <item>  IF gt_mdsnp[] IS INITIAL.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  gs_variables-refresh_output_table = c_true.</item>
+      <item/>
+      <item>  IF /agri/s_glmdhdr-aslvl NE c_measurement_level-crop_seasons</item>
+      <item>  OR /agri/s_glmdhdr-mdtyp NE &apos;ZPTA&apos;</item>
+      <item>  OR /agri/s_glmdhdr-mpgrp NE &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item>*-- Funcionalidade indisponível!</item>
+      <item>    MESSAGE i330(zfmfp).</item>
+      <item>  ELSE.</item>
+      <item>    DATA(lv_year) = sy-datum(4).</item>
+      <item>    IF gv_safra_x IS INITIAL.</item>
+      <item>      gv_safra_x = lv_year.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;POPUP_TO_GET_VALUE&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        fieldname           = &apos;ANO_SAFRA&apos;</item>
+      <item>        tabname             = &apos;ZFMFPSAFRAS&apos;</item>
+      <item>        titel               = &apos;Safra&apos;</item>
+      <item>        valuein             = gv_safra_x</item>
+      <item>      IMPORTING</item>
+      <item>        answer              = gv_answer_x</item>
+      <item>        valueout            = gv_safra_x</item>
+      <item>      EXCEPTIONS</item>
+      <item>        fieldname_not_found = 1</item>
+      <item>        OTHERS              = 2.</item>
+      <item>      IF sy-subrc &lt;&gt; 0.</item>
+      <item>        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno</item>
+      <item>          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.</item>
+      <item>      ELSEIF gv_answer_x EQ &apos;C&apos;.</item>
+      <item>        CLEAR gv_safra_x.</item>
+      <item>*-- Operação cancelada!</item>
+      <item>        MESSAGE i332(zfmfp).</item>
+      <item>      ELSE.</item>
+      <item>        DATA(lv_safra_min) = lv_year - 3.</item>
+      <item>        DATA(lv_safra_max) = lv_year + 3.</item>
+      <item>        IF gv_safra_x NOT BETWEEN lv_safra_min</item>
+      <item>                              AND lv_safra_max.</item>
+      <item>          CLEAR gv_safra_x.</item>
+      <item>*-- Verificar safra informada! Intervalo maior que 3 anos!</item>
+      <item>          MESSAGE i331(zfmfp).</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;FCODE_SEASON</item>
+      <item/>
+     </SOURCE>
+     <PARENT_FULL_NAME>\PR:/AGRI/SAPLGLMDM\IC:/AGRI/LGLMDMF0F\SE:END</PARENT_FULL_NAME>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDB96CD45FA1C432C02</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDB96CD45FA1C432C02</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>026</LENGTH>
+       <TEXT>Selecionar Safra</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_SEASON</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDB96CD45FA1C432C02</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

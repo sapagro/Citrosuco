@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Equipment Create</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_GLUPLOAD_MASTER_DATA</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_GLUPLOAD_MASTER_DATA</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_GLUPLOAD_MASTER_DATA=CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_CL_UPLOAD_MASTER_DATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_GLUPLOAD_MASTER_DATA=CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_GLUPLOAD_MASTER_DATA=CP\EX:IRRIGATION_EQUIP_CREATE\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  LOOP AT ls_fmir_doc-x-irflo ASSIGNING FIELD-SYMBOL(&lt;lfs_tplnr&gt;).</item>
+      <item/>
+      <item>    &lt;lfs_tplnr&gt;-zztotal = &lt;lfs_tplnr&gt;-zzcshift1 + &lt;lfs_tplnr&gt;-zzcshift2 +</item>
+      <item>                          &lt;lfs_tplnr&gt;-zzcshift3 + &lt;lfs_tplnr&gt;-zzcshift4 +</item>
+      <item>                          &lt;lfs_tplnr&gt;-zzcshift5 + &lt;lfs_tplnr&gt;-zzcshift6.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_INPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>         input            = &lt;lfs_tplnr&gt;-tplnr_fl</item>
+      <item>      IMPORTING</item>
+      <item>         output           = &lt;lfs_tplnr&gt;-tplnr_fl</item>
+      <item>      EXCEPTIONS</item>
+      <item>         not_found        = 1</item>
+      <item>         not_active       = 2</item>
+      <item>      OTHERS              = 3.</item>
+      <item>     IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDAA699F3CB19FB499B</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDAA699F3CB19FB499B</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>026</LENGTH>
+       <TEXT>Equipment Create</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_EQUIP_CREATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDAA699F3CB19FB499B</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

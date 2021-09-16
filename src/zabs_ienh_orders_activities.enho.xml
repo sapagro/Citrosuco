@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Automatic confirmation of Order activities</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMFPM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMFPM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMFPM\FO:ACTIVITIES_GRID_BUILD\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item> DATA: lwa_fmfpcnf     TYPE /agri/s_fmfp_cnf,</item>
+      <item>       lwa_fpcnf_fcat  TYPE /agri/s_fmfp_cnf_fcat.</item>
+      <item/>
+      <item>  CHECK gs_variables-refresh_activities_grid IS NOT INITIAL OR</item>
+      <item>        ref_grid_activities IS INITIAL.</item>
+      <item/>
+      <item/>
+      <item> READ TABLE gt_fmfpcnf INTO lwa_fmfpcnf WITH KEY</item>
+      <item>                     aufnr = /agri/s_fmfp_cnf-aufnr</item>
+      <item>                     posnr = /agri/s_fmfp_cnf-posnr</item>
+      <item>                     BINARY SEARCH.</item>
+      <item/>
+      <item>      IF sy-subrc IS INITIAL .</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-leinh1 IS NOT INITIAL.</item>
+      <item>           lwa_fmfpcnf-ism01 = lwa_fmfpcnf-ism01.</item>
+      <item>           lwa_fpcnf_fcat-ism01 = lwa_fmfpcnf-ism01.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-leinh2 IS NOT INITIAL.</item>
+      <item>           lwa_fmfpcnf-ism02 = lwa_fmfpcnf-ism01.</item>
+      <item>           lwa_fpcnf_fcat-ism02 = lwa_fmfpcnf-ism01.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-leinh3 IS NOT INITIAL.</item>
+      <item>           lwa_fmfpcnf-ism03 = lwa_fmfpcnf-ism01.</item>
+      <item>           lwa_fpcnf_fcat-ism03 = lwa_fmfpcnf-ism01.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-leinh4 IS NOT INITIAL.</item>
+      <item>           lwa_fmfpcnf-ism04 = lwa_fmfpcnf-ism01.</item>
+      <item>           lwa_fpcnf_fcat-ism04 = lwa_fmfpcnf-ism01.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-leinh5 IS NOT INITIAL.</item>
+      <item>           lwa_fmfpcnf-ism05 = lwa_fmfpcnf-ism01.</item>
+      <item>           lwa_fpcnf_fcat-ism05 = lwa_fmfpcnf-ism01.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-leinh6 IS NOT INITIAL.</item>
+      <item>           lwa_fmfpcnf-ism06 = lwa_fmfpcnf-ism01.</item>
+      <item>           lwa_fpcnf_fcat-ism06 = lwa_fmfpcnf-ism01.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        MODIFY gt_fmfpcnf from lwa_fmfpcnf TRANSPORTING ism02 ism03 ism04 ism05 ism06</item>
+      <item>                                           WHERE aufnr EQ /agri/s_fmfp_cnf-aufnr</item>
+      <item>                                           AND posnr EQ /agri/s_fmfp_cnf-posnr.</item>
+      <item/>
+      <item>        MODIFY gt_fpcnf_fcat from lwa_fpcnf_fcat TRANSPORTING ism02 ism03 ism04 ism05 ism06</item>
+      <item>                                                  WHERE aufnr EQ /agri/s_fmfp_cnf-aufnr</item>
+      <item>                                                  AND posnr EQ /agri/s_fmfp_cnf-posnr.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEA9EB77B7A1A9CB5D0</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA9EB77B7A1A9CB5D0</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>063</LENGTH>
+       <TEXT>Automatic confirmation of Order activities</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ORDERS_ACTIVITIES</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEA9EB77B7A1A9CB5D0</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

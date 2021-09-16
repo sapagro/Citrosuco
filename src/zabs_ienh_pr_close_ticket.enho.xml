@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Close ticket Own Produce</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMPR_OWN_PRODUCE</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMPR_OWN_PRODUCE</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMPR_OWN_PRODUCE=====CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMPR_OWN_PRODUCE=====CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMPR_OWN_PRODUCE\ME:CLOSE_TICKET\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lv_subrc_enhanc      TYPE sysubrc,</item>
+      <item>        lv_setproc_enhanc    TYPE /agri/glsetproc,</item>
+      <item>        lv_idproc_enhanc     TYPE /agri/glidproc,</item>
+      <item>        lv_idproc_enhanc_ref TYPE /agri/glidproc,</item>
+      <item>        lv_object_enhanc     TYPE balobj_d,</item>
+      <item>        lv_subobject_enhanc  TYPE balsubobj,</item>
+      <item>        lv_budat_enhanc      TYPE budat,</item>
+      <item>        lv_bldat_enhanc      TYPE bldat,</item>
+      <item>        ls_cmdetail_enhanc   TYPE /agri/s_fmcmdetail.</item>
+      <item/>
+      <item>  DATA: lwa_param_enhanc     TYPE /agri/s_fmprcpar,</item>
+      <item>        lwa_scl01_enhanc     TYPE /agri/fmscl01.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_methpro_enhanc&gt; TYPE /agri/fmmthpro.</item>
+      <item/>
+      <item>* Produce Receipt: Own Produce</item>
+      <item>  mv_subrc = 4.</item>
+      <item/>
+      <item>* Initialization to cluster memory</item>
+      <item>  initial_export_to_memory_enhan mv_key.</item>
+      <item/>
+      <item>* Get crop details</item>
+      <item>  CALL METHOD get_crop_details</item>
+      <item>    IMPORTING</item>
+      <item>      es_cmdetail                   = ls_cmdetail_enhanc</item>
+      <item>      es_flcma                      = ms_flcma</item>
+      <item>    EXCEPTIONS</item>
+      <item>      functional_location_not_found = 1</item>
+      <item>      scale_master_not_found        = 2</item>
+      <item>      assignment_not_found          = 3</item>
+      <item>      crop_master_not_found         = 4</item>
+      <item>      OTHERS                        = 5.</item>
+      <item/>
+      <item>* Get version process</item>
+      <item>  CALL METHOD get_version_process</item>
+      <item>    IMPORTING</item>
+      <item>      e_setproc = lv_setproc_enhanc</item>
+      <item>      e_object  = lv_object_enhanc.</item>
+      <item/>
+      <item>* Discard subprocesses conditioned to material</item>
+      <item>  IF ls_cmdetail_enhanc-xmatnr IS INITIAL.</item>
+      <item>    DELETE mt_scl01 WHERE idproc = &apos;220&apos;.</item>
+      <item>    DELETE mt_scl01 WHERE idproc = &apos;230&apos;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* &lt;100&gt;: Main (head process)</item>
+      <item>  lv_idproc_enhanc = &apos;100&apos;.</item>
+      <item/>
+      <item>  process_continue_enhanc lv_idproc_enhanc lv_subrc_enhanc lv_subobject_enhanc space.</item>
+      <item/>
+      <item>  CHECK lv_subrc_enhanc = 0.</item>
+      <item/>
+      <item>*  Read process info</item>
+      <item>  READ TABLE mt_scl01 INTO lwa_scl01_enhanc WITH KEY idproc = lv_idproc_enhanc.</item>
+      <item/>
+      <item>* Start time (wait initial)</item>
+      <item>  WAIT UP TO lwa_scl01_enhanc-begzt SECONDS.</item>
+      <item/>
+      <item>  CALL METHOD process_execute_100</item>
+      <item>    EXPORTING</item>
+      <item>      is_prhdr  = ms_prhdr</item>
+      <item>      i_setproc = lv_setproc_enhanc</item>
+      <item>      i_idproc  = lv_idproc_enhanc</item>
+      <item>      i_subrc   = mv_subrc.</item>
+      <item/>
+      <item>* Finish time (wait end)</item>
+      <item>  WAIT UP TO lwa_scl01_enhanc-endzt SECONDS.</item>
+      <item/>
+      <item>  IF ls_cmdetail_enhanc-xmatnr IS NOT INITIAL.</item>
+      <item>    lv_idproc_enhanc = &apos;220&apos;.</item>
+      <item/>
+      <item>    process_continue_enhanc lv_idproc_enhanc lv_subrc_enhanc lv_subobject_enhanc space.</item>
+      <item/>
+      <item>    IF lv_subrc_enhanc = 0.</item>
+      <item>*  Read process info</item>
+      <item>      READ TABLE mt_scl01 INTO lwa_scl01_enhanc WITH KEY idproc = lv_idproc_enhanc.</item>
+      <item/>
+      <item>* Start time (wait initial)</item>
+      <item>      WAIT UP TO lwa_scl01_enhanc-begzt SECONDS.</item>
+      <item/>
+      <item>* Date determination</item>
+      <item>      CALL METHOD get_time_events</item>
+      <item>        EXPORTING</item>
+      <item>          it_scl01  = mt_scl01</item>
+      <item>          i_idproc  = lv_idproc_enhanc</item>
+      <item>          i_docvar1 = space</item>
+      <item>          i_docvar2 = space</item>
+      <item>          i_dokar   = space</item>
+      <item>          is_prhdr  = ms_prhdr</item>
+      <item>        CHANGING</item>
+      <item>          c_budat   = lv_budat_enhanc</item>
+      <item>          c_bldat   = lv_bldat_enhanc.</item>
+      <item/>
+      <item>      CLEAR mv_subrc.</item>
+      <item/>
+      <item>      CALL METHOD process_execute_220</item>
+      <item>        EXPORTING</item>
+      <item>          i_schun     = lwa_scl01_enhanc-schun</item>
+      <item>          i_matnr     = ls_cmdetail_enhanc-xmatnr</item>
+      <item>          i_budat     = lv_budat_enhanc</item>
+      <item>          i_bldat     = lv_bldat_enhanc</item>
+      <item>          i_setproc   = lv_setproc_enhanc</item>
+      <item>          i_idproc    = lv_idproc_enhanc</item>
+      <item>          i_object    = lv_object_enhanc</item>
+      <item>          i_subobject = lv_subobject_enhanc</item>
+      <item>          i_testrun   = mv_testrun</item>
+      <item>          is_prhdr    = ms_prhdr</item>
+      <item>        CHANGING</item>
+      <item>          c_subrc     = mv_subrc.</item>
+      <item/>
+      <item>* Update structure MT_PRSTAT (local)</item>
+      <item>      CALL METHOD update_rcp_structure</item>
+      <item>        EXPORTING</item>
+      <item>          i_setproc = lv_setproc_enhanc</item>
+      <item>          i_idproc  = lv_idproc_enhanc</item>
+      <item>          i_subrc   = mv_subrc</item>
+      <item>        CHANGING</item>
+      <item>          ct_prstat = mt_prstat.</item>
+      <item/>
+      <item>* Finish time (wait end)</item>
+      <item>      WAIT UP TO lwa_scl01_enhanc-endzt SECONDS.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* &lt;300&gt;: Yard goods movements</item>
+      <item>  lv_idproc_enhanc = &apos;300&apos;.</item>
+      <item/>
+      <item>  process_continue_enhanc lv_idproc_enhanc lv_subrc_enhanc lv_subobject_enhanc space.</item>
+      <item/>
+      <item>  IF lv_subrc_enhanc = 0.</item>
+      <item>*  Read process info</item>
+      <item>    READ TABLE mt_scl01 INTO lwa_scl01_enhanc WITH KEY idproc = lv_idproc_enhanc.</item>
+      <item/>
+      <item>* Start time (wait initial)</item>
+      <item>    WAIT UP TO lwa_scl01_enhanc-begzt SECONDS.</item>
+      <item/>
+      <item>* Date determination</item>
+      <item>    CALL METHOD get_time_events</item>
+      <item>      EXPORTING</item>
+      <item>        it_scl01  = mt_scl01</item>
+      <item>        i_idproc  = lv_idproc_enhanc</item>
+      <item>        i_docvar1 = space</item>
+      <item>        i_docvar2 = space</item>
+      <item>        i_dokar   = space</item>
+      <item>        is_prhdr  = ms_prhdr</item>
+      <item>      CHANGING</item>
+      <item>        c_budat   = lv_budat_enhanc</item>
+      <item>        c_bldat   = lv_bldat_enhanc.</item>
+      <item/>
+      <item>    CLEAR mv_subrc.</item>
+      <item/>
+      <item>    CALL METHOD process_execute_300</item>
+      <item>      EXPORTING</item>
+      <item>        is_prhdr    = ms_prhdr</item>
+      <item>        i_schun     = lwa_scl01_enhanc-schun</item>
+      <item>        i_matnr     = ls_cmdetail_enhanc-ymatnr</item>
+      <item>        i_yaufnr    = ms_flcma-yaufnr</item>
+      <item>        i_budat     = lv_budat_enhanc</item>
+      <item>        i_bldat     = lv_bldat_enhanc</item>
+      <item>        i_setproc   = lv_setproc_enhanc</item>
+      <item>        i_idproc    = lv_idproc_enhanc</item>
+      <item>        i_object    = lv_object_enhanc</item>
+      <item>        i_subobject = lv_subobject_enhanc</item>
+      <item>        i_testrun   = mv_testrun</item>
+      <item>      CHANGING</item>
+      <item>        c_subrc     = mv_subrc.</item>
+      <item/>
+      <item>* Update structure MT_PRSTAT (local)</item>
+      <item>    CALL METHOD update_rcp_structure</item>
+      <item>      EXPORTING</item>
+      <item>        i_setproc = lv_setproc_enhanc</item>
+      <item>        i_idproc  = lv_idproc_enhanc</item>
+      <item>        i_subrc   = mv_subrc</item>
+      <item>      CHANGING</item>
+      <item>        ct_prstat = mt_prstat.</item>
+      <item/>
+      <item>* Finish time (wait end)</item>
+      <item>    WAIT UP TO lwa_scl01_enhanc-endzt SECONDS.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>    lv_idproc_enhanc = &apos;310&apos;.</item>
+      <item/>
+      <item>    process_continue_enhanc lv_idproc_enhanc lv_subrc_enhanc lv_subobject_enhanc space.</item>
+      <item/>
+      <item>    IF lv_subrc_enhanc = 0.</item>
+      <item>*  Read process info</item>
+      <item>      READ TABLE mt_scl01 INTO lwa_scl01_enhanc WITH KEY idproc = lv_idproc_enhanc.</item>
+      <item/>
+      <item>* Start time (wait initial)</item>
+      <item>      WAIT UP TO lwa_scl01_enhanc-begzt SECONDS.</item>
+      <item/>
+      <item>* Date determination</item>
+      <item>      CALL METHOD get_time_events</item>
+      <item>        EXPORTING</item>
+      <item>          it_scl01  = mt_scl01</item>
+      <item>          i_idproc  = lv_idproc_enhanc</item>
+      <item>          i_docvar1 = space</item>
+      <item>          i_docvar2 = space</item>
+      <item>          i_dokar   = space</item>
+      <item>          is_prhdr  = ms_prhdr</item>
+      <item>        CHANGING</item>
+      <item>          c_budat   = lv_budat_enhanc</item>
+      <item>          c_bldat   = lv_bldat_enhanc.</item>
+      <item/>
+      <item>      CLEAR mv_subrc.</item>
+      <item/>
+      <item>      CALL METHOD process_execute_310</item>
+      <item>        EXPORTING</item>
+      <item>          is_prhdr    = ms_prhdr</item>
+      <item>          i_schun     = lwa_scl01_enhanc-schun</item>
+      <item>          i_matnr     = ls_cmdetail_enhanc-ymatnr</item>
+      <item>          i_yaufnr    = ms_flcma-yaufnr</item>
+      <item>          i_budat     = lv_budat_enhanc</item>
+      <item>          i_bldat     = lv_bldat_enhanc</item>
+      <item>          i_setproc   = lv_setproc_enhanc</item>
+      <item>          i_idproc    = lv_idproc_enhanc</item>
+      <item>          i_object    = lv_object_enhanc</item>
+      <item>          i_subobject = lv_subobject_enhanc</item>
+      <item>          i_testrun   = mv_testrun</item>
+      <item>        CHANGING</item>
+      <item>          c_subrc     = mv_subrc.</item>
+      <item/>
+      <item>* Update structure MT_PRSTAT (local)</item>
+      <item>      CALL METHOD update_rcp_structure</item>
+      <item>        EXPORTING</item>
+      <item>          i_setproc = lv_setproc_enhanc</item>
+      <item>          i_idproc  = lv_idproc_enhanc</item>
+      <item>          i_subrc   = mv_subrc</item>
+      <item>        CHANGING</item>
+      <item>          ct_prstat = mt_prstat.</item>
+      <item/>
+      <item>* Finish time (wait end)</item>
+      <item>      WAIT UP TO lwa_scl01_enhanc-endzt SECONDS.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>* Update ticket status</item>
+      <item>  CALL METHOD execute_update_status</item>
+      <item>    EXPORTING</item>
+      <item>*      it_scl01  = lt_steps</item>
+      <item>      it_scl01  = mt_scl01</item>
+      <item>      it_prstat = mt_prstat</item>
+      <item>    CHANGING</item>
+      <item>      cs_prhdr  = ms_prhdr.</item>
+      <item/>
+      <item>  lv_idproc_enhanc = &apos;100&apos;.</item>
+      <item/>
+      <item>* Superior ticket status</item>
+      <item>  CALL METHOD update_status_hierarchical</item>
+      <item>    EXPORTING</item>
+      <item>      i_setproc = lv_setproc_enhanc</item>
+      <item>      i_idproc  = lv_idproc_enhanc</item>
+      <item>    CHANGING</item>
+      <item>      is_prhdr  = ms_prhdr.</item>
+      <item/>
+      <item>  EXIT.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMPR_OWN_PRODUCE=====CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_FMPR_OWN_PRODUCE=====CP\IC:/AGRI/CL_FMPR_OWN_PRODUCE=====CCMAC\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DEFINE append_to_import_table_enhan.</item>
+      <item/>
+      <item>*-- Assign varible to import</item>
+      <item>  lwa_param_enhanc-parname = &amp;1.</item>
+      <item>  lwa_param_enhanc-varname = &amp;2.</item>
+      <item>  append lwa_param_enhanc to mt_param.</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item>DEFINE initial_export_to_memory_enhan.</item>
+      <item/>
+      <item>*-- Add record to import table</item>
+      <item>  append_to_import_table_enhan &apos;%_KEY&apos; &apos;MC_KEY&apos;.</item>
+      <item/>
+      <item>*-- Import local key</item>
+      <item>  import_key_from_memory_enhan mv_key.</item>
+      <item/>
+      <item>  if mc_key is initial .</item>
+      <item/>
+      <item>*-- Add variables to export</item>
+      <item>    loop at mt_methpro assigning &lt;lwa_methpro_enhanc&gt; where attr_flg = &apos;X&apos;.</item>
+      <item>      concatenate &apos;%_&apos; &lt;lwa_methpro_enhanc&gt;-param into lwa_param_enhanc-parname.</item>
+      <item>      lwa_param_enhanc-varname = &lt;lwa_methpro_enhanc&gt;-param.</item>
+      <item>      append lwa_param_enhanc to mt_param.</item>
+      <item>    endloop.</item>
+      <item/>
+      <item>*-- Export to cluster memory</item>
+      <item>    export (mt_param)</item>
+      <item>             to database /agri/fmprc(ws) id &amp;1.</item>
+      <item/>
+      <item>    commit work and wait.</item>
+      <item/>
+      <item>    clear: lwa_param_enhanc, mt_param[].</item>
+      <item/>
+      <item>*-- Add local key to export table</item>
+      <item>    mc_key = mv_key.</item>
+      <item>    append_to_export_table_enhanc &apos;%_KEY&apos; &apos;MC_KEY&apos; space.</item>
+      <item/>
+      <item>*-- Export local key to cluster memory</item>
+      <item>    export_key_to_memory_enh mv_key.</item>
+      <item/>
+      <item>    clear: lwa_param_enhanc, mt_param[].</item>
+      <item/>
+      <item>  else.</item>
+      <item/>
+      <item>*-- Initial import process variables to cluster memory</item>
+      <item>    initial_import_from_memory_enh mv_key.</item>
+      <item/>
+      <item>  endif.</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item>DEFINE import_key_from_memory_enhan.</item>
+      <item/>
+      <item>  import (mt_param)</item>
+      <item>       from database /agri/fmprc(wk) id &amp;1.</item>
+      <item/>
+      <item>  clear: lwa_param_enhanc, mt_param[].</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item>DEFINE initial_import_from_memory_enh.</item>
+      <item/>
+      <item>*-- Add variables to import</item>
+      <item>  loop at mt_methpro assigning &lt;lwa_methpro_enhanc&gt; where attr_flg = &apos;X&apos;.</item>
+      <item>    concatenate &apos;%_&apos; &lt;lwa_methpro_enhanc&gt;-param into lwa_param_enhanc-parname.</item>
+      <item>    lwa_param_enhanc-varname = &lt;lwa_methpro_enhanc&gt;-local_param.</item>
+      <item>    append lwa_param_enhanc to mt_param.</item>
+      <item>  endloop.</item>
+      <item/>
+      <item>*-- Import to cluster memory</item>
+      <item>  import (mt_param)</item>
+      <item>       from database /agri/fmprc(ws) id &amp;1.</item>
+      <item/>
+      <item>  clear: lwa_param_enhanc, mt_param.</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item>DEFINE export_key_to_memory_enh.</item>
+      <item>*-- Export to memory the parameters updated.</item>
+      <item>  export (mt_param)</item>
+      <item>       to database /agri/fmprc(wk) id &amp;1.</item>
+      <item/>
+      <item>  commit work and wait.</item>
+      <item/>
+      <item>  clear: lwa_param_enhanc, mt_param[].</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item>DEFINE append_to_export_table_enhanc.</item>
+      <item/>
+      <item>  if &amp;3 = &apos;X&apos;.</item>
+      <item/>
+      <item>*-- Add all variables to export table</item>
+      <item>    loop at mt_methpro assigning &lt;lwa_methpro_enhanc&gt; where attr_flg = &apos;X&apos;.</item>
+      <item>      concatenate &apos;%_&apos; &lt;lwa_methpro_enhanc&gt;-param into lwa_param_enhanc-parname.</item>
+      <item>      lwa_param_enhanc-varname = &lt;lwa_methpro_enhanc&gt;-param.</item>
+      <item>      append lwa_param_enhanc to mt_param.</item>
+      <item>    endloop.</item>
+      <item/>
+      <item>  endif.</item>
+      <item/>
+      <item>  if not &amp;1 is initial and</item>
+      <item>     not &amp;2 is initial.</item>
+      <item/>
+      <item>*-- Add variable to export table</item>
+      <item>    lwa_param_enhanc-parname = &amp;1.</item>
+      <item>    lwa_param_enhanc-varname = &amp;2.</item>
+      <item>    append lwa_param_enhanc to mt_param.</item>
+      <item/>
+      <item>  endif.</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item>DEFINE process_continue_enhanc.</item>
+      <item/>
+      <item>* Executable process</item>
+      <item>  read table mt_scl01 with key idproc = &amp;1</item>
+      <item>                               execu  = &apos;X&apos; into lwa_scl01_enhanc.</item>
+      <item>  &amp;3 = lwa_scl01_enhanc-subobject.</item>
+      <item/>
+      <item>  if sy-subrc = 0.</item>
+      <item>* Process executed sucessfully</item>
+      <item>    read table mt_prstat with key idproc = &amp;1</item>
+      <item>                                  status = 0 transporting no fields.</item>
+      <item/>
+      <item>* With conditional process</item>
+      <item>    if sy-subrc = 0.</item>
+      <item>      &amp;2 = 4.</item>
+      <item>    elseif not lwa_scl01_enhanc-exproc is initial.</item>
+      <item>* Conditional process executed sucessfully</item>
+      <item>      read table mt_prstat with key idproc = lwa_scl01_enhanc-exproc</item>
+      <item>                                    status = 0 transporting no fields.</item>
+      <item>      if sy-subrc = 0.</item>
+      <item>        &amp;2 = 0.</item>
+      <item>      else.</item>
+      <item>        &amp;2 = 4.</item>
+      <item>      endif.</item>
+      <item>    else.</item>
+      <item>      &amp;2 = 0.</item>
+      <item>    endif.</item>
+      <item/>
+      <item>  else.</item>
+      <item>* If a parent process was indicated then</item>
+      <item>* check flag to generate dynamic subprocesses</item>
+      <item>    read table mt_scl01 with key idproc    = &amp;4</item>
+      <item>                                 execu     = &apos;X&apos;</item>
+      <item>                                 dynidproc = &apos;X&apos; into lwa_scl01_enhanc.</item>
+      <item/>
+      <item>    &amp;3 = lwa_scl01_enhanc-subobject.</item>
+      <item/>
+      <item>    if sy-subrc = 0.</item>
+      <item>* Check if parent process is sucessfully close</item>
+      <item>      read table mt_prstat with key idproc = &amp;4</item>
+      <item>                                    status = 0 transporting no fields.</item>
+      <item>      if sy-subrc = 0.</item>
+      <item>        &amp;2 = 4.</item>
+      <item>      else.</item>
+      <item>        read table mt_prstat with key idproc = &amp;1</item>
+      <item>                                      status = 0 transporting no fields.</item>
+      <item>        if sy-subrc = 0.</item>
+      <item>          &amp;2 = 4.</item>
+      <item>        else.</item>
+      <item>          &amp;2 = 0.</item>
+      <item>        endif.</item>
+      <item>      endif.</item>
+      <item>    else.</item>
+      <item>      &amp;2 = 4.</item>
+      <item>    endif.</item>
+      <item>  endif.</item>
+      <item/>
+      <item>END-OF-DEFINITION.</item>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BEEBF386D22169A3</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BEEBF386D22169A3</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>036</LENGTH>
+       <TEXT>Close ticket Own Produce</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_CLOSE_TICKET</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BEEBF386D22169A3</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

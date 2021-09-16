@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>ZABS_IENH_CROP_SEASON_CRET</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLCSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLCSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CROP_SEASON_MASS_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  FIELD-SYMBOLS: &lt;ls_csdoc_infocus&gt; TYPE /agri/s_glcs_doc.</item>
+      <item/>
+      <item>  IF sy-ucomm EQ &apos;CRET&apos;</item>
+      <item>  AND sy-tcode EQ &apos;/AGRI/GLFLCA&apos;.</item>
+      <item>    DATA(lv_tabix) = LINES( gt_csdoc_infocus ).</item>
+      <item>    IF lv_tabix IS NOT INITIAL.</item>
+      <item>      READ TABLE gt_csdoc_infocus ASSIGNING &lt;ls_csdoc_infocus&gt; INDEX lv_tabix.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        IF &lt;ls_csdoc_infocus&gt;-x-cshdr-updkz EQ c_updkz_new.</item>
+      <item>          IF &lt;ls_csdoc_infocus&gt;-updkz IS INITIAL.</item>
+      <item>            SELECT SINGLE tplnr_fl</item>
+      <item>              FROM /agri/glflcma</item>
+      <item>              INTO @DATA(lv_tplnr_fl_x)</item>
+      <item>             WHERE tplnr_fl = @&lt;ls_csdoc_infocus&gt;-tplnr_fl</item>
+      <item>               AND contr    = @&lt;ls_csdoc_infocus&gt;-contr.</item>
+      <item>            IF sy-subrc NE 0.</item>
+      <item>              &lt;ls_csdoc_infocus&gt;-updkz = c_updkz_new.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          READ TABLE gs_csdoc_infocus-x-csprso ASSIGNING FIELD-SYMBOL(&lt;ls_csprso_x&gt;) INDEX 1.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            IF &lt;ls_csprso_x&gt;-updkz = c_updkz_new.</item>
+      <item>              SELECT SINGLE *</item>
+      <item>                FROM /agri/glcsprso</item>
+      <item>                INTO @DATA(ls_csprso_x)</item>
+      <item>               WHERE tplnr_fl = @&lt;ls_csprso_x&gt;-tplnr_fl</item>
+      <item>                 AND contr    = @&lt;ls_csprso_x&gt;-contr</item>
+      <item>                 AND werks    = @&lt;ls_csprso_x&gt;-werks</item>
+      <item>                 AND cpros    = @&lt;ls_csprso_x&gt;-cpros</item>
+      <item>                 AND vornr    = @&lt;ls_csprso_x&gt;-vornr.</item>
+      <item/>
+      <item>              IF sy-subrc EQ 0.</item>
+      <item>*                DELETE FROM /agri/glcsprso WHERE tplnr_fl = @&lt;ls_csprso_x&gt;-tplnr_fl</item>
+      <item>*                                             AND contr    = @&lt;ls_csprso_x&gt;-contr.</item>
+      <item>                DELETE /agri/glcsprso FROM TABLE gs_csdoc_infocus-x-csprso[].</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  COMMIT WORK AND WAIT.</item>
+      <item>                ENDIF.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          READ TABLE gs_csdoc_infocus-x-csprst ASSIGNING FIELD-SYMBOL(&lt;ls_csprst_x&gt;) INDEX 1.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            IF &lt;ls_csprso_x&gt;-updkz = c_updkz_new.</item>
+      <item>              SELECT * UP TO 1 ROWS</item>
+      <item>                FROM /agri/glcsprst</item>
+      <item>                INTO @DATA(ls_glcsprst_x)</item>
+      <item>               WHERE tplnr_fl = @&lt;ls_csprso_x&gt;-tplnr_fl</item>
+      <item>                 AND contr    = @&lt;ls_csprso_x&gt;-contr</item>
+      <item>                 AND cpros    = @&lt;ls_csprso_x&gt;-cpros.</item>
+      <item>              ENDSELECT.</item>
+      <item/>
+      <item>              IF sy-subrc EQ 0.</item>
+      <item>*                DELETE FROM /agri/glcsprst WHERE tplnr_fl = @&lt;ls_csprst_x&gt;-tplnr_fl</item>
+      <item>*                                             AND contr    = @&lt;ls_csprst_x&gt;-contr.</item>
+      <item>                DELETE /agri/glcsprst FROM TABLE gs_csdoc_infocus-x-csprst[].</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  COMMIT WORK AND WAIT.</item>
+      <item>                ENDIF.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDB88F7B4A85CC87848</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDB88F7B4A85CC87848</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>039</LENGTH>
+       <TEXT>ZABS_IENH_CROP_SEASON_CRET</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_CROP_SEASON_CRET</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDB88F7B4A85CC87848</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

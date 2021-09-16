@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Execute rcp</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMPR_PROCESS_TICKET</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMPR_PROCESS_TICKET</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMPR_PROCESS_TICKET==CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMPR_PROCESS_TICKET==CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMPR_PROCESS_TICKET\ME:EXECUTE_RCP\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:   lt_prstat_enhanc     TYPE /agri/t_fmprstat,</item>
+      <item>        lt_prvar_enhanc      TYPE /agri/t_fmprvar,</item>
+      <item>        lwa_prstat_enhanc    TYPE /agri/s_fmprstat,</item>
+      <item>        lt_prhrq             type /agri/t_fmprhrq,</item>
+      <item>        lt_pritm_highlevel   type /agri/t_fmpritm,</item>
+      <item>        lwa_prvar_enhanc     TYPE /agri/s_fmprvar.</item>
+      <item>  DATA: lt_prstat_enhanc_c   TYPE /agri/t_fmprstat,</item>
+      <item>        lt_prvar_enhanc_c    TYPE /agri/t_fmprvar.</item>
+      <item>  DATA: lt_prdoc_enhanc      TYPE /agri/t_fmpr_doc,</item>
+      <item>        lwa_prdoc_enhanc     TYPE /agri/s_fmpr_doc.</item>
+      <item/>
+      <item/>
+      <item>  DATA: ls_prhdr_enhanc      TYPE /agri/fmprhdr.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS:</item>
+      <item>        &lt;lwa_prvar_enhancec&gt; TYPE /agri/s_fmprvarec,</item>
+      <item>        &lt;lwa_pritm_highlevel&gt; TYPE /agri/s_fmpritm.</item>
+      <item/>
+      <item>* Get status / variables</item>
+      <item>  CALL METHOD /agri/cl_fm_master_ticket=&gt;get_details</item>
+      <item>    EXPORTING</item>
+      <item>      i_prnum          = i_prnum</item>
+      <item>      i_gjahr          = i_gjahr</item>
+      <item>    IMPORTING</item>
+      <item>      es_prhdr         = ls_prhdr_enhanc</item>
+      <item>      et_prstat        = lt_prstat_enhanc_c</item>
+      <item>      et_prvar         = lt_prvar_enhanc_c</item>
+      <item>    EXCEPTIONS</item>
+      <item>      ticket_not_found = 1</item>
+      <item>      OTHERS           = 2.</item>
+      <item/>
+      <item>* Update structure PRSTAT (DB)</item>
+      <item>  lwa_prstat_enhanc-bukrs     = i_bukrs.</item>
+      <item>  lwa_prstat_enhanc-prnum     = i_prnum.</item>
+      <item>  lwa_prstat_enhanc-gjahr     = i_gjahr.</item>
+      <item>  lwa_prstat_enhanc-setproc   = i_setproc.</item>
+      <item>  lwa_prstat_enhanc-idproc    = i_idproc.</item>
+      <item>  lwa_prstat_enhanc-status    = i_subrc.</item>
+      <item>  lwa_prstat_enhanc-lognumber = i_lgnumber.</item>
+      <item>  lwa_prstat_enhanc-parentid  = i_parentid.</item>
+      <item/>
+      <item>* Determine the UPDKZ</item>
+      <item>  READ TABLE lt_prstat_enhanc_c TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY prnum   = lwa_prstat_enhanc-prnum</item>
+      <item>             gjahr   = lwa_prstat_enhanc-gjahr</item>
+      <item>             setproc = lwa_prstat_enhanc-setproc</item>
+      <item>             idproc  = lwa_prstat_enhanc-idproc.</item>
+      <item>  IF sy-subrc = 0.</item>
+      <item>    lwa_prstat_enhanc-updkz = mc_updkz_update.</item>
+      <item>  ELSE.</item>
+      <item>    lwa_prstat_enhanc-updkz = mc_updkz_new.</item>
+      <item>  ENDIF.</item>
+      <item>  APPEND lwa_prstat_enhanc TO lt_prstat_enhanc.</item>
+      <item/>
+      <item>* RCP to memory variables</item>
+      <item>  LOOP AT it_prvarec ASSIGNING &lt;lwa_prvar_enhancec&gt;.</item>
+      <item>    lwa_prvar_enhanc-bukrs   = i_bukrs.</item>
+      <item>    lwa_prvar_enhanc-prnum   = i_prnum.</item>
+      <item>    lwa_prvar_enhanc-gjahr   = i_gjahr.</item>
+      <item>    lwa_prvar_enhanc-setproc = i_setproc.</item>
+      <item>    lwa_prvar_enhanc-idproc  = i_idproc.</item>
+      <item>    MOVE-CORRESPONDING &lt;lwa_prvar_enhancec&gt; TO lwa_prvar_enhanc.</item>
+      <item/>
+      <item>* Determine the UPDKZ</item>
+      <item>    READ TABLE lt_prvar_enhanc_c TRANSPORTING NO FIELDS</item>
+      <item>      WITH KEY prnum   = lwa_prvar_enhanc-prnum</item>
+      <item>               gjahr   = lwa_prvar_enhanc-gjahr</item>
+      <item>               setproc = lwa_prvar_enhanc-setproc</item>
+      <item>               idproc  = lwa_prvar_enhanc-idproc</item>
+      <item>               grpvar  = lwa_prvar_enhanc-grpvar</item>
+      <item>               varname = lwa_prvar_enhanc-varname.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      lwa_prvar_enhanc-updkz  = mc_updkz_update.</item>
+      <item>    ELSE.</item>
+      <item>      lwa_prvar_enhanc-updkz  = mc_updkz_new.</item>
+      <item>    ENDIF.</item>
+      <item>    APPEND lwa_prvar_enhanc TO lt_prvar_enhanc.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  lwa_prdoc_enhanc-prnum    = i_prnum.</item>
+      <item>  lwa_prdoc_enhanc-gjahr    = i_gjahr.</item>
+      <item>  lwa_prdoc_enhanc-updkz    = mc_updkz_update.</item>
+      <item>  lwa_prdoc_enhanc-x-prhdr  = ls_prhdr_enhanc.</item>
+      <item>  lwa_prdoc_enhanc-x-prstat = lt_prstat_enhanc.</item>
+      <item>  lwa_prdoc_enhanc-x-prvar  = lt_prvar_enhanc.</item>
+      <item>  APPEND lwa_prdoc_enhanc TO lt_prdoc_enhanc.</item>
+      <item/>
+      <item>* Save status / variables</item>
+      <item>  CALL FUNCTION &apos;/AGRI/FMPR_SAVE&apos;</item>
+      <item>    CHANGING</item>
+      <item>      ct_prdoc    = lt_prdoc_enhanc</item>
+      <item>      ct_messages = et_messages</item>
+      <item>    EXCEPTIONS</item>
+      <item>      OTHERS      = 0.</item>
+      <item/>
+      <item>  EXIT.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMPR_PROCESS_TICKET==CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMPR_PROCESS_TICKET\ME:SET_BATCH_CLASSIFICATION\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>DATA: BEGIN OF ls_object_key_enhanc,</item>
+      <item>          matnr TYPE mch1-matnr,</item>
+      <item>          charg TYPE mch1-charg,</item>
+      <item>        END OF ls_object_key_enhanc.</item>
+      <item/>
+      <item>  DATA: lv_objectkey_enhanc      TYPE bapi1003_key-object,</item>
+      <item>        lv_objectkey_enhanc_long TYPE bapi1003_key-object_long,</item>
+      <item>        lv_index_enhanc          TYPE sytabix.</item>
+      <item/>
+      <item>  DATA: lt_valuesnum_enhanc  TYPE STANDARD TABLE OF bapi1003_alloc_values_num,</item>
+      <item>        lt_valueschar_enhanc TYPE STANDARD TABLE OF bapi1003_alloc_values_char,</item>
+      <item>        lt_valuescurr_enhanc TYPE STANDARD TABLE OF bapi1003_alloc_values_curr.</item>
+      <item/>
+      <item>  DATA: lwa_allocvalues_enhanc TYPE /agri/s_fmallocvalues,</item>
+      <item>        lwa_return_enhanc      TYPE bapiret2.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS:</item>
+      <item>    &lt;lwa_valuesnum_enhanc&gt;  TYPE bapi1003_alloc_values_num,</item>
+      <item>    &lt;lwa_valueschar_enhanc&gt; TYPE bapi1003_alloc_values_char,</item>
+      <item>    &lt;lwa_valuescurr_enhanc&gt; TYPE bapi1003_alloc_values_curr.</item>
+      <item/>
+      <item>* Object key</item>
+      <item>  ls_object_key_enhanc-matnr = i_matnr.</item>
+      <item>  ls_object_key_enhanc-charg = i_charg.</item>
+      <item>  lv_objectkey_enhanc        = ls_object_key_enhanc.</item>
+      <item>  lv_objectkey_enhanc_long   = ls_object_key_enhanc.</item>
+      <item/>
+      <item>* Class assignment</item>
+      <item>  CALL FUNCTION &apos;BAPI_OBJCL_CREATE&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      objectkeynew      = lv_objectkey_enhanc</item>
+      <item>      objecttablenew    = mc_batch_class-objecttable</item>
+      <item>      classnumnew       = i_classnum</item>
+      <item>      classtypenew      = mc_batch_class-classtype</item>
+      <item>      objectkeynew_long = lv_objectkey_enhanc_long</item>
+      <item>    TABLES</item>
+      <item>      return         = et_return.</item>
+      <item/>
+      <item>* Commit</item>
+      <item>  bapi_commit( ).</item>
+      <item/>
+      <item>* Delete message for Assigment already exist</item>
+      <item>  DELETE et_return WHERE id = &apos;CL&apos; AND number = &apos;731&apos; AND type = &apos;E&apos;. &quot;#EC CI_STDSEQ</item>
+      <item/>
+      <item>* Check for error messages</item>
+      <item>  READ TABLE et_return TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;. &quot;#EC CI_STDSEQ</item>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item/>
+      <item>* Get characteristics</item>
+      <item>    CALL FUNCTION &apos;BAPI_OBJCL_GETDETAIL&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        objectkey        = lv_objectkey_enhanc</item>
+      <item>        objecttable      = mc_batch_class-objecttable</item>
+      <item>        classnum         = i_classnum</item>
+      <item>        classtype        = mc_batch_class-classtype</item>
+      <item>        unvaluated_chars = mc_batch_class-unvaluated_chars</item>
+      <item>        objectkey_long   = lv_objectkey_enhanc_long</item>
+      <item>      TABLES</item>
+      <item>        allocvaluesnum   = lt_valuesnum_enhanc</item>
+      <item>        allocvalueschar  = lt_valueschar_enhanc</item>
+      <item>        allocvaluescurr  = lt_valuescurr_enhanc</item>
+      <item>        return           = et_return.</item>
+      <item/>
+      <item>* Check for error messages</item>
+      <item>    READ TABLE et_return TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;. &quot;#EC CI_STDSEQ</item>
+      <item>    CHECK sy-subrc &lt;&gt; 0.</item>
+      <item/>
+      <item>* Assign new values (try to match)</item>
+      <item>*&gt;&gt; CHAR values</item>
+      <item>    LOOP AT lt_valueschar_enhanc ASSIGNING &lt;lwa_valueschar_enhanc&gt;.</item>
+      <item>      lv_index_enhanc = sy-tabix.</item>
+      <item>      READ TABLE it_allocvalues INTO lwa_allocvalues_enhanc &quot;#EC CI_STDSEQ</item>
+      <item>      WITH KEY atnam = &lt;lwa_valueschar_enhanc&gt;-charact.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        CLEAR &lt;lwa_valueschar_enhanc&gt;-value_char.</item>
+      <item>        &lt;lwa_valueschar_enhanc&gt;-value_char =  lwa_allocvalues_enhanc-atwrt.</item>
+      <item>*        &lt;lwa_valueschar_enhanc&gt;-value_neutral_long =  lwa_allocvalues_enhanc-atwrt.</item>
+      <item>        MODIFY  lt_valueschar_enhanc FROM &lt;lwa_valueschar_enhanc&gt; INDEX lv_index_enhanc.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>*&gt;&gt; NUM values</item>
+      <item>    LOOP AT lt_valuesnum_enhanc ASSIGNING &lt;lwa_valuesnum_enhanc&gt;.</item>
+      <item>      lv_index_enhanc = sy-tabix.</item>
+      <item>      READ TABLE it_allocvalues INTO lwa_allocvalues_enhanc &quot;#EC CI_STDSEQ</item>
+      <item>*      WITH KEY atnam = &lt;lwa_valueschar_enhanc&gt;-charact.</item>
+      <item>      WITH KEY atnam = &lt;lwa_valuesnum_enhanc&gt;-charact.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        CLEAR &lt;lwa_valuesnum_enhanc&gt;-value_from.</item>
+      <item>        &lt;lwa_valuesnum_enhanc&gt;-value_from =  lwa_allocvalues_enhanc-atflv.</item>
+      <item>        MODIFY  lt_valuesnum_enhanc FROM &lt;lwa_valuesnum_enhanc&gt; INDEX lv_index_enhanc.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>*&gt;&gt; CURR values</item>
+      <item>    LOOP AT lt_valuescurr_enhanc ASSIGNING  &lt;lwa_valuescurr_enhanc&gt;.</item>
+      <item>      lv_index_enhanc = sy-tabix.</item>
+      <item>      READ TABLE it_allocvalues INTO lwa_allocvalues_enhanc &quot;#EC CI_STDSEQ</item>
+      <item>*      WITH KEY atnam = &lt;lwa_valueschar_enhanc&gt;-charact.</item>
+      <item>      WITH KEY atnam = &lt;lwa_valueschar_enhanc&gt;-charact.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        CLEAR  &lt;lwa_valuescurr_enhanc&gt;-value_from.</item>
+      <item>        &lt;lwa_valuescurr_enhanc&gt;-value_from =  lwa_allocvalues_enhanc-atflv.</item>
+      <item>        MODIFY  lt_valuescurr_enhanc FROM &lt;lwa_valuescurr_enhanc&gt; INDEX lv_index_enhanc.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>* Update batch classification</item>
+      <item>    CALL FUNCTION &apos;BAPI_OBJCL_CHANGE&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        objectkey          = lv_objectkey_enhanc</item>
+      <item>        objecttable        = mc_batch_class-objecttable</item>
+      <item>        classnum           = i_classnum</item>
+      <item>        classtype          = mc_batch_class-classtype</item>
+      <item>        objectkey_long     = lv_objectkey_enhanc_long</item>
+      <item>      TABLES</item>
+      <item>        allocvaluesnumnew  = lt_valuesnum_enhanc[]</item>
+      <item>        allocvaluescharnew = lt_valueschar_enhanc[]</item>
+      <item>        allocvaluescurrnew = lt_valuescurr_enhanc[]</item>
+      <item>        return             = et_return[].</item>
+      <item/>
+      <item>* Commit</item>
+      <item>    bapi_commit( ).</item>
+      <item/>
+      <item>  ELSE.</item>
+      <item/>
+      <item>* Add message</item>
+      <item>    lwa_return_enhanc-type       = &apos;E&apos;.</item>
+      <item>    lwa_return_enhanc-id         = &apos;CL&apos;.</item>
+      <item>    lwa_return_enhanc-number     = &apos;763&apos;.</item>
+      <item>*   lwa_return_enhanc-message_v1 = lv_objectkey_enhanc.</item>
+      <item>    lwa_return_enhanc-message_v1 = lv_objectkey_enhanc_long.</item>
+      <item>    APPEND lwa_return_enhanc TO et_return.</item>
+      <item>  ENDIF.</item>
+      <item>EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BDE8538FE283E3DF</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BDE8538FE283E3DF</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>021</LENGTH>
+       <TEXT>Execute rcp</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_CLASS_OWNPROD_EXR</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BDE8538FE283E3DF</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

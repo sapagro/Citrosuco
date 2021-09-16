@@ -1,0 +1,1 @@
+sap.ui.define(["com/br/zcol/controller/FlexColumn.controller"],function(o){"use strict";QUnit.module("FlexColumn Controller");QUnit.test("I should test the FlexColumn controller",function(l){var n=new o;n.onInit();l.ok(n)})});                             

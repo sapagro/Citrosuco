@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Save Measurement Document</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:MDDOC_INFOCUS_SAVE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  TYPES: BEGIN OF ly_atributos_x,</item>
+      <item>           safra   TYPE atinn,</item>
+      <item>           florada TYPE atinn,</item>
+      <item>         END OF ly_atributos_x.</item>
+      <item/>
+      <item>  DATA: lrt_atinn_x    TYPE RANGE OF atinn,</item>
+      <item>        ls_atributos_x TYPE ly_atributos_x.</item>
+      <item/>
+      <item>  DATA: lt_new_mddoc   LIKE lt_mddoc,</item>
+      <item>        gt_message     TYPE /agri/t_gprolog,</item>
+      <item>        lt_messages_x  TYPE /agri/t_gprolog,</item>
+      <item>        lt_cs_messages TYPE /agri/t_gprolog,</item>
+      <item>        lt_selection   TYPE TABLE OF rsparams,</item>
+      <item>        lrt_acnum      TYPE RANGE OF zfmachdr-acnum,</item>
+      <item>        lv_stop_save_x TYPE xfeld,</item>
+      <item>        lv_subrc_x     TYPE sy-subrc,</item>
+      <item>        lv_msgv1_x     TYPE sy-msgv1.</item>
+      <item/>
+      <item>****Ownership</item>
+      <item>  CONSTANTS : BEGIN OF c_ownership,</item>
+      <item>                own         TYPE /agri/glownshp VALUE &apos;OW&apos;,</item>
+      <item>                third_party TYPE /agri/glownshp VALUE &apos;TP&apos;,</item>
+      <item>              END OF c_ownership.</item>
+      <item/>
+      <item>*-- BOC-Chamados/Melhorias RO</item>
+      <item>  REFRESH lt_messages_x.</item>
+      <item>  CLEAR lv_stop_save_x.</item>
+      <item/>
+      <item>  DATA(lv_zfmacm_update) = abap_false.</item>
+      <item>  DATA(lv_save_x) = abap_false.</item>
+      <item>  IF gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ-PLANTIO&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZPTA&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-updkz EQ &apos;I&apos;.</item>
+      <item>    DATA(lv_locked_x) = abap_true.</item>
+      <item>    IF gs_mddoc_infocus-x-mdhdr-tplnr_fl IS NOT INITIAL.</item>
+      <item>      CALL FUNCTION &apos;ENQUEUE_/AGRI/EZ_GLFL&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          tplnr_fl       = gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>        EXCEPTIONS</item>
+      <item>          foreign_lock   = 1</item>
+      <item>          system_failure = 2</item>
+      <item>          OTHERS         = 3.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        lv_subrc_x = sy-subrc.</item>
+      <item>        lv_msgv1_x = sy-msgv1.</item>
+      <item>        lv_locked_x = abap_false.</item>
+      <item>        INSERT INITIAL LINE INTO TABLE lt_messages_x</item>
+      <item>          ASSIGNING FIELD-SYMBOL(&lt;ls_message&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          MESSAGE ID &apos;/AGRI/GLFL&apos; TYPE &apos;E&apos;</item>
+      <item>            NUMBER &apos;011&apos; WITH gs_mddoc_infocus-x-mdhdr-tplnr_fl lv_msgv1_x INTO sy-msgli.</item>
+      <item>          &lt;ls_message&gt;-msgid = &apos;/AGRI/GLFL&apos;.</item>
+      <item>          &lt;ls_message&gt;-msgno = &apos;011&apos;.</item>
+      <item>          &lt;ls_message&gt;-msgty = &apos;E&apos;.</item>
+      <item>          &lt;ls_message&gt;-msgv1 = gs_mddoc_infocus-x-mdhdr-tplnr_fl.</item>
+      <item>          &lt;ls_message&gt;-msgv2 = lv_msgv1_x.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SELECT SINGLE *</item>
+      <item>      FROM /agri/glflot</item>
+      <item>      INTO @DATA(ls_flhdr)</item>
+      <item>     WHERE tplnr_fl = @gs_mddoc_infocus-x-mdhdr-tplnr_fl.</item>
+      <item/>
+      <item>    IF ls_flhdr-strno IS NOT INITIAL.</item>
+      <item>      CALL FUNCTION &apos;ENQUEUE_/AGRI/EZ_GLFLS&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          strno          = ls_flhdr-strno</item>
+      <item>        EXCEPTIONS</item>
+      <item>          foreign_lock   = 1</item>
+      <item>          system_failure = 2</item>
+      <item>          OTHERS         = 3.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        lv_subrc_x = sy-subrc.</item>
+      <item>        lv_msgv1_x = sy-msgv1.</item>
+      <item>        lv_locked_x = abap_false.</item>
+      <item>        INSERT INITIAL LINE INTO TABLE lt_messages_x</item>
+      <item>          ASSIGNING &lt;ls_message&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          MESSAGE ID &apos;/AGRI/GLFL&apos; TYPE &apos;E&apos;</item>
+      <item>            NUMBER &apos;011&apos; WITH ls_flhdr-strno lv_msgv1_x INTO sy-msgli.</item>
+      <item>          &lt;ls_message&gt;-msgid = &apos;/AGRI/GLFL&apos;.</item>
+      <item>          &lt;ls_message&gt;-msgno = &apos;011&apos;.</item>
+      <item>          &lt;ls_message&gt;-msgty = &apos;E&apos;.</item>
+      <item>          &lt;ls_message&gt;-msgv1 = ls_flhdr-strno.</item>
+      <item>          &lt;ls_message&gt;-msgv2 = lv_msgv1_x.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_locked_x EQ abap_false.</item>
+      <item>      LOOP AT lt_messages_x INTO DATA(lwa_message_x).</item>
+      <item>        CHECK lwa_message_x-msgid IS NOT INITIAL AND</item>
+      <item>              lwa_message_x-msgno IS NOT INITIAL.</item>
+      <item>        IF lwa_message_x-msgty IS INITIAL.</item>
+      <item>          lwa_message_x-msgty = c_msg_type-info.</item>
+      <item>        ENDIF.</item>
+      <item>        MESSAGE ID lwa_message_x-msgid TYPE lwa_message_x-msgty</item>
+      <item>        NUMBER lwa_message_x-msgno WITH lwa_message_x-msgv1 lwa_message_x-msgv2</item>
+      <item>                lwa_message_x-msgv3 lwa_message_x-msgv4 INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CHECK lv_locked_x EQ abap_true.</item>
+      <item/>
+      <item>    SELECT *</item>
+      <item>      FROM zfmaitm</item>
+      <item>      INTO TABLE @DATA(lt_zfmacitm)</item>
+      <item>     WHERE tplnr_fl = @gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>       AND contr    = @gs_mddoc_infocus-x-mdhdr-contr.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SELECT *</item>
+      <item>        FROM zfmachdr</item>
+      <item>        INTO TABLE @DATA(lt_zfmachdr)</item>
+      <item>        FOR ALL ENTRIES IN @lt_zfmacitm</item>
+      <item>       WHERE acnum = @lt_zfmacitm-acnum.</item>
+      <item/>
+      <item>      SORT lt_zfmachdr BY acnum ajahr.</item>
+      <item/>
+      <item>      LOOP AT lt_zfmachdr INTO DATA(ls_zfmachdr).</item>
+      <item>        CALL FUNCTION &apos;ENQUEUE_EZ_FMAC&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            mode_zfmachdr  = &apos;X&apos;</item>
+      <item>            mandt          = sy-mandt</item>
+      <item>            acnum          = ls_zfmachdr-acnum</item>
+      <item>            ajahr          = ls_zfmachdr-ajahr</item>
+      <item>            x_acnum        = &apos; &apos;</item>
+      <item>            x_ajahr        = &apos; &apos;</item>
+      <item>            _scope         = &apos;2&apos;</item>
+      <item>            _wait          = &apos; &apos;</item>
+      <item>            _collect       = &apos; &apos;</item>
+      <item>          EXCEPTIONS</item>
+      <item>            foreign_lock   = 1</item>
+      <item>            system_failure = 2</item>
+      <item>            OTHERS         = 3.</item>
+      <item>        IF sy-subrc &lt;&gt; 0.</item>
+      <item>          lv_subrc_x = sy-subrc.</item>
+      <item>          lv_msgv1_x = sy-msgv1.</item>
+      <item>          lv_locked_x = abap_false.</item>
+      <item>*-- Área de Cultivo &amp;1 bloqueada pelo usuário &amp;2!</item>
+      <item>          MESSAGE e292(zfmfp) WITH ls_zfmachdr-acnum lv_msgv1_x INTO sy-msgli.</item>
+      <item>          INSERT INITIAL LINE INTO TABLE lt_messages_x</item>
+      <item>            ASSIGNING &lt;ls_message&gt;.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;ls_message&gt;-msgid = &apos;ZFMFP&apos;.</item>
+      <item>            &lt;ls_message&gt;-msgno = &apos;292&apos;.</item>
+      <item>            &lt;ls_message&gt;-msgty = &apos;E&apos;.</item>
+      <item>            &lt;ls_message&gt;-msgv1 = ls_zfmachdr-acnum.</item>
+      <item>            &lt;ls_message&gt;-msgv2 = lv_msgv1_x.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_locked_x EQ abap_false.</item>
+      <item>      LOOP AT lt_messages_x INTO lwa_message_x.</item>
+      <item>        CHECK lwa_message_x-msgid IS NOT INITIAL AND</item>
+      <item>              lwa_message_x-msgno IS NOT INITIAL.</item>
+      <item>        IF lwa_message_x-msgty IS INITIAL.</item>
+      <item>          lwa_message_x-msgty = c_msg_type-info.</item>
+      <item>        ENDIF.</item>
+      <item>        MESSAGE ID lwa_message_x-msgid TYPE lwa_message_x-msgty</item>
+      <item>        NUMBER lwa_message_x-msgno WITH lwa_message_x-msgv1 lwa_message_x-msgv2</item>
+      <item>                lwa_message_x-msgv3 lwa_message_x-msgv4 INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CHECK lv_locked_x EQ abap_true.</item>
+      <item/>
+      <item>    lv_zfmacm_update = abap_true.</item>
+      <item>  ELSEIF gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ-COMPLEXIDADE&apos;</item>
+      <item>     AND gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZTYP&apos;</item>
+      <item>     AND gs_mddoc_infocus-x-mdhdr-updkz EQ &apos;I&apos;.</item>
+      <item>    DO 2 TIMES.</item>
+      <item>      DATA(lv_index_x) = sy-index.</item>
+      <item/>
+      <item>      INSERT INITIAL LINE INTO table lrt_atinn_x</item>
+      <item>        ASSIGNING FIELD-SYMBOL(&lt;lrs_atinn_x&gt;).</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lrs_atinn_x&gt; = &apos;IEQ&apos;.</item>
+      <item>      ELSE.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CASE lv_index_x.</item>
+      <item>        WHEN 1.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ATINN_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = &apos;CIT-SAFRA&apos;</item>
+      <item>            IMPORTING</item>
+      <item>              output = ls_atributos_x-safra.</item>
+      <item/>
+      <item>          IF &lt;lrs_atinn_x&gt; IS ASSIGNED.</item>
+      <item>            &lt;lrs_atinn_x&gt;-low = ls_atributos_x-safra.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN 2.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ATINN_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = &apos;CIT-FLORADA&apos;</item>
+      <item>            IMPORTING</item>
+      <item>              output = ls_atributos_x-florada.</item>
+      <item/>
+      <item>          IF &lt;lrs_atinn_x&gt; IS ASSIGNED.</item>
+      <item>            &lt;lrs_atinn_x&gt;-low = ls_atributos_x-florada.</item>
+      <item>          ENDIF.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDDO.</item>
+      <item/>
+      <item>    SELECT h~mdocm, h~mdtyp, h~aslvl, h~tplnr_fl,</item>
+      <item>           h~contr, h~cmnum, h~equnr, h~mpgrp,</item>
+      <item>           h~mdate, h~mtime, v~atzhl, v~atwrt, v~atflv,</item>
+      <item>           c~atinn, q~value AS atinn_out, c~atnam</item>
+      <item>      INTO TABLE @DATA(lt_glmdatv_db)</item>
+      <item>      FROM /agri/glmdhdr AS h</item>
+      <item>      INNER JOIN /agri/glmdatv AS v</item>
+      <item>      ON v~mdocm EQ h~mdocm</item>
+      <item>      INNER JOIN cabn AS c</item>
+      <item>      ON c~atinn EQ v~atinn</item>
+      <item>      LEFT OUTER JOIN /agri/fm_qmsmpl AS q</item>
+      <item>      ON q~datum EQ c~adatu &quot;creates field atinn_out char40</item>
+      <item>     WHERE h~mdtyp    EQ &apos;ZPTA&apos; &quot;Medições ao nível de safra</item>
+      <item>       AND h~tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>       AND h~mpgrp    EQ &apos;FAZ-ESTIMATIVA&apos;</item>
+      <item>       AND h~kfrst    EQ @/agri/cl_fmpr_process_ticket=&gt;mc_kfrst</item>
+      <item>       AND h~canceled EQ @abap_false</item>
+      <item>       AND v~atinn    IN @lrt_atinn_x[].</item>
+      <item/>
+      <item>    READ TABLE gs_mddoc_infocus-x-mdatv INTO DATA(ls_safra_new)</item>
+      <item>      WITH KEY atinn = ls_atributos_x-safra.</item>
+      <item/>
+      <item>    READ TABLE gs_mddoc_infocus-x-mdatv INTO DATA(ls_florada_new)</item>
+      <item>      WITH KEY atinn = ls_atributos_x-florada.</item>
+      <item/>
+      <item>    IF ls_safra_new-atwrt IS NOT INITIAL</item>
+      <item>    AND ls_florada_new-atwrt IS NOT INITIAL.</item>
+      <item>      DATA(lt_safras_db) = lt_glmdatv_db[].</item>
+      <item>      DELETE lt_safras_db WHERE atinn NE ls_atributos_x-safra</item>
+      <item>                             OR atwrt NE ls_safra_new-atwrt.</item>
+      <item>      DATA(lt_floradas_db) = lt_glmdatv_db[].</item>
+      <item>      DELETE lt_floradas_db WHERE atinn NE ls_atributos_x-florada</item>
+      <item>                               OR atwrt NE ls_florada_new-atwrt.</item>
+      <item/>
+      <item>      SORT: lt_safras_db BY mdocm,</item>
+      <item>            lt_floradas_db BY mdocm.</item>
+      <item/>
+      <item>      LOOP AT lt_safras_db INTO DATA(ls_safra_db).</item>
+      <item>        READ TABLE lt_floradas_db INTO DATA(ls_florada_db)</item>
+      <item>          WITH KEY mdocm = ls_safra_db-mdocm BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          lv_save_x = abap_true.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ-COMPLEXIDADE&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZTYP&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-updkz EQ &apos;I&apos;.</item>
+      <item>    IF lv_save_x EQ abap_false.</item>
+      <item>*-- Não existe doc.medição &apos;FAZ-ESTIMATIVA&apos; para safra e florada informadas!</item>
+      <item>      MESSAGE i395(zfmfp).</item>
+      <item>    ENDIF.</item>
+      <item>    CHECK lv_save_x = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item>*-- EOC-Chamados/Melhorias RO</item>
+      <item/>
+      <item>*-- BOC-Chamados/Melhorias DJ</item>
+      <item>  DATA(lv_create) = abap_false.</item>
+      <item>  IF gs_variables-document_mode EQ c_mode_create</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-tplnr_fl IS NOT INITIAL.</item>
+      <item>    SELECT SINGLE tplnr_fl, ownshp</item>
+      <item>      FROM /agri/glflot</item>
+      <item>      INTO @DATA(ls_glflot)</item>
+      <item>     WHERE tplnr_fl = @gs_mddoc_infocus-x-mdhdr-tplnr_fl.</item>
+      <item>    IF ls_glflot-ownshp EQ c_ownership-third_party.</item>
+      <item>      lv_create = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  DATA(lv_create_new_mddoc) = abap_false.</item>
+      <item>  IF gs_variables-document_mode EQ c_mode_create</item>
+      <item>  AND lv_create EQ abap_true</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-aslvl EQ c_measurement_level-crop_seasons</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZPTA&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;ENCERRAR_FLORADA&apos;.</item>
+      <item>    lv_create_new_mddoc = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SELECT SINGLE *</item>
+      <item>    FROM /agri/glmdhdr</item>
+      <item>    INTO @DATA(ls_glmdhdr_old)</item>
+      <item>   WHERE mdocm = @gs_mddoc_infocus-x-mdhdr-mdocm.</item>
+      <item>*-- EOC-Chamados/Melhorias DJ</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:MDDOC_INFOCUS_SAVE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>*-- BOC-Chamados/Melhorias DJ</item>
+      <item>  DATA: lwa_dummy_header TYPE /agri/s_glmdhdr.</item>
+      <item/>
+      <item>  IF lv_subrc EQ 0</item>
+      <item>  AND lv_create_new_mddoc EQ abap_true.</item>
+      <item>    lt_new_mddoc[] = lt_mddoc[].</item>
+      <item>    READ TABLE lt_new_mddoc ASSIGNING FIELD-SYMBOL(&lt;ls_new_mddoc&gt;) INDEX 1.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*--BOC-T_T.KONNO-07.15.21</item>
+      <item>      DATA(lv_mdocm) = gs_mddoc_infocus-x-mdhdr-mdocm.</item>
+      <item>*--EOC-T_T.KONNO-07.15.21</item>
+      <item>      gs_mddoc_infocus-x-mdhdr-mdocm = &lt;ls_new_mddoc&gt;-mdocm = text-046.</item>
+      <item>      gs_mddoc_infocus-x-mdhdr-mdocm = &lt;ls_new_mddoc&gt;-x-mdhdr-mdocm = text-046.</item>
+      <item>      gs_mddoc_infocus-x-mdhdr-mpgrp = &lt;ls_new_mddoc&gt;-x-mdhdr-mpgrp = &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item/>
+      <item>      CLEAR: gs_mddoc_infocus-x-mdhdr-stsma,</item>
+      <item>             gs_mddoc_infocus-x-mdhdr-objnr,</item>
+      <item>             &lt;ls_new_mddoc&gt;-x-mdhdr-stsma,</item>
+      <item>             &lt;ls_new_mddoc&gt;-x-mdhdr-objnr.</item>
+      <item/>
+      <item>*-- Criar Documento de Medição CIT-ESTIMATIVA liberado</item>
+      <item>      PERFORM zabs_md_header_update USING lwa_dummy_header</item>
+      <item>                                 CHANGING gs_mddoc_infocus-x-mdhdr</item>
+      <item>                                          lv_subrc.</item>
+      <item/>
+      <item>      CLEAR: gs_mddoc_infocus-x-mdhdr-stsma,</item>
+      <item>             gs_mddoc_infocus-x-mdhdr-objnr,</item>
+      <item>             gs_mddoc_infocus-x-mdhdr-kfrst.</item>
+      <item/>
+      <item>      MOVE-CORRESPONDING gs_mddoc_infocus-x-mdhdr TO &lt;ls_new_mddoc&gt;-x-mdhdr.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    REFRESH lt_messages.</item>
+      <item>    CALL FUNCTION &apos;ZABS_FM_GLMD_SAVE&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        i_commit_work     = lv_commit</item>
+      <item>        iref_text         = ref_text</item>
+      <item>        it_mddoc_ref      = lt_mddoc</item>
+      <item>*--BOC-T_T.KONNO-07.15.21</item>
+      <item>        i_mdocm           = lv_mdocm</item>
+      <item>*--EOC-T_T.KONNO-07.15.21</item>
+      <item>      CHANGING</item>
+      <item>        ct_mddoc          = lt_new_mddoc</item>
+      <item>        ct_messages       = lt_messages</item>
+      <item>      EXCEPTIONS</item>
+      <item>        no_change         = 1</item>
+      <item>        OTHERS            = 2.</item>
+      <item/>
+      <item>    lv_subrc  = sy-subrc.</item>
+      <item>    LOOP AT lt_messages INTO ls_message.</item>
+      <item>      MESSAGE ID ls_message-msgid TYPE ls_message-msgty</item>
+      <item>        NUMBER ls_message-msgno WITH ls_message-msgv1</item>
+      <item>        ls_message-msgv2 ls_message-msgv3 ls_message-msgv4 INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF lv_subrc NE 0.</item>
+      <item>      IF lv_subrc EQ 1.</item>
+      <item>        MESSAGE ID &apos;/AGRI/GLOBAL&apos; TYPE c_msg_type-success</item>
+      <item>          NUMBER &apos;322&apos; INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ELSE.</item>
+      <item>        READ TABLE lt_new_mddoc INTO DATA(ls_new_mddoc) INDEX 1.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          MESSAGE ID &apos;/AGRI/GLMD&apos; TYPE c_msg_type-error NUMBER &apos;011&apos;</item>
+      <item>            WITH ls_new_mddoc-x-mdhdr-mdocm INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      LOOP AT lt_new_mddoc INTO ls_new_mddoc.</item>
+      <item>        PERFORM message_context_set USING ls_new_mddoc-x-mdhdr.</item>
+      <item>        MESSAGE ID &apos;/AGRI/GLMD&apos; TYPE c_msg_type-success NUMBER &apos;006&apos;</item>
+      <item>           WITH ls_new_mddoc-x-mdhdr-mdocm INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;FUNCTION_EXISTS&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      funcname           = &apos;ZABS_FM_MDM_MESSAGE&apos;</item>
+      <item>    EXCEPTIONS</item>
+      <item>      function_not_exist = 1</item>
+      <item>      OTHERS             = 2.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    CALL FUNCTION &apos;ZABS_FM_MDM_MESSAGE&apos;</item>
+      <item>      IMPORTING</item>
+      <item>        et_messages = lt_cs_messages[].</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT lt_cs_messages INTO DATA(ls_cs_msg).</item>
+      <item>    IF ls_cs_msg-msgid IS NOT INITIAL</item>
+      <item>    AND ls_cs_msg-msgno IS NOT INITIAL</item>
+      <item>    AND ls_cs_msg-msgty IS NOT INITIAL.</item>
+      <item>      MESSAGE ID ls_cs_msg-msgid TYPE ls_cs_msg-msgty</item>
+      <item>        NUMBER ls_cs_msg-msgno WITH ls_cs_msg-msgv1</item>
+      <item>        ls_cs_msg-msgv2 ls_cs_msg-msgv3 ls_cs_msg-msgv4</item>
+      <item>        INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item>*-- EOC-Chamados/Melhorias DJ</item>
+      <item/>
+      <item>*-- BOC-Chamados/Melhorias RO</item>
+      <item>*-- Conflito Objetos: Melhoria 66 x Atualização Área de Cultivo</item>
+      <item>  IF lv_zfmacm_update = abap_true.</item>
+      <item>    LOOP AT lt_zfmachdr INTO ls_zfmachdr.</item>
+      <item>      REFRESH lrt_acnum.</item>
+      <item>      INSERT INITIAL LINE INTO TABLE lrt_acnum</item>
+      <item>        ASSIGNING FIELD-SYMBOL(&lt;lrs_acnum&gt;).</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lrs_acnum&gt; = &apos;IEQ&apos;.</item>
+      <item>        &lt;lrs_acnum&gt;-low = ls_zfmachdr-acnum.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      SUBMIT zabs_rep_fmacm_update WITH so_acnum IN lrt_acnum[]</item>
+      <item>                                   WITH p_ajahr  EQ ls_zfmachdr-ajahr</item>
+      <item>                                   WITH p_glmdm  EQ abap_true AND RETURN.</item>
+      <item/>
+      <item>      IMPORT gt_message FROM MEMORY ID &apos;ZFMACM_UPDATE&apos;.</item>
+      <item/>
+      <item>      LOOP AT gt_message INTO DATA(ls_message_x).</item>
+      <item>        IF ls_message_x-msgid IS NOT INITIAL</item>
+      <item>        AND ls_message_x-msgno IS NOT INITIAL</item>
+      <item>        AND ls_message_x-msgty IS NOT INITIAL.</item>
+      <item>          MESSAGE ID ls_message_x-msgid TYPE ls_message_x-msgty</item>
+      <item>            NUMBER ls_message_x-msgno WITH ls_message_x-msgv1</item>
+      <item>            ls_message_x-msgv2 ls_message_x-msgv3 ls_message_x-msgv4</item>
+      <item>            INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item>*-- EOC-Chamados/Melhorias RO</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDB83AEF751E16A702E</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDB83AEF751E16A702E</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>038</LENGTH>
+       <TEXT>Save Measurement Document</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_MMDOC_SAVE</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDB83AEF751E16A702E</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Check Selected Row</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMNSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMNSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FCODE_BCNF\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>DATA: lt_rows_x TYPE lvc_t_row,</item>
+      <item>      lwa_row_x TYPE lvc_s_row.</item>
+      <item/>
+      <item>  CALL METHOD ref_grid_batches-&gt;get_selected_rows</item>
+      <item>    IMPORTING</item>
+      <item>      et_index_rows = lt_rows_x.</item>
+      <item/>
+      <item>  CHECK lt_rows_x IS NOT INITIAL.</item>
+      <item/>
+      <item>  READ TABLE lt_rows_x INTO lwa_row_x INDEX 1.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    READ TABLE gt_batches_fcat INTO gs_batch_fcat INDEX lwa_row_x-index.</item>
+      <item/>
+      <item>    LOOP AT gt_fmfpcnf ASSIGNING FIELD-SYMBOL(&lt;ls_fmfpcnf_x&gt;).</item>
+      <item>      &lt;ls_fmfpcnf_x&gt;-budat = gs_batch_fcat-budat.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ELSE.</item>
+      <item>    CLEAR gs_batch_fcat.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA396F3E5394B6D37</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA396F3E5394B6D37</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>028</LENGTH>
+       <TEXT>Check Selected Row</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_FCODE_BCNF</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA396F3E5394B6D37</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

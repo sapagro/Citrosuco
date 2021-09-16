@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Get Produce Receipt Order</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMPR_PROCESS_TICKET</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMPR_PROCESS_TICKET</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMPR_PROCESS_TICKET==CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMPR_PROCESS_TICKET==CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMPR_PROCESS_TICKET\ME:GET_PRODUCE_RECEIPT_ORDER\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lt_auartx          TYPE /agri/t_fmauart,</item>
+      <item>        lt_istatx          TYPE /agri/t_fmistat,</item>
+      <item>        lt_prdordx         TYPE /agri/t_fmprdord,</item>
+      <item>        lwa_prdordx        TYPE /agri/s_fmprdord,</item>
+      <item>        lt_prdord_ax       TYPE /agri/t_fmprdord.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lt_fmpritm&gt; TYPE /agri/t_fmpritm.</item>
+      <item/>
+      <item>*  IF sy-uname EQ &apos;T_H.KABABE&apos;</item>
+      <item>*  OR sy-uname EQ &apos;T_T.KONNO&apos;.</item>
+      <item>*    BREAK-POINT.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_custom_proc) = abap_false.</item>
+      <item>  LOOP AT lt_formatted_stack INTO DATA(ls_formatted_stack).</item>
+      <item>    IF ls_formatted_stack-progname EQ &apos;SAPLZFMNTX_RECEIPT&apos;.</item>
+      <item>      lv_custom_proc = abap_true.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>* Get allows status</item>
+      <item>  get_order_status_allowed( ).</item>
+      <item>  IF r_ord_stat[] IS NOT INITIAL.</item>
+      <item>    APPEND LINES OF r_ord_stat TO lt_istatx.</item>
+      <item>  ELSE.</item>
+      <item>    RAISE status_not_found.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_custom_proc EQ abap_true.</item>
+      <item>    ASSIGN (&apos;(SAPLZFMNTX_RECEIPT)GS_PRDOC_INFOCUS-X-PRITM&apos;) TO &lt;lt_fmpritm&gt;.</item>
+      <item>  ELSE.</item>
+      <item>    ASSIGN (&apos;(/AGRI/SAPLFMPRM)GS_PRDOC_INFOCUS-X-PRITM&apos;) TO &lt;lt_fmpritm&gt;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF &lt;lt_fmpritm&gt; IS ASSIGNED.</item>
+      <item>    DATA(lv_exitx) = abap_true.</item>
+      <item>    READ TABLE &lt;lt_fmpritm&gt; INTO DATA(lwa_fmpritm) INDEX 1.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      IF lwa_fmpritm-zzhaufnr IS NOT INITIAL.</item>
+      <item>        CONDENSE lwa_fmpritm-zzhaufnr.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            input = lwa_fmpritm-zzhaufnr</item>
+      <item>         IMPORTING</item>
+      <item>           output = lwa_fmpritm-zzhaufnr.</item>
+      <item/>
+      <item>        SELECT aufnr UP TO 1 ROWS</item>
+      <item>          FROM /agri/fmfpitm</item>
+      <item>          INTO @DATA(lv_produce_order)</item>
+      <item>         WHERE aufnr_to = @lwa_fmpritm-zzhaufnr.</item>
+      <item>        ENDSELECT.</item>
+      <item>        IF sy-subrc NE 0.</item>
+      <item>          RAISE order_not_found.</item>
+      <item>        ELSE.</item>
+      <item>          r_aufnr = lv_produce_order.</item>
+      <item>        ENDIF.</item>
+      <item>      ELSE.</item>
+      <item>        RAISE order_not_found.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    lv_exitx = abap_false.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK lv_exitx = abap_false.</item>
+      <item/>
+      <item>*  DATA: lt_auartx    TYPE /agri/t_fmauart.</item>
+      <item>*  DATA: lt_istatx    TYPE /agri/t_fmistat,</item>
+      <item>*        lt_prdordx   TYPE /agri/t_fmprdord,</item>
+      <item>*        lwa_prdordx  TYPE /agri/s_fmprdord.</item>
+      <item>*  DATA: lt_prdord_ax TYPE /agri/t_fmprdord.</item>
+      <item>*</item>
+      <item>** Get allows status</item>
+      <item>*  get_order_status_allowed( ).</item>
+      <item>*  IF r_ord_stat[] IS NOT INITIAL.</item>
+      <item>*    APPEND LINES OF r_ord_stat TO lt_istatx.</item>
+      <item>*  ELSE.</item>
+      <item>*    RAISE status_not_found.</item>
+      <item>*  ENDIF.</item>
+      <item>*</item>
+      <item>** Get last released receipt order</item>
+      <item>*  SELECT k~aufnr a~objnr</item>
+      <item>*         FROM afko AS k</item>
+      <item>*   INNER JOIN aufk AS a</item>
+      <item>*           ON k~aufnr = a~aufnr</item>
+      <item>*   INNER JOIN afpo AS p</item>
+      <item>*           ON k~aufnr = p~aufnr</item>
+      <item>*   INNER JOIN t001k AS t       &quot;#EC CI_BUFFJOIN</item>
+      <item>*           ON a~werks = t~bwkey</item>
+      <item>*         INTO CORRESPONDING FIELDS OF TABLE lt_prdordx</item>
+      <item>*        WHERE k~plnbez = i_matnr</item>
+      <item>*          AND p~posnr = 1</item>
+      <item>*          AND p~projn = ms_flcma-proid    &quot; WBS-Element from assigment</item>
+      <item>*          AND t~bwkey = ms_master-werks  &quot; Plant from scale master settings</item>
+      <item>*        ORDER BY k~aufnr DESCENDING.</item>
+      <item>*  IF lt_prdordx[] IS INITIAL.</item>
+      <item>*    RAISE order_not_found.</item>
+      <item>*  ELSE.</item>
+      <item>** Get the order statuses</item>
+      <item>*    SELECT objnr stat</item>
+      <item>*      FROM jest</item>
+      <item>*      INTO CORRESPONDING FIELDS OF TABLE lt_prdord_ax</item>
+      <item>*       FOR ALL ENTRIES IN lt_prdordx  &quot;#EC CI_NO_TRANSFORM</item>
+      <item>*     WHERE objnr = lt_prdordx-objnr</item>
+      <item>*       AND stat IN lt_istatx</item>
+      <item>*       AND inact = space.</item>
+      <item>*    IF sy-subrc = 0.</item>
+      <item>** Sor by order number to get the last one</item>
+      <item>*      SORT lt_prdordx   BY objnr DESCENDING.</item>
+      <item>*      SORT lt_prdord_ax BY objnr DESCENDING.</item>
+      <item>*      READ TABLE lt_prdord_ax INTO lwa_prdordx INDEX 1.</item>
+      <item>*      IF sy-subrc = 0.</item>
+      <item>*        READ TABLE lt_prdordx INTO lwa_prdordx WITH KEY objnr = lwa_prdordx-objnr.</item>
+      <item>*        r_aufnr = lwa_prdordx-aufnr.</item>
+      <item>*      ELSE.</item>
+      <item>*        RAISE order_not_found.</item>
+      <item>*      ENDIF.</item>
+      <item>*    ELSE.</item>
+      <item>*      RAISE order_not_found.</item>
+      <item>*    ENDIF.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEA88BAB4BA8FD3BEF0</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA88BAB4BA8FD3BEF0</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>038</LENGTH>
+       <TEXT>Get Produce Receipt Order</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_GET_PRODUCE_ORDER</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEA88BAB4BA8FD3BEF0</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

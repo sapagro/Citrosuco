@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <INCLUDES>
+    <SOBJ_NAME>LZHRG_HCM_UPDATE_INFOTYPETOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZHRG_HCM_UPDATE_INFOTYPE</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZHR_HCM_UPDATE_INFOTYPE</FUNCNAME>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IS_P2001</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>P2001</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IS_P9900</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>P9900</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>EX_RETURN</PARAMETER>
+       <DBFIELD>BAPIRETURN1</DBFIELD>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>EX_KEY</PARAMETER>
+       <DBFIELD>BAPIPAKEY</DBFIELD>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IS_P2001</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IS_P9900</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EX_RETURN</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EX_KEY</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

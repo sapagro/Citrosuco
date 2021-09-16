@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>CIT-ESTIMATIVA</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:DATA_UPDATE_ALL\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lv_tabix_x TYPE sy-tabix,</item>
+      <item>        lv_subrc_temp_x TYPE sy-subrc,</item>
+      <item>        lv_upd_subrc_x TYPE sy-subrc,</item>
+      <item>        lwa_mdatv_x TYPE /agri/s_glmdatv,</item>
+      <item>        lwa_mdatv_old_x TYPE /agri/s_glmdatv,</item>
+      <item>        lwa_mdhdr_x TYPE /agri/s_glmdhdr,</item>
+      <item>        lwa_fcat_x TYPE lvc_s_fcat,</item>
+      <item>        lwa_athdr_x TYPE /agri/s_gathdr,</item>
+      <item>        lwa_athdr_temp_x TYPE /agri/s_gathdr.</item>
+      <item/>
+      <item>  DATA: lv_date_x TYPE atwrt,</item>
+      <item>        lv_atwrt_x TYPE /agri/gatwrt,</item>
+      <item>        lv_atflv_x TYPE atflv.</item>
+      <item>  DATA: lv_data_x TYPE /agri/gatwrt,</item>
+      <item>        lv_okcode_x TYPE sy-ucomm,</item>
+      <item>        lv_error_x.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lv_mdocm_x&gt;     TYPE any,</item>
+      <item>                 &lt;lv_value_x&gt;     TYPE any,</item>
+      <item>                 &lt;lv_value_old_x&gt; TYPE any,</item>
+      <item>                 &lt;lv_updkz_x&gt;     TYPE updkz_d,</item>
+      <item>                 &lt;lwa_data_x&gt;     TYPE any,</item>
+      <item>                 &lt;lwa_data_old_x&gt; TYPE any.</item>
+      <item/>
+      <item>  LOOP AT lt_data ASSIGNING &lt;lwa_data_x&gt;.</item>
+      <item/>
+      <item>    UNASSIGN &lt;lv_mdocm_x&gt;.</item>
+      <item>    ASSIGN COMPONENT &apos;MDOCM&apos; OF STRUCTURE &lt;lwa_data_x&gt;</item>
+      <item>                                       TO &lt;lv_mdocm_x&gt;.</item>
+      <item>    CHECK &lt;lv_mdocm_x&gt; IS ASSIGNED AND</item>
+      <item>          &lt;lv_mdocm_x&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>    UNASSIGN &lt;lv_updkz_x&gt;.</item>
+      <item>    ASSIGN COMPONENT &apos;UPDKZ&apos; OF STRUCTURE &lt;lwa_data_x&gt;</item>
+      <item>                                       TO &lt;lv_updkz_x&gt;.</item>
+      <item>    CHECK &lt;lv_updkz_x&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>    READ TABLE gt_mddoc INTO gs_mddoc_infocus</item>
+      <item>                        WITH KEY mdocm = &lt;lv_mdocm_x&gt;</item>
+      <item>                      BINARY SEARCH.</item>
+      <item>    CHECK sy-subrc EQ 0.</item>
+      <item>    lv_tabix_x = sy-tabix.</item>
+      <item/>
+      <item>*{   INSERT         C4DK907826                                        1</item>
+      <item>    MOVE-CORRESPONDING gs_mddoc_infocus-x-mdhdr TO /agri/s_glmdhdr.</item>
+      <item>*}   INSERT</item>
+      <item>*    MOVE-CORRESPONDING gs_mddoc_infocus-x-mdhdr TO /agri/s_glmdhdr.</item>
+      <item/>
+      <item>    MOVE-CORRESPONDING &lt;lwa_data_x&gt; TO /agri/s_glmdhdr.</item>
+      <item>    PERFORM message_context_set USING /agri/s_glmdhdr.</item>
+      <item/>
+      <item>    IF /agri/s_glmdhdr-muser IS INITIAL.</item>
+      <item>      /agri/s_glmdhdr-muser = sy-uname.</item>
+      <item>    ENDIF.</item>
+      <item>    IF /agri/s_glmdhdr-mdate IS INITIAL.</item>
+      <item>      /agri/s_glmdhdr-mdate = sy-datum.</item>
+      <item>    ENDIF.</item>
+      <item>    IF /agri/s_glmdhdr-mtime IS INITIAL.</item>
+      <item>      /agri/s_glmdhdr-mtime = sy-uzeit.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF /agri/s_glmdhdr-aslvl EQ c_measurement_level-crop_seasons OR</item>
+      <item>       /agri/s_glmdhdr-aslvl EQ c_measurement_level-harvest.</item>
+      <item>      MOVE-CORRESPONDING /agri/s_glmdhdr TO /agri/s_glflcma.</item>
+      <item>    ENDIF.</item>
+      <item>    PERFORM md_header_data_check USING /agri/s_glmdhdr</item>
+      <item>                              CHANGING lv_upd_subrc_x.</item>
+      <item>    IF lv_upd_subrc_x IS NOT INITIAL.</item>
+      <item>      lv_subrc = lv_upd_subrc_x.</item>
+      <item>      CLEAR lv_upd_subrc_x.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE &lt;gt_mddata_old&gt; ASSIGNING &lt;lwa_data_old_x&gt;</item>
+      <item>                                    WITH KEY (&apos;MDOCM&apos;) = &lt;lv_mdocm_x&gt;</item>
+      <item>                                  BINARY SEARCH.</item>
+      <item>    CHECK sy-subrc EQ 0.</item>
+      <item/>
+      <item>    CLEAR: gs_variables-errors, lv_upd_subrc_x.</item>
+      <item>    LOOP AT gt_fcat INTO lwa_fcat_x.</item>
+      <item>      CHECK lwa_fcat_x-sp_group EQ c_fldgrp-attributes.</item>
+      <item/>
+      <item>      READ TABLE gt_athdr INTO lwa_athdr_x</item>
+      <item>                          WITH KEY atinn = lwa_fcat_x-scrtext_s</item>
+      <item>                        BINARY SEARCH.</item>
+      <item>      CHECK sy-subrc EQ 0.</item>
+      <item/>
+      <item>      UNASSIGN: &lt;lv_value_x&gt;, &lt;lv_value_old_x&gt;.</item>
+      <item>      ASSIGN COMPONENT lwa_fcat_x-fieldname</item>
+      <item>          OF STRUCTURE &lt;lwa_data_x&gt; TO &lt;lv_value_x&gt;.</item>
+      <item>      CHECK &lt;lv_value_x&gt; IS ASSIGNED.</item>
+      <item/>
+      <item>      ASSIGN COMPONENT lwa_fcat_x-fieldname</item>
+      <item>          OF STRUCTURE &lt;lwa_data_old_x&gt; TO &lt;lv_value_old_x&gt;.</item>
+      <item>      CHECK &lt;lv_value_old_x&gt; IS ASSIGNED.</item>
+      <item/>
+      <item>      CLEAR: lwa_mdatv_old_x, lwa_mdatv_x,</item>
+      <item>             lv_atwrt_x, lv_atflv_x, lv_date_x, lv_subrc_temp_x.</item>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO lwa_mdatv_old_x</item>
+      <item>              WITH KEY mdocm = &lt;lv_mdocm_x&gt;</item>
+      <item>                       atinn = lwa_athdr_x-atinn.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lwa_mdatv_x = lwa_mdatv_old_x.</item>
+      <item>      ELSE.</item>
+      <item>        MOVE-CORRESPONDING lwa_athdr_x TO lwa_mdatv_x.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF &lt;lv_value_old_x&gt; NE &lt;lv_value_x&gt;</item>
+      <item>      AND NOT &lt;lv_value_x&gt; IS INITIAL.</item>
+      <item/>
+      <item>        IF lwa_mdatv_old_x IS NOT INITIAL.</item>
+      <item>          lwa_mdatv_old_x-atwtb = lwa_mdatv_x-atwtb.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_athdr_x-atfor EQ c_atfor-date.</item>
+      <item>          MOVE &lt;lv_value_x&gt; TO lv_date_x.</item>
+      <item/>
+      <item>          CALL FUNCTION &apos;CTCV_CONVERT_DATE_TO_FLOAT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              date  = lv_date_x</item>
+      <item>            IMPORTING</item>
+      <item>              float = lv_atflv_x.</item>
+      <item/>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_athdr_x-atfor EQ c_atfor-char.</item>
+      <item>          MOVE &lt;lv_value_x&gt; TO lv_atwrt_x.</item>
+      <item>        ELSEIF lwa_athdr_x-atfor NE c_atfor-date.</item>
+      <item/>
+      <item>          IF lwa_athdr_x-attab IS INITIAL</item>
+      <item>          AND lwa_athdr_x-atfel IS INITIAL</item>
+      <item>          AND ( lwa_athdr_x-atfor EQ c_atfor-numeric</item>
+      <item>             OR lwa_athdr_x-atfor EQ c_atfor-currency ).</item>
+      <item>****</item>
+      <item>****</item>
+      <item>            MOVE &lt;lv_value_x&gt; TO lv_data_x.</item>
+      <item>            PERFORM attr_str_to_float_convert USING lwa_athdr_x</item>
+      <item>                                                    lv_data_x</item>
+      <item>                                           CHANGING lv_atflv_x</item>
+      <item>                                                    lv_subrc_temp_x.</item>
+      <item/>
+      <item>          ELSE.</item>
+      <item>            MOVE &lt;lv_value_x&gt; TO lv_atflv_x.</item>
+      <item>          ENDIF.</item>
+      <item>***</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lv_subrc_temp_x IS NOT INITIAL.</item>
+      <item>          lv_upd_subrc_x = lv_subrc_temp_x.</item>
+      <item>          CONTINUE.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        lwa_athdr_temp_x = lwa_athdr_x.</item>
+      <item>        CLEAR lwa_athdr_temp_x-msehi.</item>
+      <item>        CALL METHOD /agri/cl_gattr_utils=&gt;attr_value_for_display_prepare</item>
+      <item>          EXPORTING</item>
+      <item>            i_agtyp       = c_agtyp-measurements</item>
+      <item>            i_value_descr = c_false</item>
+      <item>            is_athdr      = lwa_athdr_temp_x</item>
+      <item>          CHANGING</item>
+      <item>            c_atwrt       = lv_atwrt_x</item>
+      <item>            c_atflv       = lv_atflv_x.</item>
+      <item/>
+      <item>*--BOC-T_T.KONNO-02.06.21</item>
+      <item>        IF GS_MDDOC_INFOCUS-X-MDHDR-MPGRP EQ &apos;CIT-ESTIMATIVA&apos;</item>
+      <item>        AND GS_MDDOC_INFOCUS-X-MDHDR-UPDKZ EQ &apos;I&apos;</item>
+      <item>        AND SY-TCODE EQ &apos;/AGRI/GLMD23&apos;</item>
+      <item>        AND LV_ATWRT_X IS INITIAL</item>
+      <item>        AND LV_ATFLV_X IS INITIAL</item>
+      <item>        AND &lt;LV_VALUE_X&gt; IS ASSIGNED</item>
+      <item>        AND &lt;LV_VALUE_X&gt; EQ &apos;0&apos;</item>
+      <item>        AND LV_DATA_X EQ &apos;0&apos;.</item>
+      <item>          LV_ATWRT_X = &apos;0&apos;.</item>
+      <item>        ENDIF.</item>
+      <item>*--EOC-T_T.KONNO-02.06.21</item>
+      <item/>
+      <item>        lwa_mdatv_x-atwrt = lv_atwrt_x.</item>
+      <item>        lwa_mdatv_x-atflv = lv_atflv_x.</item>
+      <item/>
+      <item>        CLEAR lwa_mdatv_x-ataut.</item>
+      <item>        PERFORM attribute_update USING space</item>
+      <item>                                       lwa_mdatv_old_x</item>
+      <item>                              CHANGING lwa_mdatv_x</item>
+      <item>                                       lv_subrc_temp_x.</item>
+      <item>        IF lv_subrc_temp_x NE 0.</item>
+      <item>          lv_upd_subrc_x = 4.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>      ELSEIF &lt;lv_value_old_x&gt; NE &lt;lv_value_x&gt;</item>
+      <item>         AND &lt;lv_value_x&gt; IS INITIAL.</item>
+      <item>        PERFORM attribute_value_delete USING lwa_athdr_x-atinn</item>
+      <item>                                    CHANGING lv_subrc_temp_x.</item>
+      <item>        IF lv_subrc_temp_x NE 0.</item>
+      <item>          lv_upd_subrc_x = 4.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    ENDLOOP.</item>
+      <item>    IF lv_upd_subrc_x IS INITIAL.</item>
+      <item>      MOVE-CORRESPONDING /agri/s_glmdhdr TO gs_mddoc_infocus-x-mdhdr.</item>
+      <item>      IF ok_code NE c_fcode-save.</item>
+      <item>        lv_okcode_x = ok_code.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      PERFORM attr_value_check_class_call USING space</item>
+      <item>                                    CHANGING gt_value_check_atinn</item>
+      <item>                                             lv_upd_subrc_x</item>
+      <item>                                             lv_error_x.</item>
+      <item>      IF ok_code NE c_fcode-save.</item>
+      <item>        ok_code = lv_okcode_x.</item>
+      <item>      ENDIF.</item>
+      <item>      REFRESH: gt_value_check_atinn.</item>
+      <item/>
+      <item>      IF lv_upd_subrc_x NE 0.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        CONTINUE.</item>
+      <item>      ENDIF.</item>
+      <item>      MODIFY gt_mddoc FROM gs_mddoc_infocus INDEX lv_tabix_x.</item>
+      <item>    ELSE.</item>
+      <item>      lv_subrc = lv_upd_subrc_x.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEBB1824A27704F35C7</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEBB1824A27704F35C7</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>024</LENGTH>
+       <TEXT>CIT-ESTIMATIVA</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_DATA_UPDATE_ALL</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEBB1824A27704F35C7</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Goods movement Create</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMFPM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMFPM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMFPM\FO:GOODS_MOVEMENT_CREATE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  ASSIGN (&apos;(SAPLZFG_ACM)GV_POSTING_DATE&apos;) TO FIELD-SYMBOL(&lt;lv_posting_date&gt;).</item>
+      <item>  IF sy-subrc EQ 0</item>
+      <item>  AND &lt;lv_posting_date&gt; IS NOT INITIAL.</item>
+      <item>*    READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>*      WITH KEY kind        = &apos;FORM&apos;</item>
+      <item>*               progname    = &apos;ZABS_FMACM_UPLOAD&apos;</item>
+      <item>*               includename = &apos;ZABS_INC_FMACM_UPLOAD_F01&apos;</item>
+      <item>*               event       = &apos;ACCOMPLISHMENT_SHEET_CREATE&apos;.</item>
+      <item>    READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>      WITH KEY kind        = &apos;FORM&apos;</item>
+      <item>               progname    = &apos;ZABS_REP_SYNC_MOB_DATA&apos;</item>
+      <item>               includename = &apos;ZABS_INC_SYNC_MOB_DATA_F01&apos;</item>
+      <item>               event       = &apos;UPDATE_ACCOMPLISHMENT_SHEET&apos;.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      lwa_mvt_header-pstng_date = &lt;lv_posting_date&gt;.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMFPM\FO:GOODS_MOVEMENT_CREATE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>IF lv_commit_work IS NOT INITIAL AND</item>
+      <item>   lt_return IS INITIAL.</item>
+      <item>CALL FUNCTION &apos;DEQUEUE_ALL&apos;.</item>
+      <item/>
+      <item>ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDA9CA4CAC9EEEB61CB</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDA9CA4CAC9EEEB61CB</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>032</LENGTH>
+       <TEXT>Goods movement Create</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_GOODS_MVMNT_CREATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDA9CA4CAC9EEEB61CB</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

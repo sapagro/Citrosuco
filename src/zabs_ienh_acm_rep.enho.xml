@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Enhancement for Accomplishment Report</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>PROG</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMACM_REPORT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>PROG</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMACM_REPORT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/FMACM_REPORT</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/FMACM_REPORT</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/FMACM_REPORT\FO:DATA_GET\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  TYPES: BEGIN OF ty_terrains,</item>
+      <item>           tplnr_fl TYPE /agri/gltplnr_fl,</item>
+      <item>           form     TYPE /agri/glstrno,</item>
+      <item>           terrain  TYPE /agri/glstrno,</item>
+      <item>         END OF ty_terrains.</item>
+      <item/>
+      <item> DATA: lt_accom    TYPE /agri/t_fmacom,</item>
+      <item>       lt_terrains TYPE STANDARD TABLE OF ty_terrains,</item>
+      <item>       ls_terrains TYPE ty_terrains,</item>
+      <item>       lv_strno    TYPE /agri/glstrno,</item>
+      <item>       lt_split    TYPE STANDARD TABLE OF string,</item>
+      <item>       lt_tplnr    TYPE /agri/t_gltplnr,</item>
+      <item>       ls_tplnr    TYPE /agri/s_gltplnr,</item>
+      <item>       lt_safra_complex  TYPE zabs_t_safra_complex,</item>
+      <item>       ls_safra_complex  TYPE zabs_s_safra_complex,</item>
+      <item>       lt_complex  TYPE zabs_t_terrain_complex.</item>
+      <item/>
+      <item> lt_accom = gt_accomplisment[].</item>
+      <item/>
+      <item>*-- Fetch the Turmas, device number and complexity from accomplishment sheet</item>
+      <item>SELECT a~accom,      a~zzturma,  b~posnr,</item>
+      <item>       b~tplnr,      b~tmatnr,   b~aufnr,</item>
+      <item>       b~idresource, b~arbpl,    b~zztplnr,</item>
+      <item>       b~zzactrn,    b~zzacdtr,  b~zzbill,</item>
+      <item>       b~zzacppg,    b~zzstdur,  b~zzdevno,</item>
+      <item>       b~zzimei1,    b~zzimei2,  b~zzappl,</item>
+      <item>       b~zzjust,     b~zzbagno,  b~zzlongitude,</item>
+      <item>       b~zzlatitude, b~zzmackey, b~zzbaggp,</item>
+      <item>       b~zzcdate,    b~zzctime,  b~zzmcnim,</item>
+      <item>       b~zzlmnga,    b~zzmeinh,  b~zzcrimei,</item>
+      <item>       b~zzcrbadge,  b~zzchimei, b~zzchbadge, b~zzhdate</item>
+      <item>  FROM /agri/fmachdr AS a INNER JOIN /agri/fmacitm AS b</item>
+      <item>    ON b~accom EQ a~accom</item>
+      <item>  INTO TABLE @DATA(lt_achdr_itm)</item>
+      <item>   FOR ALL ENTRIES IN @lt_accom</item>
+      <item> WHERE a~accom EQ @lt_accom-accom.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>   SORT lt_achdr_itm BY accom tplnr tmatnr aufnr idresource.</item>
+      <item>   DATA(lt_acitm_tmp) = lt_achdr_itm.</item>
+      <item>   SORT lt_acitm_tmp BY zzturma.</item>
+      <item>   DELETE ADJACENT DUPLICATES FROM lt_acitm_tmp COMPARING zzturma.</item>
+      <item>   IF lt_acitm_tmp IS NOT INITIAL.</item>
+      <item>    SELECT turma_id, turma_text</item>
+      <item>      FROM zfmfpgrouphdr</item>
+      <item>      INTO TABLE @DATA(lt_turma)</item>
+      <item>       FOR ALL ENTRIES IN @lt_acitm_tmp</item>
+      <item>     WHERE turma_id EQ @lt_acitm_tmp-zzturma.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>       SORT lt_turma BY turma_id.</item>
+      <item/>
+      <item>*-- Fetch the HCM Turmas</item>
+      <item>        SELECT orgeh, turma</item>
+      <item>          FROM yoturmas</item>
+      <item>          INTO TABLE @DATA(lt_hcm_turm)</item>
+      <item>           FOR ALL ENTRIES IN @lt_turma</item>
+      <item>         WHERE turma EQ @lt_turma-turma_id.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          SORT lt_hcm_turm BY turma.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>       REFRESH lt_acitm_tmp.</item>
+      <item>       lt_acitm_tmp = lt_achdr_itm.</item>
+      <item>       SORT lt_acitm_tmp BY idresource arbpl.</item>
+      <item>       DELETE ADJACENT DUPLICATES FROM lt_acitm_tmp</item>
+      <item>                             COMPARING idresource arbpl.</item>
+      <item/>
+      <item>       IF lt_acitm_tmp IS NOT INITIAL.</item>
+      <item>*-- Fetch the HCM Resources</item>
+      <item>        SELECT idresource, arbpl, pernr</item>
+      <item>          FROM /agri/fmacres</item>
+      <item>          INTO TABLE @data(lt_resources)</item>
+      <item>           FOR ALL ENTRIES IN @lt_acitm_tmp</item>
+      <item>         WHERE idresource EQ @lt_acitm_tmp-idresource</item>
+      <item>           AND arbpl      EQ @lt_acitm_tmp-arbpl.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          SORT lt_resources BY idresource arbpl.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>*      Begin - Adonis - Plano Diretor - 12/07/21</item>
+      <item>        SELECT *</item>
+      <item>          FROM zfmfpsafras</item>
+      <item>          INTO TABLE @DATA(lt_safras)</item>
+      <item>         WHERE tipo_safra EQ &apos;C&apos;.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      REFRESH lt_acitm_tmp.</item>
+      <item>      lt_acitm_tmp = lt_achdr_itm.</item>
+      <item>      SORT lt_acitm_tmp BY tplnr.</item>
+      <item>      DELETE ADJACENT DUPLICATES FROM lt_acitm_tmp</item>
+      <item>                            COMPARING tplnr.</item>
+      <item/>
+      <item>      LOOP AT lt_acitm_tmp INTO DATA(ls_acitm).</item>
+      <item/>
+      <item>*-- Collect Terrains</item>
+      <item>        CLEAR ls_tplnr.</item>
+      <item>        ls_tplnr-tplnr_fl = ls_acitm-tplnr.</item>
+      <item>        COLLECT ls_tplnr INTO lt_tplnr.</item>
+      <item/>
+      <item>        LOOP AT lt_safras INTO DATA(ls_safra).</item>
+      <item/>
+      <item>        IF ls_acitm-zzhdate BETWEEN ls_safra-inicio_safra</item>
+      <item>                        AND ls_safra-fim_safra.</item>
+      <item/>
+      <item>          CLEAR ls_safra_complex.</item>
+      <item>          ls_safra_complex-ano_safra = ls_safra-ano_safra.</item>
+      <item>          COLLECT ls_safra_complex INTO lt_safra_complex.</item>
+      <item/>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ENDLOOP.</item>
+      <item/>
+      <item>*-- Collect forms</item>
+      <item>        CLEAR ls_terrains.</item>
+      <item>        ls_terrains-tplnr_fl = ls_acitm-tplnr.</item>
+      <item/>
+      <item/>
+      <item>        CLEAR lv_strno.</item>
+      <item>        CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_OUTPUT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            input  = ls_terrains-tplnr_fl</item>
+      <item>          IMPORTING</item>
+      <item>            output = lv_strno.</item>
+      <item/>
+      <item>        REFRESH lt_split.</item>
+      <item>        SPLIT lv_strno AT &apos;-&apos; INTO TABLE lt_split.</item>
+      <item/>
+      <item>        READ TABLE lt_split INTO DATA(ls_split) INDEX 1.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          ls_terrains-form = ls_split.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        CLEAR ls_split.</item>
+      <item>        READ TABLE lt_split INTO ls_split INDEX 2.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          ls_terrains-terrain = ls_split.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        COLLECT ls_terrains INTO lt_terrains.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      DATA(lt_forms) = lt_terrains.</item>
+      <item>      SORT lt_forms BY form.</item>
+      <item>      DELETE ADJACENT DUPLICATES FROM lt_forms COMPARING form.</item>
+      <item/>
+      <item>      IF lt_forms IS NOT INITIAL.</item>
+      <item>*--BOC-T_T.KONNO</item>
+      <item>*-- Fetch the HCM Forms</item>
+      <item>*        SELECT faz_btrtl, btrtl</item>
+      <item>*          FROM yofazendas</item>
+      <item>*          INTO TABLE @DATA(lt_hcm_form)</item>
+      <item>*           FOR ALL ENTRIES IN @lt_forms</item>
+      <item>*         WHERE btrtl EQ @lt_forms-form(4).</item>
+      <item>*        IF sy-subrc EQ 0.</item>
+      <item>*          SORT lt_hcm_form BY btrtl.</item>
+      <item>*        ENDIF.</item>
+      <item>        SELECT faz_btrtl, fazenda_farm</item>
+      <item>          FROM yofazendas</item>
+      <item>          INTO TABLE @DATA(lt_hcm_form)</item>
+      <item>          FOR ALL ENTRIES IN @lt_forms</item>
+      <item>         WHERE fazenda_farm EQ @lt_forms-form(6).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          SORT lt_hcm_form BY fazenda_farm.</item>
+      <item>        ENDIF.</item>
+      <item>*--EOC-T_T.KONNO</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lt_tplnr IS NOT INITIAL.</item>
+      <item>*-- Fetch the complexity for terrains</item>
+      <item>*        CALL FUNCTION &apos;ZABS_FM_GET_COMPLEXITY&apos;</item>
+      <item>        CALL FUNCTION &apos;ZABS_FM_COMPLEXITY_GET&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            it_tplnr   = lt_tplnr</item>
+      <item>            it_safra  = lt_safra_complex</item>
+      <item>          IMPORTING</item>
+      <item>            et_complex = lt_complex.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>   ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item> LOOP AT gt_details ASSIGNING FIELD-SYMBOL(&lt;ls_details&gt;).</item>
+      <item>  READ TABLE lt_achdr_itm INTO DATA(ls_achdr_itm)</item>
+      <item>        WITH KEY accom      = &lt;ls_details&gt;-accom</item>
+      <item>                 tplnr      = &lt;ls_details&gt;-tplnr</item>
+      <item>                 tmatnr     = &lt;ls_details&gt;-tmatnr</item>
+      <item>                 aufnr      = &lt;ls_details&gt;-aufnr</item>
+      <item>                 idresource = &lt;ls_details&gt;-idresource</item>
+      <item>      BINARY SEARCH.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>*    &lt;ls_details&gt;-zzturma = ls_achdr_itm-zzturma.</item>
+      <item>*    &lt;ls_details&gt;-zzdevno = ls_achdr_itm-zzdevno.</item>
+      <item/>
+      <item>    MOVE-CORRESPONDING ls_achdr_itm TO &lt;ls_details&gt;.</item>
+      <item/>
+      <item/>
+      <item/>
+      <item>*    -- Read complex of the Terrain</item>
+      <item>    LOOP AT lt_complex INTO DATA(ls_complex)</item>
+      <item>              WHERE tplnr = ls_achdr_itm-tplnr</item>
+      <item>                AND inicio_safra &lt;= ls_achdr_itm-zzhdate</item>
+      <item>                AND fim_safra &gt;= ls_achdr_itm-zzhdate.</item>
+      <item>      &lt;ls_details&gt;-zzcompl = ls_complex-complex.</item>
+      <item>      EXIT.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>      READ TABLE lt_complex INTO ls_complex</item>
+      <item>            WITH KEY tplnr = ls_achdr_itm-tplnr</item>
+      <item>          BINARY SEARCH.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;ls_details&gt;-zzcompl = ls_complex-complex.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE lt_turma INTO DATA(ls_turma)</item>
+      <item>          WITH KEY turma_id = ls_achdr_itm-zzturma</item>
+      <item>        BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>       &lt;ls_details&gt;-zztdesc = ls_turma-turma_text.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Read HCM Turma</item>
+      <item>    READ TABLE lt_hcm_turm INTO DATA(ls_hcm_turm)</item>
+      <item>          WITH KEY turma = ls_achdr_itm-zzturma</item>
+      <item>        BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      &lt;ls_details&gt;-zzhgang = ls_hcm_turm-orgeh.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Read HCN Resource</item>
+      <item>    READ TABLE lt_resources INTO DATA(ls_resources)</item>
+      <item>          WITH KEY idresource = ls_achdr_itm-idresource</item>
+      <item>                   arbpl      = ls_achdr_itm-arbpl</item>
+      <item>        BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      &lt;ls_details&gt;-zzhresr = ls_resources-pernr.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Read HCM Form and Terrain</item>
+      <item>    CLEAR ls_terrains.</item>
+      <item>    READ TABLE lt_terrains INTO ls_terrains</item>
+      <item>          WITH KEY tplnr_fl = ls_achdr_itm-tplnr</item>
+      <item>        BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*--BOC-T_T.KONNO</item>
+      <item>*      READ TABLE lt_hcm_form INTO DATA(ls_hcm_form)</item>
+      <item>*            WITH KEY btrtl = ls_terrains-form</item>
+      <item>*          BINARY SEARCH.</item>
+      <item>      READ TABLE lt_hcm_form INTO DATA(ls_hcm_form)</item>
+      <item>        WITH KEY fazenda_farm = ls_terrains-form BINARY SEARCH.</item>
+      <item>*--EOC-T_T.KONNO</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;ls_details&gt;-zzhfarm = ls_hcm_form-faz_btrtl.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      &lt;ls_details&gt;-zzhterr = ls_terrains-terrain.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item> ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9BD87999DA34E3EDE</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9BD87999DA34E3EDE</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>056</LENGTH>
+       <TEXT>Enhancement for Accomplishment Report</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ACM_REP</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9BD87999DA34E3EDE</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

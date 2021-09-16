@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SFPI" serializer_version="v1.0.0">
+ <asx:abap version="1.0" xmlns:asx="http://www.sap.com/abapxml">
+  <asx:values>
+   <VERSION>1</VERSION>
+   <TYPE/>
+   <INTERFACE href="#o1"/>
+   <INTERFACET>
+    <FPINTERFACET>
+     <NAME/>
+     <STATE/>
+     <LANGUAGE>E</LANGUAGE>
+     <ID/>
+     <TEXT>Terrain Details</TEXT>
+    </FPINTERFACET>
+   </INTERFACET>
+  </asx:values>
+  <asx:heap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:abap="http://www.sap.com/abapxml/types/built-in" xmlns:cls="http://www.sap.com/abapxml/classes/global" xmlns:dic="http://www.sap.com/abapxml/types/dictionary">
+   <cls:CL_FP_INTERFACE_DATA id="o1">
+    <CL_FP_INTERFACE_DATA classVersion="1">
+     <CODING href="#o5"/>
+     <PARAMETERS href="#o4"/>
+     <GLOBAL_DEFINITIONS href="#o3"/>
+     <REFERENCE_FIELDS href="#o2"/>
+     <XSD_DEFINITIONS/>
+    </CL_FP_INTERFACE_DATA>
+   </cls:CL_FP_INTERFACE_DATA>
+   <cls:CL_FP_REFERENCE_FIELDS id="o2">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_REFERENCE_FIELDS classVersion="1">
+     <REFERENCE_FIELDS>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GT_SUBTOT-QTD_PLANTS</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GWA_SUBTOT-QTD_PLANTS</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GT_TERRAIN_DTLS-SUB_TOT_VAL</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GT_TERRAIN_DTLS-QTD_PLANTS</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GWA_TERRAIN_DTLS-QTD_PLANTS</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GWA_TERRAIN_DTLS-SUB_TOT_VAL</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GWA_FARM_SUBTOT-QTD_PLANTS</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+      <SFPREF>
+       <ACTIVE/>
+       <STANDARD/>
+       <DATATYPE>QUAN</DATATYPE>
+       <VALUE>GT_FARM_SUBTOT-QTD_PLANTS</VALUE>
+       <UNIT>ITEM-MEINH</UNIT>
+      </SFPREF>
+     </REFERENCE_FIELDS>
+    </CL_FP_REFERENCE_FIELDS>
+   </cls:CL_FP_REFERENCE_FIELDS>
+   <cls:CL_FP_GLOBAL_DEFINITIONS id="o3">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_GLOBAL_DEFINITIONS classVersion="1">
+     <GLOBAL_DATA>
+      <SFPGDATA>
+       <NAME>GWA_SUBTOT</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_STR_SUBTOT</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GT_SUBTOT</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_TTY_SUBTOT</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GV_DATE</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>CHAR10</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GWA_FINAL</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>IFINAL</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GT_FINAL</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>TY_FINAL</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GWA_FARM_SUBTOT</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_STR_FARM_SUBTOT</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GWA_TERRAIN_DTLS</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_STR_TERRAIN_DTLS</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>ITEM</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>/AGRI/FMFPITM</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>GT_FARM_SUBTOT1</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>TY_ISUBTOT</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+      <SFPGDATA>
+       <NAME>DATE</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>CHAR10</TYPENAME>
+       <DEFAULTVAL/>
+       <CONSTANT/>
+      </SFPGDATA>
+     </GLOBAL_DATA>
+     <TYPES>
+      <FPCLINE>TYPES : BEGIN OF ifinal,</FPCLINE>
+      <FPCLINE>          farm    TYPE zabs_tty_terrain_dtls,</FPCLINE>
+      <FPCLINE>*          subtot  TYPE zabs_tty_subtot,</FPCLINE>
+      <FPCLINE>          subtot  TYPE zabs_tty_farm_subtot,</FPCLINE>
+      <FPCLINE>          farm_no TYPE zabs_del_farm,</FPCLINE>
+      <FPCLINE>*        region TYPE ZABS_DEL_REG,</FPCLINE>
+      <FPCLINE>*        hdr    TYPE zabs_tty_farm_hdr,</FPCLINE>
+      <FPCLINE>          sub     TYPE zabs_tty_farm_subtot,</FPCLINE>
+      <FPCLINE>        END OF ifinal,</FPCLINE>
+      <FPCLINE>        ty_final TYPE TABLE OF ifinal,</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>        BEGIN OF isubtot,</FPCLINE>
+      <FPCLINE>          reason     TYPE zabs_del_reason,</FPCLINE>
+      <FPCLINE>          rsdesc     TYPE atwtb,</FPCLINE>
+      <FPCLINE>          qtd_plants TYPE zabs_del_plant,</FPCLINE>
+      <FPCLINE>        END OF isubtot,</FPCLINE>
+      <FPCLINE>        ty_isubtot TYPE TABLE OF isubtot,</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>        BEGIN OF isubtot_region,</FPCLINE>
+      <FPCLINE>          region     TYPE zabs_del_reg,</FPCLINE>
+      <FPCLINE>          reason     TYPE zabs_del_reason,</FPCLINE>
+      <FPCLINE>          rsdesc     TYPE atwtb,</FPCLINE>
+      <FPCLINE>          qtd_plants TYPE zabs_del_plant,</FPCLINE>
+      <FPCLINE>        END OF isubtot_region,</FPCLINE>
+      <FPCLINE>        ty_isubtot_region TYPE TABLE OF isubtot_region.</FPCLINE>
+     </TYPES>
+     <FIELDSYMBOLS/>
+    </CL_FP_GLOBAL_DEFINITIONS>
+   </cls:CL_FP_GLOBAL_DEFINITIONS>
+   <cls:CL_FP_PARAMETERS id="o4">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_PARAMETERS classVersion="1">
+     <IMPORT_PARAMETERS>
+      <SFPIOPAR>
+       <NAME>GV_REGTXT</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ATWTB</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GV_RBTXT</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>/AGRI/GLDESCR</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GV_LANGU</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>SY-LANGU</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GT_FARM_SUBTOT_F</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_TTY_FARM_SUBTOT</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GT_FARM_SUBTOT</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_TTY_FARM_SUBTOT</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GV_DATBI</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>CHAR10</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GV_DATAB</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>CHAR10</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GT_TERRAIN_DTLS</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_TTY_TERRAIN_DTLS</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>GT_FARM_SUBTOT_T</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>ZABS_TTY_FARM_SUBTOT</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+     </IMPORT_PARAMETERS>
+     <EXPORT_PARAMETERS/>
+     <TABLE_PARAMETERS/>
+     <EXCEPTIONS/>
+    </CL_FP_PARAMETERS>
+   </cls:CL_FP_PARAMETERS>
+   <cls:CL_FP_CODING id="o5">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_CODING classVersion="1">
+     <INPUT_PARAMETERS>
+      <FPPARAMETER>WA_FINAL-REGION</FPPARAMETER>
+     </INPUT_PARAMETERS>
+     <OUTPUT_PARAMETERS/>
+     <INITIALIZATION>
+      <FPCLINE/>
+      <FPCLINE>*DATE = SY-DATUM.</FPCLINE>
+      <FPCLINE>WRITE sy-datum USING EDIT MASK &apos;__/__/____&apos; TO date.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>*LOOP AT gt_farm_hdr INTO gwa_farm_hdr.</FPCLINE>
+      <FPCLINE>*gwa_final-region = gwa_farm_hdr-region.</FPCLINE>
+      <FPCLINE>*</FPCLINE>
+      <FPCLINE>*APPEND gwa_farm_hdr to gwa_final-hdr.</FPCLINE>
+      <FPCLINE>*</FPCLINE>
+      <FPCLINE>*LOOP AT gt_terrain_dtls INTO gwa_terrain_dtls WHERE region = gwa_farm_hdr-region.</FPCLINE>
+      <FPCLINE>*  APPEND gwa_terrain_dtls to gwa_final-farm.</FPCLINE>
+      <FPCLINE>*ENDLOOP.</FPCLINE>
+      <FPCLINE>*</FPCLINE>
+      <FPCLINE>*</FPCLINE>
+      <FPCLINE>*LOOP AT gt_farm_subtot INTO gwa_farm_subtot WHERE region = gwa_farm_hdr-region.</FPCLINE>
+      <FPCLINE>*  APPEND gwa_farm_subtot to gwa_final-sub.</FPCLINE>
+      <FPCLINE>*ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>*LOOP AT gt_farm_subtot INTO gwa_farm_subtot.</FPCLINE>
+      <FPCLINE>*  APPEND gwa_farm_subtot to gwa_final-sub.</FPCLINE>
+      <FPCLINE>*ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>*APPEND gwa_final TO gt_final.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>*ENDLOOP.</FPCLINE>
+      <FPCLINE>*SORT gt_terrain_dtls by farm.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>DATA : lt_subtot_regio_temp TYPE ty_isubtot_region,</FPCLINE>
+      <FPCLINE>       lt_regio_temp        TYPE ty_isubtot_region,</FPCLINE>
+      <FPCLINE>       lwa_subtot_regio     TYPE isubtot_region,</FPCLINE>
+      <FPCLINE>       lwa_regio_temp       TYPE zabs_str_farm_subtot.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>DATA(lt_dtls_temp) = gt_terrain_dtls.</FPCLINE>
+      <FPCLINE>DELETE lt_dtls_temp WHERE sub_tot IS NOT INITIAL.</FPCLINE>
+      <FPCLINE>LOOP AT lt_dtls_temp INTO DATA(lwa_dtls).</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  MOVE-CORRESPONDING lwa_dtls TO lwa_subtot_regio.</FPCLINE>
+      <FPCLINE>  APPEND lwa_subtot_regio TO lt_subtot_regio_temp.</FPCLINE>
+      <FPCLINE>  CLEAR lwa_subtot_regio.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>SORT lt_subtot_regio_temp BY region reason.</FPCLINE>
+      <FPCLINE>LOOP AT lt_subtot_regio_temp INTO lwa_subtot_regio.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  COLLECT lwa_subtot_regio INTO lt_regio_temp.</FPCLINE>
+      <FPCLINE>  CLEAR lwa_subtot_regio.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>DATA(gt_trn_dtls_temp) = gt_terrain_dtls.</FPCLINE>
+      <FPCLINE>SORT gt_trn_dtls_temp BY region.</FPCLINE>
+      <FPCLINE>DELETE ADJACENT DUPLICATES FROM gt_trn_dtls_temp COMPARING region.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>LOOP AT gt_trn_dtls_temp INTO DATA(gwa_trn_dtls_temp).</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  gwa_final-farm_no = gwa_trn_dtls_temp-farm.</FPCLINE>
+      <FPCLINE>  LOOP AT gt_terrain_dtls INTO gwa_terrain_dtls WHERE sub_tot IS INITIAL</FPCLINE>
+      <FPCLINE>                                                  AND region EQ gwa_trn_dtls_temp-region.</FPCLINE>
+      <FPCLINE>    APPEND gwa_terrain_dtls TO gwa_final-farm.</FPCLINE>
+      <FPCLINE>    CLEAR gwa_terrain_dtls.</FPCLINE>
+      <FPCLINE>  ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>*  LOOP AT gt_terrain_dtls INTO gwa_terrain_dtls WHERE sub_tot IS NOT INITIAL</FPCLINE>
+      <FPCLINE>*                                                  AND region EQ gwa_trn_dtls_temp-region.</FPCLINE>
+      <FPCLINE>*    MOVE-CORRESPONDING gwa_terrain_dtls TO gwa_subtot.</FPCLINE>
+      <FPCLINE>*    APPEND gwa_subtot TO gwa_final-subtot.</FPCLINE>
+      <FPCLINE>*    CLEAR gwa_subtot.</FPCLINE>
+      <FPCLINE>*  ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  LOOP AT lt_regio_temp INTO DATA(lwa_temp)</FPCLINE>
+      <FPCLINE>                        WHERE region = gwa_trn_dtls_temp-region.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>    MOVE-CORRESPONDING lwa_temp TO lwa_regio_temp.</FPCLINE>
+      <FPCLINE>    APPEND lwa_regio_temp TO gwa_final-subtot.</FPCLINE>
+      <FPCLINE>    CLEAR lwa_regio_temp.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  READ TABLE gt_farm_subtot INTO DATA(lwa_farm_subtot)</FPCLINE>
+      <FPCLINE>                            WITH KEY region = gwa_trn_dtls_temp-region.</FPCLINE>
+      <FPCLINE>  IF sy-subrc = 0.</FPCLINE>
+      <FPCLINE>    APPEND lwa_farm_subtot TO gwa_final-sub.</FPCLINE>
+      <FPCLINE>    CLEAR lwa_farm_subtot.</FPCLINE>
+      <FPCLINE>  ENDIF.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  APPEND gwa_final TO gt_final.</FPCLINE>
+      <FPCLINE>  CLEAR gwa_final.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>DATA : lt_subtot_temp TYPE ty_isubtot,</FPCLINE>
+      <FPCLINE>       lwa_subtot     TYPE isubtot.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>LOOP AT gt_farm_subtot INTO lwa_farm_subtot.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  MOVE-CORRESPONDING lwa_farm_subtot TO lwa_subtot.</FPCLINE>
+      <FPCLINE>  APPEND lwa_subtot TO lt_subtot_temp.</FPCLINE>
+      <FPCLINE>  CLEAR lwa_subtot.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDLOOP.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>SORT lt_subtot_temp BY reason.</FPCLINE>
+      <FPCLINE>LOOP AT lt_subtot_temp INTO lwa_subtot.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  COLLECT lwa_subtot INTO gt_farm_subtot1.</FPCLINE>
+      <FPCLINE>  CLEAR lwa_subtot.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDLOOP.</FPCLINE>
+     </INITIALIZATION>
+     <FORMS/>
+    </CL_FP_CODING>
+   </cls:CL_FP_CODING>
+  </asx:heap>
+ </asx:abap>
+</abapGit>

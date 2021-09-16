@@ -1,0 +1,63 @@
+*******************************************************************
+*   System-defined Include-files.                                 *
+*******************************************************************
+  INCLUDE LZFMPLATOP.                   " Global Data
+  INCLUDE LZFMPLAUXX.                   " Function Modules
+
+*******************************************************************
+*   User-defined Include-files (if necessary).                    *
+*******************************************************************
+* INCLUDE /AGRI/LGLFLAF...                   " Subroutines
+* INCLUDE /AGRI/LGLFLAO...                   " PBO-Modules
+* INCLUDE /AGRI/LGLFLAI...                   " PAI-Modules
+* INCLUDE /AGRI/LGLFLAE...                   " Events
+* INCLUDE /AGRI/LGLFLAP...                   " Local class implement.
+
+INCLUDE LZFMPLAF0A.
+*INCLUDE LZFMACAF0A.
+INCLUDE LZFMPLAF0B.
+*INCLUDE LZFMACAF0B.
+INCLUDE LZFMPLAF0C.
+*INCLUDE LZFMACAF0C.
+INCLUDE LZFMPLAF0F.
+*INCLUDE LZFMACAF0F.
+INCLUDE LZFMPLAF0G.
+*INCLUDE LZFMACAF0G.
+INCLUDE LZFMPLAF0H.
+*INCLUDE LZFMACAF0H.
+INCLUDE LZFMPLAF0I.
+*INCLUDE LZFMACAF0I.
+INCLUDE LZFMPLAF0J.
+*INCLUDE LZFMACAF0J.
+INCLUDE LZFMPLAF0K.
+*INCLUDE LZFMACAF0K.
+INCLUDE LZFMPLAF0L.
+*INCLUDE LZFMACAF0L.
+INCLUDE LZFMPLAF0M.
+*INCLUDE LZFMACAF0M.
+INCLUDE LZFMPLAF0N.
+*INCLUDE LZFMACAF0N.
+INCLUDE LZFMPLAF0O.
+*INCLUDE LZFMACAF0O.
+INCLUDE LZFMPLAF0P.
+*INCLUDE LZFMACAF0P.
+INCLUDE LZFMPLAF0Q.
+*INCLUDE LZFMACAF0Q.
+INCLUDE LZFMPLAF0R.
+*INCLUDE LZFMACAF0R.
+INCLUDE LZFMPLAF0S.
+*INCLUDE LZFMACAF0S.
+INCLUDE LZFMPLAF0T.
+*INCLUDE LZFMACAF0T.
+INCLUDE LZFMPLAF0U.
+*INCLUDE LZFMACAF0U.
+INCLUDE LZFMPLAF0V.
+*INCLUDE LZFMACAF0V.
+INCLUDE LZFMPLAF0W.
+*INCLUDE LZFMACAF0W.
+
+*INCLUDE lzfmplaf01.
+
+INCLUDE lzfmplaf0d.
+
+INCLUDE lzfmplaf01.

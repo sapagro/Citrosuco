@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZFMUNQPL</ROLLNAME>
+    <DOMNAME>MEINS</DOMNAME>
+    <HEADLEN>17</HEADLEN>
+    <SCRLEN2>17</SCRLEN2>
+    <SCRLEN3>17</SCRLEN3>
+    <DTELMASTER>P</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Unidade de Quantidade Plantas</DDTEXT>
+     <REPTEXT>Und.Qtd.Plantas</REPTEXT>
+     <SCRTEXT_M>Und.Qtd.Plantas</SCRTEXT_M>
+     <SCRTEXT_L>Und.Qtd.Plantas</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

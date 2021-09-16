@@ -1,0 +1,3 @@
+FUNCTION-POOL ZABS_FG_CIT_ESTIMATIVA.       "MESSAGE-ID ..
+
+* INCLUDE LZABS_FG_CIT_ESTIMATIVAD...        " Local class definition

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Selection screen parameters</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>PROG</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPR_PROCESS</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>PROG</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPR_PROCESS</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/FMPR_PROCESS</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/FMPR_PROCESS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/FMPR_PROCESS\IC:/AGRI/GLOBAL_CONSTANTS\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>      lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>      ls_text            TYPE rsseltexts,</item>
+      <item>      lt_text            TYPE TABLE OF rsseltexts.</item>
+      <item/>
+      <item>lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>IF sy-tcode EQ &apos;/AGRI/FMPRM&apos;.</item>
+      <item>  INCLUDE zabs_inc_fmprm_sel_options IF FOUND.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>INITIALIZATION.</item>
+      <item>  z1_text = &apos;Parâmetros Adicionais&apos;.</item>
+      <item/>
+      <item>  LOOP AT SCREEN.</item>
+      <item>    IF screen-name EQ &apos;%_S_ZPLATE_%_APP_%-TEXT&apos;.</item>
+      <item>      %_s_zplate_%_app_%-text = &apos;Placa CM&apos;.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA3DC1F5C20AFB36E</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA3DC1F5C20AFB36E</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>041</LENGTH>
+       <TEXT>Selection screen parameters</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_SELECT_SCREEN</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA3DC1F5C20AFB36E</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

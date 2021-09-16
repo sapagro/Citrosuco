@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Task Create</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMFPM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMFPM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\FU:/AGRI/FMFP_UP_TASK_CREATE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lwa_fpitm_x  TYPE /agri/s_fmfpitm,</item>
+      <item>        lwa_aufnr_x  TYPE /agri/s_fmaufnr,</item>
+      <item>        lt_aufnr_x   TYPE /agri/t_fmaufnr,</item>
+      <item>        lwa_fpcom_x  TYPE /agri/s_fmfpcom,</item>
+      <item>        lt_fpdoc_x   TYPE /agri/t_fmfp_doc,</item>
+      <item>        lt_fphdr_x   TYPE /agri/t_fmfphdr,</item>
+      <item>        lwa_fphdr_x  TYPE /agri/s_fmfphdr,</item>
+      <item>        lwa_fpdoc_x  TYPE /agri/s_fmfp_doc,</item>
+      <item>        lt_cskey_x   TYPE /agri/t_glcs_key,</item>
+      <item>        lt_csdoc_x   TYPE /agri/t_glcs_doc,</item>
+      <item>        lwa_csdoc_x  TYPE /agri/s_glcs_doc,</item>
+      <item>        lv_new_posnr TYPE co_posnr,</item>
+      <item>        lv_lines_x   TYPE sy-tabix,</item>
+      <item>        lv_subrc_x   TYPE sy-subrc,</item>
+      <item>        lv_save_x.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_fpdoc_x&gt; TYPE /agri/s_fmfp_doc,</item>
+      <item>                 &lt;lwa_fpitm_x&gt; TYPE /agri/s_fmfpitm.</item>
+      <item/>
+      <item>  IF is_fpitm IS INITIAL OR</item>
+      <item>     i_matnr IS INITIAL  OR</item>
+      <item>     is_cskey IS INITIAL.</item>
+      <item>    RAISE inconsistent_data.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  gs_variables-initiator = c_log_initiator-create.</item>
+      <item>  PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                    c_log_subobject-create.</item>
+      <item>  REFRESH: lt_cskey_x.</item>
+      <item>  APPEND is_cskey TO lt_cskey_x.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/GLCS_VIEW&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_mode         = c_mode_display</item>
+      <item>      it_cskey       = lt_cskey_x</item>
+      <item>    IMPORTING</item>
+      <item>      et_csdoc       = lt_csdoc_x</item>
+      <item>    EXCEPTIONS</item>
+      <item>      no_data_exists = 1</item>
+      <item>      OTHERS         = 2.</item>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>    RAISE no_data.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  READ TABLE lt_csdoc_x INTO lwa_csdoc_x INDEX 1.</item>
+      <item>  MOVE-CORRESPONDING lwa_csdoc_x-x-cshdr TO lwa_fpdoc_x-x-fphdr.</item>
+      <item>  IF is_fpitm-aufnr IS NOT INITIAL.</item>
+      <item>    lwa_aufnr_x-aufnr = is_fpitm-aufnr.</item>
+      <item>    APPEND lwa_aufnr_x TO lt_aufnr_x.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;/AGRI/FMFP_VIEW&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        it_aufnr       = lt_aufnr_x</item>
+      <item>      IMPORTING</item>
+      <item>        et_fpdoc       = lt_fpdoc_x</item>
+      <item>      EXCEPTIONS ##FM_SUBRC_OK</item>
+      <item>        no_data_exists = 1</item>
+      <item>        OTHERS         = 2.</item>
+      <item>    READ TABLE lt_fpdoc_x INTO lwa_fpdoc_x INDEX 1.</item>
+      <item>    IF lwa_fpdoc_x-x-fpitm IS NOT INITIAL.</item>
+      <item>      SELECT * FROM /agri/fmfphdr &quot;#EC CI_ALL_FIELDS_NEEDED               &quot;#EC CI_FAE_LINES_ENSURED</item>
+      <item>               INTO TABLE lt_fphdr_x</item>
+      <item>       FOR ALL ENTRIES IN lwa_fpdoc_x-x-fpitm</item>
+      <item>               WHERE aufnr EQ lwa_fpdoc_x-x-fpitm-aufnr_to &quot;#EC CI_NOORDER</item>
+      <item>                 AND matnr EQ is_fpitm-matnr</item>
+      <item>                 AND cstat NE c_cstat-confirmed</item>
+      <item>                 AND tecom EQ space.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        READ TABLE lt_fphdr_x INTO lwa_fphdr_x INDEX 1.     &quot;#EC CI_NOORDER</item>
+      <item>        MESSAGE ID &apos;/AGRI/FMFP&apos;  TYPE c_msg_type-error NUMBER &apos;073&apos;</item>
+      <item>                                 WITH lwa_fphdr_x-aufnr is_fpitm-matnr</item>
+      <item>                                 INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ELSE.</item>
+      <item>*       DESCRIBE TABLE lwa_fpdoc_x-x-fpitm LINES lv_lines_x.</item>
+      <item>        lv_lines_x = lines( lwa_fpdoc_x-x-fpitm ).</item>
+      <item>        lv_lines_x = lv_lines_x + 1.</item>
+      <item/>
+      <item>        DO 5 TIMES.</item>
+      <item>          lv_new_posnr = lv_lines_x.</item>
+      <item>          READ TABLE lwa_fpdoc_x-x-fpcom TRANSPORTING NO FIELDS</item>
+      <item>            WITH KEY posnr = lv_new_posnr.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            ADD 1 TO lv_lines_x.</item>
+      <item>            CONTINUE.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          READ TABLE lwa_fpdoc_x-x-fpitm TRANSPORTING NO FIELDS</item>
+      <item>            WITH KEY posnr = lv_new_posnr.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            ADD 1 TO lv_lines_x.</item>
+      <item>            CONTINUE.</item>
+      <item>          ENDIF.</item>
+      <item>          EXIT.</item>
+      <item>        ENDDO.</item>
+      <item>        lv_lines_x = lv_new_posnr.</item>
+      <item/>
+      <item>        CLEAR: lwa_fpitm_x.</item>
+      <item>        MOVE-CORRESPONDING is_fpitm TO lwa_fpitm_x.</item>
+      <item>*        lwa_fpitm_x-posnr = lv_lines_x + 1.</item>
+      <item>        lwa_fpitm_x-posnr = lv_lines_x.</item>
+      <item/>
+      <item>        lwa_fpitm_x-aufnr = lwa_fpdoc_x-aufnr.</item>
+      <item>        lwa_fpitm_x-gamng = lwa_fpitm_x-tomng.</item>
+      <item>        lwa_fpitm_x-unpln = c_true.</item>
+      <item>        lwa_fpitm_x-updkz = c_updkz_new.</item>
+      <item>        APPEND lwa_fpitm_x TO lwa_fpdoc_x-x-fpitm.</item>
+      <item/>
+      <item>        MOVE-CORRESPONDING lwa_fpitm_x TO lwa_fpcom_x.</item>
+      <item>        lwa_fpcom_x-matnr = i_matnr.</item>
+      <item>        lwa_fpcom_x-updkz = lwa_fpitm_x-updkz = c_updkz_new.</item>
+      <item>        APPEND lwa_fpcom_x TO lwa_fpdoc_x-x-fpcom.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    lwa_fpdoc_x-x-fphdr-grcre = c_true.</item>
+      <item>    MOVE-CORRESPONDING is_fpitm TO lwa_fpitm_x.</item>
+      <item>    lwa_fpitm_x-gamng = lwa_fpitm_x-tomng.</item>
+      <item>    lwa_fpitm_x-unpln = c_true.</item>
+      <item>    lwa_fpitm_x-updkz = c_updkz_new.</item>
+      <item>    APPEND lwa_fpitm_x TO lwa_fpdoc_x-x-fpitm.</item>
+      <item/>
+      <item>    lwa_fpcom_x-matnr = i_matnr.</item>
+      <item>    lwa_fpcom_x-updkz = lwa_fpitm_x-updkz = c_updkz_new.</item>
+      <item>    APPEND lwa_fpcom_x TO lwa_fpdoc_x-x-fpcom.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM create_task_orders CHANGING lwa_fpdoc_x</item>
+      <item>                                      lv_save_x.</item>
+      <item>  IF lv_save_x IS NOT INITIAL.</item>
+      <item>    es_fpdoc = lwa_fpdoc_x.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item/>
+      <item>  messages_get gs_variables-initiator et_messages[].</item>
+      <item/>
+      <item>  IF i_save_messages EQ c_true.</item>
+      <item>    messages_save gs_variables-initiator c_false.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEB8AA036342A2764B2</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEB8AA036342A2764B2</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>021</LENGTH>
+       <TEXT>Task Create</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_TASK_CREATE</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEB8AA036342A2764B2</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

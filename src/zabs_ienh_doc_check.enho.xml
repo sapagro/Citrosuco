@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Measurement doc. before save</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:DOCUMENT_CHECK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lv_safra         TYPE char4,</item>
+      <item>        lv_florada       TYPE char2,</item>
+      <item>        lv_florada_prev  TYPE char2,</item>
+      <item>        lv_mpgrp         TYPE /agri/glmpgrp,</item>
+      <item>        lv_msgno         TYPE msgno,</item>
+      <item>        lv_subrc_tmp     TYPE sy-subrc,</item>
+      <item>        lv_preverrad     LIKE sy-datum,</item>
+      <item>        lv_safra_atinn   TYPE /agri/gatinn,</item>
+      <item>        lv_florada_atinn TYPE /agri/gatinn.</item>
+      <item/>
+      <item>  SELECT SINGLE ownshp</item>
+      <item>    FROM /agri/glflot</item>
+      <item>    INTO @DATA(lv_ownshp)</item>
+      <item>   WHERE tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl.</item>
+      <item/>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    IF gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ-INV-PLANTAS&apos;</item>
+      <item>    OR gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ-ESTIMATIVA&apos;.</item>
+      <item>      IF lv_ownshp NE &apos;OW&apos;.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>*--Grupo de medição incorreto para o tipo de propriedade do terreno.</item>
+      <item>        MESSAGE ID &apos;ZFMFP&apos;</item>
+      <item>          TYPE c_msg_type-error NUMBER &apos;416&apos; INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSEIF gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;CIT-INV-PLANTAS&apos;</item>
+      <item>        OR gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item>      IF lv_ownshp NE &apos;TP&apos;.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>*--Grupo de medição incorreto para o tipo de propriedade do terreno.</item>
+      <item>        MESSAGE ID &apos;ZFMFP&apos;</item>
+      <item>          TYPE c_msg_type-error NUMBER &apos;416&apos; INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZPTA&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;ENCERRAR_FLORADA&apos;.</item>
+      <item>    SELECT mdocm</item>
+      <item>      FROM /agri/glmdhdr</item>
+      <item>      INTO TABLE @DATA(tl_mdhdr)</item>
+      <item>     WHERE mpgrp EQ &apos;ENCERRAR_FLORADA&apos;</item>
+      <item>       AND tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>       AND canceled EQ @space.</item>
+      <item/>
+      <item>    SORT tl_mdhdr BY mdocm.</item>
+      <item/>
+      <item>    IF gs_mddoc_infocus-x-mdatv IS NOT INITIAL.</item>
+      <item>      READ TABLE gt_athdr INTO DATA(ls_athdr)</item>
+      <item>        WITH KEY atnam = &apos;CIT-SAFRA&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_safra_atinn = ls_athdr-atinn.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gt_athdr INTO ls_athdr</item>
+      <item>        WITH KEY atnam = &apos;CIT-FLORADA&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_florada_atinn = ls_athdr-atinn.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO DATA(sl_mdatv)</item>
+      <item>        WITH KEY atinn = lv_safra_atinn.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_safra = sl_mdatv-atwrt.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO sl_mdatv</item>
+      <item>        WITH KEY atinn = lv_florada_atinn.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_florada = sl_mdatv-atwrt.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF tl_mdhdr[] IS NOT INITIAL.</item>
+      <item>      SELECT mdocm, atinn, atwrt</item>
+      <item>        FROM /agri/glmdatv</item>
+      <item>        INTO TABLE @DATA(tl_mdatv)</item>
+      <item>        FOR ALL ENTRIES IN @tl_mdhdr</item>
+      <item>       WHERE mdocm EQ @tl_mdhdr-mdocm.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SORT: tl_mdhdr BY mdocm,</item>
+      <item>          tl_mdatv BY mdocm atinn.</item>
+      <item/>
+      <item>    DELETE tl_mdatv WHERE atinn NE lv_safra_atinn</item>
+      <item>                      AND atinn NE lv_florada_atinn.</item>
+      <item/>
+      <item>    LOOP AT tl_mdhdr INTO DATA(sl_mdhdr).</item>
+      <item>      READ TABLE tl_mdatv TRANSPORTING NO FIELDS</item>
+      <item>        WITH KEY mdocm = sl_mdhdr-mdocm BINARY SEARCH.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        DATA(vl_tabix) = sy-tabix.</item>
+      <item>      ELSE.</item>
+      <item>        CONTINUE.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      LOOP AT tl_mdatv INTO DATA(sl_matv) FROM vl_tabix.</item>
+      <item>        IF sl_matv-mdocm NE sl_mdhdr-mdocm.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item>        IF lv_florada_prev IS INITIAL.</item>
+      <item>          lv_florada_prev = sl_matv-atwrt.</item>
+      <item>        ELSE.</item>
+      <item>          IF lv_safra EQ sl_matv-atwrt</item>
+      <item>          AND lv_florada_prev EQ lv_florada.</item>
+      <item>            lv_subrc = 4.</item>
+      <item>            MESSAGE ID &apos;ZABS_MSGCLS&apos;</item>
+      <item>              TYPE c_msg_type-error NUMBER &apos;198&apos; INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>            EXIT.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      CLEAR: lv_florada_prev.</item>
+      <item/>
+      <item>      IF lv_subrc NE 0.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF lv_subrc EQ 0.</item>
+      <item>*-- Checking for the Second condition</item>
+      <item>      SELECT tplnr_fl,ownshp</item>
+      <item>        FROM /agri/glflot</item>
+      <item>        INTO TABLE @DATA(lt_flot)</item>
+      <item>       WHERE tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl.</item>
+      <item/>
+      <item>      SORT lt_flot BY tplnr_fl.</item>
+      <item>      DELETE ADJACENT DUPLICATES FROM lt_flot COMPARING tplnr_fl.</item>
+      <item>      READ TABLE lt_flot INTO DATA(ls_flot) INDEX 1.</item>
+      <item>      IF ls_flot-ownshp = &apos;OW&apos;.</item>
+      <item>        lv_mpgrp = &apos;FAZ-ESTIMATIVA&apos;.</item>
+      <item>      ELSEIF ls_flot-ownshp = &apos;TP&apos;.</item>
+      <item>        lv_mpgrp = &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CLEAR tl_mdhdr.</item>
+      <item>      SELECT mdocm</item>
+      <item>        FROM /agri/glmdhdr</item>
+      <item>        INTO TABLE tl_mdhdr</item>
+      <item>       WHERE mpgrp EQ lv_mpgrp</item>
+      <item>         AND tplnr_fl EQ gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>         AND canceled EQ space.</item>
+      <item/>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        CLEAR tl_mdatv.</item>
+      <item/>
+      <item>        SELECT mdocm, atinn, atwrt</item>
+      <item>          FROM /agri/glmdatv</item>
+      <item>          INTO TABLE @tl_mdatv</item>
+      <item>          FOR ALL ENTRIES IN @tl_mdhdr</item>
+      <item>         WHERE mdocm EQ @tl_mdhdr-mdocm.</item>
+      <item/>
+      <item>        SORT: tl_mdhdr BY mdocm,</item>
+      <item>              tl_mdatv BY mdocm atinn.</item>
+      <item/>
+      <item>        DELETE tl_mdatv WHERE atinn NE lv_safra_atinn</item>
+      <item>                          AND atinn NE lv_florada_atinn.</item>
+      <item/>
+      <item>        LOOP AT tl_mdhdr INTO DATA(sl_mdhdrr).</item>
+      <item>          READ TABLE tl_mdatv TRANSPORTING NO FIELDS</item>
+      <item>            WITH KEY mdocm = sl_mdhdrr-mdocm BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            DATA(vl_tabixx) = sy-tabix.</item>
+      <item>          ELSE.</item>
+      <item>            CONTINUE.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          LOOP AT tl_mdatv INTO DATA(sl_matvv) FROM vl_tabixx.</item>
+      <item>            IF sl_matvv-mdocm NE sl_mdhdrr-mdocm.</item>
+      <item>              EXIT.</item>
+      <item>            ENDIF.</item>
+      <item>            IF lv_florada_prev IS INITIAL.</item>
+      <item>              lv_florada_prev = sl_matvv-atwrt.</item>
+      <item>            ELSE.</item>
+      <item>              IF lv_safra EQ sl_matvv-atwrt</item>
+      <item>              AND lv_florada_prev EQ lv_florada.</item>
+      <item>                lv_subrc_tmp = 4.</item>
+      <item>                EXIT.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDIF.</item>
+      <item/>
+      <item>          ENDLOOP.</item>
+      <item>          CLEAR:lv_florada_prev.</item>
+      <item>          IF lv_subrc_tmp NE 0.</item>
+      <item>            EXIT.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDLOOP.</item>
+      <item/>
+      <item>        IF lv_subrc_tmp = 0.</item>
+      <item>          lv_subrc = 4.</item>
+      <item>          MESSAGE ID &apos;ZABS_MSGCLS&apos;</item>
+      <item>            TYPE c_msg_type-error NUMBER &apos;199&apos; INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item>      ELSE.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;199&apos;</item>
+      <item>                                INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSEIF gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZPTA&apos;</item>
+      <item>     AND gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;ENCERRAR_COLHEITA&apos;.</item>
+      <item>    SELECT mdocm</item>
+      <item>      FROM /agri/glmdhdr</item>
+      <item>      INTO TABLE @tl_mdhdr</item>
+      <item>     WHERE mpgrp EQ &apos;ENCERRAR_COLHEITA&apos;</item>
+      <item>       AND tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>       AND canceled EQ @space.</item>
+      <item/>
+      <item>    IF gs_mddoc_infocus-x-mdatv[] IS NOT INITIAL.</item>
+      <item>      READ TABLE gt_athdr INTO ls_athdr WITH KEY atnam = &apos;CIT-SAFRA&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_safra_atinn = ls_athdr-atinn.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO sl_mdatv</item>
+      <item>        WITH KEY atinn = lv_safra_atinn.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_safra = sl_mdatv-atwrt.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF tl_mdhdr[] IS NOT INITIAL.</item>
+      <item>      SELECT mdocm, atinn, atwrt</item>
+      <item>        FROM /agri/glmdatv</item>
+      <item>        INTO TABLE @tl_mdatv</item>
+      <item>        FOR ALL ENTRIES IN @tl_mdhdr</item>
+      <item>       WHERE mdocm EQ @tl_mdhdr-mdocm.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    DELETE tl_mdatv WHERE atwrt NE lv_safra.</item>
+      <item>    READ TABLE tl_mdatv INTO DATA(sl_mddatv) WITH KEY atwrt = lv_safra.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      lv_subrc = 4.</item>
+      <item>      MESSAGE ID &apos;ZABS_MSGCLS&apos;</item>
+      <item>        TYPE c_msg_type-error NUMBER &apos;200&apos; INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Begin - Adonis - Plano Diretor</item>
+      <item>  IF gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZTYP&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ_PREVISAO&apos;</item>
+      <item>  AND gs_variables-document_mode EQ c_mode_create.</item>
+      <item>    SELECT *</item>
+      <item>      FROM /agri/glflcma</item>
+      <item>      INTO TABLE @DATA(lt_glflcma)</item>
+      <item>     WHERE tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>       AND  zzprevisto = &apos;X&apos;</item>
+      <item>       AND  loevm &lt;&gt; &apos;X&apos;.</item>
+      <item/>
+      <item>    IF gs_mddoc_infocus-x-mdatv[] IS NOT INITIAL.</item>
+      <item/>
+      <item>      LOOP AT gt_athdr INTO ls_athdr WHERE atnam = &apos;FAZ_VAR_MP_TECNICA&apos;</item>
+      <item>                                       OR  atnam = &apos;CIT-PORTA-ENXERTO&apos;</item>
+      <item>                                       OR  atnam = &apos;CIT-ESPACAMENTO-RUA&apos;</item>
+      <item>                                       OR  atnam = &apos;CIT-ESPACAMENTO-PES&apos;</item>
+      <item>                                       OR  atnam = &apos;FAZ_QUANTIDADE_PLANTAS&apos;</item>
+      <item>                                       OR  atnam = &apos;FAZ_AREA_TALHAO&apos;.</item>
+      <item/>
+      <item>        READ TABLE gs_mddoc_infocus-x-mdatv INTO sl_mdatv</item>
+      <item>        WITH KEY atinn = ls_athdr-atinn.</item>
+      <item>          IF sy-subrc EQ 0</item>
+      <item>          AND ( sl_mdatv-atwrt IS NOT INITIAL OR</item>
+      <item>                sl_mdatv-atflv IS NOT INITIAL ).</item>
+      <item/>
+      <item>         READ TABLE lt_glflcma INTO DATA(lw_glflcma)</item>
+      <item>          WITH KEY varia = &apos;FORMAÇÃO&apos; zzprevisto = &apos;X&apos;.</item>
+      <item/>
+      <item>          IF sy-subrc EQ 0 AND lw_glflcma-zzprev_plantio IS NOT INITIAL.</item>
+      <item>          ELSE.</item>
+      <item>              lv_subrc = 4.</item>
+      <item>              MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                    WITH &apos;Não existe época de cultura prevista.&apos;</item>
+      <item>                                      INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>              EXIT.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      READ TABLE gt_athdr INTO ls_athdr WITH KEY atnam = &apos;FAZ_PREV_ERRADICACAO&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        DATA(lv_prev_erradicacao) = ls_athdr-atinn.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gt_athdr INTO ls_athdr WITH KEY atnam = &apos;FAZ_FIM_MP_PLANTIO&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        DATA(lv_fim_plantio) = ls_athdr-atinn.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gt_athdr INTO ls_athdr WITH KEY atnam = &apos;FAZ_CAL_PREV&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>*-- Cancelamento Previsão</item>
+      <item>        READ TABLE gs_mddoc_infocus-x-mdatv INTO DATA(ls_canc_prev)</item>
+      <item>          WITH KEY atinn = ls_athdr-atinn.</item>
+      <item>*-- Cancelamento Previsão Preenchido</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item/>
+      <item>          LOOP AT gs_mddoc_infocus-x-mdatv TRANSPORTING NO FIELDS</item>
+      <item>            WHERE atinn &lt;&gt; ls_canc_prev-atinn</item>
+      <item>              AND ( atwrt IS NOT INITIAL OR atflv IS NOT INITIAL ).</item>
+      <item>            lv_subrc = 4.</item>
+      <item>            MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                  WITH &apos;Digitação incorreta. Verificar os atributos.&apos;</item>
+      <item>                                    INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>            EXIT.</item>
+      <item>          ENDLOOP.</item>
+      <item/>
+      <item>         LOOP AT gs_mddoc_infocus-x-mdatv INTO DATA(ls_canc_prev_aux)</item>
+      <item>            WHERE atinn = ls_canc_prev-atinn</item>
+      <item>              AND atwrt IS NOT INITIAL.</item>
+      <item/>
+      <item>           CASE ls_canc_prev_aux-atwrt.</item>
+      <item>             WHEN &apos;P&apos;.</item>
+      <item/>
+      <item>                READ TABLE lt_glflcma INTO lw_glflcma</item>
+      <item>                 WITH KEY varia = &apos;FORMAÇÃO&apos; zzprevisto = &apos;X&apos;.</item>
+      <item>                IF sy-subrc EQ 0 AND lw_glflcma-zzprev_plantio IS NOT INITIAL.</item>
+      <item>                ELSE.</item>
+      <item>                    lv_subrc = 4.</item>
+      <item>                    MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                          WITH &apos;Não existe época de cultura prevista.&apos;</item>
+      <item>                                            INTO sy-msgli.</item>
+      <item>                    message_simple space.</item>
+      <item>                    EXIT.</item>
+      <item>                ENDIF.</item>
+      <item/>
+      <item>             WHEN &apos;E&apos;.</item>
+      <item/>
+      <item>                READ TABLE lt_glflcma INTO lw_glflcma</item>
+      <item>                 WITH KEY varia = &apos;MANUT&amp;COLHEITA&apos; zzprevisto = &apos;X&apos;.</item>
+      <item>                IF sy-subrc EQ 0 AND lw_glflcma-zzprev_errad IS NOT INITIAL.</item>
+      <item>                ELSE.</item>
+      <item>                    lv_subrc = 4.</item>
+      <item>                    MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                          WITH &apos;Não existe época de cultura prevista.&apos;</item>
+      <item>                                            INTO sy-msgli.</item>
+      <item>                    message_simple space.</item>
+      <item>                    EXIT.</item>
+      <item>                ENDIF.</item>
+      <item/>
+      <item>           ENDCASE.</item>
+      <item/>
+      <item>          ENDLOOP.</item>
+      <item/>
+      <item/>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO sl_mdatv</item>
+      <item>        WITH KEY atinn = lv_fim_plantio.</item>
+      <item>      IF sy-subrc EQ 0</item>
+      <item>      AND ( sl_mdatv-atwrt IS NOT INITIAL OR</item>
+      <item>            sl_mdatv-atflv IS NOT INITIAL ).</item>
+      <item/>
+      <item>        READ TABLE lt_glflcma INTO lw_glflcma</item>
+      <item>         WITH KEY varia = &apos;FORMAÇÃO&apos; zzprevisto = &apos;X&apos;.</item>
+      <item>        IF sy-subrc EQ 0 AND lw_glflcma-zzprev_plantio IS NOT INITIAL.</item>
+      <item>        ELSE.</item>
+      <item>            lv_subrc = 4.</item>
+      <item>            MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                  WITH &apos;Não existe época de cultura prevista.&apos;</item>
+      <item>                                    INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>            EXIT.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_glflcma INTO lw_glflcma</item>
+      <item>         WITH KEY varia = &apos;MANUT&amp;COLHEITA&apos; zzprevisto = &apos;X&apos;.</item>
+      <item>        IF sy-subrc EQ 0 AND lw_glflcma-zzprev_errad IS NOT INITIAL.</item>
+      <item>          IF sl_mdatv-atflv IS NOT INITIAL.</item>
+      <item>            CALL FUNCTION &apos;CTCV_CONVERT_FLOAT_TO_DATE&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                float = sl_mdatv-atflv</item>
+      <item>              IMPORTING</item>
+      <item>                date  = sl_mdatv-atwrt.</item>
+      <item>          ENDIF.</item>
+      <item>          lv_preverrad = sl_mdatv-atwrt.</item>
+      <item/>
+      <item>          IF lv_preverrad BETWEEN lw_glflcma-datab AND lw_glflcma-datbi.</item>
+      <item>            lv_subrc = 4.</item>
+      <item>            MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                  WITH &apos;Já existe uma época de cultura com as mesmas datas. &apos;</item>
+      <item>                                    INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>            EXIT.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO sl_mdatv</item>
+      <item>        WITH KEY atinn = lv_prev_erradicacao.</item>
+      <item>      IF sy-subrc EQ 0 AND ( sl_mdatv-atwrt IS NOT INITIAL OR</item>
+      <item>                             sl_mdatv-atflv IS NOT INITIAL ).</item>
+      <item/>
+      <item/>
+      <item>        READ TABLE lt_glflcma INTO lw_glflcma</item>
+      <item>         WITH KEY varia = &apos;MANUT&amp;COLHEITA&apos; zzprevisto = &apos;X&apos;.</item>
+      <item>        IF sy-subrc EQ 0 AND lw_glflcma-zzprev_errad IS NOT INITIAL.</item>
+      <item>        ELSE.</item>
+      <item>            lv_subrc = 4.</item>
+      <item>            MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                  WITH &apos;Não existe época de cultura prevista.&apos;</item>
+      <item>                                    INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>            EXIT.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_glflcma INTO lw_glflcma</item>
+      <item>         WITH KEY varia = &apos;FORMAÇÃO&apos; zzprevisto = &apos;X&apos;.</item>
+      <item>        IF sy-subrc EQ 0 AND lw_glflcma-zzprev_plantio IS NOT INITIAL.</item>
+      <item>          IF sl_mdatv-atflv IS NOT INITIAL.</item>
+      <item>            CALL FUNCTION &apos;CTCV_CONVERT_FLOAT_TO_DATE&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                float = sl_mdatv-atflv</item>
+      <item>              IMPORTING</item>
+      <item>                date  = sl_mdatv-atwrt.</item>
+      <item>          ENDIF.</item>
+      <item>          lv_preverrad = sl_mdatv-atwrt.</item>
+      <item/>
+      <item>          IF lv_preverrad BETWEEN lw_glflcma-datab AND lw_glflcma-datbi.</item>
+      <item>            lv_subrc = 4.</item>
+      <item>            MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                  WITH &apos;Já existe uma época de cultura com as mesmas datas. &apos;</item>
+      <item>                                    INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>            EXIT.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        LOOP AT gs_mddoc_infocus-x-mdatv TRANSPORTING NO FIELDS</item>
+      <item>          WHERE atinn &lt;&gt; lv_prev_erradicacao</item>
+      <item>            AND ( atwrt IS NOT INITIAL OR atflv IS NOT INITIAL ).</item>
+      <item>          lv_subrc = 4.</item>
+      <item>          MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE c_msg_type-error NUMBER &apos;000&apos;</item>
+      <item>                WITH &apos;Digitação incorreta. Verificar os atributos.&apos;</item>
+      <item>                                  INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>          EXIT.</item>
+      <item>        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEBB4D4F34C377FFDA9</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEBB4D4F34C377FFDA9</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>042</LENGTH>
+       <TEXT>Measurement doc. before save</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_DOC_CHECK</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEBB4D4F34C377FFDA9</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

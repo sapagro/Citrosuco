@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>ODATA Work Order Changes</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMWO_DPC_EXT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMWO_DPC_EXT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMWO_DPC_EXT=========CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_FMWO_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_FMWO_DPC_EXT=========CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_FMWO_DPC_EXT=========CP\EX:/AGRI/EP_FMWO_ODATA_08\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>*** Maps filter table lines to function module parameters</item>
+      <item>  LOOP AT it_filter_select_options INTO lwa_filter.</item>
+      <item>    CASE lwa_filter-property.</item>
+      <item>      WHEN &apos;WONUM&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>         EXPORTING</item>
+      <item>           is_select_option = lwa_filter</item>
+      <item>         IMPORTING</item>
+      <item>           et_select_option = lt_wonum ).</item>
+      <item>      WHEN &apos;AUFNR&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>         EXPORTING</item>
+      <item>           is_select_option = lwa_filter</item>
+      <item>         IMPORTING</item>
+      <item>           et_select_option = lt_aufnr ).</item>
+      <item>      WHEN &apos;WOTYP&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>        is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>        et_select_option = lt_wotyp ).</item>
+      <item>      WHEN &apos;STRNO&apos; OR &apos;TPLNR_FL&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>        is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>        et_select_option = lt_tplnr ).</item>
+      <item>      WHEN &apos;CMNUM&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>           EXPORTING</item>
+      <item>         is_select_option = lwa_filter</item>
+      <item>           IMPORTING</item>
+      <item>         et_select_option = lt_cmnum ).</item>
+      <item>      WHEN &apos;STORT&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>         is_select_option = lwa_filter</item>
+      <item>           IMPORTING</item>
+      <item>         et_select_option = lt_stort ).</item>
+      <item>      WHEN &apos;DATAB&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>       is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>       et_select_option = lt_datab ).</item>
+      <item>      WHEN &apos;DATBI&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>         EXPORTING</item>
+      <item>       is_select_option = lwa_filter</item>
+      <item>         IMPORTING</item>
+      <item>       et_select_option = lt_datbi ).</item>
+      <item>      WHEN &apos;MATNR&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>         EXPORTING</item>
+      <item>           is_select_option = lwa_filter</item>
+      <item>         IMPORTING</item>
+      <item>           et_select_option = lt_matnr ).</item>
+      <item>      WHEN &apos;KFRST&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>         EXPORTING</item>
+      <item>           is_select_option = lwa_filter</item>
+      <item>         IMPORTING</item>
+      <item>           et_select_option = lt_kfrst ).</item>
+      <item>      WHEN &apos;ERNAM&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>            is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>            et_select_option = lt_ernam ).</item>
+      <item>      WHEN &apos;ERDAT&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>            is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>            et_select_option = lt_erdat ).</item>
+      <item>      WHEN &apos;AENAM&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>            is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>            et_select_option = lt_aenam ).</item>
+      <item>      WHEN &apos;AEDAT&apos;.</item>
+      <item>        lref_filter-&gt;convert_select_option(</item>
+      <item>          EXPORTING</item>
+      <item>            is_select_option = lwa_filter</item>
+      <item>          IMPORTING</item>
+      <item>            et_select_option = lt_aedat ).</item>
+      <item/>
+      <item>      WHEN OTHERS.</item>
+      <item>    ENDCASE.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lt_tplnr IS NOT INITIAL.</item>
+      <item>    SELECT tplnr_fl INTO TABLE lt_flot</item>
+      <item>           FROM /agri/glflot</item>
+      <item>           WHERE strno IN lt_tplnr.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lt_aufnr IS NOT INITIAL or</item>
+      <item>     lt_datab IS NOT INITIAL or</item>
+      <item>     lt_datbi IS NOT INITIAL or</item>
+      <item>     lt_cmnum is not INITIAL.</item>
+      <item/>
+      <item>    IF lt_flot IS INITIAL.</item>
+      <item>      SELECT * FROM /agri/fmwoitm             &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>          INTO TABLE lt_woitm</item>
+      <item>          WHERE  wonum    IN lt_wonum</item>
+      <item>            AND  aufnr    IN lt_aufnr</item>
+      <item>            AND  cmnum    IN lt_cmnum</item>
+      <item>            AND  datab    IN lt_datab</item>
+      <item>            AND  datbi    IN lt_datbi.</item>
+      <item/>
+      <item>    ELSEIF lt_flot IS NOT INITIAL.</item>
+      <item>      SELECT * FROM /agri/fmwoitm             &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>        INTO TABLE lt_woitm</item>
+      <item>        FOR ALL ENTRIES IN lt_flot                 &quot;#EC CI_NO_TRANSFORM</item>
+      <item>        WHERE  wonum    IN lt_wonum</item>
+      <item>          AND  aufnr    IN lt_aufnr</item>
+      <item>          AND  tplnr_fl EQ lt_flot-tplnr_fl</item>
+      <item>          AND  cmnum    IN lt_cmnum</item>
+      <item>          AND  datab    IN lt_datab</item>
+      <item>          AND  datbi    IN lt_datbi.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    IF lt_flot IS NOT INITIAL.</item>
+      <item>      SELECT * FROM /agri/fmwoitm             &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>        INTO TABLE lt_woitm</item>
+      <item>        FOR ALL ENTRIES IN lt_flot                 &quot;#EC CI_NO_TRANSFORM</item>
+      <item>        WHERE  wonum    IN lt_wonum</item>
+      <item>          AND  tplnr_fl EQ lt_flot-tplnr_fl.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lt_woitm IS NOT INITIAL.</item>
+      <item>    SELECT * FROM /agri/fmwochdr              &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>      INTO CORRESPONDING FIELDS OF TABLE et_fmwohdr</item>
+      <item>      FOR ALL ENTRIES IN lt_woitm                  &quot;#EC CI_NO_TRANSFORM</item>
+      <item>      WHERE wonum EQ lt_woitm-wonum</item>
+      <item>       AND  wotyp IN lt_wotyp</item>
+      <item>       AND  matnr IN lt_matnr</item>
+      <item>       AND  stort IN lt_stort</item>
+      <item>       AND  kfrst IN lt_kfrst</item>
+      <item>       AND  ernam IN lt_ernam</item>
+      <item>       AND  erdat IN lt_erdat</item>
+      <item>       AND  aenam IN lt_aenam</item>
+      <item>       AND  aedat IN lt_aedat.</item>
+      <item>    e_subrc = sy-subrc.</item>
+      <item>  ELSE.</item>
+      <item>    SELECT * FROM /agri/fmwochdr              &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>      INTO CORRESPONDING FIELDS OF TABLE et_fmwohdr</item>
+      <item>      WHERE wonum  IN lt_wonum</item>
+      <item>       AND  wotyp  IN lt_wotyp</item>
+      <item>       AND  matnr  IN lt_matnr</item>
+      <item>       AND  stort  IN lt_stort</item>
+      <item>       AND  kfrst  IN lt_kfrst</item>
+      <item>       AND  ernam  IN lt_ernam</item>
+      <item>       AND  erdat  IN lt_erdat</item>
+      <item>       AND  aenam  IN lt_aenam</item>
+      <item>       AND  aedat  IN lt_aedat.</item>
+      <item>    e_subrc = sy-subrc.</item>
+      <item>  ENDIF.</item>
+      <item>  IF et_fmwohdr IS NOT INITIAL.</item>
+      <item>    SORT et_fmwohdr BY wonum.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_FMWO_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_FMWO_DPC_EXT=========CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_FMWO_DPC_EXT=========CP\EX:/AGRI/EP_FMWO_ODATA_60\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lt_woitm    type /agri/t_fmwoitm,</item>
+      <item>        ls_woitm    type /agri/s_fmwoitm,</item>
+      <item>        ls_message  TYPE /agri/s_gprolog.</item>
+      <item/>
+      <item>  LOOP AT it_woitm into ls_woitm.</item>
+      <item/>
+      <item>    IF ls_woitm-tplnr_fl is not INITIAL.</item>
+      <item>      CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_OUTPUT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          input         = ls_woitm-tplnr_fl</item>
+      <item>       IMPORTING</item>
+      <item>         OUTPUT        = ls_woitm-tplnr_fl .</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    APPEND ls_woitm to lt_woitm.</item>
+      <item>    CLEAR ls_woitm.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/FMWO_CREATE&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_verid                 = i_verid</item>
+      <item>      is_wohdr                = is_wohdr</item>
+      <item>      it_woitm                = lt_woitm &quot;it_woitm</item>
+      <item>      it_wowds                = it_wowds</item>
+      <item>    IMPORTING</item>
+      <item>      es_fmwoc_doc            = es_fmwo_doc</item>
+      <item>      et_messages             = et_messages</item>
+      <item>    EXCEPTIONS</item>
+      <item>      creation_failed         = 1</item>
+      <item>      no_documents_to_process = 2</item>
+      <item>      no_authorization        = 3</item>
+      <item>      OTHERS                  = 4.</item>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>    CASE SY-SUBRC.</item>
+      <item>      WHEN 1 OR 4.</item>
+      <item>        ls_message-msgid = &apos;00&apos;.</item>
+      <item>        ls_message-msgty = &apos;E&apos;.</item>
+      <item>        ls_message-msgno = &apos;001&apos;.</item>
+      <item>        ls_message-msgv1 = &apos;Work Order Creation Failed&apos;.</item>
+      <item>        APPEND ls_message to et_messages.</item>
+      <item>      WHEN 2.</item>
+      <item>        ls_message-msgid = &apos;00&apos;.</item>
+      <item>        ls_message-msgty = &apos;E&apos;.</item>
+      <item>        ls_message-msgno = &apos;001&apos;.</item>
+      <item>        ls_message-msgv1 = &apos;No Documents To Process, Invalid Data&apos;.</item>
+      <item>        APPEND ls_message to et_messages.</item>
+      <item>      WHEN 3.</item>
+      <item>        ls_message-msgid = &apos;00&apos;.</item>
+      <item>        ls_message-msgty = &apos;E&apos;.</item>
+      <item>        ls_message-msgno = &apos;001&apos;.</item>
+      <item>        ls_message-msgv1 = &apos;No Authorization&apos;.</item>
+      <item>        APPEND ls_message to et_messages.</item>
+      <item>    ENDCASE.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item> RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9BC81C5AE5A6E2E4A</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9BC81C5AE5A6E2E4A</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>036</LENGTH>
+       <TEXT>ODATA Work Order Changes</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_EI_FMWO_ODATA</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9BC81C5AE5A6E2E4A</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

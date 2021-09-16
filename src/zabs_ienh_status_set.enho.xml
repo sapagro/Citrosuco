@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Status Set</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:STATUS_SET\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_fcode_excludes_x TYPE ui_functions,</item>
+      <item>        lv_set_custom       TYPE abap_bool VALUE abap_false,</item>
+      <item>        lv_change_season    TYPE abap_bool VALUE abap_false.</item>
+      <item/>
+      <item>  IF sy-tcode EQ &apos;/AGRI/GLMDM&apos;</item>
+      <item>  AND sy-cprog EQ &apos;/AGRI/SAPLGLMDM&apos;</item>
+      <item>  AND sy-dynnr EQ c_screen-main_screen.</item>
+      <item>    lv_set_custom = abap_true.</item>
+      <item>  ELSEIF sy-tcode EQ &apos;/AGRI/GLMD23&apos;</item>
+      <item>     AND sy-dynnr EQ c_screen-create_mass_dialog.</item>
+      <item>    lv_change_season = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF NOT gs_mddoc_infocus-x-mdhdr-mdtyp IS INITIAL.</item>
+      <item>    keytext_get_simple &apos;/AGRI/GLMDHDR&apos;</item>
+      <item>                       &apos;MDTYP&apos;</item>
+      <item>                       gs_mddoc_infocus-x-mdhdr-mdtyp</item>
+      <item>                       gs_variables-object_text.</item>
+      <item>  ELSE.</item>
+      <item>    gs_variables-object_text = text-001.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM fcode_excludes_prepare CHANGING lt_fcode_excludes_x.</item>
+      <item/>
+      <item>  CASE sy-dynnr.</item>
+      <item>    WHEN c_screen-main_screen.</item>
+      <item>      IF lv_set_custom = abap_true.</item>
+      <item>        IF gs_variables-overview_mode EQ c_mode_display</item>
+      <item>        OR gs_mddoc_infocus IS INITIAL.</item>
+      <item>            APPEND: &apos;ZCANCEL&apos;  TO lt_fcode_excludes_x,</item>
+      <item>                    &apos;ZREVERSE&apos; TO lt_fcode_excludes_x.</item>
+      <item>        ELSE.</item>
+      <item>          IF gs_mddoc_infocus-x-mdhdr-canceled EQ abap_true.</item>
+      <item>            APPEND &apos;ZCANCEL&apos;  TO lt_fcode_excludes_x.</item>
+      <item>          ELSE.</item>
+      <item>            APPEND &apos;ZREVERSE&apos; TO lt_fcode_excludes_x.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>        SET PF-STATUS &apos;ZABS_S100&apos; OF PROGRAM &apos;ZABS_REP_SAPLGLMDM&apos; EXCLUDING lt_fcode_excludes_x.</item>
+      <item>        RETURN.</item>
+      <item>      ELSE.</item>
+      <item>        SET PF-STATUS &apos;S100&apos; EXCLUDING lt_fcode_excludes_x.</item>
+      <item>      ENDIF.</item>
+      <item>    WHEN c_screen-hierarchy_terrains.</item>
+      <item>      SET PF-STATUS &apos;S201&apos;.</item>
+      <item>    WHEN c_screen-create_mass_dialog OR</item>
+      <item>         c_screen-create_dialog.</item>
+      <item>      IF lv_change_season EQ abap_false.</item>
+      <item>        SET PF-STATUS &apos;S101&apos; EXCLUDING lt_fcode_excludes_x.</item>
+      <item>      ELSE.</item>
+      <item>        SET PF-STATUS &apos;ZABS_S101&apos; OF PROGRAM &apos;ZABS_REP_SAPLGLMDM&apos; EXCLUDING lt_fcode_excludes_x.</item>
+      <item>      ENDIF.</item>
+      <item>    WHEN OTHERS.</item>
+      <item>  ENDCASE.</item>
+      <item/>
+      <item>  IF lv_change_season EQ abap_true.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA2833D3DC490A1C4</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA2833D3DC490A1C4</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>020</LENGTH>
+       <TEXT>Status Set</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_STATUS_SET</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA2833D3DC490A1C4</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

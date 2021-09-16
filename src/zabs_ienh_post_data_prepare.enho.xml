@@ -1,0 +1,632 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Postings Data Prepare</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMNSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMNSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\IC:/AGRI/LFMNSMF0P\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  zabs_postings_data_prepare</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_postings_data_prepare</item>
+      <item>                      TABLES lt_ticket STRUCTURE bapi_pp_timeticket</item>
+      <item>                             lt_items  STRUCTURE bapi2017_gm_item_create</item>
+      <item>                             lt_linkgm STRUCTURE bapi_link_conf_goodsmov</item>
+      <item>                       USING lt_fmfpcnf TYPE /agri/t_fmfp_cnf</item>
+      <item>                             lwa_fpdoc  TYPE /agri/s_fmfp_doc</item>
+      <item>                    CHANGING lv_subrc.</item>
+      <item/>
+      <item>  DATA: lwa_tcoko       TYPE tcoko,</item>
+      <item>        lv_index        TYPE i,</item>
+      <item>        lv_index_msg    TYPE i,</item>
+      <item>        lv_activity_no  TYPE i,</item>
+      <item>        lv_tot_yield    TYPE gamng,</item>
+      <item>        lwa_item        TYPE bapi2017_gm_item_create,</item>
+      <item>        lwa_fpitm       TYPE /agri/s_fmfpitm,</item>
+      <item>        lwa_fmfpcnf     TYPE /agri/s_fmfp_cnf,</item>
+      <item>        lwa_fpcom       TYPE /agri/s_fmfpcom,</item>
+      <item>        lwa_yfpcom      TYPE /agri/s_fmfpcom,</item>
+      <item>        lwa_activities  TYPE /agri/s_fmfpact,</item>
+      <item>        lwa_linkgm      TYPE bapi_link_conf_goodsmov,</item>
+      <item>        lwa_mvt_code    TYPE bapi2017_gm_code,</item>
+      <item>        lwa_grheader_gi TYPE bapi2017_gm_head_01,</item>
+      <item>        lwa_grheader_gr TYPE bapi2017_gm_head_01,</item>
+      <item>        lwa_return      TYPE bapiret2,</item>
+      <item>        lt_return       TYPE TABLE OF bapiret2,</item>
+      <item>        lt_items_gi     TYPE TABLE OF bapi2017_gm_item_create,</item>
+      <item>        lt_items_gr     TYPE TABLE OF bapi2017_gm_item_create.</item>
+      <item/>
+      <item>  PERFORM co_constants_read CHANGING lwa_tcoko.</item>
+      <item/>
+      <item>  CLEAR: lv_subrc.</item>
+      <item/>
+      <item>  DESCRIBE TABLE lt_ticket LINES lwa_linkgm-index_confirm.</item>
+      <item>  DESCRIBE TABLE lt_items  LINES lwa_linkgm-index_goodsmov.</item>
+      <item>  lv_index = lwa_linkgm-index_goodsmov.</item>
+      <item/>
+      <item>  LOOP AT lt_fmfpcnf INTO lwa_fmfpcnf.</item>
+      <item/>
+      <item>    gs_variables-item_infocus = lwa_fpitm-posnr.</item>
+      <item>    PERFORM messages_context_set USING lwa_fpdoc-x-fphdr.</item>
+      <item>    CLEAR: gs_variables-item_infocus.</item>
+      <item/>
+      <item>    CLEAR: lt_ticket.</item>
+      <item>    lwa_linkgm-index_confirm  = lwa_linkgm-index_confirm + 1.</item>
+      <item>    lv_activity_no            = 1.</item>
+      <item>    lt_ticket-orderid         = lwa_fmfpcnf-aufnr.</item>
+      <item>    lt_ticket-operation       = lwa_fmfpcnf-vornr.</item>
+      <item>    lt_ticket-fin_conf        = &apos;1&apos;.</item>
+      <item>    lt_ticket-postg_date      = lwa_fmfpcnf-budat.</item>
+      <item>    lt_ticket-yield           = lwa_fmfpcnf-lmnga.</item>
+      <item>    lt_ticket-conf_quan_unit  = lwa_fmfpcnf-meinh.</item>
+      <item>    lt_ticket-work_cntr       = lwa_fmfpcnf-arbpl_ext.</item>
+      <item>    lt_ticket-no_of_employee  = lwa_fmfpcnf-anzms.</item>
+      <item>    lt_ticket-pers_no         = lwa_fmfpcnf-pernr.</item>
+      <item>    lt_ticket-exec_start_date = lwa_fmfpcnf-isdd.</item>
+      <item>    lt_ticket-exec_start_time = lwa_fmfpcnf-isdz.</item>
+      <item>    lt_ticket-exec_fin_date   = lwa_fmfpcnf-iedd.</item>
+      <item>    lt_ticket-exec_fin_time   = lwa_fmfpcnf-iedz.</item>
+      <item>    lt_ticket-conf_activity1  = lwa_fmfpcnf-ism01.</item>
+      <item>    lt_ticket-conf_acti_unit1 = lwa_fmfpcnf-leinh1.</item>
+      <item>    lt_ticket-conf_activity2  = lwa_fmfpcnf-ism02.</item>
+      <item>    lt_ticket-conf_acti_unit2 = lwa_fmfpcnf-leinh2.</item>
+      <item>    lt_ticket-conf_activity3  = lwa_fmfpcnf-ism03.</item>
+      <item>    lt_ticket-conf_acti_unit3 = lwa_fmfpcnf-leinh3.</item>
+      <item>    lt_ticket-conf_activity4  = lwa_fmfpcnf-ism04.</item>
+      <item>    lt_ticket-conf_acti_unit4 = lwa_fmfpcnf-leinh4.</item>
+      <item>    lt_ticket-conf_activity5  = lwa_fmfpcnf-ism05.</item>
+      <item>    lt_ticket-conf_acti_unit5 = lwa_fmfpcnf-leinh5.</item>
+      <item>    lt_ticket-conf_activity6  = lwa_fmfpcnf-ism06.</item>
+      <item>    lt_ticket-conf_acti_unit6 = lwa_fmfpcnf-leinh6.</item>
+      <item>    APPEND lt_ticket.</item>
+      <item/>
+      <item>    IF lwa_fmfpcnf-gicre IS NOT INITIAL.</item>
+      <item>**      LOOP AT lwa_fpdoc-x-fpcom INTO lwa_fpcom</item>
+      <item>**                               WHERE aufnr = lwa_fmfpcnf-aufnr</item>
+      <item>**                                 AND posnr = lwa_fmfpcnf-posnr</item>
+      <item>**                                 AND matnr IS NOT INITIAL</item>
+      <item>**                                 AND xwaok IS NOT INITIAL.</item>
+      <item>**        lwa_grheader_gi-pstng_date = lwa_fmfpcnf-budat.</item>
+      <item>**        lwa_item-prod_date         = sy-datum.</item>
+      <item>**        lwa_item-material_long     = lwa_fpcom-matnr.</item>
+      <item>**        lwa_item-batch             = lwa_fpcom-charg.</item>
+      <item>**        lwa_item-move_type         = lwa_tcoko-wa_bwart.</item>
+      <item>**        lwa_item-stge_loc          = lwa_fpcom-lgort.</item>
+      <item>**        lwa_item-entry_qnt         = lwa_fpcom-lmnga.</item>
+      <item>**        lwa_item-entry_uom         = lwa_fpcom-erfme.</item>
+      <item>**        lwa_item-withdrawn         = c_true.</item>
+      <item>**        lwa_item-activity          = lwa_fmfpcnf-vornr.</item>
+      <item>**        lwa_item-orderid           = lwa_fmfpcnf-aufnr.</item>
+      <item>**        lwa_item-plant             = lwa_fpcom-werks.</item>
+      <item>**</item>
+      <item>**        IF lwa_fpcom-bwart IS NOT INITIAL.</item>
+      <item>**          lwa_item-move_type = lwa_fpcom-bwart.</item>
+      <item>**        ENDIF.</item>
+      <item>**</item>
+      <item>**        READ TABLE lwa_fpdoc-y-fpcom INTO lwa_yfpcom</item>
+      <item>**          WITH KEY aufnr = lwa_fpcom-aufnr</item>
+      <item>**                   posnr = lwa_fpcom-posnr</item>
+      <item>**                   contr = lwa_fpcom-contr BINARY SEARCH.</item>
+      <item>**        IF sy-subrc EQ 0.</item>
+      <item>**          lwa_item-reserv_no = lwa_fpdoc-x-fphdr-rsnum.</item>
+      <item>**          lwa_item-res_item  = lwa_fpcom-rspos.</item>
+      <item>**        ENDIF.</item>
+      <item>**        APPEND lwa_item TO lt_items_gi.</item>
+      <item>**        CLEAR: lwa_item.</item>
+      <item>**        lwa_linkgm-index_goodsmov = lwa_linkgm-index_goodsmov + 1.</item>
+      <item>**        APPEND lwa_linkgm TO lt_linkgm.</item>
+      <item>**      ENDLOOP.</item>
+      <item>      LOOP AT gt_components INTO DATA(lwa_component)</item>
+      <item>        WHERE aufnr = lwa_fmfpcnf-aufnr</item>
+      <item>          AND posnr = lwa_fmfpcnf-posnr</item>
+      <item>          AND matnr IS NOT INITIAL</item>
+      <item>          AND xwaok IS NOT INITIAL.</item>
+      <item>        lwa_grheader_gi-pstng_date = lwa_fmfpcnf-budat.</item>
+      <item>        lwa_item-prod_date         = sy-datum.</item>
+      <item>        lwa_item-material_long     = lwa_component-matnr.</item>
+      <item>        lwa_item-batch             = lwa_component-charg.</item>
+      <item>        lwa_item-move_type         = lwa_tcoko-wa_bwart.</item>
+      <item>        IF lwa_component-bwart IS NOT INITIAL.</item>
+      <item>          lwa_item-move_type = lwa_component-bwart.</item>
+      <item>        ENDIF.</item>
+      <item>        lwa_item-stge_loc          = lwa_component-lgort.</item>
+      <item>        lwa_item-entry_qnt         = lwa_component-lmnga.</item>
+      <item>        lwa_item-entry_uom         = lwa_component-erfme.</item>
+      <item>        lwa_item-withdrawn         = c_true.</item>
+      <item>        lwa_item-activity          = lwa_fmfpcnf-vornr.</item>
+      <item>        lwa_item-orderid           = lwa_fmfpcnf-aufnr.</item>
+      <item>        lwa_item-plant             = lwa_component-werks.</item>
+      <item/>
+      <item>        IF lwa_component-bwart IS NOT INITIAL.</item>
+      <item>          lwa_item-move_type = lwa_component-bwart.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lwa_fpdoc-y-fpcom INTO lwa_yfpcom</item>
+      <item>          WITH KEY aufnr = lwa_component-aufnr</item>
+      <item>                   posnr = lwa_component-posnr</item>
+      <item>                   contr = lwa_component-contr BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          lwa_item-reserv_no = lwa_fpdoc-x-fphdr-rsnum.</item>
+      <item>          lwa_item-res_item  = lwa_component-rspos.</item>
+      <item>        ENDIF.</item>
+      <item>        APPEND lwa_item TO lt_items_gi.</item>
+      <item>        CLEAR: lwa_item.</item>
+      <item>        lwa_linkgm-index_goodsmov = lwa_linkgm-index_goodsmov + 1.</item>
+      <item>        APPEND lwa_linkgm TO lt_linkgm.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lwa_fmfpcnf-grcre IS NOT INITIAL AND</item>
+      <item>       lwa_fmfpcnf-lmnga IS NOT INITIAL.</item>
+      <item>      lwa_grheader_gr-pstng_date = lwa_fmfpcnf-budat.</item>
+      <item>      lwa_item-prod_date = sy-datum.</item>
+      <item>*{   REPLACE        S4HK902655                                        2</item>
+      <item>*\      lwa_item-material  = lwa_fpdoc-x-fphdr-matnr.</item>
+      <item>      lwa_item-material_long  = lwa_fpdoc-x-fphdr-matnr.</item>
+      <item>*}   REPLACE</item>
+      <item>      lwa_item-move_type = lwa_tcoko-we_bwart.</item>
+      <item>      lwa_item-entry_uom = lwa_fmfpcnf-meinh.</item>
+      <item>      lwa_item-mvt_ind   = &apos;F&apos;.</item>
+      <item>      lwa_item-orderid   = lwa_fpdoc-x-fphdr-aufnr.</item>
+      <item>      lwa_item-plant     = lwa_fpdoc-x-fphdr-iwerk.</item>
+      <item>      IF lwa_fmfpcnf-umren IS NOT INITIAL.</item>
+      <item>        lwa_item-entry_qnt = lwa_fmfpcnf-lmnga / lwa_fmfpcnf-umren.</item>
+      <item>      ENDIF.</item>
+      <item>      IF lwa_fpdoc-x-fphdr-autyp EQ c_document_category-production_order.</item>
+      <item>        lwa_item-batch = gs_variables-batch_infocus.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gt_batches_fcat INTO DATA(ls_batch_fcat)</item>
+      <item>        WITH KEY aufnr = lwa_item-orderid</item>
+      <item>                 matnr = lwa_item-material_long</item>
+      <item>                 charg = lwa_item-batch.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lwa_item-entry_uom = ls_batch_fcat-erfme.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      APPEND lwa_item TO lt_items_gr.</item>
+      <item>      CLEAR lwa_item.</item>
+      <item>      lwa_linkgm-index_goodsmov = lwa_linkgm-index_goodsmov + 1.</item>
+      <item>      APPEND lwa_linkgm TO lt_linkgm.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lt_items_gi[] IS NOT INITIAL.</item>
+      <item>    lwa_mvt_code-gm_code = &apos;03&apos;.</item>
+      <item>    PERFORM goods_movement_create TABLES lt_items_gi</item>
+      <item>                                         lt_return</item>
+      <item>                                   USING space</item>
+      <item>                                         lwa_mvt_code</item>
+      <item>                                         lwa_grheader_gi</item>
+      <item>                                CHANGING lv_subrc.</item>
+      <item>    IF lv_subrc NE 0.</item>
+      <item>      LOOP AT lt_fmfpcnf INTO lwa_fmfpcnf.</item>
+      <item/>
+      <item>        gs_variables-item_infocus = lwa_fmfpcnf-posnr.</item>
+      <item>        PERFORM messages_context_set USING lwa_fpdoc-x-fphdr.</item>
+      <item>        CLEAR: gs_variables-item_infocus.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-gicre IS NOT INITIAL.</item>
+      <item>          LOOP AT lwa_fpdoc-x-fpcom INTO lwa_fpcom</item>
+      <item>                                   WHERE aufnr = lwa_fmfpcnf-aufnr</item>
+      <item>                                     AND posnr = lwa_fmfpcnf-posnr</item>
+      <item>                                     AND matnr IS NOT INITIAL</item>
+      <item>                                     AND xwaok IS NOT INITIAL.</item>
+      <item>            lv_index_msg = lv_index_msg + 1.</item>
+      <item>            LOOP AT lt_return INTO lwa_return</item>
+      <item>                            WHERE row EQ lv_index_msg.</item>
+      <item>              MESSAGE ID lwa_return-id TYPE c_msg_type-error</item>
+      <item>               NUMBER lwa_return-number</item>
+      <item>                 WITH lwa_return-message_v1 lwa_return-message_v2</item>
+      <item>                      lwa_return-message_v3 lwa_return-message_v4</item>
+      <item>                 INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ENDLOOP.</item>
+      <item>          ENDLOOP.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>*        IF lwa_fpitm-grcre IS NOT INITIAL AND</item>
+      <item>*           lwa_fpitm-lmnga IS NOT INITIAL.</item>
+      <item>*          lv_index_msg = lv_index_msg + 1.</item>
+      <item>*        ENDIF.</item>
+      <item/>
+      <item>      ENDLOOP.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lt_items_gr[] IS NOT INITIAL.</item>
+      <item>    lwa_mvt_code-gm_code = &apos;02&apos;.</item>
+      <item>    PERFORM goods_movement_create TABLES lt_items_gr</item>
+      <item>                                         lt_return</item>
+      <item>                                   USING space</item>
+      <item>                                         lwa_mvt_code</item>
+      <item>                                         lwa_grheader_gr</item>
+      <item>                                CHANGING lv_subrc.</item>
+      <item>    IF lv_subrc NE 0.</item>
+      <item>      CLEAR: lv_index_msg.</item>
+      <item>      LOOP AT lt_fmfpcnf INTO lwa_fmfpcnf.</item>
+      <item/>
+      <item>        gs_variables-item_infocus = lwa_fmfpcnf-posnr.</item>
+      <item>        PERFORM messages_context_set USING lwa_fpdoc-x-fphdr.</item>
+      <item>        CLEAR: gs_variables-item_infocus.</item>
+      <item/>
+      <item>*        IF lwa_fpitm-gicre IS NOT INITIAL.</item>
+      <item>*          LOOP AT lwa_fpdoc-x-fpcom INTO lwa_fpcom</item>
+      <item>*                                   WHERE aufnr = lwa_fpitm-aufnr</item>
+      <item>*                                     AND posnr = lwa_fpitm-posnr</item>
+      <item>*                                     AND matnr IS NOT INITIAL</item>
+      <item>*                                     AND xwaok IS NOT INITIAL.</item>
+      <item>*            lv_index_msg = lv_index_msg + 1.</item>
+      <item>*          ENDLOOP.</item>
+      <item>*        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_fmfpcnf-grcre IS NOT INITIAL AND</item>
+      <item>           lwa_fmfpcnf-lmnga IS NOT INITIAL.</item>
+      <item>          lv_index_msg = lv_index_msg + 1.</item>
+      <item>          LOOP AT lt_return INTO lwa_return</item>
+      <item>                            WHERE row EQ lv_index_msg.</item>
+      <item>            MESSAGE ID lwa_return-id TYPE c_msg_type-error</item>
+      <item>             NUMBER lwa_return-number</item>
+      <item>               WITH lwa_return-message_v1 lwa_return-message_v2</item>
+      <item>                    lwa_return-message_v3 lwa_return-message_v4</item>
+      <item>               INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>          ENDLOOP.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  APPEND LINES OF lt_items_gi[] TO lt_items[].</item>
+      <item>  APPEND LINES OF lt_items_gr[] TO lt_items[].</item>
+      <item/>
+      <item>ENDFORM.                    &quot;zabs_postings_data_prepare</item>
+      <item/>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  zabs_post_batch_confirmations</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_post_batch_confirmations</item>
+      <item>                  TABLES lt_ticket  STRUCTURE bapi_pp_timeticket</item>
+      <item>                         lt_itemsgm STRUCTURE bapi2017_gm_item_create</item>
+      <item>                         lt_linkgm  STRUCTURE bapi_link_conf_goodsmov</item>
+      <item>                         lt_linkbd  STRUCTURE /agri/s_fmlink_batch_conf</item>
+      <item>                         lt_fmfpcnf STRUCTURE /agri/s_fmfp_cnf</item>
+      <item>                CHANGING lwa_fpdoc_infocus TYPE /agri/s_fmfp_doc</item>
+      <item>                         lt_ocdoc   TYPE /agri/t_fmoc_doc</item>
+      <item>                         lt_fpdoc   TYPE /agri/t_fmfp_doc</item>
+      <item>                         lv_subrc   TYPE sy-subrc.</item>
+      <item/>
+      <item>  DATA: lv_row       TYPE bapi_line,</item>
+      <item>        lwa_fpdoc    TYPE /agri/s_fmfp_doc,</item>
+      <item>        lv_ccontr    TYPE /agri/fmccontr,</item>
+      <item>        lv_gcontr    TYPE /agri/gcontr,</item>
+      <item>        lv_quantity  TYPE /agri/fmlmnga,</item>
+      <item>        lwa_status   TYPE bapiret1,</item>
+      <item>        lwa_fpbch    TYPE /agri/s_fmfpbch,</item>
+      <item>        lwa_fpcom    TYPE /agri/s_fmfpcom,</item>
+      <item>        lwa_return   TYPE bapi_coru_return,</item>
+      <item>        lwa_ocopr    TYPE /agri/s_fmocopr,</item>
+      <item>        lwa_occom    TYPE /agri/s_fmoccom,</item>
+      <item>        lwa_ocindx   TYPE /agri/s_fmocindx,</item>
+      <item>        lwa_linkbd   TYPE /agri/s_fmlink_batch_conf,</item>
+      <item>        lwa_fmfpcnf  TYPE /agri/s_fmfp_cnf,</item>
+      <item>        lwa_fpoc_doc TYPE /agri/s_fmoc_doc,</item>
+      <item>        lwa_bapiret  TYPE bapiret2,</item>
+      <item>        lt_return    TYPE TABLE OF bapi_coru_return,</item>
+      <item>        lt_fpbch_new TYPE /agri/t_fmfpbch.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_fpdoc&gt; TYPE /agri/s_fmfp_doc,</item>
+      <item>                 &lt;lwa_fpitm&gt; TYPE /agri/s_fmfpitm,</item>
+      <item>                 &lt;lwa_fpbch&gt; TYPE /agri/s_fmfpbch.</item>
+      <item/>
+      <item>*--Call this subroutine for only one order at a time</item>
+      <item>*--Subroutine confirms for multiple batches and creates mutiple</item>
+      <item>* confirmations and updates one order</item>
+      <item>  IF lt_ticket[] IS INITIAL.</item>
+      <item>    lv_subrc = 4.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  READ TABLE lt_itemsgm INTO DATA(lwa_itemsgm)</item>
+      <item>    WITH KEY move_type = zcl_abs_abap_maintain=&gt;c_move_type_grn_create.</item>
+      <item>  IF sy-subrc EQ 0</item>
+      <item>  AND lwa_itemsgm-batch IS NOT INITIAL.</item>
+      <item>    LOOP AT lt_itemsgm ASSIGNING FIELD-SYMBOL(&lt;lwa_itemsgm&gt;).</item>
+      <item>      &lt;lwa_itemsgm&gt;-gr_rcpt = lwa_itemsgm-batch.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SORT: lt_fpdoc BY aufnr.</item>
+      <item>  CALL FUNCTION &apos;BAPI_PRODORDCONF_CREATE_TT&apos;</item>
+      <item>    IMPORTING</item>
+      <item>      return                   = lwa_status</item>
+      <item>    TABLES</item>
+      <item>      timetickets              = lt_ticket[]</item>
+      <item>      goodsmovements           = lt_itemsgm</item>
+      <item>      link_conf_goodsmov       = lt_linkgm</item>
+      <item>      detail_return            = lt_return.</item>
+      <item/>
+      <item>  SORT lt_return BY type row id number.</item>
+      <item>  READ TABLE lt_return TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY type = c_msg_type-error BINARY SEARCH.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    LOOP AT lt_fmfpcnf INTO lwa_fmfpcnf.</item>
+      <item>      READ TABLE lt_fpdoc INTO lwa_fpdoc</item>
+      <item>        WITH KEY aufnr = lwa_fmfpcnf-aufnr BINARY SEARCH.</item>
+      <item/>
+      <item>      gs_variables-item_infocus = lwa_fmfpcnf-posnr.</item>
+      <item>      PERFORM messages_context_set USING lwa_fpdoc-x-fphdr.</item>
+      <item>      lv_row = lv_row + 1.</item>
+      <item>      LOOP AT lt_return INTO lwa_return</item>
+      <item>                        WHERE row = lv_row</item>
+      <item>                          AND type EQ c_msg_type-error.</item>
+      <item>        MESSAGE ID lwa_return-id TYPE c_msg_type-error</item>
+      <item>          NUMBER lwa_return-number</item>
+      <item>          WITH lwa_return-message_v1 lwa_return-message_v2</item>
+      <item>               lwa_return-message_v3 lwa_return-message_v4 INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDLOOP.</item>
+      <item>      CLEAR: lwa_fpdoc.</item>
+      <item/>
+      <item>    ENDLOOP.</item>
+      <item>    lv_subrc = 4.</item>
+      <item>    CALL FUNCTION &apos;BAPI_TRANSACTION_ROLLBACK&apos;.</item>
+      <item>    EXIT.</item>
+      <item>  ELSE.</item>
+      <item>    CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        wait   = &apos;X&apos;</item>
+      <item>      IMPORTING</item>
+      <item>        return = lwa_bapiret.</item>
+      <item>    WAIT UP TO 2 SECONDS.</item>
+      <item>    READ TABLE lt_itemsgm INTO DATA(lwa_item_x) INDEX 1.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SELECT * UP TO 1 ROWS</item>
+      <item>        FROM matdoc</item>
+      <item>        INTO @DATA(lwa_matdoc)</item>
+      <item>       WHERE werks = @lwa_item_x-plant</item>
+      <item>         AND aufnr = @lwa_item_x-orderid</item>
+      <item>         AND bwart = @lwa_item_x-move_type</item>
+      <item>         AND matnr = @lwa_item_x-material</item>
+      <item>         AND charg = @lwa_item_x-batch.</item>
+      <item>      ENDSELECT.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>*-- Erro ao processar movimento &amp;1.</item>
+      <item>        MESSAGE i089(zfmfp) WITH lwa_item_x-move_type.</item>
+      <item>        LEAVE LIST-PROCESSING.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT lwa_fpdoc_infocus-x-fpbch INTO lwa_fpbch.</item>
+      <item>    IF lv_gcontr LT lwa_fpbch-contr.</item>
+      <item>      lv_gcontr = lwa_fpbch-contr.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item>  CLEAR: lwa_fpbch.</item>
+      <item/>
+      <item>  LOOP AT lt_fpdoc INTO lwa_fpdoc.</item>
+      <item/>
+      <item>*--Get batch and counter for current document</item>
+      <item>    READ TABLE lt_linkbd INTO lwa_linkbd</item>
+      <item>                         WITH KEY index_document = sy-tabix.</item>
+      <item>    CHECK sy-subrc EQ 0.</item>
+      <item>    READ TABLE lwa_fpdoc_infocus-x-fpbch ASSIGNING &lt;lwa_fpbch&gt;</item>
+      <item>      WITH KEY contr = lwa_linkbd-contr</item>
+      <item>               charg = lwa_linkbd-charg BINARY SEARCH.</item>
+      <item>    CHECK sy-subrc EQ 0.</item>
+      <item/>
+      <item>    MOVE-CORRESPONDING lwa_fpdoc-x-fphdr TO lwa_fpoc_doc-x-ochdr.</item>
+      <item>    CLEAR: lwa_fpoc_doc-x-ochdr-updkz,</item>
+      <item>           lwa_fpoc_doc-x-ochdr-matnr,</item>
+      <item>           lwa_fpoc_doc-x-ochdr-charg,</item>
+      <item>           lv_ccontr.</item>
+      <item>    lwa_fpoc_doc-x-ochdr-charg_ref = lwa_linkbd-charg.</item>
+      <item>    lwa_fpoc_doc-x-ochdr-contr_ref = lwa_linkbd-contr.</item>
+      <item/>
+      <item>    LOOP AT lt_fmfpcnf INTO lwa_fmfpcnf</item>
+      <item>                      WHERE aufnr EQ lwa_fpdoc-aufnr.</item>
+      <item/>
+      <item>      lv_row = lv_row + 1.</item>
+      <item>      READ TABLE lwa_fpdoc-x-fpitm ASSIGNING &lt;lwa_fpitm&gt;</item>
+      <item>        WITH KEY aufnr = lwa_fmfpcnf-aufnr</item>
+      <item>                 posnr = lwa_fmfpcnf-posnr BINARY SEARCH.</item>
+      <item>      CHECK sy-subrc EQ 0.</item>
+      <item/>
+      <item>      gs_variables-item_infocus = &lt;lwa_fpitm&gt;-posnr.</item>
+      <item>      PERFORM messages_context_set USING lwa_fpdoc-x-fphdr.</item>
+      <item/>
+      <item>      CLEAR: lwa_return.</item>
+      <item>      READ TABLE lt_return INTO lwa_return</item>
+      <item>        WITH KEY type   = c_msg_type-info</item>
+      <item>                 row    = lv_row</item>
+      <item>                 id     = &apos;RU&apos;</item>
+      <item>                 number = &apos;100&apos; BINARY SEARCH.</item>
+      <item>      CHECK sy-subrc EQ 0.</item>
+      <item/>
+      <item>      MOVE-CORRESPONDING &lt;lwa_fpitm&gt; TO lwa_ocopr.</item>
+      <item>      MOVE-CORRESPONDING lwa_fmfpcnf TO lwa_ocopr.</item>
+      <item>      lwa_ocopr-rueck = lwa_return-conf_no.</item>
+      <item>      lwa_ocopr-rmzhl = lwa_return-conf_cnt.</item>
+      <item>      lwa_ocopr-rsnum = lwa_fpdoc-x-fphdr-rsnum.</item>
+      <item>      lwa_ocopr-updkz = c_updkz_new.</item>
+      <item>      APPEND lwa_ocopr TO lwa_fpoc_doc-x-ocopr.</item>
+      <item/>
+      <item>      IF lwa_fmfpcnf-gicre IS NOT INITIAL.</item>
+      <item>        LOOP AT lwa_fpdoc-x-fpcom INTO lwa_fpcom</item>
+      <item>                                WHERE aufnr EQ &lt;lwa_fpitm&gt;-aufnr</item>
+      <item>                                  AND posnr EQ &lt;lwa_fpitm&gt;-posnr</item>
+      <item>                                  AND lmnga IS NOT INITIAL.</item>
+      <item>          MOVE-CORRESPONDING lwa_fpcom TO lwa_occom.</item>
+      <item>          lwa_occom-rueck = lwa_return-conf_no.</item>
+      <item>          lwa_occom-rmzhl = lwa_return-conf_cnt.</item>
+      <item>          lv_ccontr = lv_ccontr + 1.</item>
+      <item>          lwa_occom-contr = lv_ccontr.</item>
+      <item>          lwa_occom-updkz = c_updkz_new.</item>
+      <item>          APPEND lwa_occom TO lwa_fpoc_doc-x-occom.</item>
+      <item>        ENDLOOP.</item>
+      <item>        IF &lt;lwa_fpbch&gt;-codat IS INITIAL.</item>
+      <item>          &lt;lwa_fpbch&gt;-codat = lwa_fmfpcnf-budat.</item>
+      <item>          IF &lt;lwa_fpbch&gt;-updkz NE c_updkz_new.</item>
+      <item>            &lt;lwa_fpbch&gt;-updkz = c_updkz_update.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF &lt;lwa_fpitm&gt;-grcre IS NOT INITIAL.</item>
+      <item>        CLEAR: lv_quantity.</item>
+      <item>        IF &lt;lwa_fpitm&gt;-umren IS NOT INITIAL.</item>
+      <item>          lv_quantity = lwa_fmfpcnf-lmnga / &lt;lwa_fpitm&gt;-umren.</item>
+      <item>        ENDIF.</item>
+      <item>        IF lv_quantity IS NOT INITIAL.</item>
+      <item/>
+      <item>          lwa_fpoc_doc-x-ochdr-menge = lv_quantity.</item>
+      <item>          lwa_fpoc_doc-x-ochdr-meins = lwa_fpdoc-x-fphdr-gmein.</item>
+      <item>          lwa_fpoc_doc-x-ochdr-matnr = lwa_fpdoc-x-fphdr-matnr.</item>
+      <item>          lwa_fpoc_doc-x-ochdr-charg = lwa_fpoc_doc-x-ochdr-charg_ref.</item>
+      <item>          lwa_fpdoc_infocus-x-fphdr-gwemg =</item>
+      <item>                      lwa_fpdoc_infocus-x-fphdr-gwemg + lv_quantity.</item>
+      <item>          IF lwa_fpdoc_infocus-x-fphdr-updkz NE c_updkz_new.</item>
+      <item>            lwa_fpdoc_infocus-x-fphdr-updkz = c_updkz_update.</item>
+      <item>          ENDIF.</item>
+      <item>          IF lv_quantity NE &lt;lwa_fpbch&gt;-erfmg.</item>
+      <item>            MOVE-CORRESPONDING &lt;lwa_fpbch&gt; TO lwa_fpbch.</item>
+      <item>            CLEAR: lwa_fpbch-codat.</item>
+      <item>            lwa_fpbch-erfmg = &lt;lwa_fpbch&gt;-erfmg - lv_quantity.</item>
+      <item>            IF lwa_fpbch-erfmg GT 0.</item>
+      <item>              lv_gcontr = lv_gcontr + 1.</item>
+      <item>              lwa_fpbch-contr = lv_gcontr.</item>
+      <item>              lwa_fpbch-updkz = c_updkz_new.</item>
+      <item>              APPEND lwa_fpbch TO lt_fpbch_new.</item>
+      <item>            ENDIF.</item>
+      <item>            CLEAR: lwa_fpbch.</item>
+      <item>          ENDIF.</item>
+      <item>          &lt;lwa_fpbch&gt;-grdat = lwa_fmfpcnf-budat.</item>
+      <item>          &lt;lwa_fpbch&gt;-gwemg = lv_quantity.</item>
+      <item>          &lt;lwa_fpbch&gt;-erfmg = &lt;lwa_fpbch&gt;-gwemg.</item>
+      <item>          IF &lt;lwa_fpbch&gt;-updkz NE c_updkz_new.</item>
+      <item>            &lt;lwa_fpbch&gt;-updkz = c_updkz_update.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>***Extended Additional Syntax Check 1_3 ATC  1709 PQ</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-success NUMBER &apos;013&apos;</item>
+      <item>*                         WITH &lt;lwa_fpitm&gt;-vornr</item>
+      <item>                         INTO sy-msgli. &quot;#EC*</item>
+      <item>*****</item>
+      <item>      message_simple space.</item>
+      <item/>
+      <item>    ENDLOOP.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      lwa_fpoc_doc-x-ochdr-updkz = c_updkz_new.</item>
+      <item>      lwa_ocindx-aufnr = lwa_fpdoc-aufnr.</item>
+      <item>      lwa_ocindx-gwemg = lwa_fpoc_doc-x-ochdr-menge.</item>
+      <item>      lwa_ocindx-gmein = lwa_fpoc_doc-x-ochdr-meins.</item>
+      <item>      lwa_ocindx-aufnr = lwa_fpdoc-aufnr.</item>
+      <item>      lwa_ocindx-updkz = c_updkz_new.</item>
+      <item>      APPEND lwa_ocindx TO lwa_fpoc_doc-x-ocindx.</item>
+      <item>      APPEND lwa_fpoc_doc TO lt_ocdoc.</item>
+      <item>      CLEAR: lwa_fpoc_doc, lwa_ocindx.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lt_fpbch_new IS NOT INITIAL.</item>
+      <item>    APPEND LINES OF lt_fpbch_new TO lwa_fpdoc_infocus-x-fpbch.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;zabs_post_batch_confirmations</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:POSTINGS_DATA_PREPARE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_custom) = abap_false.</item>
+      <item>  READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY kind        = &apos;FORM&apos;</item>
+      <item>             progname    = &apos;/AGRI/SAPLFMNSM&apos;</item>
+      <item>             includename = &apos;/AGRI/LFMNSMF0F&apos;</item>
+      <item>             event       = &apos;FCODE_CONF&apos;.</item>
+      <item>  IF sy-subrc EQ 0</item>
+      <item>  OR sy-ucomm EQ &apos;CONF&apos;.</item>
+      <item>    lv_custom = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_custom EQ abap_true.</item>
+      <item>    PERFORM zabs_postings_data_prepare TABLES lt_ticket</item>
+      <item>                                              lt_items</item>
+      <item>                                              lt_linkgm</item>
+      <item>                                        USING lt_fmfpcnf</item>
+      <item>                                              lwa_fpdoc</item>
+      <item>                                     CHANGING lv_subrc.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK lv_custom EQ abap_false.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA3AD176712FC6EF4</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA3AD176712FC6EF4</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>032</LENGTH>
+       <TEXT>Postings Data Prepare</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_POST_DATA_PREPARE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA3AD176712FC6EF4</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Cropo Season Default Values Fill</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLCSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLCSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_DEFAULT_VALUES_FILL\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>*--BOC- T_T.KONNO-05.28.21</item>
+      <item>  DATA: lv_tarea_x   TYPE /agri/glaarea,</item>
+      <item>        lv_years_x   TYPE t5a4a-dlyyr,</item>
+      <item>        lv_subrc_x   TYPE sy-subrc,</item>
+      <item>        lwa_season_x TYPE /agri/glseason.</item>
+      <item/>
+      <item>  IF sy-tcode NE &apos;ZABS_UPLOAD&apos;</item>
+      <item>  AND sy-cprog NE &apos;ZABS_REP_ATUALIZA_SAFRA&apos;.</item>
+      <item>    DATA(lv_change) = abap_true.</item>
+      <item>  ELSE.</item>
+      <item>    lv_change = abap_false.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF gs_variables-extend_crop_season IS INITIAL.</item>
+      <item>    IF lv_change EQ abap_true.</item>
+      <item>      SELECT SINGLE * FROM /agri/glseason</item>
+      <item>        INTO lwa_season_x</item>
+      <item>       WHERE season EQ /agri/s_glflcma-season.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        /agri/s_glflcma-datab+0(4) = /agri/s_glcsscrfields-gyear.</item>
+      <item>        /agri/s_glflcma-datab+4(4) = lwa_season_x-sperd.</item>
+      <item>        lv_years_x = lwa_season_x-offst.</item>
+      <item>        /agri/s_glflcma-datbi = /agri/s_glflcma-datab.</item>
+      <item/>
+      <item>        IF lv_years_x IS NOT INITIAL.</item>
+      <item>          CALL FUNCTION &apos;/AGRI/G_RP_CALC_DATE_IN_INTERV&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              i_date      = /agri/s_glflcma-datab</item>
+      <item>              i_days      = 0</item>
+      <item>              i_months    = 0</item>
+      <item>              i_years     = lv_years_x</item>
+      <item>            IMPORTING</item>
+      <item>              e_calc_date = /agri/s_glflcma-datbi.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_season_x-eperd IS NOT INITIAL.</item>
+      <item>          /agri/s_glflcma-datbi+4(4) = lwa_season_x-eperd.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_change EQ abap_true.</item>
+      <item>      /agri/s_glflcma-astat  = c_crop_season_status-active.</item>
+      <item>      /agri/s_glflcma-ymatnr = /agri/s_glcmhdr-ymatnr.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    /agri/s_glflcma-tplkz  = /agri/s_glflot-tplkz.</item>
+      <item>    /agri/s_glflcma-tplvl  = /agri/s_glflot-tplvl.</item>
+      <item>    /agri/s_glflcma-bukrs  = /agri/s_glflot-bukrs.</item>
+      <item>    /agri/s_glflcma-iwerk  = /agri/s_glflot-iwerk.</item>
+      <item>    /agri/s_glflcma-fltyp  = /agri/s_glflot-fltyp.</item>
+      <item>    /agri/s_glflcma-aarea  = /agri/s_glflot-garea.</item>
+      <item>    /agri/s_glflcma-garea  = /agri/s_glflot-garea.</item>
+      <item>    /agri/s_glflcma-msehi  = /agri/s_glflot-msehi.</item>
+      <item>    /agri/s_glflcma-fldty  = /agri/s_glcmhdr-fldty.</item>
+      <item>    /agri/s_glflcma-exuom  = /agri/s_glcmhdr-exuom.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  /agri/s_glflcma-exyld = /agri/s_glcmhdr-exyld.</item>
+      <item>  PERFORM cs_variant_determine CHANGING lv_subrc_x.</item>
+      <item/>
+      <item>  IF /agri/s_glflcma-msehi NE /agri/s_glcmhdr-msehi.</item>
+      <item>    CALL FUNCTION &apos;UNIT_CONVERSION_SIMPLE&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input                = /agri/s_glcmhdr-tarea</item>
+      <item>        round_sign           = c_true</item>
+      <item>        unit_in              = /agri/s_glcmhdr-msehi</item>
+      <item>        unit_out             = /agri/s_glflcma-msehi</item>
+      <item>      IMPORTING</item>
+      <item>        output               = lv_tarea_x</item>
+      <item>      EXCEPTIONS</item>
+      <item>        conversion_not_found = 1</item>
+      <item>        division_by_zero     = 2</item>
+      <item>        input_invalid        = 3</item>
+      <item>        output_invalid       = 4</item>
+      <item>        overflow             = 5</item>
+      <item>        type_invalid         = 6</item>
+      <item>        units_missing        = 7</item>
+      <item>        unit_in_not_found    = 8</item>
+      <item>        unit_out_not_found   = 9</item>
+      <item>        OTHERS               = 10.</item>
+      <item>  ELSE.</item>
+      <item>    lv_tarea_x = /agri/s_glcmhdr-tarea.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_tarea_x IS NOT INITIAL.</item>
+      <item>    /agri/s_glflcma-exyld = /agri/s_glflcma-exyld / lv_tarea_x.</item>
+      <item>  ELSE.</item>
+      <item>    CLEAR /agri/s_glflcma-exyld.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  /agri/s_glflcma-eston = /agri/s_glflcma-exyld * /agri/s_glflcma-aarea.</item>
+      <item>  /agri/s_glflcma-esuom = /agri/s_glflcma-exuom.</item>
+      <item/>
+      <item>  READ TABLE gt_enhancement_class WITH KEY tplkz = /agri/s_glflcma-tplkz</item>
+      <item>                                           tplvl = /agri/s_glflcma-tplvl.</item>
+      <item>  IF sy-subrc EQ 0 AND</item>
+      <item>     gt_enhancement_class-ref_enhancement IS NOT INITIAL.</item>
+      <item>    TRY.</item>
+      <item>        CALL METHOD gt_enhancement_class-ref_enhancement-&gt;header_defaults_fill</item>
+      <item>          EXPORTING</item>
+      <item>            i_tplkz  = /agri/s_glflcma-tplkz</item>
+      <item>            i_tplvl  = /agri/s_glflcma-tplvl</item>
+      <item>          CHANGING</item>
+      <item>            cs_cshdr = /agri/s_glflcma.</item>
+      <item>      CATCH cx_sy_dyn_call_illegal_method.</item>
+      <item>    ENDTRY.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item>*--EOC- T_T.KONNO-05.28.21</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEBA283FFC2ED554EBA</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEBA283FFC2ED554EBA</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>048</LENGTH>
+       <TEXT>Cropo Season Default Values Fill</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_CS_DEF_VAL_FILL</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEBA283FFC2ED554EBA</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

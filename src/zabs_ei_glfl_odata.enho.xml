@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Terrain Partner</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_GLFL_DPC_EXT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_GLFL_DPC_EXT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_GLFL_DPC_EXT=========CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_GLFL_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_GLFL_DPC_EXT=========CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_GLFL_DPC_EXT=========CP\EX:/AGRI/EP_GLFL_ODATA_26\EI</FULL_NAME>
+     <SOURCE>
+      <item>    CLEAR:lwa_glfldoc-x-ihpa[],lwa_glfldoc-y-ihpa[],lt_ihpa.</item>
+      <item>    LOOP AT ls_trdetails-trpartnerset INTO lwa_trpartnerset.</item>
+      <item>      MOVE-CORRESPONDING lwa_trpartnerset TO lwa_ihpa.</item>
+      <item>      IF lwa_ihpa-parvw = &apos;VN&apos; or</item>
+      <item>         lwa_ihpa-parvw = &apos;FO&apos;.</item>
+      <item>        lwa_ihpa-lifnr = lwa_trpartnerset-partner.</item>
+      <item>      ELSEIF lwa_ihpa-parvw = &apos;SP&apos;.</item>
+      <item>        lwa_ihpa-kunnr = lwa_trpartnerset-partner.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      lwa_ihpa-ptrno = ls_trdetails-ptrno.</item>
+      <item>      IF lwa_ihpa-lifnr IS NOT INITIAL.</item>
+      <item>        CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            input  = lwa_ihpa-lifnr</item>
+      <item>          IMPORTING</item>
+      <item>            output = lwa_ihpa-lifnr.</item>
+      <item/>
+      <item>        SELECT lifnr                &quot;#EC CI_SEL_NESTED  &quot;#EC CI_NOORDER</item>
+      <item>               land1</item>
+      <item>               adrnr</item>
+      <item>               FROM lfa1</item>
+      <item>               INTO CORRESPONDING FIELDS OF TABLE lt_lfa1</item>
+      <item>               WHERE lifnr = lwa_ihpa-lifnr.</item>
+      <item>        IF lt_lfa1 IS NOT INITIAL.</item>
+      <item>          READ TABLE lt_lfa1 INTO lwa_lfa1 INDEX 1.     &quot;#EC CI_NOORDER</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            lwa_ihpa-lifnr = lwa_lfa1-lifnr.</item>
+      <item>            lwa_ihpa-land1 = lwa_lfa1-land1.</item>
+      <item>            lwa_ihpa-adrnr = lwa_lfa1-adrnr.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ELSEIF lwa_ihpa-kunnr IS NOT INITIAL.</item>
+      <item>        CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            input  = lwa_ihpa-kunnr</item>
+      <item>          IMPORTING</item>
+      <item>            output = lwa_ihpa-kunnr.</item>
+      <item/>
+      <item>        SELECT kunnr                &quot;#EC CI_SEL_NESTED  &quot;#EC CI_NOORDER</item>
+      <item>               land1</item>
+      <item>               adrnr</item>
+      <item>               FROM kna1</item>
+      <item>               INTO CORRESPONDING FIELDS OF TABLE lt_kna1</item>
+      <item>               WHERE kunnr = lwa_ihpa-kunnr.</item>
+      <item/>
+      <item>        IF lt_kna1 IS NOT INITIAL.</item>
+      <item>          READ TABLE lt_kna1 INTO lwa_kna1 INDEX 1.     &quot;#EC CI_NOORDER</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            lwa_ihpa-kunnr = lwa_kna1-kunnr.</item>
+      <item>            lwa_ihpa-land1 = lwa_kna1-land1.</item>
+      <item>            lwa_ihpa-adrnr = lwa_kna1-adrnr.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>      lwa_ihpa-adrda = &apos;D&apos;.</item>
+      <item>      CALL FUNCTION &apos;/AGRI/G_CONV_EXIT_PARVW_INPUT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          i_parvw = lwa_ihpa-parvw</item>
+      <item>        IMPORTING</item>
+      <item>          o_parvw = lwa_ihpa-parvw.</item>
+      <item/>
+      <item>      APPEND lwa_ihpa TO lt_ihpa.</item>
+      <item>      lwa_glfldoc-tplnr_fl = lwa_flhdr-tplnr_fl.</item>
+      <item>      lwa_glfldoc-updkz    = lwa_flhdr-updkz.</item>
+      <item>      lwa_glfldoc-x-ihpa[] = lt_ihpa[].</item>
+      <item>      lwa_glfldoc-y-ihpa[] = lt_ihpa[].</item>
+      <item>      CLEAR lwa_ihpa.</item>
+      <item>    ENDLOOP.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_GLFL_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_GLFL_DPC_EXT=========CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_GLFL_DPC_EXT=========CP\EX:/AGRI/EP_GLFL_ODATA_27\EI</FULL_NAME>
+     <SOURCE>
+      <item>*      CASE iv_action_name.</item>
+      <item>      if iv_action_name = &apos;TrCmpnyCdFi&apos;.        &quot;getting Company Code</item>
+      <item>*-- Read the maintenance planning plant</item>
+      <item>        CLEAR lwa_parameter.</item>
+      <item>        READ TABLE it_parameter INTO lwa_parameter</item>
+      <item>              WITH KEY name = gc_field_name-iwerk.&quot;&apos;Iwerk&apos;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          lv_iwerk = lwa_parameter-value.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE it_parameter INTO lwa_parameter</item>
+      <item>              WITH KEY name = &apos;Swerk&apos;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          lv_swerk = lwa_parameter-value.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lv_swerk IS NOT INITIAL  AND</item>
+      <item>           lv_iwerk IS INITIAL.</item>
+      <item>          SELECT SINGLE * FROM t001w</item>
+      <item>            INTO lwa_t001w</item>
+      <item>            WHERE werks = lv_swerk.</item>
+      <item>        ELSE.</item>
+      <item>          SELECT SINGLE * FROM t001w</item>
+      <item>            INTO lwa_t001w</item>
+      <item>            WHERE werks = lv_swerk</item>
+      <item>              AND iwerk = lv_iwerk.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF sy-subrc NE 0.</item>
+      <item>          IF lv_iwerk NE lv_swerk.</item>
+      <item>            lv_msgno = 206.</item>
+      <item>            lwa_messages-msgv1 = lv_swerk.</item>
+      <item>            lwa_message_container-&gt;add_message(</item>
+      <item>             EXPORTING iv_msg_type               = &apos;W&apos; &quot;lwa_messages-msgty</item>
+      <item>                       iv_msg_id                 = &apos;I0&apos; &quot;lwa_messages-msgid</item>
+      <item>                       iv_msg_number             = lv_msgno</item>
+      <item>                       iv_msg_v1                 = lwa_messages-msgv1</item>
+      <item>                       iv_msg_v2                 = lwa_messages-msgv2</item>
+      <item>                       iv_msg_v3                 = lwa_messages-msgv3</item>
+      <item>                       iv_msg_v4                 = lwa_messages-msgv4</item>
+      <item>                       iv_add_to_response_header = abap_true ).</item>
+      <item>          ENDIF.</item>
+      <item>          ELSEIF lwa_t001w-bwkey IS NOT INITIAL.</item>
+      <item>            SELECT SINGLE * FROM t001k</item>
+      <item>              INTO lwa_t001k</item>
+      <item>              WHERE bwkey = lwa_t001w-bwkey.</item>
+      <item/>
+      <item>          ENDIF.</item>
+      <item>*        ENDIF.</item>
+      <item>***        CALL FUNCTION &apos;ITOB_CHECK_PLANT_ALL&apos;</item>
+      <item>***          EXPORTING</item>
+      <item>***            swerk_imp         = lv_iwerk</item>
+      <item>***          IMPORTING</item>
+      <item>***            bukrs_s_exp       = lwa_bukrs</item>
+      <item>***          EXCEPTIONS</item>
+      <item>***            empty_key         = 1</item>
+      <item>***            application_error = 2</item>
+      <item>***            OTHERS            = 3.</item>
+      <item>***        IF sy-subrc &lt;&gt; 0.</item>
+      <item>**** Implement suitable error handling here</item>
+      <item>***        ENDIF.</item>
+      <item/>
+      <item>        MOVE-CORRESPONDING lwa_t001w TO lwa_terrainmaster.</item>
+      <item>        lwa_terrainmaster-bukrs = lwa_t001k-bukrs.</item>
+      <item>        lwa_terrainmaster-swerk = lwa_t001w-werks.</item>
+      <item/>
+      <item>        copy_data_to_ref( EXPORTING is_data = lwa_terrainmaster</item>
+      <item>                            CHANGING cr_data = er_data ).</item>
+      <item>exit.</item>
+      <item>    ELSEIF iv_action_name = &apos;TrMask&apos;.</item>
+      <item>        READ TABLE it_parameter INTO lwa_parameter WITH KEY name = gc_field_name-tplkz.&quot;&apos;Tplkz&apos;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          lwa_trmask-tplkz = lwa_parameter-value.</item>
+      <item>        ENDIF.</item>
+      <item>*        CALL FUNCTION &apos;FUNC_LOCATION_GET_EDITMASK&apos;</item>
+      <item>*          EXPORTING</item>
+      <item>*            structure_indicator     = lwa_trmask-tplkz</item>
+      <item>*          IMPORTING</item>
+      <item>*            editmask                = lwa_trmask-editm</item>
+      <item>*            hierarchy_levels        = lwa_trmask-stufm</item>
+      <item>*          EXCEPTIONS</item>
+      <item>*            str_indicator_not_found = 1</item>
+      <item>*            OTHERS                  = 2.</item>
+      <item>*        IF sy-subrc &lt;&gt; 0.</item>
+      <item>** Implement suitable error handling here</item>
+      <item>*        ENDIF.</item>
+      <item/>
+      <item>        SELECT SINGLE * FROM /agri/tgl370s</item>
+      <item>       INTO ls_tgl370s_buff WHERE tplkz EQ lwa_trmask-tplkz.</item>
+      <item/>
+      <item>        lwa_trmask-editm = ls_tgl370s_buff-editm.</item>
+      <item>        lwa_trmask-stufm = ls_tgl370s_buff-stufm.</item>
+      <item>        CONDENSE lwa_trmask-stufm.</item>
+      <item>        copy_data_to_ref( EXPORTING is_data = lwa_trmask &quot;#EC CI_FLDEXT_OK</item>
+      <item>                           CHANGING cr_data = er_data ).</item>
+      <item>exit.</item>
+      <item>        endif.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9BD92C0E30FB63F7D</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9BD92C0E30FB63F7D</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>Terrain Partner</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_EI_GLFL_ODATA</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9BD92C0E30FB63F7D</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

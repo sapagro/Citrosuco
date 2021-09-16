@@ -1,0 +1,1605 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Create Business Partner</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLFLM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLFLM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLFLM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLFLM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLFLM\IC:/AGRI/LGLFLMF0F\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  zabs_func_location_create</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_func_location_create.</item>
+      <item/>
+      <item>  DATA: lv_subrc       TYPE sy-subrc,</item>
+      <item>        lv_not_allowed,</item>
+      <item>        ls_tabstrip    TYPE /agri/s_gtabstrip.</item>
+      <item/>
+      <item>  PERFORM document_data_initialize USING c_true.</item>
+      <item>  gs_variables-document_mode = c_mode_create.</item>
+      <item/>
+      <item>  CLEAR: /agri/s_glflot.</item>
+      <item>  CALL FUNCTION &apos;ZABS_FM_FUNC_LOCATION_CREATE&apos;</item>
+      <item>    CHANGING</item>
+      <item>      cs_glflot = /agri/s_glflot.</item>
+      <item/>
+      <item>  CHECK /agri/s_glflot-tplkz IS NOT INITIAL.</item>
+      <item/>
+      <item>  MOVE-CORRESPONDING /agri/s_glflot TO gs_fldoc_infocus-x-flhdr.</item>
+      <item/>
+      <item>  gs_fldoc_infocus-x-flhdr-updkz = c_updkz_new.</item>
+      <item/>
+      <item>  PERFORM document_infocus_prepare.</item>
+      <item/>
+      <item>  CHECK gs_fldoc_infocus IS NOT INITIAL.</item>
+      <item/>
+      <item>  PERFORM authority_check USING gs_fldoc_infocus-x-flhdr</item>
+      <item>                                c_authorization_activity-release</item>
+      <item>                                c_msg_type-info</item>
+      <item>                       CHANGING lv_subrc.</item>
+      <item>  IF lv_subrc NE 0.</item>
+      <item>    gs_fldoc_infocus-x-flhdr-kfrst = &apos;A&apos;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM release_status_allowed_check</item>
+      <item>                                 USING gs_fldoc_infocus-x-flhdr</item>
+      <item>                                       gs_fldoc_infocus-x-flhdr-kfrst</item>
+      <item>                              CHANGING lv_not_allowed.</item>
+      <item>  IF lv_not_allowed IS NOT INITIAL.</item>
+      <item>    CLEAR: gs_fldoc_infocus, gs_variables-document_mode.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>****Set active tab</item>
+      <item>  LOOP AT gt_tabstrip_fcodes INTO ls_tabstrip WHERE invisible IS INITIAL.</item>
+      <item>    EXIT.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  ts_items-activetab = ls_tabstrip-ts_fcode.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;zabs_func_location_create</item>
+      <item/>
+      <item>FORM fcode_zupd.</item>
+      <item/>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lt_partner_fcat_x  TYPE /agri/t_gpar_partner_fcat,</item>
+      <item>        lt_return_address  TYPE bapiret2_tab,</item>
+      <item>        lt_return_tax      TYPE bapiret2_tab,</item>
+      <item>        lrt_atnam          TYPE RANGE OF atnam,</item>
+      <item>        ls_address         TYPE bapibus1006_address,</item>
+      <item>        ls_address_x       TYPE bapibus1006_address_x,</item>
+      <item>        lv_inscr_estadual  TYPE bptaxtype,</item>
+      <item>        lv_nro_fiscal      TYPE bptaxtype,</item>
+      <item>        lv_caracteristica  TYPE atnam,</item>
+      <item>        lv_subrc           TYPE sysubrc,</item>
+      <item>        lv_taxnum1         TYPE bptaxnum,</item>
+      <item>        lv_taxnum3         TYPE bptaxnum,</item>
+      <item>        lv_display_msg     TYPE abap_bool,</item>
+      <item>        lv_bup_partner     TYPE bu_partner,</item>
+      <item>        dummy.</item>
+      <item/>
+      <item>  DATA: BEGIN OF ls_business_partner,</item>
+      <item>          prop_supplier  TYPE parvw_4 VALUE &apos;FC&apos;,</item>
+      <item>          owner          TYPE parvw_4 VALUE &apos;FP&apos;,</item>
+      <item>          supplier       TYPE parvw_4 VALUE &apos;FO&apos;,</item>
+      <item>          start_supplier TYPE parvw_4 VALUE &apos;ZT&apos;,</item>
+      <item>        END OF ls_business_partner.</item>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF c_fcode,</item>
+      <item>               partner_master_display TYPE sy-ucomm VALUE &apos;IRM_PAR_MAS&apos;,</item>
+      <item>               enter                  TYPE sy-ucomm VALUE &apos;ENTR&apos;,</item>
+      <item>               adldata_display        TYPE sy-ucomm VALUE &apos;IRM_ADT&apos;,</item>
+      <item>               partner_delete         TYPE sy-ucomm VALUE &apos;PSLO&apos;,</item>
+      <item>               determination_log      TYPE sy-ucomm VALUE &apos;DETERMLOG&apos;,</item>
+      <item>               partner_details        TYPE sy-ucomm VALUE &apos;PSDE&apos;,</item>
+      <item>               propose_alternative    TYPE sy-ucomm VALUE &apos;ALT&apos;,</item>
+      <item>               select_all_partners    TYPE sy-ucomm VALUE &apos;ALST&apos;,</item>
+      <item>               deselect_all           TYPE sy-ucomm VALUE &apos;NOSE&apos;,</item>
+      <item>               filter                 TYPE sy-ucomm VALUE &apos;LISTBOX1&apos;,</item>
+      <item>               telephone              TYPE sy-ucomm VALUE &apos;TEL&apos;,</item>
+      <item>             END OF c_fcode.</item>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF c_task,</item>
+      <item>               create VALUE &apos;I&apos;,</item>
+      <item>               update VALUE &apos;U&apos;,</item>
+      <item>               modify VALUE &apos;M&apos;,</item>
+      <item>               delete VALUE &apos;D&apos;,</item>
+      <item>             END OF c_task.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lt_selected_rows_x&gt; TYPE lvc_t_row.</item>
+      <item/>
+      <item>  CLEAR gs_variables-errors.</item>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_bp_x) = abap_false.</item>
+      <item>  IF sy-tcode EQ &apos;/AGRI/GLFLM&apos;</item>
+      <item>  AND sy-cprog EQ &apos;/AGRI/SAPLGLFLM&apos;</item>
+      <item>  AND ts_items-activetab EQ &apos;T\05&apos;.</item>
+      <item>    lv_bp_x = abap_true.</item>
+      <item>  ELSE.</item>
+      <item>*-- Clique sobre a aba &quot;Parceiros&quot; p/ atualizar o endereço do Parceiro FC!</item>
+      <item>    MESSAGE i195(zfmfp).</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_bp_x EQ abap_true.</item>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input  = ls_business_partner-prop_supplier</item>
+      <item>      IMPORTING</item>
+      <item>        output = ls_business_partner-prop_supplier.</item>
+      <item/>
+      <item>    ASSIGN (&apos;(/AGRI/SAPLGPAR)GT_PARTNER_FCAT&apos;) TO FIELD-SYMBOL(&lt;lt_partner_fcat&gt;).</item>
+      <item>    IF &lt;lt_partner_fcat&gt; IS ASSIGNED.</item>
+      <item>      lt_partner_fcat_x[] = &lt;lt_partner_fcat&gt;.</item>
+      <item>      READ TABLE lt_partner_fcat_x INTO DATA(ls_partner_fc)</item>
+      <item>        WITH KEY parvw = ls_business_partner-prop_supplier.</item>
+      <item>      IF sy-subrc EQ 0</item>
+      <item>      AND ls_partner_fc-partner IS NOT INITIAL.</item>
+      <item>        lv_bup_partner = ls_partner_fc-partner.</item>
+      <item>        lv_bup_partner = |{ lv_bup_partner ALPHA = IN }|.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      RETURN.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_bup_partner IS INITIAL.</item>
+      <item>*-- Não existe fornecedor imóvel função FC para atualização de endereço!</item>
+      <item>      MESSAGE i196(zfmfp).</item>
+      <item>      RETURN.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF gs_variables-document_mode = c_mode_create</item>
+      <item>    OR gs_variables-document_mode = c_mode_change.</item>
+      <item>      IF gs_variables-initiator IS INITIAL.</item>
+      <item>        gs_variables-initiator = c_log_initiator-save.</item>
+      <item>        PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                          c_log_subobject-save</item>
+      <item>                                          gs_fldoc_infocus-x-flhdr.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_bup_partner IS NOT INITIAL.</item>
+      <item>        SELECT SINGLE partner</item>
+      <item>          FROM but000</item>
+      <item>          INTO @DATA(lv_partner_check)</item>
+      <item>         WHERE partner = @lv_bup_partner.</item>
+      <item/>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          gs_variables-data_changed = c_true.</item>
+      <item>          gs_fldoc_infocus-x-flhdr-updkz = c_updkz_update.</item>
+      <item>          gs_fldoc_infocus-updkz = c_updkz_update.</item>
+      <item/>
+      <item>          CALL FUNCTION &apos;BAPI_BUPA_ADDRESS_GETDETAIL&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              businesspartner = lv_bup_partner</item>
+      <item>            IMPORTING</item>
+      <item>              addressdata     = ls_address</item>
+      <item>            TABLES</item>
+      <item>              return          = lt_return_address.</item>
+      <item/>
+      <item>          READ TABLE lt_return_address INTO DATA(ls_message_x)</item>
+      <item>            WITH KEY type = &apos;E&apos;.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            gs_variables-errors = abap_true.</item>
+      <item>            MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>              WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                   ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>            MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>              WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                   ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>          ELSE.</item>
+      <item>            REFRESH lt_return_address.</item>
+      <item/>
+      <item>*-- Address Data</item>
+      <item>            ls_address-street = gs_fldoc_infocus-x-adrc-street.</item>
+      <item>            ls_address_x-street = abap_true.</item>
+      <item/>
+      <item>            IF gs_fldoc_infocus-x-adrc-house_num1 IS NOT INITIAL.</item>
+      <item>              ls_address-house_no = gs_fldoc_infocus-x-adrc-house_num1.</item>
+      <item>            ELSE.</item>
+      <item>              ls_address-house_no = &apos;S/N&apos;.</item>
+      <item>            ENDIF.</item>
+      <item>            ls_address_x-house_no = abap_true.</item>
+      <item/>
+      <item>            ls_address-house_no2 = gs_fldoc_infocus-x-adrc-house_num2.</item>
+      <item/>
+      <item>            IF gs_fldoc_infocus-x-adrc-city2 IS NOT INITIAL.</item>
+      <item>              ls_address-district = gs_fldoc_infocus-x-adrc-city2.</item>
+      <item>            ELSE.</item>
+      <item>              ls_address-district = &apos;ÁREA RURAL&apos;.</item>
+      <item>            ENDIF.</item>
+      <item>            ls_address_x-district = abap_true.</item>
+      <item/>
+      <item>            ls_address-postl_cod1   = gs_fldoc_infocus-x-adrc-post_code1.</item>
+      <item>            ls_address_x-postl_cod1 = abap_true.</item>
+      <item>            ls_address-city         = gs_fldoc_infocus-x-adrc-city1.</item>
+      <item>            ls_address_x-city       = abap_true.</item>
+      <item>            ls_address-country      = gs_fldoc_infocus-x-adrc-country.</item>
+      <item>            ls_address_x-country    = abap_true.</item>
+      <item>            ls_address-region       = gs_fldoc_infocus-x-adrc-region.</item>
+      <item>            ls_address_x-region     = abap_true.</item>
+      <item>            ls_address-time_zone    = gs_fldoc_infocus-x-adrc-time_zone.</item>
+      <item>            ls_address_x-time_zone  = abap_true.</item>
+      <item>            ls_address-taxjurcode   = gs_fldoc_infocus-x-adrc-taxjurcode.</item>
+      <item>            ls_address_x-taxjurcode = abap_true.</item>
+      <item>            ls_address-langu        = gs_fldoc_infocus-x-adrc-langu.</item>
+      <item>            ls_address_x-langu      = abap_true.</item>
+      <item/>
+      <item>            CALL FUNCTION &apos;LANGUAGE_CODE_SAP_TO_ISO&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                sap_code  = ls_address-langu</item>
+      <item>              IMPORTING</item>
+      <item>                iso_code  = ls_address-languiso</item>
+      <item>              EXCEPTIONS</item>
+      <item>                not_found = 1</item>
+      <item>                OTHERS    = 2.</item>
+      <item/>
+      <item>            ls_address_x-langu_iso = abap_true.</item>
+      <item/>
+      <item>            CALL FUNCTION &apos;BAPI_BUPA_ADDRESS_CHANGE&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                businesspartner = lv_bup_partner</item>
+      <item>                addressdata     = ls_address</item>
+      <item>                addressdata_x   = ls_address_x</item>
+      <item>              TABLES</item>
+      <item>                return          = lt_return_address.</item>
+      <item/>
+      <item>            READ TABLE lt_return_address INTO ls_message_x</item>
+      <item>              WITH KEY type = &apos;E&apos;.</item>
+      <item>            IF sy-subrc EQ 0.</item>
+      <item>              gs_variables-errors = abap_true.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ELSE.</item>
+      <item>              CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>                EXPORTING</item>
+      <item>                  wait = abap_true.</item>
+      <item/>
+      <item>*-- Parceiro de Negócios &amp;1 atualizado com sucesso!</item>
+      <item>              lv_display_msg = abap_true.</item>
+      <item>              MESSAGE ID &apos;ZFMFP&apos; TYPE &apos;S&apos; NUMBER &apos;198&apos;</item>
+      <item>                WITH lv_bup_partner INTO dummy.</item>
+      <item>              MESSAGE ID &apos;ZFMFP&apos; TYPE &apos;S&apos; NUMBER &apos;198&apos;</item>
+      <item>                WITH lv_bup_partner INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ENDIF.</item>
+      <item/>
+      <item>            DO 3 TIMES.</item>
+      <item>              DATA(lv_index) = sy-index.</item>
+      <item>              INSERT INITIAL LINE INTO TABLE lrt_atnam</item>
+      <item>              ASSIGNING FIELD-SYMBOL(&lt;lrs_atnam&gt;).</item>
+      <item>              IF sy-subrc EQ 0.</item>
+      <item>                &lt;lrs_atnam&gt; = &apos;IEQ&apos;.</item>
+      <item>                IF lv_index EQ 1.</item>
+      <item>                  &lt;lrs_atnam&gt;-low = &apos;CIT-IE&apos;.</item>
+      <item>                ELSEIF lv_index EQ 2.</item>
+      <item>                  &lt;lrs_atnam&gt;-low = &apos;CIT-CNPJ&apos;.</item>
+      <item>                ELSEIF lv_index EQ 3.</item>
+      <item>                  &lt;lrs_atnam&gt;-low = &apos;CIT-CPF-IMOVEL&apos;.</item>
+      <item>                ENDIF.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDDO.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          SELECT atinn, atnam</item>
+      <item>            FROM cabn</item>
+      <item>            INTO TABLE @DATA(lt_cabn)</item>
+      <item>           WHERE atnam IN @lrt_atnam[].</item>
+      <item/>
+      <item>           DATA(lv_impj) = abap_false.</item>
+      <item>           IF gs_fldoc_infocus-x-adrc-region = &apos;SP&apos;.</item>
+      <item>             lv_impj = abap_true.</item>
+      <item>           ELSE.</item>
+      <item>             READ TABLE lt_cabn INTO DATA(ls_cabn) WITH KEY atnam = &apos;CIT-CNPJ&apos;.</item>
+      <item>             IF sy-subrc EQ 0.</item>
+      <item>              READ TABLE gs_fldoc_infocus-x-flatv INTO DATA(ls_flatv)</item>
+      <item>                 WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>               IF sy-subrc EQ 0</item>
+      <item>               AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>                 lv_impj = abap_true.</item>
+      <item>               ENDIF.</item>
+      <item>             ENDIF.</item>
+      <item>           ENDIF.</item>
+      <item/>
+      <item>           IF lv_impj EQ abap_true.</item>
+      <item>             lv_inscr_estadual = &apos;BR3&apos;.</item>
+      <item>           ELSE.</item>
+      <item>             lv_inscr_estadual = &apos;BF3&apos;.</item>
+      <item>           ENDIF.</item>
+      <item/>
+      <item>           READ TABLE lt_cabn INTO ls_cabn WITH KEY atnam = &apos;CIT-IE&apos;.</item>
+      <item>           IF sy-subrc EQ 0.</item>
+      <item>             READ TABLE gs_fldoc_infocus-x-flatv INTO ls_flatv</item>
+      <item>               WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>             IF sy-subrc EQ 0</item>
+      <item>             AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>               lv_taxnum1 = ls_flatv-atwrt.</item>
+      <item>*-- Adiciona Inscrição Estadual</item>
+      <item>               REFRESH lt_return_tax.</item>
+      <item>               CALL FUNCTION &apos;BAPI_BUPA_TAX_CHANGE&apos;</item>
+      <item>                 EXPORTING</item>
+      <item>                   businesspartner = lv_bup_partner</item>
+      <item>                   taxtype         = lv_inscr_estadual</item>
+      <item>                   taxnumber       = lv_taxnum1</item>
+      <item>                 TABLES</item>
+      <item>                   return          = lt_return_tax.</item>
+      <item/>
+      <item>               READ TABLE lt_return_tax TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>               IF sy-subrc NE 0.</item>
+      <item>                 CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>                   EXPORTING</item>
+      <item>                     wait = abap_true.</item>
+      <item>               ELSE.</item>
+      <item>                 gs_variables-errors = abap_true.</item>
+      <item>                 LOOP AT lt_return_tax INTO ls_message_x.</item>
+      <item>                   gs_variables-errors = abap_true.</item>
+      <item>                   MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                     WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                          ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>                   MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                     WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                          ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>                   message_simple space.</item>
+      <item>                 ENDLOOP.</item>
+      <item>               ENDIF.</item>
+      <item>             ENDIF.</item>
+      <item>           ENDIF.</item>
+      <item/>
+      <item>          IF lv_impj EQ abap_true.</item>
+      <item>            lv_caracteristica = &apos;CIT-CNPJ&apos;.</item>
+      <item>            lv_nro_fiscal = &apos;BR1&apos;.</item>
+      <item>          ELSE.</item>
+      <item>            lv_caracteristica = &apos;CIT-CPF-IMOVEL&apos;.</item>
+      <item>            lv_nro_fiscal = &apos;BR2&apos;.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          READ TABLE lt_cabn INTO ls_cabn WITH KEY atnam = lv_caracteristica.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            READ TABLE gs_fldoc_infocus-x-flatv INTO ls_flatv</item>
+      <item>              WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>            IF sy-subrc EQ 0</item>
+      <item>            AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>              lv_taxnum3 = ls_flatv-atwrt.</item>
+      <item>*-- Adiciona CNPJ (CIT-CNPJ -&gt; BR1) ou CPF (CIT-CPF-IMOVEL -&gt; BR2)</item>
+      <item>              REFRESH lt_return_tax.</item>
+      <item>              CALL FUNCTION &apos;BAPI_BUPA_TAX_CHANGE&apos;</item>
+      <item>                EXPORTING</item>
+      <item>                  businesspartner = lv_bup_partner</item>
+      <item>                  taxtype         = lv_nro_fiscal</item>
+      <item>                  taxnumber       = lv_taxnum3</item>
+      <item>                TABLES</item>
+      <item>                  return          = lt_return_tax.</item>
+      <item/>
+      <item>              READ TABLE lt_return_tax TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>              IF sy-subrc NE 0.</item>
+      <item>                CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>                  EXPORTING</item>
+      <item>                    wait = abap_true.</item>
+      <item>              ELSE.</item>
+      <item>                gs_variables-errors = abap_true.</item>
+      <item>                LOOP AT lt_return_tax INTO ls_message_x.</item>
+      <item>                  gs_variables-errors = abap_true.</item>
+      <item>                  MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                    WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                         ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>                  MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                    WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                         ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>                  message_simple space.</item>
+      <item>                ENDLOOP.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-PARTNERS_GRID_REFRESH&apos;)</item>
+      <item>            TO FIELD-SYMBOL(&lt;ls_grid_refresh_x&gt;).</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;ls_grid_refresh_x&gt; = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-MANUAL_CHANGES&apos;)</item>
+      <item>            TO FIELD-SYMBOL(&lt;ls_man_changes_x&gt;).</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;ls_man_changes_x&gt; = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item>        ELSE.</item>
+      <item>*-- Fornecedor imóvel função FC &amp;1 inexistente!</item>
+      <item>          MESSAGE i197(zfmfp) WITH lv_bup_partner.</item>
+      <item>          RETURN.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      ASSIGN (&apos;(/AGRI/SAPLGPAR)GT_SELECTED_ROWS&apos;) TO &lt;lt_selected_rows_x&gt;.</item>
+      <item>      IF &lt;lt_selected_rows_x&gt; IS ASSIGNED.</item>
+      <item>        INSERT INITIAL LINE INTO TABLE &lt;lt_selected_rows_x&gt;</item>
+      <item>          ASSIGNING FIELD-SYMBOL(&lt;ls_selected_row_x&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;ls_selected_row_x&gt;-index = 0000000001.</item>
+      <item>          PERFORM partner_data_update IN PROGRAM /agri/saplgpar</item>
+      <item>                                           USING lt_partner_fcat_x</item>
+      <item>                                        CHANGING lv_subrc IF FOUND.</item>
+      <item/>
+      <item>          sy-ucomm = c_fcode-partner_details.</item>
+      <item>          gs_variables-partners_changed = abap_true.</item>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-PARTNERS_CHANGED&apos;)</item>
+      <item>            TO FIELD-SYMBOL(&lt;lv_changed&gt;).</item>
+      <item>          IF &lt;lv_changed&gt; IS ASSIGNED.</item>
+      <item>            &lt;lv_changed&gt; = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-PARTNERS_GRID_REFRESH&apos;)</item>
+      <item>            TO FIELD-SYMBOL(&lt;lv_refresh&gt;).</item>
+      <item>          IF &lt;lv_refresh&gt; IS ASSIGNED.</item>
+      <item>            &lt;lv_refresh&gt; = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          PERFORM partners_data_get IN PROGRAM /agri/saplgpar IF FOUND.</item>
+      <item/>
+      <item>          PERFORM partners_fcode_get IN PROGRAM /agri/saplgpar IF FOUND.</item>
+      <item/>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGLFLM)OK_CODE&apos;) TO FIELD-SYMBOL(&lt;lv_ok_code_x&gt;).</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;lv_ok_code_x&gt; = &apos;T\05&apos;.</item>
+      <item>            PERFORM fcode_processing IN PROGRAM /agri/saplglflm IF FOUND.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF gs_variables-errors EQ abap_true</item>
+      <item>    OR lv_display_msg = abap_true.</item>
+      <item>      CLEAR gs_variables-errors.</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.</item>
+      <item/>
+      <item>FORM fcode_zbp.</item>
+      <item/>
+      <item>  TYPES: ltype_xvbpa_x TYPE TABLE OF /agri/s_gvbpav.</item>
+      <item/>
+      <item>  DATA: lo_vmd_ei_api      TYPE REF TO vmd_ei_api,</item>
+      <item>        lo_cmd_ei_api      TYPE REF TO cmd_ei_api,</item>
+      <item>        lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lt_partner_fcat_x  TYPE /agri/t_gpar_partner_fcat,</item>
+      <item>        lt_tplnr           TYPE /agri/t_gltplnr,</item>
+      <item>        lt_messages        TYPE /agri/t_gprolog,</item>
+      <item>        lt_xvbpa_x         TYPE ltype_xvbpa_x,</item>
+      <item>        lt_partners        TYPE cvis_wyt3_t,</item>
+      <item>        lt_xlfas           TYPE STANDARD TABLE OF flfas INITIAL SIZE 0,</item>
+      <item>        lt_xlfb5           TYPE STANDARD TABLE OF flfb5 INITIAL SIZE 0,</item>
+      <item>        lt_xlfbk           TYPE STANDARD TABLE OF flfbk INITIAL SIZE 0,</item>
+      <item>        lt_xlfza           TYPE STANDARD TABLE OF flfza INITIAL SIZE 0,</item>
+      <item>        lt_xknvk           TYPE STANDARD TABLE OF fknvk INITIAL SIZE 0,</item>
+      <item>        lt_ylfas           TYPE STANDARD TABLE OF flfas INITIAL SIZE 0,</item>
+      <item>        lt_ylfb5           TYPE STANDARD TABLE OF flfb5 INITIAL SIZE 0,</item>
+      <item>        lt_ylfbk           TYPE STANDARD TABLE OF flfbk INITIAL SIZE 0,</item>
+      <item>        lt_ylfza           TYPE STANDARD TABLE OF flfza INITIAL SIZE 0,</item>
+      <item>        ls_vendor          TYPE vmds_ei_extern,</item>
+      <item>        ls_company         TYPE vmds_ei_company,</item>
+      <item>        ls_purchasing      TYPE vmds_ei_purchasing,</item>
+      <item>        ls_address         TYPE cvis_ei_address1,</item>
+      <item>        ls_master_data     TYPE vmds_ei_main,</item>
+      <item>        ls_functions       TYPE vmds_ei_functions,</item>
+      <item>        ls_message         TYPE /agri/s_gprolog,</item>
+      <item>        ls_variant         TYPE disvariant,</item>
+      <item>        ls_lfa1            TYPE lfa1,</item>
+      <item>        ls_lfb1            TYPE lfb1,</item>
+      <item>        ls_lfm1            TYPE lfm1,</item>
+      <item>        ls_ylfa1           TYPE lfa1,</item>
+      <item>        ls_ylfb1           TYPE lfb1,</item>
+      <item>        ls_ylfm1           TYPE lfm1,</item>
+      <item>        lv_display_msg     TYPE abap_bool,</item>
+      <item>        lv_fldname         TYPE fieldname,</item>
+      <item>        lv_subrc           TYPE sysubrc,</item>
+      <item>        lv_posnr           TYPE posnr,</item>
+      <item>        lv_bup_partner     TYPE bu_partner,</item>
+      <item>        lv_impj            TYPE abap_bool,</item>
+      <item>        dummy.</item>
+      <item/>
+      <item>  DATA: BEGIN OF ls_business_partner,</item>
+      <item>          prop_supplier  TYPE parvw_4 VALUE &apos;FC&apos;,</item>
+      <item>          owner          TYPE parvw_4 VALUE &apos;FP&apos;,</item>
+      <item>          supplier       TYPE parvw_4 VALUE &apos;FO&apos;,</item>
+      <item>          start_supplier TYPE parvw_4 VALUE &apos;ZT&apos;,</item>
+      <item>        END OF ls_business_partner.</item>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF c_fcode,</item>
+      <item>               partner_master_display TYPE sy-ucomm VALUE &apos;IRM_PAR_MAS&apos;,</item>
+      <item>               enter                  TYPE sy-ucomm VALUE &apos;ENTR&apos;,</item>
+      <item>               adldata_display        TYPE sy-ucomm VALUE &apos;IRM_ADT&apos;,</item>
+      <item>               partner_delete         TYPE sy-ucomm VALUE &apos;PSLO&apos;,</item>
+      <item>               determination_log      TYPE sy-ucomm VALUE &apos;DETERMLOG&apos;,</item>
+      <item>               partner_details        TYPE sy-ucomm VALUE &apos;PSDE&apos;,</item>
+      <item>               propose_alternative    TYPE sy-ucomm VALUE &apos;ALT&apos;,</item>
+      <item>               select_all_partners    TYPE sy-ucomm VALUE &apos;ALST&apos;,</item>
+      <item>               deselect_all           TYPE sy-ucomm VALUE &apos;NOSE&apos;,</item>
+      <item>               filter                 TYPE sy-ucomm VALUE &apos;LISTBOX1&apos;,</item>
+      <item>               telephone              TYPE sy-ucomm VALUE &apos;TEL&apos;,</item>
+      <item>             END OF c_fcode.</item>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF c_task,</item>
+      <item>               create VALUE &apos;I&apos;,</item>
+      <item>               update VALUE &apos;U&apos;,</item>
+      <item>               modify VALUE &apos;M&apos;,</item>
+      <item>               delete VALUE &apos;D&apos;,</item>
+      <item>             END OF c_task.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lt_selected_rows_x&gt; TYPE lvc_t_row.</item>
+      <item/>
+      <item>  CLEAR gs_variables-errors.</item>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_bp_x) = abap_false.</item>
+      <item>  IF sy-tcode EQ &apos;/AGRI/GLFLM&apos;</item>
+      <item>  AND sy-cprog EQ &apos;/AGRI/SAPLGLFLM&apos;</item>
+      <item>  AND ts_items-activetab EQ &apos;T\05&apos;.</item>
+      <item>    lv_bp_x = abap_true.</item>
+      <item>  ELSE.</item>
+      <item>*-- Clique sobre a aba &quot;Parceiros&quot; para criar o Parceiro de Negócios!</item>
+      <item>    MESSAGE i095(zfmfp).</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_bp_x EQ abap_true.</item>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input  = ls_business_partner-supplier</item>
+      <item>      IMPORTING</item>
+      <item>        output = ls_business_partner-supplier.</item>
+      <item/>
+      <item>    DATA(lv_partner_fo) = abap_false.</item>
+      <item>    ASSIGN (&apos;(/AGRI/SAPLGPAR)GT_PARTNER_FCAT&apos;) TO FIELD-SYMBOL(&lt;lt_partner_fcat&gt;).</item>
+      <item>    IF &lt;lt_partner_fcat&gt; IS ASSIGNED.</item>
+      <item>      lt_partner_fcat_x[] = &lt;lt_partner_fcat&gt;.</item>
+      <item>      READ TABLE lt_partner_fcat_x INTO DATA(ls_partner_fo)</item>
+      <item>        WITH KEY parvw = ls_business_partner-supplier.</item>
+      <item>      IF sy-subrc EQ 0</item>
+      <item>      AND ls_partner_fo-partner IS NOT INITIAL.</item>
+      <item>        lv_partner_fo = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      RETURN.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_partner_fo EQ abap_false.</item>
+      <item>*-- Informar fornecedor função FO antes de criar fornecedor imóvel função FC!</item>
+      <item>      MESSAGE i194(zfmfp).</item>
+      <item>      RETURN.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input  = ls_business_partner-prop_supplier</item>
+      <item>      IMPORTING</item>
+      <item>        output = ls_business_partner-prop_supplier.</item>
+      <item/>
+      <item>    READ TABLE lt_partner_fcat_x TRANSPORTING NO FIELDS</item>
+      <item>      WITH KEY parvw = ls_business_partner-prop_supplier.</item>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>      DATA(lv_updkz) = c_updkz_new.</item>
+      <item>    ELSE.</item>
+      <item>      lv_updkz = c_updkz_update.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF gs_variables-document_mode = c_mode_create</item>
+      <item>    OR gs_variables-document_mode = c_mode_change.</item>
+      <item>      IF gs_variables-initiator IS INITIAL.</item>
+      <item>        gs_variables-initiator = c_log_initiator-save.</item>
+      <item>        PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                          c_log_subobject-save</item>
+      <item>                                          gs_fldoc_infocus-x-flhdr.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      PERFORM zabs_cria_bp CHANGING lv_bup_partner</item>
+      <item>                                    lv_impj</item>
+      <item>                                    lv_display_msg.</item>
+      <item/>
+      <item>      IF lv_bup_partner IS NOT INITIAL.</item>
+      <item>        gs_variables-data_changed = c_true.</item>
+      <item>        gs_fldoc_infocus-x-flhdr-updkz = c_updkz_update.</item>
+      <item>        gs_fldoc_infocus-updkz = c_updkz_update.</item>
+      <item/>
+      <item>        SELECT * UP TO 1 ROWS</item>
+      <item>          FROM but020</item>
+      <item>          INTO @DATA(ls_but020)</item>
+      <item>         WHERE partner = @lv_bup_partner.</item>
+      <item>        ENDSELECT.</item>
+      <item/>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          SELECT * UP TO 1 ROWS</item>
+      <item>            FROM adrc</item>
+      <item>            INTO @DATA(ls_adrc)</item>
+      <item>           WHERE addrnumber = @ls_but020-addrnumber.</item>
+      <item>          ENDSELECT.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_partner_fcat_x ASSIGNING FIELD-SYMBOL(&lt;ls_partner_fcat_x&gt;)</item>
+      <item>          WITH KEY parvw = ls_business_partner-prop_supplier.</item>
+      <item>        IF sy-subrc NE 0.</item>
+      <item>          DATA(lv_new_line) = abap_false.</item>
+      <item>          LOOP AT lt_partner_fcat_x ASSIGNING &lt;ls_partner_fcat_x&gt;.</item>
+      <item>            IF &lt;ls_partner_fcat_x&gt; IS INITIAL.</item>
+      <item>              lv_new_line = abap_true.</item>
+      <item>              EXIT.</item>
+      <item>            ELSE.</item>
+      <item>              lv_posnr = &lt;ls_partner_fcat_x&gt;-posnr.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDLOOP.</item>
+      <item/>
+      <item>          IF lv_new_line = abap_false.</item>
+      <item>            INSERT INITIAL LINE INTO TABLE lt_partner_fcat_x</item>
+      <item>              ASSIGNING &lt;ls_partner_fcat_x&gt;.</item>
+      <item>            lv_new_line = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item>        ELSE.</item>
+      <item>          lv_new_line = abap_true.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lv_new_line = abap_true.</item>
+      <item>          MOVE-CORRESPONDING ls_adrc TO &lt;ls_partner_fcat_x&gt;.</item>
+      <item>          ADD 1 TO lv_posnr.</item>
+      <item>          &lt;ls_partner_fcat_x&gt;-posnr   = lv_posnr.</item>
+      <item>          &lt;ls_partner_fcat_x&gt;-parvw   = ls_business_partner-prop_supplier.</item>
+      <item>          &lt;ls_partner_fcat_x&gt;-partner = lv_bup_partner.</item>
+      <item>          &lt;lt_partner_fcat&gt; = lt_partner_fcat_x[].</item>
+      <item>*-- Parceiro de Negócios FC &amp;1 atribuído ao Terreno!</item>
+      <item>*          MESSAGE i096(zfmfp) WITH lv_bup_partner.</item>
+      <item>          lv_display_msg = abap_true.</item>
+      <item>          MESSAGE ID &apos;ZFMFP&apos; TYPE &apos;S&apos; NUMBER &apos;096&apos;</item>
+      <item>            WITH lv_bup_partner INTO dummy.</item>
+      <item>          MESSAGE ID &apos;ZFMFP&apos; TYPE &apos;S&apos; NUMBER &apos;096&apos;</item>
+      <item>            WITH lv_bup_partner INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-PARTNERS_GRID_REFRESH&apos;)</item>
+      <item>          TO FIELD-SYMBOL(&lt;ls_grid_refresh_x&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;ls_grid_refresh_x&gt; = abap_true.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-MANUAL_CHANGES&apos;)</item>
+      <item>          TO FIELD-SYMBOL(&lt;ls_man_changes_x&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;ls_man_changes_x&gt; = abap_true.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lv_impj EQ abap_true.</item>
+      <item>          CREATE OBJECT lo_vmd_ei_api.</item>
+      <item>*-- Interface externa: dados centrais</item>
+      <item>          ls_vendor-central_data-central-data-ktokk = &apos;IMPJ&apos;.</item>
+      <item>*-- Interface externa: dados da empresa</item>
+      <item>          ls_company-task = c_task-modify.</item>
+      <item>          ls_company-data_key-bukrs = gs_fldoc_infocus-x-flhdr-bukrs.</item>
+      <item>*-- Chave para a ordenação por nºs atribuição</item>
+      <item>          ls_company-data-zuawa = &apos;009&apos;.</item>
+      <item>*-- Cta.de reconciliação na contabilidade geral</item>
+      <item>          ls_company-data-akont = &apos;2101010001&apos;.</item>
+      <item>*-- Grupo de administração de tesouraria</item>
+      <item>          ls_company-data-fdgrv = &apos;A1&apos;. &quot;F-FRUTAS</item>
+      <item>          IF lv_impj EQ abap_true.</item>
+      <item>            APPEND ls_company TO ls_vendor-company_data-company.</item>
+      <item>          ENDIF.</item>
+      <item>*-- Interface externa: dados de compras</item>
+      <item>          ls_purchasing-task = c_task-modify.</item>
+      <item>          ls_purchasing-data_key-ekorg = &apos;CIT&apos;. &quot;Citros - fruit</item>
+      <item>*-- Interface externa: funções de parceiro</item>
+      <item>          DO 3 TIMES.</item>
+      <item>            DATA(lv_index) = sy-index.</item>
+      <item>            CLEAR ls_functions.</item>
+      <item>            CASE lv_index.</item>
+      <item>              WHEN 1.</item>
+      <item>                ls_functions-task = c_task-modify.</item>
+      <item/>
+      <item>                ls_functions-data-partner = lv_bup_partner.</item>
+      <item>                CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>                  EXPORTING</item>
+      <item>                    input  = ls_functions-data-partner</item>
+      <item>                  IMPORTING</item>
+      <item>                    output = ls_functions-data-partner.</item>
+      <item/>
+      <item>                ls_functions-data_key-parvw = &apos;ZF&apos;.</item>
+      <item>                CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>                  EXPORTING</item>
+      <item>                    input  = ls_functions-data_key-parvw</item>
+      <item>                  IMPORTING</item>
+      <item>                    output = ls_functions-data_key-parvw.</item>
+      <item/>
+      <item>                ls_functions-data-defpa    = abap_true.</item>
+      <item>                ls_functions-datax-defpa   = abap_true.</item>
+      <item>                ls_functions-datax-partner = abap_true.</item>
+      <item>                APPEND ls_functions TO ls_purchasing-functions-functions.</item>
+      <item>              WHEN 2.</item>
+      <item>                READ TABLE lt_partner_fcat_x INTO ls_partner_fo</item>
+      <item>                  WITH KEY parvw = ls_business_partner-supplier.</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  CONDENSE ls_partner_fo-partner NO-GAPS.</item>
+      <item>                  ls_functions-task = c_task-modify.</item>
+      <item/>
+      <item>                  ls_functions-data-partner = ls_partner_fo-partner(10).</item>
+      <item>                  CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      input  = ls_functions-data-partner</item>
+      <item>                    IMPORTING</item>
+      <item>                      output = ls_functions-data-partner.</item>
+      <item/>
+      <item>                  ls_functions-data_key-parvw = &apos;ZG&apos;.</item>
+      <item>                  CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      input  = ls_functions-data_key-parvw</item>
+      <item>                    IMPORTING</item>
+      <item>                      output = ls_functions-data_key-parvw.</item>
+      <item/>
+      <item>                  ls_functions-data-defpa    = abap_false.</item>
+      <item>                  ls_functions-datax-defpa   = abap_true.</item>
+      <item>                  ls_functions-datax-partner = abap_true.</item>
+      <item>                  APPEND ls_functions TO ls_purchasing-functions-functions.</item>
+      <item>                ENDIF.</item>
+      <item>              WHEN 3.</item>
+      <item>*-- Verifica Parceiro FO</item>
+      <item>                READ TABLE lt_partner_fcat_x INTO ls_partner_fo</item>
+      <item>                  WITH KEY parvw = ls_business_partner-supplier.</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  CONDENSE ls_partner_fo-partner NO-GAPS.</item>
+      <item>                  ls_functions-task = c_task-modify.</item>
+      <item/>
+      <item>                  ls_functions-data-partner = ls_partner_fo-partner(10).</item>
+      <item>                  CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      input  = ls_functions-data-partner</item>
+      <item>                    IMPORTING</item>
+      <item>                      output = ls_functions-data-partner.</item>
+      <item>*-- Verifica Parceiros do Parceiro FO</item>
+      <item>                  CALL FUNCTION &apos;/AGRI/G_WYT3_SELECT_WITH_EKORG&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      i_lifnr         = ls_functions-data-partner</item>
+      <item>                      i_ekorg         = &apos;CIT&apos;</item>
+      <item>                    IMPORTING</item>
+      <item>                      et_wyt3         = lt_partners</item>
+      <item>                    EXCEPTIONS</item>
+      <item>                      no_record_found = 1</item>
+      <item>                      OTHERS          = 2.</item>
+      <item/>
+      <item>                  IF sy-subrc EQ 0.</item>
+      <item>*-- Verifica Parceiro ZT</item>
+      <item>                    CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>                      EXPORTING</item>
+      <item>                        input  = ls_business_partner-start_supplier</item>
+      <item>                      IMPORTING</item>
+      <item>                        output = ls_business_partner-start_supplier.</item>
+      <item/>
+      <item>                    READ TABLE lt_partners INTO DATA(ls_partner_zt)</item>
+      <item>                      WITH KEY parvw = ls_business_partner-start_supplier.</item>
+      <item>                    IF sy-subrc EQ 0.</item>
+      <item>                      ls_functions-data_key-parvw = ls_business_partner-start_supplier.</item>
+      <item>                      ls_functions-data-partner = ls_partner_zt-lifn2.</item>
+      <item>                      ls_functions-data-defpa    = abap_false.</item>
+      <item>                      ls_functions-datax-defpa   = abap_true.</item>
+      <item>                      ls_functions-datax-partner = abap_true.</item>
+      <item>                      APPEND ls_functions TO ls_purchasing-functions-functions.</item>
+      <item>                    ENDIF.</item>
+      <item>                  ENDIF.</item>
+      <item>                ENDIF.</item>
+      <item>            ENDCASE.</item>
+      <item>          ENDDO.</item>
+      <item/>
+      <item>          APPEND ls_purchasing TO ls_vendor-purchasing_data-purchasing.</item>
+      <item>          ls_vendor-header-object_instance-lifnr = lv_bup_partner.</item>
+      <item>          ls_vendor-header-object_task = c_task-update.</item>
+      <item>          APPEND ls_vendor TO ls_master_data-vendors.</item>
+      <item/>
+      <item>*-- Maintain vendor data</item>
+      <item>          CALL METHOD vmd_ei_api=&gt;maintain_bapi</item>
+      <item>            EXPORTING</item>
+      <item>              iv_collect_messages      = &apos;X&apos;</item>
+      <item>              is_master_data           = ls_master_data</item>
+      <item>            IMPORTING</item>
+      <item>              es_master_data_correct   = DATA(ls_master_data_correct)</item>
+      <item>              es_message_correct       = DATA(ls_message_correct)</item>
+      <item>              es_master_data_defective = DATA(ls_master_data_defective)</item>
+      <item>              es_message_defective     = DATA(ls_message_defective).</item>
+      <item/>
+      <item>          IF ls_message_defective-is_error IS INITIAL</item>
+      <item>          AND ls_message_defective-messages[] IS INITIAL.</item>
+      <item>            COMMIT WORK AND WAIT.</item>
+      <item>          ELSE.</item>
+      <item>            ROLLBACK WORK.</item>
+      <item>            gs_variables-errors = abap_true.</item>
+      <item>            LOOP AT ls_message_defective-messages INTO DATA(ls_message_x).</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ENDLOOP.</item>
+      <item>          ENDIF.</item>
+      <item>        ELSE.</item>
+      <item>          CREATE OBJECT lo_vmd_ei_api.</item>
+      <item>*-- Interface externa: dados centrais</item>
+      <item>          ls_vendor-central_data-central-data-ktokk = &apos;IMPF&apos;.</item>
+      <item>*-- Interface externa: dados da empresa</item>
+      <item>          ls_company-task = c_task-modify.</item>
+      <item>          ls_company-data_key-bukrs = gs_fldoc_infocus-x-flhdr-bukrs.</item>
+      <item>*-- Chave para a ordenação por nºs atribuição</item>
+      <item>          ls_company-data-zuawa = &apos;009&apos;.</item>
+      <item>*-- Cta.de reconciliação na contabilidade geral</item>
+      <item>          ls_company-data-akont = &apos;2101010001&apos;.</item>
+      <item>*-- Grupo de administração de tesouraria</item>
+      <item>          ls_company-data-fdgrv = &apos;A1&apos;. &quot;F-FRUTAS</item>
+      <item>          APPEND ls_company TO ls_vendor-company_data-company.</item>
+      <item>*-- Interface externa: dados de compras</item>
+      <item>          ls_purchasing-task = c_task-modify.</item>
+      <item>          ls_purchasing-data_key-ekorg = &apos;CIT&apos;. &quot;Citros - fruit</item>
+      <item>*-- Interface externa: funções de parceiro</item>
+      <item>          DO 3 TIMES.</item>
+      <item>            lv_index = sy-index.</item>
+      <item>            CLEAR ls_functions.</item>
+      <item>            CASE lv_index.</item>
+      <item>              WHEN 1.</item>
+      <item>                ls_functions-task = c_task-modify.</item>
+      <item/>
+      <item>                ls_functions-data-partner = lv_bup_partner.</item>
+      <item>                CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>                  EXPORTING</item>
+      <item>                    input  = ls_functions-data-partner</item>
+      <item>                  IMPORTING</item>
+      <item>                    output = ls_functions-data-partner.</item>
+      <item/>
+      <item>                ls_functions-data_key-parvw = &apos;ZF&apos;.</item>
+      <item>                CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>                  EXPORTING</item>
+      <item>                    input  = ls_functions-data_key-parvw</item>
+      <item>                  IMPORTING</item>
+      <item>                    output = ls_functions-data_key-parvw.</item>
+      <item/>
+      <item>                ls_functions-data-defpa    = abap_true.</item>
+      <item>                ls_functions-datax-defpa   = abap_true.</item>
+      <item>                ls_functions-datax-partner = abap_true.</item>
+      <item>                APPEND ls_functions TO ls_purchasing-functions-functions.</item>
+      <item>              WHEN 2.</item>
+      <item>                READ TABLE lt_partner_fcat_x INTO ls_partner_fo</item>
+      <item>                  WITH KEY parvw = ls_business_partner-supplier.</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  CONDENSE ls_partner_fo-partner NO-GAPS.</item>
+      <item>                  ls_functions-task = c_task-modify.</item>
+      <item/>
+      <item>                  ls_functions-data-partner = ls_partner_fo-partner(10).</item>
+      <item>                  CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      input  = ls_functions-data-partner</item>
+      <item>                    IMPORTING</item>
+      <item>                      output = ls_functions-data-partner.</item>
+      <item/>
+      <item>                  ls_functions-data_key-parvw = &apos;ZG&apos;.</item>
+      <item>                  CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      input  = ls_functions-data_key-parvw</item>
+      <item>                    IMPORTING</item>
+      <item>                      output = ls_functions-data_key-parvw.</item>
+      <item/>
+      <item>                  ls_functions-data-defpa    = abap_false.</item>
+      <item>                  ls_functions-datax-defpa   = abap_true.</item>
+      <item>                  ls_functions-datax-partner = abap_true.</item>
+      <item>                  APPEND ls_functions TO ls_purchasing-functions-functions.</item>
+      <item>                ENDIF.</item>
+      <item>              WHEN 3.</item>
+      <item>*-- Verifica Parceiro FO</item>
+      <item>                READ TABLE lt_partner_fcat_x INTO ls_partner_fo</item>
+      <item>                  WITH KEY parvw = ls_business_partner-supplier.</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  CONDENSE ls_partner_fo-partner NO-GAPS.</item>
+      <item>                  ls_functions-task = c_task-modify.</item>
+      <item/>
+      <item>                  ls_functions-data-partner = ls_partner_fo-partner(10).</item>
+      <item>                  CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      input  = ls_functions-data-partner</item>
+      <item>                    IMPORTING</item>
+      <item>                      output = ls_functions-data-partner.</item>
+      <item>*-- Verifica Parceiros do Parceiro FO</item>
+      <item>                  CALL FUNCTION &apos;/AGRI/G_WYT3_SELECT_WITH_EKORG&apos;</item>
+      <item>                    EXPORTING</item>
+      <item>                      i_lifnr         = ls_functions-data-partner</item>
+      <item>                      i_ekorg         = &apos;CIT&apos;</item>
+      <item>                    IMPORTING</item>
+      <item>                      et_wyt3         = lt_partners</item>
+      <item>                    EXCEPTIONS</item>
+      <item>                      no_record_found = 1</item>
+      <item>                      OTHERS          = 2.</item>
+      <item/>
+      <item>                  IF sy-subrc EQ 0.</item>
+      <item>*-- Verifica Parceiro ZT</item>
+      <item>                    CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>                      EXPORTING</item>
+      <item>                        input  = ls_business_partner-start_supplier</item>
+      <item>                      IMPORTING</item>
+      <item>                        output = ls_business_partner-start_supplier.</item>
+      <item/>
+      <item>                    READ TABLE lt_partners INTO ls_partner_zt</item>
+      <item>                      WITH KEY parvw = ls_business_partner-start_supplier.</item>
+      <item>                    IF sy-subrc EQ 0.</item>
+      <item>                      ls_functions-data_key-parvw = ls_business_partner-start_supplier.</item>
+      <item>                      ls_functions-data-partner = ls_partner_zt-lifn2.</item>
+      <item>                      ls_functions-data-defpa    = abap_false.</item>
+      <item>                      ls_functions-datax-defpa   = abap_true.</item>
+      <item>                      ls_functions-datax-partner = abap_true.</item>
+      <item>                      APPEND ls_functions TO ls_purchasing-functions-functions.</item>
+      <item>                    ENDIF.</item>
+      <item>                  ENDIF.</item>
+      <item>                ENDIF.</item>
+      <item>            ENDCASE.</item>
+      <item>          ENDDO.</item>
+      <item/>
+      <item>*-- Set the Address for the Vendor</item>
+      <item>          ls_vendor-central_data-address = ls_address.</item>
+      <item>          APPEND ls_purchasing TO ls_vendor-purchasing_data-purchasing.</item>
+      <item>          ls_vendor-header-object_instance-lifnr = lv_bup_partner.</item>
+      <item>          ls_vendor-header-object_task = c_task-update.</item>
+      <item>          APPEND ls_vendor TO ls_master_data-vendors.</item>
+      <item/>
+      <item>*-- Maintain vendor data</item>
+      <item>          CALL METHOD vmd_ei_api=&gt;maintain_bapi</item>
+      <item>            EXPORTING</item>
+      <item>              iv_collect_messages      = &apos;X&apos;</item>
+      <item>              is_master_data           = ls_master_data</item>
+      <item>            IMPORTING</item>
+      <item>              es_master_data_correct   = ls_master_data_correct</item>
+      <item>              es_message_correct       = ls_message_correct</item>
+      <item>              es_master_data_defective = ls_master_data_defective</item>
+      <item>              es_message_defective     = ls_message_defective.</item>
+      <item/>
+      <item>          IF ls_message_defective-is_error IS INITIAL</item>
+      <item>          AND ls_message_defective-messages[] IS INITIAL.</item>
+      <item>            COMMIT WORK AND WAIT.</item>
+      <item>          ELSE.</item>
+      <item>            ROLLBACK WORK.</item>
+      <item>            gs_variables-errors = abap_true.</item>
+      <item>            LOOP AT ls_message_defective-messages INTO ls_message_x.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ENDLOOP.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      ASSIGN (&apos;(/AGRI/SAPLGPAR)GT_SELECTED_ROWS&apos;) TO &lt;lt_selected_rows_x&gt;.</item>
+      <item>      IF &lt;lt_selected_rows_x&gt; IS ASSIGNED.</item>
+      <item>        INSERT INITIAL LINE INTO TABLE &lt;lt_selected_rows_x&gt;</item>
+      <item>          ASSIGNING FIELD-SYMBOL(&lt;ls_selected_row_x&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;ls_selected_row_x&gt;-index = 0000000001.</item>
+      <item>          PERFORM partner_data_update IN PROGRAM /agri/saplgpar</item>
+      <item>                                           USING lt_partner_fcat_x</item>
+      <item>                                        CHANGING lv_subrc IF FOUND.</item>
+      <item/>
+      <item>          sy-ucomm = c_fcode-partner_details.</item>
+      <item>          gs_variables-partners_changed = abap_true.</item>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-PARTNERS_CHANGED&apos;)</item>
+      <item>            TO FIELD-SYMBOL(&lt;lv_changed&gt;).</item>
+      <item>          IF &lt;lv_changed&gt; IS ASSIGNED.</item>
+      <item>            &lt;lv_changed&gt; = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGPAR)GS_VARIABLES-PARTNERS_GRID_REFRESH&apos;)</item>
+      <item>            TO FIELD-SYMBOL(&lt;lv_refresh&gt;).</item>
+      <item>          IF &lt;lv_refresh&gt; IS ASSIGNED.</item>
+      <item>            &lt;lv_refresh&gt; = abap_true.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          PERFORM partners_data_get IN PROGRAM /agri/saplgpar IF FOUND.</item>
+      <item/>
+      <item>          PERFORM partners_fcode_get IN PROGRAM /agri/saplgpar IF FOUND.</item>
+      <item/>
+      <item>          ASSIGN (&apos;(/AGRI/SAPLGLFLM)OK_CODE&apos;) TO FIELD-SYMBOL(&lt;lv_ok_code_x&gt;).</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;lv_ok_code_x&gt; = &apos;T\05&apos;.</item>
+      <item>            PERFORM fcode_processing IN PROGRAM /agri/saplglflm IF FOUND.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF gs_variables-errors EQ abap_true</item>
+      <item>    OR lv_display_msg = abap_true.</item>
+      <item>      CLEAR gs_variables-errors.</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.</item>
+      <item/>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_CRIA_BP</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_cria_bp CHANGING lv_bup_partner TYPE bu_partner</item>
+      <item>                           cv_impj        TYPE abap_bool</item>
+      <item>                           lv_display_msg TYPE abap_bool.</item>
+      <item>  DATA: lt_return_create  TYPE bapiret2_tab,</item>
+      <item>        lt_return_indsec  TYPE bapiret2_tab,</item>
+      <item>        lt_return_role    TYPE bapiret2_tab,</item>
+      <item>        lt_return_dequeue TYPE bapiret2_tab,</item>
+      <item>        lt_return_tax     TYPE bapiret2_tab,</item>
+      <item>        lt_partner_fcat_x TYPE /agri/t_gpar_partner_fcat,</item>
+      <item>        lt_roles          TYPE STANDARD TABLE OF bapibusisb990_bproles,</item>
+      <item>        lrt_atnam         TYPE RANGE OF atnam,</item>
+      <item>        lrt_role          TYPE RANGE OF bu_partnerrole,</item>
+      <item>        ls_role           LIKE LINE OF lt_roles,</item>
+      <item>        ls_ind_key        TYPE bsc_indusk,</item>
+      <item>        ls_ind_data       TYPE bus_ei_com_struc_industrysec,</item>
+      <item>        ls_centraldata    TYPE bapibus1006_central,</item>
+      <item>        ls_centralperson  TYPE bapibus1006_central_person,</item>
+      <item>        ls_centralorg     TYPE bapibus1006_central_organ,</item>
+      <item>        ls_address        TYPE bapibus1006_address,</item>
+      <item>        ls_taxcommon      TYPE bapibus1006tax_common,</item>
+      <item>        ls_but000         TYPE but000,</item>
+      <item>        ls_vendors        TYPE vmds_ei_main,</item>
+      <item>        ls_vendor         TYPE vmds_ei_extern,</item>
+      <item>        lv_inscr_estadual TYPE bptaxtype,</item>
+      <item>        lv_nro_fiscal     TYPE bptaxtype,</item>
+      <item>        lv_category       TYPE bapibus1006_head-partn_cat,</item>
+      <item>        lv_partn_grp      TYPE bapibus1006_head-partn_grp,</item>
+      <item>        lv_testrun        TYPE testrun VALUE abap_true,</item>
+      <item>        lv_partner_locked TYPE abap_bool,</item>
+      <item>        lv_caracteristica TYPE atnam,</item>
+      <item>        lv_taxnum1        TYPE bptaxnum,</item>
+      <item>        lv_taxnum3        TYPE bptaxnum,</item>
+      <item>        dummy.</item>
+      <item/>
+      <item>  DATA: BEGIN OF ls_business_partner,</item>
+      <item>          prop_supplier  TYPE parvw_4 VALUE &apos;FC&apos;,</item>
+      <item>          owner          TYPE parvw_4 VALUE &apos;FP&apos;,</item>
+      <item>          supplier       TYPE parvw_4 VALUE &apos;FO&apos;,</item>
+      <item>          start_supplier TYPE parvw_4 VALUE &apos;ZT&apos;,</item>
+      <item>        END OF ls_business_partner.</item>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF lc_partner_type,</item>
+      <item>               person TYPE bu_type VALUE &apos;1&apos;,</item>
+      <item>               group  TYPE bu_type VALUE &apos;3&apos;,</item>
+      <item>               org    TYPE bu_type VALUE &apos;2&apos;,</item>
+      <item>             END OF lc_partner_type.</item>
+      <item/>
+      <item>  IF gs_variables-document_mode = c_mode_change</item>
+      <item>  OR gs_variables-document_mode = c_mode_create.</item>
+      <item>    CALL FUNCTION &apos;BUFFER_REFRESH_ALL&apos;.</item>
+      <item/>
+      <item>    DO 3 TIMES.</item>
+      <item>      DATA(lv_index) = sy-index.</item>
+      <item>      INSERT INITIAL LINE INTO TABLE lrt_atnam</item>
+      <item>        ASSIGNING FIELD-SYMBOL(&lt;lrs_atnam&gt;).</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lrs_atnam&gt; = &apos;IEQ&apos;.</item>
+      <item>        IF lv_index EQ 1.</item>
+      <item>          &lt;lrs_atnam&gt;-low = &apos;CIT-IE&apos;.</item>
+      <item>        ELSEIF lv_index EQ 2.</item>
+      <item>          &lt;lrs_atnam&gt;-low = &apos;CIT-CNPJ&apos;.</item>
+      <item>        ELSEIF lv_index EQ 3.</item>
+      <item>          &lt;lrs_atnam&gt;-low = &apos;CIT-CPF-IMOVEL&apos;.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDDO.</item>
+      <item/>
+      <item>    SELECT atinn, atnam</item>
+      <item>      FROM cabn</item>
+      <item>      INTO TABLE @DATA(lt_cabn)</item>
+      <item>     WHERE atnam IN @lrt_atnam[].</item>
+      <item/>
+      <item>    DATA(lv_impj) = abap_false.</item>
+      <item>    IF gs_fldoc_infocus-x-adrc-region = &apos;SP&apos;.</item>
+      <item>      lv_impj = abap_true.</item>
+      <item>    ELSE.</item>
+      <item>      READ TABLE lt_cabn INTO DATA(ls_cabn) WITH KEY atnam = &apos;CIT-CNPJ&apos;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>       READ TABLE gs_fldoc_infocus-x-flatv INTO DATA(ls_flatv)</item>
+      <item>          WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>        IF sy-subrc EQ 0</item>
+      <item>        AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>          lv_impj = abap_true.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    cv_impj = lv_impj.</item>
+      <item/>
+      <item>    IF lv_impj EQ abap_true.</item>
+      <item>      lv_caracteristica = &apos;CIT-CNPJ&apos;.</item>
+      <item>      lv_nro_fiscal = &apos;BR1&apos;.</item>
+      <item>    ELSE.</item>
+      <item>      lv_caracteristica = &apos;CIT-CPF-IMOVEL&apos;.</item>
+      <item>      lv_nro_fiscal = &apos;BR2&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    DATA(lv_create) = abap_false.</item>
+      <item>    READ TABLE lt_cabn INTO ls_cabn WITH KEY atnam = lv_caracteristica.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      READ TABLE gs_fldoc_infocus-x-flatv INTO ls_flatv</item>
+      <item>        WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>      IF sy-subrc EQ 0</item>
+      <item>      AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>        lv_create = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_create EQ abap_false.</item>
+      <item>      IF lv_impj EQ abap_true.</item>
+      <item>*-- BP não pode ser criado. Verificar preenchimento CNPJ.</item>
+      <item>        MESSAGE i242(zfmfp).</item>
+      <item>      ELSE.</item>
+      <item>*-- BP não pode ser criado. Verificar preenchimento CPF.</item>
+      <item>        MESSAGE i243(zfmfp).</item>
+      <item>      ENDIF.</item>
+      <item>      RETURN.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Partner Category</item>
+      <item>    IF lv_impj EQ abap_true.</item>
+      <item>      lv_category = lc_partner_type-org.</item>
+      <item>    ELSE.</item>
+      <item>      lv_category = lc_partner_type-person.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Partner Group</item>
+      <item>    IF lv_impj EQ abap_false.</item>
+      <item>      lv_partn_grp = &apos;0024&apos;.</item>
+      <item>    ELSE.</item>
+      <item>      lv_partn_grp = &apos;0023&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- General data</item>
+      <item>    IF lv_impj EQ abap_true.</item>
+      <item>      ls_centraldata-partnertype = &apos;IMPJ&apos;.</item>
+      <item>    ELSE.</item>
+      <item>      ls_centraldata-partnertype = &apos;IMPF&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_PARVW_INPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input  = ls_business_partner-supplier</item>
+      <item>      IMPORTING</item>
+      <item>        output = ls_business_partner-supplier.</item>
+      <item/>
+      <item>    DATA(lv_partner_fo) = abap_false.</item>
+      <item>    ASSIGN (&apos;(/AGRI/SAPLGPAR)GT_PARTNER_FCAT&apos;) TO FIELD-SYMBOL(&lt;lt_partner_fcat&gt;).</item>
+      <item>    IF &lt;lt_partner_fcat&gt; IS ASSIGNED.</item>
+      <item>      lt_partner_fcat_x[] = &lt;lt_partner_fcat&gt;.</item>
+      <item>      READ TABLE lt_partner_fcat_x INTO DATA(ls_partner_fo)</item>
+      <item>        WITH KEY parvw = ls_business_partner-supplier.</item>
+      <item>      IF sy-subrc EQ 0</item>
+      <item>      AND ls_partner_fo-partner IS NOT INITIAL.</item>
+      <item>        lv_partner_fo = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*   ls_centraldata-searchterm1 = gs_fldoc_infocus-x-adrc-name1(20).</item>
+      <item>    IF lv_partner_fo EQ abap_true.</item>
+      <item>      ls_centraldata-searchterm1 = ls_partner_fo-name1(20).</item>
+      <item>      ls_centralperson-firstname = ls_partner_fo-name1(20).</item>
+      <item>*      ls_centralperson-lastname = ls_partner_fo-name1(20).</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Organization Data</item>
+      <item>*   ls_centralorg-name1 = gs_fldoc_infocus-x-adrc-name1.</item>
+      <item>    IF lv_partner_fo EQ abap_true.</item>
+      <item>      ls_centralorg-name1 = ls_partner_fo-name1.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    ls_centralorg-name2 = gs_fldoc_infocus-x-adrc-name2.</item>
+      <item/>
+      <item>    IF lv_impj EQ abap_true.</item>
+      <item>      ls_centralorg-industrysector = &apos;0008&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Address Data</item>
+      <item>    ls_address-street = gs_fldoc_infocus-x-adrc-street.</item>
+      <item/>
+      <item>    IF gs_fldoc_infocus-x-adrc-house_num1 IS NOT INITIAL.</item>
+      <item>      ls_address-house_no = gs_fldoc_infocus-x-adrc-house_num1.</item>
+      <item>    ELSE.</item>
+      <item>      ls_address-house_no = &apos;S/N&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    ls_address-house_no2 = gs_fldoc_infocus-x-adrc-house_num2.</item>
+      <item/>
+      <item>    IF gs_fldoc_infocus-x-adrc-city2 IS NOT INITIAL.</item>
+      <item>      ls_address-district = gs_fldoc_infocus-x-adrc-city2.</item>
+      <item>    ELSE.</item>
+      <item>      ls_address-district = &apos;RURAL&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    ls_address-postl_cod1 = gs_fldoc_infocus-x-adrc-post_code1.</item>
+      <item>    ls_address-city       = gs_fldoc_infocus-x-adrc-city1.</item>
+      <item>    ls_address-country    = gs_fldoc_infocus-x-adrc-country.</item>
+      <item>    ls_address-region     = gs_fldoc_infocus-x-adrc-region.</item>
+      <item>    ls_address-time_zone  = gs_fldoc_infocus-x-adrc-time_zone.</item>
+      <item>    ls_address-taxjurcode = gs_fldoc_infocus-x-adrc-taxjurcode.</item>
+      <item/>
+      <item>    IF lv_impj EQ abap_true.</item>
+      <item>      ls_address-langu = gs_fldoc_infocus-x-adrc-langu.</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;LANGUAGE_CODE_SAP_TO_ISO&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          sap_code  = ls_address-langu</item>
+      <item>        IMPORTING</item>
+      <item>          iso_code  = ls_address-languiso</item>
+      <item>        EXCEPTIONS</item>
+      <item>          not_found = 1</item>
+      <item>          OTHERS    = 2.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    DO 2 TIMES.</item>
+      <item>      lv_index = sy-index.</item>
+      <item>      INSERT INITIAL LINE INTO TABLE lrt_role</item>
+      <item>      ASSIGNING FIELD-SYMBOL(&lt;lrs_role&gt;).</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lrs_role&gt;     = &apos;IEQ&apos;.</item>
+      <item>        IF lv_index EQ 1.</item>
+      <item>          &lt;lrs_role&gt;-low = &apos;FLVN00&apos;.</item>
+      <item>        ELSE.</item>
+      <item>          &lt;lrs_role&gt;-low = &apos;FLVN01&apos;.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDDO.</item>
+      <item/>
+      <item>    SELECT *</item>
+      <item>      FROM tb003</item>
+      <item>      INTO TABLE @DATA(lt_tb003)</item>
+      <item>     WHERE role IN @lrt_role.</item>
+      <item/>
+      <item>    LOOP AT lt_tb003 INTO DATA(ls_tb003).</item>
+      <item>      ls_role-partnerrole = ls_tb003-role.</item>
+      <item>      ls_role-partnerrolecategory = ls_tb003-rolecategory.</item>
+      <item>      IF lv_impj EQ abap_true.</item>
+      <item>        ls_role-all_partnerroles = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item>      ls_role-valid_from = sy-datum.</item>
+      <item>      ls_role-valid_to = &apos;99991231&apos;.</item>
+      <item>      APPEND ls_role TO lt_roles.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    ls_centralperson-sex = abap_false.</item>
+      <item>    ls_centralperson-occupation = &apos;0003&apos;.</item>
+      <item>    ls_centralperson-nationality = &apos;BR&apos;.</item>
+      <item/>
+      <item>    IF lv_impj EQ abap_true.</item>
+      <item>      CALL FUNCTION &apos;BAPI_BUPA_FS_CREATE_FROM_DATA2&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          partnercategory         = lv_category</item>
+      <item>          partnergroup            = lv_partn_grp</item>
+      <item>          centraldata             = ls_centraldata</item>
+      <item>          centraldataorganization = ls_centralorg</item>
+      <item>          addressdata             = ls_address</item>
+      <item>        IMPORTING</item>
+      <item>          businesspartner         = lv_bup_partner</item>
+      <item>        TABLES</item>
+      <item>          return                  = lt_return_create</item>
+      <item>          roles                   = lt_roles.</item>
+      <item>    ELSE.</item>
+      <item>      CALL FUNCTION &apos;BAPI_BUPA_FS_CREATE_FROM_DATA2&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          partnercategory         = lv_category</item>
+      <item>          partnergroup            = lv_partn_grp</item>
+      <item>          centraldata             = ls_centraldata</item>
+      <item>          centraldataperson       = ls_centralperson</item>
+      <item>          addressdata             = ls_address</item>
+      <item>        IMPORTING</item>
+      <item>          businesspartner         = lv_bup_partner</item>
+      <item>        TABLES</item>
+      <item>          return                  = lt_return_create</item>
+      <item>          roles                   = lt_roles.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_bup_partner IS INITIAL.</item>
+      <item>      LOOP AT lt_return_create INTO DATA(ls_message_x).</item>
+      <item>        gs_variables-errors = abap_true.</item>
+      <item>        MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>          WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>               ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>        MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>          WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>               ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ELSE.</item>
+      <item>*-- Parceiro de Negócios &amp;1 foi criado</item>
+      <item>      lv_display_msg = abap_true.</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE &apos;S&apos; NUMBER &apos;103&apos;</item>
+      <item>        WITH lv_bup_partner INTO dummy.</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE &apos;S&apos; NUMBER &apos;103&apos;</item>
+      <item>        WITH lv_bup_partner INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          wait = abap_true.</item>
+      <item/>
+      <item>      SELECT * UP TO 1 ROWS</item>
+      <item>        FROM but100</item>
+      <item>        INTO @DATA(ls_but100)</item>
+      <item>       WHERE partner EQ @lv_bup_partner.</item>
+      <item>      ENDSELECT.</item>
+      <item/>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        LOOP AT lt_tb003 INTO ls_tb003.</item>
+      <item>          REFRESH lt_return_role.</item>
+      <item>          CALL FUNCTION &apos;BAPI_BUPA_ROLE_ADD_2&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              businesspartner             = lv_bup_partner</item>
+      <item>              businesspartnerrole         = ls_tb003-role</item>
+      <item>              businesspartnerrolecategory = ls_tb003-rolecategory</item>
+      <item>              validfromdate               = sy-datum</item>
+      <item>              validuntildate              = &apos;99991231&apos;</item>
+      <item>            TABLES</item>
+      <item>              return                      = lt_return_role.</item>
+      <item/>
+      <item>          READ TABLE lt_return_role TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>          IF sy-subrc NE 0.</item>
+      <item>            CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                wait = abap_true.</item>
+      <item>          ELSE.</item>
+      <item>            gs_variables-errors = abap_true.</item>
+      <item>            LOOP AT lt_return_role INTO ls_message_x.</item>
+      <item>              gs_variables-errors = abap_true.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ENDLOOP.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_impj EQ abap_true.</item>
+      <item>        ls_ind_key-keysystem    = &apos;CITR&apos;.</item>
+      <item>        ls_ind_key-ind_sector   = &apos;0008&apos;.</item>
+      <item>        ls_ind_data-ind_default = abap_true.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;BAPI_INDUSTRYSECTOR_ADD&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            businesspartner         = lv_bup_partner</item>
+      <item>            industrysectorkeysystem = ls_ind_key-keysystem</item>
+      <item>            industrysector          = ls_ind_key-ind_sector</item>
+      <item>            defaultindustry         = ls_ind_data-ind_default</item>
+      <item>          TABLES</item>
+      <item>            return                  = lt_return_indsec.</item>
+      <item/>
+      <item>        READ TABLE lt_return_indsec TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>        IF sy-subrc NE 0.</item>
+      <item>          CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              wait = abap_true.</item>
+      <item>        ELSE.</item>
+      <item>          gs_variables-errors = abap_true.</item>
+      <item>          LOOP AT lt_return_indsec INTO ls_message_x.</item>
+      <item>            gs_variables-errors = abap_true.</item>
+      <item>            MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>              WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                   ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>            MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>              WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                   ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>            message_simple space.</item>
+      <item>          ENDLOOP.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_impj EQ abap_true.</item>
+      <item>        ls_taxcommon-naturalperson = abap_false.</item>
+      <item>      ELSE.</item>
+      <item>        ls_taxcommon-naturalperson = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      REFRESH lt_return_tax.</item>
+      <item>      CALL FUNCTION &apos;BAPI_BUPA_TAX_COMMON_CHANGE&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          businesspartner = lv_bup_partner</item>
+      <item>          taxcommon       = ls_taxcommon</item>
+      <item>        TABLES</item>
+      <item>          return          = lt_return_tax.</item>
+      <item/>
+      <item>      READ TABLE lt_return_tax TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            wait = abap_true.</item>
+      <item>      ELSE.</item>
+      <item>        gs_variables-errors = abap_true.</item>
+      <item>        LOOP AT lt_return_tax INTO ls_message_x.</item>
+      <item>          gs_variables-errors = abap_true.</item>
+      <item>          MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>            WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                 ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>          MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>            WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                 ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_impj EQ abap_true.</item>
+      <item>        lv_inscr_estadual = &apos;BR3&apos;.</item>
+      <item/>
+      <item>        READ TABLE lt_cabn INTO ls_cabn WITH KEY atnam = &apos;CIT-IE&apos;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE gs_fldoc_infocus-x-flatv INTO ls_flatv</item>
+      <item>            WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>          IF sy-subrc EQ 0</item>
+      <item>          AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>            lv_taxnum1 = ls_flatv-atwrt.</item>
+      <item>*-- Adiciona Inscrição Estadual</item>
+      <item>            REFRESH lt_return_tax.</item>
+      <item>            CALL FUNCTION &apos;BAPI_BUPA_TAX_ADD&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                businesspartner = lv_bup_partner</item>
+      <item>                taxtype         = lv_inscr_estadual</item>
+      <item>                taxnumber       = lv_taxnum1</item>
+      <item>              TABLES</item>
+      <item>                return          = lt_return_tax.</item>
+      <item/>
+      <item>            READ TABLE lt_return_tax TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>            IF sy-subrc NE 0.</item>
+      <item>              CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>                EXPORTING</item>
+      <item>                  wait = abap_true.</item>
+      <item>            ELSE.</item>
+      <item>              gs_variables-errors = abap_true.</item>
+      <item>              LOOP AT lt_return_tax INTO ls_message_x.</item>
+      <item>                gs_variables-errors = abap_true.</item>
+      <item>                MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                  WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                       ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>                MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                  WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                       ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>                message_simple space.</item>
+      <item>              ENDLOOP.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_impj EQ abap_true.</item>
+      <item>        lv_caracteristica = &apos;CIT-CNPJ&apos;.</item>
+      <item>        lv_nro_fiscal = &apos;BR1&apos;.</item>
+      <item>      ELSE.</item>
+      <item>        lv_caracteristica = &apos;CIT-CPF-IMOVEL&apos;.</item>
+      <item>        lv_nro_fiscal = &apos;BR2&apos;.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE lt_cabn INTO ls_cabn WITH KEY atnam = lv_caracteristica.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        READ TABLE gs_fldoc_infocus-x-flatv INTO ls_flatv</item>
+      <item>          WITH KEY atinn = ls_cabn-atinn.</item>
+      <item>        IF sy-subrc EQ 0</item>
+      <item>        AND ls_flatv-atwrt IS NOT INITIAL.</item>
+      <item>          lv_taxnum3 = ls_flatv-atwrt.</item>
+      <item>*-- Adiciona CNPJ (CIT-CNPJ -&gt; BR1) ou CPF (CIT-CPF-IMOVEL -&gt; BR2)</item>
+      <item>          REFRESH lt_return_tax.</item>
+      <item>          CALL FUNCTION &apos;BAPI_BUPA_TAX_ADD&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              businesspartner = lv_bup_partner</item>
+      <item>              taxtype         = lv_nro_fiscal</item>
+      <item>              taxnumber       = lv_taxnum3</item>
+      <item>            TABLES</item>
+      <item>              return          = lt_return_tax.</item>
+      <item/>
+      <item>          READ TABLE lt_return_tax TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>          IF sy-subrc NE 0.</item>
+      <item>            CALL FUNCTION &apos;BAPI_TRANSACTION_COMMIT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                wait = abap_true.</item>
+      <item>          ELSE.</item>
+      <item>            gs_variables-errors = abap_true.</item>
+      <item>            LOOP AT lt_return_tax INTO ls_message_x.</item>
+      <item>              gs_variables-errors = abap_true.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO dummy.</item>
+      <item>              MESSAGE ID ls_message_x-id TYPE ls_message_x-type NUMBER ls_message_x-number</item>
+      <item>                WITH ls_message_x-message_v1 ls_message_x-message_v2</item>
+      <item>                     ls_message_x-message_v3 ls_message_x-message_v4 INTO sy-msgli.</item>
+      <item>              message_simple space.</item>
+      <item>            ENDLOOP.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>*-- Unlock the partner number only if it is locked.</item>
+      <item>      CALL FUNCTION &apos;BUP_MEMORY_ENQ_BUF_CHECK&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          iv_partner           = lv_bup_partner</item>
+      <item>        IMPORTING</item>
+      <item>          ev_partner_is_locked = lv_partner_locked.</item>
+      <item/>
+      <item>      IF lv_partner_locked IS NOT INITIAL.</item>
+      <item>*-- Call the unlock function, iv_check_not_number must be gx_x.</item>
+      <item>        CALL FUNCTION &apos;BUPA_DEQUEUE&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            iv_partner          = lv_bup_partner</item>
+      <item>            iv_check_not_number = abap_true</item>
+      <item>          TABLES</item>
+      <item>            et_return           = lt_return_dequeue.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- BP refresh memory:</item>
+      <item>    CALL FUNCTION &apos;BUP_BUFFER_REFRESH_INTERNAL&apos;.</item>
+      <item>    CALL FUNCTION &apos;BUP_MEMORY_CENTRAL_INIT&apos;.</item>
+      <item>    CALL FUNCTION &apos;BUB_BUPR_EVENT_DLVE2&apos;.</item>
+      <item>    CALL FUNCTION &apos;BUR_BUPR_EVENT_DLVE2&apos;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZABS_CRIA_BP</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA4925F4D0D417793</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA4925F4D0D417793</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>035</LENGTH>
+       <TEXT>Create Business Partner</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_FCODE_ZBP</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA4925F4D0D417793</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

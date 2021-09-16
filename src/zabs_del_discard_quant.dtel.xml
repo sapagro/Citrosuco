@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_DISCARD_QUANT</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>MENG13</DOMNAME>
+    <HEADLEN>20</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>40</SCRLEN3>
+    <DDTEXT>Discarding Quantity</DDTEXT>
+    <REPTEXT>Discarding quantity</REPTEXT>
+    <SCRTEXT_S>Discarding</SCRTEXT_S>
+    <SCRTEXT_M>Discarding qty</SCRTEXT_M>
+    <SCRTEXT_L>Discarding quantity</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Quantidade Descartada</DDTEXT>
+     <REPTEXT>Quant. Descartada</REPTEXT>
+     <SCRTEXT_S>Qti.Desctd</SCRTEXT_S>
+     <SCRTEXT_M>Qut. Descartada</SCRTEXT_M>
+     <SCRTEXT_L>Quant. Descartada</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>BADI_IMPL</TOOL>
+   <SHORTTEXT>Work Order Update Implementation for ABS</SHORTTEXT>
+   <SPOT_NAME>WORKORDER_UPDATE</SPOT_NAME>
+   <IMPL>
+    <ENH_BADI_IMPL_DATA>
+     <SPOT_NAME>WORKORDER_UPDATE</SPOT_NAME>
+     <BADI_NAME>WORKORDER_UPDATE</BADI_NAME>
+     <IMPL_NAME>ZABS_BDI_WORKORDER_UPDATE</IMPL_NAME>
+     <IMPL_CLASS>ZCL_ABS_WORKORDER_UPDATE</IMPL_CLASS>
+     <ACTIVE>X</ACTIVE>
+     <IMPL_SHORTTEXT>Implementation: Business Add-In PM-/PP-/PS-/PI-Aufträge Vorgang: UPDATE</IMPL_SHORTTEXT>
+     <IMPL_SHORTTEXT_ID>12F6C031E8F81EE9A49EA50E3437D2CB</IMPL_SHORTTEXT_ID>
+    </ENH_BADI_IMPL_DATA>
+   </IMPL>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9A49EA0FCE91AF2C9</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A49EA0FCE91AF2C9</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>060</LENGTH>
+       <TEXT>Work Order Update Implementation for ABS</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A49EA0FCE91AF2C9</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>060</LENGTH>
+       <TEXT>Implementação de atualização de ordem de Trabalho para ABS</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9A49EA50E3437D2CB</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A49EA50E3437D2CB</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>107</LENGTH>
+       <TEXT>Implementation: Business Add-In PM-/PP-/PS-/PI-Aufträge Vorgang: UPDATE</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A49EA50E3437D2CB</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>107</LENGTH>
+       <TEXT>Implementação: Suplemento comercial PM- / PP- / PS- / PI Transação de Ordens : ATUALIZAR</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_EI_WORKORDER_UPDATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9A49EA0FCE91AF2C9</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_EI_WORKORDER_UPDATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9A49EA50E3437D2CB</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

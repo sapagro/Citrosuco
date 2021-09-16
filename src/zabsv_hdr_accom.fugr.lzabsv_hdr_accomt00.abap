@@ -1,0 +1,25 @@
+*---------------------------------------------------------------------*
+*    view related data declarations
+*   generation date: 18.09.2020 at 07:07:08
+*   view maintenance generator version: #001407#
+*---------------------------------------------------------------------*
+*...processing: ZABSV_HDR_ACCOM.................................*
+TABLES: ZABSV_HDR_ACCOM, *ZABSV_HDR_ACCOM. "view work areas
+CONTROLS: TCTRL_ZABSV_HDR_ACCOM
+TYPE TABLEVIEW USING SCREEN '0001'.
+DATA: BEGIN OF STATUS_ZABSV_HDR_ACCOM. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_ZABSV_HDR_ACCOM.
+* Table for entries selected to show on screen
+DATA: BEGIN OF ZABSV_HDR_ACCOM_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE ZABSV_HDR_ACCOM.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF ZABSV_HDR_ACCOM_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF ZABSV_HDR_ACCOM_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE ZABSV_HDR_ACCOM.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF ZABSV_HDR_ACCOM_TOTAL.
+
+*.........table declarations:.................................*
+TABLES: ZABS_HDR_ACCOM                 .

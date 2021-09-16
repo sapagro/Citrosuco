@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Attribute Group Read</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLAGA</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLAGA</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLAGA</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGA</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGA\FO:ATGRP_READ\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP_READ                         *</item>
+      <item>* Form Name         :  atgrp_read                                      *</item>
+      <item>* Include Name      :  /AGRI/LGLAGAF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Displaying Formula and Identifier Fields on a   *</item>
+      <item>*                      grid from database table                        *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  CHECK lt_ksml is NOT INITIAL.</item>
+      <item/>
+      <item>*--Fetching Attribute Formula data</item>
+      <item>  SELECT *</item>
+      <item>  FROM zabst_ksml</item>
+      <item>  INTO TABLE @DATA(lt_zksml)</item>
+      <item>  FOR ALL ENTRIES IN @lt_ksml</item>
+      <item>  WHERE clint = @lt_ksml-clint</item>
+      <item>  AND   atnam = @lt_ksml-atnam.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    SORT lt_zksml BY clint atnam.</item>
+      <item>  ELSE.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>   UNASSIGN &lt;lwa_ksml&gt;.</item>
+      <item>   LOOP AT lt_ksml ASSIGNING &lt;lwa_ksml&gt;.</item>
+      <item>     READ TABLE lt_zksml INTO DATA(lwa_zksml)</item>
+      <item>                         WITH KEY clint = &lt;lwa_ksml&gt;-clint</item>
+      <item>                                  atnam = &lt;lwa_ksml&gt;-atnam</item>
+      <item>                         BINARY SEARCH.</item>
+      <item/>
+      <item>     IF sy-subrc EQ 0.</item>
+      <item>       &lt;lwa_ksml&gt;-zzident   = lwa_zksml-ident.</item>
+      <item>       &lt;lwa_ksml&gt;-zzformula = lwa_zksml-formula.</item>
+      <item>     ENDIF.</item>
+      <item>     CLEAR lwa_zksml.</item>
+      <item>   ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9A7E1037D5836A098</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9A7E1037D5836A098</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>030</LENGTH>
+       <TEXT>Attribute Group Read</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9A7E1037D5836A098</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>030</LENGTH>
+       <TEXT>Leitura do grupo de atributos</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ATTR_GRP_READ</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9A7E1037D5836A098</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

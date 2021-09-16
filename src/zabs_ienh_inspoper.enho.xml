@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Confirm Inspection Results</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_GLCO_PROCESS</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_GLCO_PROCESS</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_GLCO_PROCESS=========CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_GLCO_PROCESS=========CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_GLCO_PROCESS\ME:PRODUCTION_ORDER_CREATE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: t_abap_stack TYPE  abap_callstack,</item>
+      <item>        t_sys_stack  TYPE  sys_callst.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;SYSTEM_CALLSTACK&apos;</item>
+      <item>    IMPORTING</item>
+      <item>      callstack    = t_abap_stack</item>
+      <item>      et_callstack = t_sys_stack.</item>
+      <item/>
+      <item>  READ TABLE t_abap_stack TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY mainprogram = &apos;ZFMFP_UNPLANNED_TASKORDER&apos;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    INCLUDE zabs_inc_inspoper IF FOUND.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9B183594581AE1287</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B183594581AE1287</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>039</LENGTH>
+       <TEXT>Confirm Inspection Results</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_INSPOPER</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9B183594581AE1287</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

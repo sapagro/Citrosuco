@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZABS_TRN_ACCRT</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZABS_TRN_ACCRT</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>E</SPRSL>
+    <TCODE>ZABS_TRN_ACCRT</TCODE>
+    <TTEXT>Accomplishment Create Items</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZABS_TRN_ACCRT</TCODE>
+    <PARAM>/*SM30 VIEWNAME=ZABSV_BGP_ACCOM;UPDATE=X;</PARAM>
+   </TSTCP>
+   <I18N_TPOOL>
+    <TSTCT>
+     <SPRSL>P</SPRSL>
+     <TTEXT>Tabela Buffer Mob.– Itens BDO</TTEXT>
+    </TSTCT>
+   </I18N_TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

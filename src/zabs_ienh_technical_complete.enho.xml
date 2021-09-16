@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Orders Technical Complete</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMFPM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMFPM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMFPM\IC:/AGRI/LFMFPMF0O\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>FORM zorders_technical_complete CHANGING lt_fphdr  TYPE /agri/t_fmfphdr</item>
+      <item>                                         lt_fpdoc  TYPE /agri/t_fmfp_doc</item>
+      <item>                                         lt_return TYPE cocf_t_bapi_return.</item>
+      <item/>
+      <item>  DATA: BEGIN OF lwa_task_orders,</item>
+      <item>          aufnr TYPE aufnr,</item>
+      <item>          aufnr_to TYPE aufnr,</item>
+      <item>        END OF lwa_task_orders.</item>
+      <item/>
+      <item>  DATA: lwa_fphdr     TYPE /agri/s_fmfphdr,</item>
+      <item>        lwa_csdfl     TYPE /agri/s_glcsdfl,</item>
+      <item>        lt_csdfl      TYPE /agri/t_glcsdfl,</item>
+      <item>        lwa_orders    TYPE bapi_order_key,</item>
+      <item>        lt_orders     TYPE TABLE OF bapi_order_key,</item>
+      <item>        lwa_status    TYPE bapiret2,</item>
+      <item>        lwa_return    TYPE bapi_coru_return,</item>
+      <item>        lwa_fpdoc     TYPE /agri/s_fmfp_doc,</item>
+      <item>        lt_fpdoc_save TYPE /agri/t_fmfp_doc,</item>
+      <item>        lv_subrc      TYPE sy-subrc.</item>
+      <item/>
+      <item>  DATA: lt_fphdr_ao  TYPE /agri/t_fmfphdr,</item>
+      <item>        lt_fphdr_to  TYPE /agri/t_fmfphdr,</item>
+      <item>        lt_task_orders LIKE TABLE OF lwa_task_orders.</item>
+      <item/>
+      <item>  CHECK lt_fphdr[] IS NOT INITIAL.</item>
+      <item>  SORT: lt_fphdr[] BY aufnr.</item>
+      <item>  lt_fphdr_ao[] = lt_fphdr[].</item>
+      <item>  DELETE lt_fphdr_ao WHERE ordlv NE c_order_level-process.</item>
+      <item/>
+      <item>*--Get task orders</item>
+      <item>  IF lt_fphdr_ao IS NOT INITIAL.</item>
+      <item>    SELECT aufnr aufnr_to FROM /agri/fmfpitm</item>
+      <item>             INTO TABLE lt_task_orders</item>
+      <item>              FOR ALL ENTRIES IN lt_fphdr_ao</item>
+      <item>            WHERE aufnr    EQ lt_fphdr_ao-aufnr</item>
+      <item>              AND aufnr_to EQ space.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SELECT * FROM /agri/fmfphdr &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>               INTO CORRESPONDING FIELDS OF TABLE lt_fphdr_to</item>
+      <item>                FOR ALL ENTRIES IN lt_task_orders  &quot;#EC CI_NO_TRANSFORM</item>
+      <item>              WHERE aufnr EQ lt_task_orders-aufnr</item>
+      <item>                AND tecom EQ space.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        SORT lt_fphdr_to BY aufnr.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>**--Check if next process is technically completed</item>
+      <item>  SELECT a~tplnr_fl a~contr a~cpros a~aufnr a~autyp a~aufnr_v</item>
+      <item>           FROM /agri/glcsdfl AS a</item>
+      <item>          INNER JOIN /agri/fmfphdr AS b</item>
+      <item>             ON b~aufnr = a~aufnr</item>
+      <item>           INTO CORRESPONDING FIELDS OF TABLE lt_csdfl</item>
+      <item>            FOR ALL ENTRIES IN lt_fphdr</item>
+      <item>          WHERE a~tplnr_fl EQ lt_fphdr-tplnr_fl</item>
+      <item>            AND a~contr    EQ lt_fphdr-contr</item>
+      <item>            AND a~autyp    EQ c_document_category-production_order</item>
+      <item>            AND a~aufnr_v  EQ lt_fphdr-aufnr</item>
+      <item>            AND b~tecom    EQ space.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    SORT: lt_csdfl BY aufnr_v.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT lt_fphdr INTO lwa_fphdr.</item>
+      <item>    IF lwa_fphdr-tecom IS NOT INITIAL. &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-success NUMBER &apos;083&apos; &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                              WITH lwa_fphdr-aufnr INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item>    PERFORM messages_context_set USING lwa_fphdr.</item>
+      <item/>
+      <item>    READ TABLE lt_csdfl INTO lwa_csdfl &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                                WITH KEY aufnr_v = lwa_fphdr-aufnr</item>
+      <item>                              BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      READ TABLE lt_fphdr TRANSPORTING NO FIELDS</item>
+      <item>                              WITH KEY aufnr = lwa_csdfl-aufnr</item>
+      <item>                            BINARY SEARCH.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-error NUMBER &apos;026&apos;</item>
+      <item>                                WITH lwa_csdfl-aufnr INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        CONTINUE.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CLEAR: lv_subrc.</item>
+      <item>    PERFORM document_infocus_lock USING lwa_fphdr-aufnr &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                               CHANGING lv_subrc.</item>
+      <item/>
+      <item>    IF lv_subrc EQ 0.</item>
+      <item>      lwa_orders-order_number = lwa_fphdr-aufnr. &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>      APPEND lwa_orders TO lt_orders.</item>
+      <item/>
+      <item>*--BOC-T_T.KONNO-10/21/20</item>
+      <item>      IF sy-tcode NE &apos;ZABS_STORDENS&apos;</item>
+      <item>      AND sy-tcode NE &apos;/AGRI/GLFLCA&apos;.</item>
+      <item>        sy-batch = abap_true.</item>
+      <item>        sy-binpt = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item>*--EOC-T_T.KONNO-10/21/20</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;BAPI_PRODORD_COMPLETE_TECH&apos;</item>
+      <item>           IMPORTING</item>
+      <item>             return                   = lwa_status</item>
+      <item>           TABLES</item>
+      <item>             orders                   = lt_orders</item>
+      <item>             detail_return            = lt_return.</item>
+      <item/>
+      <item>      LOOP AT lt_return INTO lwa_return</item>
+      <item>                        WHERE type EQ c_msg_type-error.</item>
+      <item>        MESSAGE ID lwa_return-id TYPE c_msg_type-error</item>
+      <item>         NUMBER lwa_return-number</item>
+      <item>           WITH lwa_return-message_v1 lwa_return-message_v2</item>
+      <item>                lwa_return-message_v3 lwa_return-message_v4</item>
+      <item>           INTO sy-msgli.</item>
+      <item>*--BOC-T_T.KONNO-10/21/20</item>
+      <item>        IF sy-tcode EQ &apos;ZABS_STORDENS&apos;.</item>
+      <item>          message_simple space.</item>
+      <item>        ENDIF.</item>
+      <item>*--EOC-T_T.KONNO-10/21/20</item>
+      <item>        EXIT. &quot;#EC CI_NOORDER</item>
+      <item>      ENDLOOP.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        CALL FUNCTION &apos;BAPI_TRANSACTION_ROLLBACK&apos;.</item>
+      <item>        CONTINUE.</item>
+      <item>      ELSE.</item>
+      <item>        LOOP AT lt_orders INTO lwa_orders.</item>
+      <item>          READ TABLE lt_fphdr INTO lwa_fphdr</item>
+      <item>                              WITH KEY aufnr = lwa_orders-order_number</item>
+      <item>                            BINARY SEARCH.</item>
+      <item>          IF sy-subrc NE 0.</item>
+      <item>            READ TABLE lt_fphdr_to INTO lwa_fphdr &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                               WITH KEY aufnr = lwa_orders-order_number</item>
+      <item>                             BINARY SEARCH.</item>
+      <item>          ENDIF.</item>
+      <item>          CHECK sy-subrc EQ 0.</item>
+      <item>          lwa_fpdoc-y-fphdr =</item>
+      <item>          lwa_fpdoc-x-fphdr = lwa_fphdr.</item>
+      <item>          lwa_fpdoc-x-fphdr-tecom = c_true.</item>
+      <item>          IF lwa_fpdoc-x-fphdr-updkz NE c_updkz_new.</item>
+      <item>            lwa_fpdoc-x-fphdr-updkz = c_updkz_update.</item>
+      <item>          ENDIF.</item>
+      <item>          lwa_fpdoc-aufnr = lwa_fphdr-aufnr. &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>          APPEND lwa_fpdoc TO lt_fpdoc_save.</item>
+      <item>          CLEAR: lwa_fpdoc, lwa_fphdr.</item>
+      <item>          gs_variables-refresh_header     = c_true.</item>
+      <item>          gs_variables-refresh_items_grid = c_true.</item>
+      <item>        ENDLOOP.</item>
+      <item>        PERFORM documents_mass_update USING c_true</item>
+      <item>                                   CHANGING lt_fpdoc_save</item>
+      <item>                                            lv_subrc.</item>
+      <item>        IF lv_subrc IS INITIAL.</item>
+      <item>          APPEND LINES OF lt_fpdoc_save TO lt_fpdoc.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>    REFRESH: lt_fpdoc_save,lt_orders.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZORDERS_TECHNICAL_COMPLETE</item>
+      <item/>
+      <item>FORM zorders_set_teco CHANGING lt_fphdr  TYPE /agri/t_fmfphdr</item>
+      <item>                               lt_fpdoc  TYPE /agri/t_fmfp_doc</item>
+      <item>                               lt_return TYPE cocf_t_bapi_return.</item>
+      <item/>
+      <item>  DATA: BEGIN OF lwa_task_orders,</item>
+      <item>          aufnr TYPE aufnr,</item>
+      <item>          aufnr_to TYPE aufnr,</item>
+      <item>        END OF lwa_task_orders.</item>
+      <item/>
+      <item>  DATA: lwa_fphdr  TYPE /agri/s_fmfphdr,</item>
+      <item>        lwa_csdfl  TYPE /agri/s_glcsdfl,</item>
+      <item>        lt_csdfl   TYPE /agri/t_glcsdfl,</item>
+      <item>        lwa_orders TYPE bapi_order_key,</item>
+      <item>        lt_orders  TYPE TABLE OF bapi_order_key,</item>
+      <item>*        lt_orders_to TYPE TABLE OF bapi_order_key,</item>
+      <item>        lwa_status TYPE bapiret2,</item>
+      <item>        lwa_return TYPE bapi_coru_return,</item>
+      <item>*        lt_return  TYPE TABLE OF bapi_coru_return,</item>
+      <item>        lwa_fpdoc  TYPE /agri/s_fmfp_doc,</item>
+      <item>        lt_fpdoc_save TYPE /agri/t_fmfp_doc,</item>
+      <item>        lv_subrc   TYPE sy-subrc.</item>
+      <item/>
+      <item>  DATA: lt_fphdr_ao  TYPE /agri/t_fmfphdr,</item>
+      <item>        lt_fphdr_to  TYPE /agri/t_fmfphdr,</item>
+      <item>        lt_task_orders LIKE TABLE OF lwa_task_orders.</item>
+      <item/>
+      <item>  CHECK lt_fphdr[] IS NOT INITIAL.</item>
+      <item>  SORT: lt_fphdr[] BY aufnr.</item>
+      <item>  lt_fphdr_ao[] = lt_fphdr[].</item>
+      <item>  DELETE lt_fphdr_ao WHERE ordlv NE c_order_level-process_task.</item>
+      <item/>
+      <item>*--Get task orders</item>
+      <item>  IF lt_fphdr_ao IS NOT INITIAL.</item>
+      <item>    SELECT aufnr aufnr_to FROM /agri/fmfpitm</item>
+      <item>             INTO TABLE lt_task_orders</item>
+      <item>              FOR ALL ENTRIES IN lt_fphdr_ao</item>
+      <item>            WHERE aufnr EQ lt_fphdr_ao-aufnr</item>
+      <item>              AND aufnr_to NE space.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SELECT * FROM /agri/fmfphdr &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>               INTO CORRESPONDING FIELDS OF TABLE lt_fphdr_to</item>
+      <item>                FOR ALL ENTRIES IN lt_task_orders  &quot;#EC CI_NO_TRANSFORM</item>
+      <item>              WHERE aufnr EQ lt_task_orders-aufnr_to</item>
+      <item>                AND tecom EQ space.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        SORT lt_fphdr_to BY aufnr.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  DATA(lv_tecom) = abap_true.</item>
+      <item>  READ TABLE lt_fphdr INTO DATA(ls_fphdr) INDEX 1.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>*--Check if next process is technically completed</item>
+      <item>    SELECT SINGLE aufnr, tecom</item>
+      <item>      FROM /agri/fmfphdr</item>
+      <item>      INTO @DATA(ls_fmfphdr)</item>
+      <item>     WHERE aufnr = @ls_fphdr-aufnr.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      lv_tecom = ls_fmfphdr-tecom.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_tecom EQ abap_true.</item>
+      <item>    INSERT INITIAL LINE INTO TABLE lt_return</item>
+      <item>      ASSIGNING FIELD-SYMBOL(&lt;ls_return&gt;).</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*-- Ordem Tarefa já encerrada tecnicamente!</item>
+      <item>      &lt;ls_return&gt;-type    = &apos;I&apos;.</item>
+      <item>      &lt;ls_return&gt;-id      = &apos;ZFMFP&apos;.</item>
+      <item>      &lt;ls_return&gt;-number  = 098.</item>
+      <item>    ENDIF.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT lt_fphdr INTO lwa_fphdr.</item>
+      <item>    IF lwa_fphdr-tecom IS NOT INITIAL. &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-success NUMBER &apos;083&apos; &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                              WITH lwa_fphdr-aufnr INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item>    PERFORM messages_context_set USING lwa_fphdr.</item>
+      <item/>
+      <item>    READ TABLE lt_csdfl INTO lwa_csdfl &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                                WITH KEY aufnr_v = lwa_fphdr-aufnr</item>
+      <item>                              BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      READ TABLE lt_fphdr TRANSPORTING NO FIELDS</item>
+      <item>                              WITH KEY aufnr = lwa_csdfl-aufnr</item>
+      <item>                            BINARY SEARCH.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-error NUMBER &apos;026&apos;</item>
+      <item>                                WITH lwa_csdfl-aufnr INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        CONTINUE.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CLEAR: lv_subrc.</item>
+      <item>    PERFORM document_infocus_lock USING lwa_fphdr-aufnr &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                               CHANGING lv_subrc.</item>
+      <item>    IF lv_subrc NE 0.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    LOOP AT lt_task_orders INTO lwa_task_orders &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                          WHERE aufnr EQ lwa_fphdr-aufnr.</item>
+      <item>      READ TABLE lt_fphdr_to TRANSPORTING NO FIELDS</item>
+      <item>                             WITH KEY aufnr = lwa_task_orders-aufnr_to</item>
+      <item>                           BINARY SEARCH.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        PERFORM document_infocus_lock USING lwa_task_orders-aufnr_to</item>
+      <item>                                   CHANGING lv_subrc.</item>
+      <item>        IF lv_subrc NE 0.</item>
+      <item>          EXIT. &quot;#EC CI_NOORDER</item>
+      <item>        ENDIF.</item>
+      <item>        lwa_orders-order_number = lwa_task_orders-aufnr_to.</item>
+      <item>        APPEND lwa_orders TO lt_orders.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF lv_subrc EQ 0.</item>
+      <item>      lwa_orders-order_number = lwa_fphdr-aufnr. &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>      APPEND lwa_orders TO lt_orders.</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;BAPI_PRODORD_COMPLETE_TECH&apos;</item>
+      <item>           IMPORTING</item>
+      <item>             return                   = lwa_status</item>
+      <item>           TABLES</item>
+      <item>             orders                   = lt_orders</item>
+      <item>             detail_return            = lt_return.</item>
+      <item/>
+      <item>      LOOP AT lt_return INTO lwa_return</item>
+      <item>                        WHERE type EQ c_msg_type-error.</item>
+      <item>        MESSAGE ID lwa_return-id TYPE c_msg_type-error</item>
+      <item>         NUMBER lwa_return-number</item>
+      <item>           WITH lwa_return-message_v1 lwa_return-message_v2</item>
+      <item>                lwa_return-message_v3 lwa_return-message_v4</item>
+      <item>           INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT. &quot;#EC CI_NOORDER</item>
+      <item>      ENDLOOP.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        CALL FUNCTION &apos;BAPI_TRANSACTION_ROLLBACK&apos;.</item>
+      <item>        CONTINUE.</item>
+      <item>      ELSE.</item>
+      <item>        LOOP AT lt_orders INTO lwa_orders.</item>
+      <item>          READ TABLE lt_fphdr INTO lwa_fphdr</item>
+      <item>                              WITH KEY aufnr = lwa_orders-order_number</item>
+      <item>                            BINARY SEARCH.</item>
+      <item>          IF sy-subrc NE 0.</item>
+      <item>            READ TABLE lt_fphdr_to INTO lwa_fphdr &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                               WITH KEY aufnr = lwa_orders-order_number</item>
+      <item>                             BINARY SEARCH.</item>
+      <item>          ENDIF.</item>
+      <item>          CHECK sy-subrc EQ 0.</item>
+      <item>          lwa_fpdoc-y-fphdr =</item>
+      <item>          lwa_fpdoc-x-fphdr = lwa_fphdr.</item>
+      <item>          lwa_fpdoc-x-fphdr-tecom = c_true.</item>
+      <item>          IF lwa_fpdoc-x-fphdr-updkz NE c_updkz_new.</item>
+      <item>            lwa_fpdoc-x-fphdr-updkz = c_updkz_update.</item>
+      <item>          ENDIF.</item>
+      <item>          lwa_fpdoc-aufnr = lwa_fphdr-aufnr. &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>          APPEND lwa_fpdoc TO lt_fpdoc_save.</item>
+      <item>          CLEAR: lwa_fpdoc, lwa_fphdr.</item>
+      <item>          gs_variables-refresh_header     = c_true.</item>
+      <item>          gs_variables-refresh_items_grid = c_true.</item>
+      <item>        ENDLOOP.</item>
+      <item>        PERFORM documents_mass_update USING c_true</item>
+      <item>                                   CHANGING lt_fpdoc_save</item>
+      <item>                                            lv_subrc.</item>
+      <item>        IF lv_subrc IS INITIAL.</item>
+      <item>          APPEND LINES OF lt_fpdoc_save TO lt_fpdoc.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>    REFRESH: lt_fpdoc_save,lt_orders.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZORDERS_SET_TECO</item>
+      <item/>
+      <item>FORM zrevoke_technical_complete CHANGING lt_fphdr  TYPE /agri/t_fmfphdr</item>
+      <item>                                         lt_fpdoc  TYPE /agri/t_fmfp_doc</item>
+      <item>                                         lt_return TYPE cocf_t_bapi_return.</item>
+      <item/>
+      <item>  DATA: lv_subrc   TYPE sy-subrc,</item>
+      <item>        lwa_fphdr  TYPE /agri/s_fmfphdr,</item>
+      <item>        lt_fmfphdr TYPE /agri/t_fmfphdr,</item>
+      <item>        lwa_fpdoc  TYPE /agri/s_fmfp_doc,</item>
+      <item>        lt_aufnr   TYPE /agri/t_fmaufnr.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_fphdr&gt; TYPE /agri/s_fmfphdr.</item>
+      <item/>
+      <item>  CHECK lt_fphdr[] IS NOT INITIAL.</item>
+      <item/>
+      <item>  LOOP AT lt_fphdr INTO lwa_fphdr</item>
+      <item>                    WHERE aufnr_v IS NOT INITIAL.</item>
+      <item>    APPEND lwa_fphdr-aufnr_v TO lt_aufnr.</item>
+      <item>  ENDLOOP.</item>
+      <item>  IF lt_aufnr IS NOT INITIAL.</item>
+      <item>    SELECT aufnr tplnr_fl contr cpros aufnr_v</item>
+      <item>            FROM /agri/fmfphdr</item>
+      <item>            INTO CORRESPONDING FIELDS OF TABLE lt_fmfphdr</item>
+      <item>             FOR ALL ENTRIES IN lt_aufnr</item>
+      <item>           WHERE aufnr EQ lt_aufnr-aufnr</item>
+      <item>             AND tecom EQ space.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SORT lt_fmfphdr BY aufnr.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SORT lt_fphdr BY aufnr_v.</item>
+      <item>  LOOP AT lt_fphdr ASSIGNING &lt;lwa_fphdr&gt;</item>
+      <item>                       WHERE tecom IS NOT INITIAL.</item>
+      <item/>
+      <item>    PERFORM messages_context_set USING &lt;lwa_fphdr&gt;.</item>
+      <item>    IF &lt;lwa_fphdr&gt;-aufnr_v IS NOT INITIAL.</item>
+      <item>      READ TABLE lt_fphdr INTO lwa_fphdr</item>
+      <item>                          WITH KEY aufnr = &lt;lwa_fphdr&gt;-aufnr_v</item>
+      <item>                        BINARY SEARCH.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        READ TABLE lt_fmfphdr TRANSPORTING NO FIELDS</item>
+      <item>                              WITH KEY aufnr = &lt;lwa_fphdr&gt;-aufnr_v</item>
+      <item>                            BINARY SEARCH.</item>
+      <item>        IF sy-subrc NE 0.</item>
+      <item>          MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-error NUMBER &apos;028&apos;</item>
+      <item>                                  WITH &lt;lwa_fphdr&gt;-aufnr_v INTO sy-msgli.</item>
+      <item>          message_simple space.</item>
+      <item>          CONTINUE.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CALL METHOD /agri/cl_glco_process=&gt;order_revoke_teco</item>
+      <item>      EXPORTING</item>
+      <item>        i_aufnr = &lt;lwa_fphdr&gt;-aufnr</item>
+      <item>      IMPORTING</item>
+      <item>        e_subrc = lv_subrc.</item>
+      <item>    IF lv_subrc IS NOT INITIAL.</item>
+      <item>***Extended Additional Syntax Check ATC  1709 PQ</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-error NUMBER &apos;029&apos;</item>
+      <item>*                              WITH &lt;lwa_fphdr&gt;-aufnr_v</item>
+      <item>                              INTO sy-msgli.&quot;#EC*</item>
+      <item>****</item>
+      <item>      INSERT INITIAL LINE INTO table lt_return</item>
+      <item>        ASSIGNING FIELD-SYMBOL(&lt;lwa_return&gt;).</item>
+      <item>      IF sy-subrc eq 0.</item>
+      <item>*--Impossível anular conclusão técnica Ordem &amp;1</item>
+      <item>        &lt;lwa_return&gt;-type   = c_msg_type-error.</item>
+      <item>        &lt;lwa_return&gt;-id	    = &apos;ZFMFP&apos;.</item>
+      <item>        &lt;lwa_return&gt;-number = &apos;182&apos;.</item>
+      <item>        &lt;lwa_return&gt;-message_v1 = &lt;lwa_fphdr&gt;-aufnr.</item>
+      <item>      ENDIF.</item>
+      <item>      message_simple space.</item>
+      <item>    ELSE.</item>
+      <item>      INSERT INITIAL LINE INTO table lt_return ASSIGNING &lt;lwa_return&gt;.</item>
+      <item>      IF sy-subrc eq 0.</item>
+      <item>*--Anulação de conclusão técnica efetuada com êxito Ordem &amp;1</item>
+      <item>        &lt;lwa_return&gt;-type   = c_msg_type-success.</item>
+      <item>        &lt;lwa_return&gt;-id	    = &apos;ZFMFP&apos;.</item>
+      <item>        &lt;lwa_return&gt;-number = &apos;183&apos;.</item>
+      <item>        &lt;lwa_return&gt;-message_v1 = &lt;lwa_fphdr&gt;-aufnr.</item>
+      <item>      ENDIF.</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-success NUMBER &apos;030&apos;</item>
+      <item>                              INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      CLEAR: lwa_fpdoc.</item>
+      <item>      lwa_fpdoc-y-fphdr = &lt;lwa_fphdr&gt;.</item>
+      <item>      CLEAR: &lt;lwa_fphdr&gt;-tecom, &lt;lwa_fphdr&gt;-tecom.</item>
+      <item>      &lt;lwa_fphdr&gt;-updkz = c_updkz_update.</item>
+      <item>      lwa_fpdoc-x-fphdr = &lt;lwa_fphdr&gt;.</item>
+      <item>      lwa_fpdoc-aufnr = &lt;lwa_fphdr&gt;-aufnr.</item>
+      <item>      APPEND lwa_fpdoc TO lt_fpdoc.</item>
+      <item>      gs_variables-refresh_header     = c_true.</item>
+      <item>      gs_variables-refresh_items_grid = c_true.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lt_fpdoc IS NOT INITIAL.</item>
+      <item>    CLEAR: lv_subrc.</item>
+      <item>    PERFORM documents_mass_update USING c_true</item>
+      <item>                               CHANGING lt_fpdoc</item>
+      <item>                                        lv_subrc.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEA9A975C47EC01644F</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA9A975C47EC01644F</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>038</LENGTH>
+       <TEXT>Orders Technical Complete</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_TECHNICAL_COMPLETE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEA9A975C47EC01644F</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

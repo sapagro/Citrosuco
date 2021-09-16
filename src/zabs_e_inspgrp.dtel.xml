@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_E_INSPGRP</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <HEADLEN>20</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>40</SCRLEN3>
+    <DDTEXT>Quality Inspection group</DDTEXT>
+    <REPTEXT>QA Inspection group</REPTEXT>
+    <SCRTEXT_S>Inspection</SCRTEXT_S>
+    <SCRTEXT_M>QA Inspection group</SCRTEXT_M>
+    <SCRTEXT_L>QA Inspection group</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000020</LENG>
+    <OUTPUTLEN>000020</OUTPUTLEN>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Grupo de inspeção de qualidade</DDTEXT>
+     <REPTEXT>Grupo de inspeção QA</REPTEXT>
+     <SCRTEXT_S>Grupo insp</SCRTEXT_S>
+     <SCRTEXT_M>Grupo de inspeção QA</SCRTEXT_M>
+     <SCRTEXT_L>Grupo de inspeção de qualidade</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

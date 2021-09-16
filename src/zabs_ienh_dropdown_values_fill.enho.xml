@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Dropdown Values Fill</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:DROPDOWN_VALUES_FILL\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_vrm_values_x    TYPE vrm_values,</item>
+      <item>        lwa_vrm_value_x    TYPE vrm_value,</item>
+      <item>        lv_vrm_id_x        TYPE vrm_id,</item>
+      <item>        lv_description_x   TYPE rmclm-klbez,</item>
+      <item>        lwa_agha_x         TYPE /agri/glagha,</item>
+      <item>        lt_agha_x          TYPE STANDARD TABLE OF /agri/glagha,</item>
+      <item>        lv_descr_x         TYPE /agri/gdescr_40,</item>
+      <item>        lwa_glmdtyp_x      TYPE /agri/tglmdtyp,</item>
+      <item>        lt_glmdtyp_x       TYPE STANDARD TABLE OF /agri/tglmdtyp,</item>
+      <item>        lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lt_irmea_x&gt; TYPE /agri/t_fmirmea.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  CASE sy-dynnr.</item>
+      <item>    WHEN c_screen-quick_info OR</item>
+      <item>         c_screen-mass_quick_info.</item>
+      <item/>
+      <item>      SELECT * FROM /agri/tglmdtyp</item>
+      <item>        INTO TABLE lt_glmdtyp_x.</item>
+      <item>      IF /agri/s_glmdhdr-aslvl IS NOT INITIAL.</item>
+      <item>        DELETE lt_glmdtyp_x WHERE aslvl NE /agri/s_glmdhdr-aslvl.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      LOOP AT lt_glmdtyp_x INTO lwa_glmdtyp_x.</item>
+      <item>        lwa_vrm_value_x-key = lwa_glmdtyp_x-mdtyp.</item>
+      <item>        keytext_get_simple &apos;/AGRI/TGLMDTYP&apos; &apos;MDTYP&apos; lwa_glmdtyp_x-mdtyp</item>
+      <item>                            lv_descr_x.</item>
+      <item>        lwa_vrm_value_x-text = lv_descr_x.</item>
+      <item>        APPEND lwa_vrm_value_x TO lt_vrm_values_x.</item>
+      <item>        CLEAR: lv_descr_x, lwa_vrm_value_x.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      lv_vrm_id_x = &apos;/AGRI/S_GLMDHDR-MDTYP&apos;.</item>
+      <item>      dropdowns_fill lt_vrm_values_x lv_vrm_id_x.</item>
+      <item>      REFRESH: lt_vrm_values_x.</item>
+      <item/>
+      <item>      SELECT class FROM /agri/glagha</item>
+      <item>        INTO CORRESPONDING FIELDS OF TABLE lt_agha_x</item>
+      <item>       WHERE klart EQ c_agtyp-measurements</item>
+      <item>         AND mdtyp EQ /agri/s_glmdhdr-mdtyp</item>
+      <item>         AND aslvl EQ /agri/s_glmdhdr-aslvl.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        SORT lt_agha_x BY class.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      DATA(lv_dele_x) = abap_false.</item>
+      <item>      READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>        WITH KEY kind        = &apos;FORM&apos;</item>
+      <item>                 progname    = &apos;/AGRI/SAPLFMIRM&apos;</item>
+      <item>                 includename = &apos;/AGRI/LFMIRMF0M&apos;</item>
+      <item>                 event       = &apos;MEASUREMENT_DOCUMENT_PREPARE&apos;.</item>
+      <item>      IF sy-subrc  EQ 0</item>
+      <item>      AND sy-dynnr EQ c_screen-quick_info</item>
+      <item>      AND sy-cprog EQ &apos;/AGRI/SAPLFMIRM&apos;</item>
+      <item>      AND sy-tcode EQ &apos;/AGRI/FMIRM&apos;</item>
+      <item>      AND gs_variables-document_mode NE c_mode_display.</item>
+      <item>        lv_dele_x = abap_true.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_dele_x EQ abap_true.</item>
+      <item>        ASSIGN (&apos;(/AGRI/SAPLFMIRM)GS_IRDOC_INFOCUS-X-IRMEA&apos;) TO &lt;lt_irmea_x&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          LOOP AT lt_agha_x INTO lwa_agha_x.</item>
+      <item>            DATA(lv_tabix) = sy-tabix.</item>
+      <item>            READ TABLE &lt;lt_irmea_x&gt; TRANSPORTING NO FIELDS</item>
+      <item>              WITH KEY class = lwa_agha_x-class.</item>
+      <item>            IF sy-subrc NE 0.</item>
+      <item>              DELETE lt_agha_x INDEX lv_tabix.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDLOOP.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      LOOP AT lt_agha_x INTO lwa_agha_x.</item>
+      <item>        lwa_vrm_value_x-key = lwa_agha_x-class.</item>
+      <item>        CALL FUNCTION &apos;CLMA_CLASS_EXIST&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            class             = lwa_agha_x-class</item>
+      <item>            classtype         = c_agtyp-measurements</item>
+      <item>            description_only  = c_true</item>
+      <item>          IMPORTING</item>
+      <item>            class_description = lv_description_x</item>
+      <item>          EXCEPTIONS</item>
+      <item>            no_valid_sign     = 1</item>
+      <item>            OTHERS            = 2.</item>
+      <item/>
+      <item>        lwa_vrm_value_x-text = lv_description_x.</item>
+      <item>        APPEND lwa_vrm_value_x TO lt_vrm_values_x.</item>
+      <item>        CLEAR: lv_description_x, lwa_vrm_value_x.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      lv_vrm_id_x = &apos;/AGRI/S_GLMDHDR-MPGRP&apos;.</item>
+      <item>      dropdowns_fill lt_vrm_values_x lv_vrm_id_x.</item>
+      <item>  ENDCASE.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDAABB0A6F5CCE062FE</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDAABB0A6F5CCE062FE</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>030</LENGTH>
+       <TEXT>Dropdown Values Fill</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_DROPDOWN_VALUES_FILL</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDAABB0A6F5CCE062FE</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

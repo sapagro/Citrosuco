@@ -1,0 +1,3 @@
+FUNCTION-POOL ZFMFP_MEMORY_MESSAGES.        "MESSAGE-ID ..
+
+* INCLUDE LZFMFP_MEMORY_MESSAGESD...         " Local class definition

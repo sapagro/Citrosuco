@@ -1,0 +1,1312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xfa generator="AdobeLiveCycleDesigner_V11.0.1.20160812.1.925753_SAP" APIVersion="3.6.16186.0"?><xdp:xdp xmlns:xdp="http://ns.adobe.com/xdp/" timeStamp="2020-11-20T14:31:25Z" uuid="6c2f3c07-04a4-4ecf-9ef6-327b7c2e71c0">
+<template xmlns:xliff="urn:oasis:names:tc:xliff:document:1.1" xmlns="http://www.xfa.org/schema/xfa-template/3.3/">
+   <?formServer defaultPDFRenderFormat acrobat10.0dynamic?>
+   <subform layout="tb" locale="en_US" name="data" restoreState="auto">
+      <pageSet>
+         <pageArea id="Page1" name="Master">
+            <contentArea h="279.4mm" id="contentArea_ID" w="190.5mm" x="0.25in" y="0.25in"/>
+            <medium long="297mm" short="210mm" stock="a4"/>
+            <field access="readOnly" h="7.5mm" id="floatingField000041" name="CurrentPage" presence="hidden" w="55mm" x="120.65mm" y="288.925mm">
+               <ui>
+                  <numericEdit>
+                     <border>
+                        <edge stroke="lowered"/>
+                     </border>
+                     <margin/>
+                  </numericEdit>
+               </ui>
+               <font typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption reserve="20mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="15FE8C09-8B4A-43AA-946C-4FFE254D6A78">Text Field</text>
+                  </value>
+               </caption>
+               <calculate override="error"/>
+               <event activity="ready" name="event__layout_ready" ref="$layout">
+                  <script contentType="application/x-javascript">this.rawValue = xfa.layout.page(this);
+</script>
+               </event>
+               <?templateDesigner floatingFieldPlaceholder #?>
+               <bind match="none"/>
+            </field>
+            <field access="readOnly" h="7.5mm" id="floatingField018467" name="PageCount" presence="hidden" w="55mm" x="120.65mm" y="288.925mm">
+               <ui>
+                  <numericEdit>
+                     <border>
+                        <edge stroke="lowered"/>
+                     </border>
+                     <margin/>
+                  </numericEdit>
+               </ui>
+               <font typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption reserve="20mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="0A3CD085-43BA-4027-AF0F-C4DC52BA3E72">Text Field</text>
+                  </value>
+               </caption>
+               <calculate override="error"/>
+               <event activity="ready" name="event__layout_ready" ref="$layout">
+                  <script contentType="application/x-javascript">this.rawValue = xfa.layout.pageCount();
+</script>
+               </event>
+               <?templateDesigner floatingFieldPlaceholder ##?>
+               <bind match="none"/>
+            </field>
+            <field access="readOnly" h="9mm" id="floatingField006334" name="TEXT13" presence="hidden" w="62mm" x="0mm" y="0mm">
+               <ui>
+                  <textEdit>
+                     <border>
+                        <edge stroke="lowered"/>
+                     </border>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <exData contentType="text/html">
+                     <body xmlns="http://www.w3.org/1999/xhtml"/>
+                  </exData>
+               </value>
+               <bind match="dataRef" ref="$.TEXT13"/>
+               <caption>
+                  <value>
+                     <text xliff:rid="96A58D89-FE4A-466B-BAC2-BBDDF2FEE092">TEXT13</text>
+                  </value>
+               </caption>
+               <desc>
+                  <exData name="Schema Annotation">Page
+SAPScript Include Text 
+ NAME = ZPAGE_EN 
+ LANGUAGE-FIELD = GV_LANGU 
+ OBJECT = TEXT 
+ ID = ST</exData>
+               </desc>
+            </field>
+            <field access="readOnly" h="9mm" id="floatingField026500" name="TEXT14" presence="hidden" w="62mm" x="0mm" y="0mm">
+               <ui>
+                  <textEdit>
+                     <border>
+                        <edge stroke="lowered"/>
+                     </border>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <exData contentType="text/html">
+                     <body xmlns="http://www.w3.org/1999/xhtml"/>
+                  </exData>
+               </value>
+               <bind match="dataRef" ref="$.TEXT14"/>
+               <caption>
+                  <value>
+                     <text xliff:rid="A6A2ED68-DE39-48F5-9FD2-2E57A92B5CBF">TEXT14</text>
+                  </value>
+               </caption>
+               <desc>
+                  <exData name="Schema Annotation">Of
+SAPScript Include Text 
+ NAME = ZOF_EN 
+ LANGUAGE-FIELD = GV_LANGU 
+ OBJECT = TEXT 
+ ID = ST</exData>
+               </desc>
+            </field>
+            <draw h="5.2331mm" name="Text3" w="60.325mm" x="136.525mm" y="285.75mm">
+               <ui>
+                  <textEdit/>
+               </ui>
+               <value>
+                  <exData contentType="text/html">
+                     <body xmlns="http://www.w3.org/1999/xhtml" xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/"><p style="letter-spacing:0in"><span xfa:embed="#floatingField006334" xfa:embedMode="raw" xfa:embedType="uri"/><span style="xfa-spacerun:yes">    </span><span xfa:embed="#floatingField000041" xfa:embedMode="raw" xfa:embedType="uri"/><span style="xfa-spacerun:yes">  </span><span xfa:embed="#floatingField026500" xfa:embedMode="raw" xfa:embedType="uri"/><span style="xfa-spacerun:yes">  </span><span xfa:embed="#floatingField018467" xfa:embedMode="raw" xfa:embedType="uri"/></p></body>
+                  </exData>
+               </value>
+               <font typeface="Arial"/>
+               <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+            </draw>
+            <?templateDesigner expand 1?></pageArea>
+         <?templateDesigner expand 1?></pageSet>
+      <subform layout="lr-tb" minH="69.51mm" name="PAGE1" w="190.5mm">
+         <bind match="none"/>
+         <subform name="Terrain" w="190.5mm">
+            <bind match="none"/>
+            <margin topInset="1.27mm"/>
+            <draw anchorType="topRight" h="22.225mm" hAlign="right" name="Image1" relevant="-print" w="48.899mm" x="48.899mm" y="1.905mm">
+               <value>
+                  <image contentType="image/jpeg">/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDxARDxMSEhERDRcQFRIQEBIOFhIXFRYXFhwa
+GBYZHSgjGxsmHRcVITItJiktMC4wGB8zODMsNygtLisBCgoKDg0OGxAQGy0mHyUyLy8tLS0rLS0t
+LS0tLS0tLS0tLy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAKMBNgMBEQACEQED
+EQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABQYDBAcBAgj/xABAEAACAgECBAMFBQINBQEAAAAAAQID
+EQQFBhIhMQcTQVFhcYGRFCIyobGy0RUjNUJScnSCkrPB4fAlMzRTcxb/xAAaAQEAAwEBAQAAAAAA
+AAAAAAAAAQIDBAUG/8QAKxEBAAIBBAEDAwQCAwAAAAAAAAECAwQREiExBTJBEyJRYXGRoRUzgbHB
+/9oADAMBAAIRAxEAPwDuIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHmQ
+PQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAam47jVp4c9ssL0XdyfsSMNRqceCvK8omd
+lV3PiXVtc1dcqa32nKDk382sfkeFqfVNTtvSvGv5mGc3n4b9G16q2EZrWyfNHK5YdP2l+h000upy
+Vi8Z/wCltpn5R22bnuLlNV/x8a5NPmUcPHsl0bOTT6rXTaYp90QrFrLBtW+wvl5c06rl3rn6/B+p
+62m19cs8LRxt+JXi26XR6CwAAAYtTfCuEp2SjCEVmUpyUYxXtbfYImdmPQ66nUQVlFkLYPop1yU4
+9PehuRMT3DZCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAABg1mpjVXKybxGMcszy5a46Te3iETOyiW6u
+c9VRfqliucuaKfVKCeO3sTw/efK2y3tqKZc8fbPj9mO/3byv04RnFppSjJdn1TTPq5it67eYlupe
+46iegd+nrb5LYKdfX/t8zw/0l+TPm9RlvoZvhr4nuP03ZTPHpt7VvEKqY1aai25pdZKPLGUn3eep
+06XWRjxxjw0m36/qmLdbQ19z0Gv1c42OqNTgvu4mlLvnvnv9DHUafV6m8X4xXb9UTFpTvDu5yuhK
+FvS6p8s0+mfeepoNVbLXjf3R5XrO6YPQWeAMhCC412F7jorNNGflyk4yUmm1mElJKSXo8Fb15Rsp
+lpzrsh+D+Gbdn2/VqVsZ2yU78wT5YONeFjm7vpnt+hWleEKYsc46TCE8KOM9brtRbRqpqxKjzYy5
+IwcWpRTX3Uk0+b8iuLJNvLLT5rXmYl1A2dhkBkBkBkBkBkBkAAAZAZAAMgMgegAAAAAAAAAAABXO
+L7Ob7PRnCtuXM/cml+r/ACPH9VvvwxfFp7UvPiGHjPSx5NPJ9IQt8t46YjLHb/CZ+r4K8cc/ETt/
+xKMkeHldtu2yjGbdmlk8Rl/Or/2/4sdhW+TQTEWnfHPifwb8f2akdZpr9VZqNTKPl14rrg/vc+PV
+xXdd3817DmjNp82otmyz1HUR+UbxM7ylXxZpF0jzv+rDH64PQ/y2mjqu/wDC3OGC7jKhL7tdjfsl
+ywX1yzLJ61ir4rO/8InJEI7a9RdHW132x5I6puK9jTxjp/hOLS5MsaqMt42i6K78t5+V3Pp2rkXi
+nxtqVqHoNFOVfLiNs6+lk5zSahFrqlhrt1bePTrhkvO+0OLUZp341a+m8KtycFbLWRhqHHm5ea1t
+P2O1POfgn8yPpW/KI019t9+0vvUdy0/Dl61tkvtMLoxU42ZnyedCKzZF9crPXvhrPXJa3KKdr351
+w9+WPww3G+/atxjdZOzy1NQdknNxUqc4y+uM/qRjmZrKNPaZxzu55wPsWp198qtNd5E40ObnzThl
+JxWMw692voZUrNuocuGk3tMROzqun2TV7bsu5R1God1jqtthZGdjcF5SSSlLqnmLfT2m/Ga0neXb
+wtTHO8ud8Jz3jcY26LTaiflvFtkrbprkS6YU+skpP0XfHxMq8rdQ5cU5L/bErbs+l1fDmj11+qnG
+xzlXVp642SnCVj5vvYeGu/XoniD9xeImkTMt68sNZmyu7Dw/ue/u2+3UyjXGfLzWOcouWE+WuuLS
+SSa9nf16lK1tfvdjSl83e/T4hue5cPa5U22SsqXLN188p121Ntc0FL8Eukl0x1j6ru3mknO+G+0y
+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</image>
+               </value>
+               <ui>
+                  <imageEdit/>
+               </ui>
+               <desc>
+                  <text name="embeddedHref">C:\Users\Harshita.Sagiraju\Desktop\download.jpg</text>
+               </desc>
+            </draw>
+            <field h="9mm" name="TextField1" presence="invisible" w="62mm" x="95.25mm" y="12.7mm">
+               <ui>
+                  <textEdit>
+                     <border>
+                        <edge stroke="lowered"/>
+                     </border>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption reserve="25mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="91852B7D-094E-4C39-A1F0-DB8ED14B0795">Text Field</text>
+                  </value>
+               </caption>
+               <bind match="none"/>
+            </field>
+            <field access="readOnly" h="9mm" name="TextField2" w="37mm" x="222.25mm">
+               <ui>
+                  <textEdit>
+                     <border presence="hidden"/>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <bind match="dataRef" ref="$.TEXT"/>
+            </field>
+            <subform columnWidths="101.6mm 2.54mm 30mm 6.35mm 17.78mm 2.54mm 22.44mm" layout="table" name="Table3" x="0.724mm" y="27.305mm">
+               <border>
+                  <edge presence="hidden"/>
+                  <corner presence="hidden"/>
+               </border>
+               <subform id="HeaderRow_ID_copy2" layout="row" name="HeaderRow">
+                  <assist role="TH"/>
+                  <field h="6.35mm">
+                     <font typeface="Times New Roman"/>
+                     <para vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.TEXT2"/>
+                  </field>
+                  <draw h="6.35mm">
+                     <font typeface="Times New Roman"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <para vAlign="middle"/>
+                  </draw>
+                  <field h="6.35mm">
+                     <font typeface="Times New Roman"/>
+                     <para hAlign="right" vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.TEXT"/>
+                  </field>
+                  <draw h="6.35mm">
+                     <value>
+                        <text xliff:rid="EC0C2AC7-E516-475C-B050-FCB84D040ABD">:	</text>
+                     </value>
+                     <font typeface="Times New Roman" weight="bold"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <occur max="-1"/>
+                  <bind match="none"/>
+                  <field h="6.35mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.GV_DATAB"/>
+                     <format>
+                        <picture>date{MM/DD/YYYY}</picture>
+                     </format>
+                  </field>
+                  <draw h="6.35mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <value>
+                        <text xliff:rid="AE5F5500-2E79-4DE1-92BB-8E3F6BC3FA67">-</text>
+                     </value>
+                     <font typeface="Times New Roman" weight="bold"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                  </draw>
+                  <field h="6.35mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.GV_DATBI"/>
+                     <format>
+                        <picture>date{MM/DD/YYYY}</picture>
+                     </format>
+                  </field>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Row1">
+                  <assist role="TR"/>
+                  <field h="6.35mm">
+                     <font typeface="Times New Roman"/>
+                     <para vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.TEXT3"/>
+                  </field>
+                  <draw h="6.35mm">
+                     <font typeface="Times New Roman"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <para vAlign="middle"/>
+                  </draw>
+                  <field h="6.35mm" name="Cell3">
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="right" vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.TEXT1"/>
+                  </field>
+                  <draw minH="6.35mm" w="0.406458in">
+                     <value>
+                        <text xliff:rid="546AD778-A9FE-4398-AC69-487A551336F3">:</text>
+                     </value>
+                     <font typeface="Times New Roman" weight="bold"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <field h="6.35mm" w="23.964mm">
+                     <font typeface="Times New Roman"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.DATE"/>
+                     <format>
+                        <picture>date{MM/DD/YYYY}</picture>
+                     </format>
+                  </field>
+                  <draw h="6.35mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <para vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                  </draw>
+                  <draw h="6.35mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <para vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                  </draw>
+                  <?templateDesigner expand 0?></subform>
+               <keep intact="contentArea"/>
+               <bind match="none"/>
+               <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+               <overflow leader="HeaderRow"/>
+               <?templateDesigner expand 0?></subform>
+            <subform columnWidths="16.002mm 116.869mm" layout="table" name="Table4" y="40.005mm">
+               <border>
+                  <edge presence="hidden"/>
+                  <corner presence="hidden"/>
+               </border>
+               <subform layout="row" name="Row1">
+                  <assist role="TR"/>
+                  <field h="6.35mm" name="Cell1">
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.TEXT4"/>
+                  </field>
+                  <field access="readOnly" h="6.35mm">
+                     <font typeface="Times New Roman"/>
+                     <para vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.GV_REGTXT"/>
+                     <margin leftInset="0mm"/>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 1?></subform>
+               <subform layout="row" name="Row2">
+                  <assist role="TR"/>
+                  <field colSpan="-1" h="6.35mm" name="Cell1" w="262.007mm">
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font typeface="Times New Roman"/>
+                     <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para vAlign="middle"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <bind match="dataRef" ref="$.GV_RBTXT"/>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 1?></subform>
+               <keep intact="contentArea"/>
+               <bind match="none"/>
+               <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+               <?templateDesigner expand 0?></subform>
+            <breakAfter/>
+            <?templateDesigner expand 0?></subform>
+         <subform columnWidths="59.732mm 17.78mm 38.1mm 46.913mm" layout="table" name="Table1">
+            <border>
+               <edge presence="hidden"/>
+               <corner presence="hidden"/>
+            </border>
+            <subform id="HeaderRow_ID" layout="row" name="HeaderRow">
+               <assist role="TH"/>
+               <field h="6.35mm" name="Cell1">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman" weight="bold"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="1.27mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge/>
+                     <corner thickness="0.175mm"/>
+                     <edge presence="hidden"/>
+                     <edge/>
+                     <edge/>
+                     <corner presence="hidden" thickness="0.175mm"/>
+                     <corner thickness="0.175mm"/>
+                     <corner thickness="0.175mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.TEXT7"/>
+               </field>
+               <draw h="6.35mm">
+                  <font size="9pt" typeface="Arial"/>
+                  <border>
+                     <edge/>
+                     <corner thickness="0.175mm"/>
+                     <edge presence="hidden"/>
+                     <edge/>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.175mm"/>
+                     <corner thickness="0.175mm"/>
+                     <corner presence="hidden" thickness="0.175mm"/>
+                  </border>
+                  <para vAlign="middle"/>
+                  <margin topInset="1.27mm"/>
+               </draw>
+               <field h="6.35mm" name="Cell3">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman" weight="bold"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="1.27mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge/>
+                     <corner thickness="0.175mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.TEXT8"/>
+               </field>
+               <field h="6.35mm" name="Cell4">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman" weight="bold"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="1.27mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge/>
+                     <corner thickness="0.175mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.TEXT9"/>
+               </field>
+               <border>
+                  <edge presence="hidden"/>
+               </border>
+               <occur max="-1"/>
+               <bind match="none"/>
+               <?templateDesigner expand 1?></subform>
+            <keep intact="contentArea"/>
+            <bind match="none"/>
+            <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+            <overflow leader="HeaderRow"/>
+            <margin leftInset="1.27mm"/>
+            <?templateDesigner expand 0?></subform>
+         <subform layout="tb" minH="12.7mm" name="farm">
+            <bind match="dataRef" ref="$.GT_FINAL.DATA[*]"/>
+            <subform layout="lr-tb" name="Row1" w="162.64mm">
+               <assist role="TR"/>
+               <field h="0.25in" name="Cell1" w="2.351653in">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.PLTXT"/>
+               </field>
+               <field access="readOnly" h="0.25in" name="SUB" w="0.7in">
+                  <ui>
+                     <textEdit>
+                        <border presence="hidden"/>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <bind match="none"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+               </field>
+               <field h="0.25in" name="Cell3" w="1.5in">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.RSDESC"/>
+               </field>
+               <field access="readOnly" h="0.25in" name="Cell4" w="46.913mm">
+                  <ui>
+                     <numericEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="right" vAlign="middle"/>
+                  <value>
+                     <decimal fracDigits="-1"/>
+                  </value>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.QTD_PLANTS"/>
+                  <format>
+                     <picture>num{zzzzzzzzzzzz9}</picture>
+                  </format>
+                  <event activity="initialize" name="event__initialize">
+                     <script contentType="application/x-javascript">//if (this.resolveNode("PAGE1.Table1.Row1.SUB").rawValue != NULL )
+//{
+ 
+//this.caption.font.weight = "bold";
+//this.font.weight = "bold";
+//}
+
+</script>
+                  </event>
+               </field>
+               <border>
+                  <edge presence="hidden"/>
+               </border>
+               <bind match="dataRef" ref="$.FARM.DATA[*]"/>
+               <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+               <occur max="-1"/>
+               <?templateDesigner expand 1?></subform>
+            <subform layout="lr-tb" name="sub">
+               <assist role="TR"/>
+               <field h="6.35mm" name="Cell1" w="59.733mm">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <edge presence="hidden"/>
+                     <edge/>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <corner thickness="0.1778mm"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="none"/>
+               </field>
+               <field h="0.25in" name="SUB" w="17.78mm">
+                  <ui>
+                     <textEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman" weight="bold"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <edge presence="hidden"/>
+                     <edge/>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <corner thickness="0.1778mm"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.SUB_TOT"/>
+               </field>
+               <field access="readOnly" h="0.25in" name="Cell3" w="38.1mm">
+                  <ui>
+                     <textEdit>
+                        <border presence="hidden"/>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman" weight="bold"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <bind match="none"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <edge presence="hidden"/>
+                     <edge/>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <corner thickness="0.1778mm"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+               </field>
+               <field access="readOnly" h="0.25in" name="Cell4" w="1.846972in">
+                  <ui>
+                     <numericEdit/>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman" weight="bold"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="right" vAlign="middle"/>
+                  <value>
+                     <decimal fracDigits="-1"/>
+                  </value>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <edge presence="hidden"/>
+                     <edge/>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                     <corner thickness="0.1778mm"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.QTD_PLANTS"/>
+                  <format>
+                     <picture>num{zzzzzzzzzzzz9}</picture>
+                  </format>
+                  <event activity="initialize" name="event__initialize">
+                     <script contentType="application/x-javascript">//if (this.resolveNode("PAGE1.Table1.Row1.SUB").rawValue != NULL )
+//{
+ 
+//this.caption.font.weight = "bold";
+//this.font.weight = "bold";
+//}
+
+
+</script>
+                  </event>
+               </field>
+               <border>
+                  <edge/>
+                  <edge presence="hidden"/>
+                  <edge/>
+                  <edge presence="hidden"/>
+                  <corner/>
+               </border>
+               <bind match="dataRef" ref="$.SUBTOT.DATA[*]"/>
+               <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+               <?templateDesigner expand 0?>
+               <margin leftInset="0mm"/>
+            </subform>
+            <occur max="-1"/>
+            <margin leftInset="1.27mm"/>
+            <?templateDesigner expand 0?></subform>
+         <breakAfter/>
+         <field minH="8.89mm" name="TextField5" w="60.325mm">
+            <ui>
+               <textEdit>
+                  <border presence="hidden"/>
+                  <margin/>
+               </textEdit>
+            </ui>
+            <font size="9pt" typeface="Times New Roman" weight="bold"/>
+            <margin bottomInset="1mm" leftInset="1.27mm" rightInset="1mm" topInset="1mm"/>
+            <para hAlign="center" vAlign="middle"/>
+            <bind match="dataRef" ref="$.TEXT12"/>
+         </field>
+         <subform columnWidths="17.78mm 38.753mm 47.2mm" layout="table" name="REASON_SUB">
+            <border>
+               <edge presence="hidden"/>
+               <corner presence="hidden"/>
+            </border>
+            <subform id="HeaderRow_ID_copy1" layout="row" name="HeaderRow">
+               <assist role="TH"/>
+               <draw h="3.824mm" w="17.78mm">
+                  <font typeface="Times New Roman"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <para vAlign="middle"/>
+                  <margin leftInset="1.27mm"/>
+               </draw>
+               <draw h="2.54mm">
+                  <font typeface="Times New Roman"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <para vAlign="middle"/>
+                  <margin leftInset="1.27mm"/>
+               </draw>
+               <border>
+                  <edge presence="hidden"/>
+               </border>
+               <occur max="-1"/>
+               <bind match="none"/>
+               <draw h="2.54mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font typeface="Times New Roman"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+               </draw>
+               <?templateDesigner expand 0?></subform>
+            <subform layout="row" name="Row1">
+               <assist role="TR"/>
+               <draw h="7.022mm" w="17.78mm" y="0mm">
+                  <font typeface="Arial"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <para hAlign="center" vAlign="middle"/>
+               </draw>
+               <field minH="6.35mm" name="REASON" w="50.8mm" y="0mm">
+                  <ui>
+                     <textEdit>
+                        <border presence="hidden"/>
+                     </textEdit>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$record.GT_FARM_SUBTOT1.DATA[*].RSDESC"/>
+               </field>
+               <border>
+                  <edge presence="hidden"/>
+               </border>
+               <bind match="dataRef" ref="$.GT_FARM_SUBTOT.DATA[*]"/>
+               <occur max="-1"/>
+               <field minH="6.35mm" name="REASON_VAL" w="76.2mm" y="0mm">
+                  <ui>
+                     <numericEdit>
+                        <border presence="hidden"/>
+                     </numericEdit>
+                  </ui>
+                  <font size="9pt" typeface="Times New Roman"/>
+                  <margin bottomInset="0.5mm" leftInset="1.27mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <para hAlign="right" vAlign="middle"/>
+                  <value>
+                     <decimal fracDigits="-1"/>
+                  </value>
+                  <border>
+                     <edge presence="hidden"/>
+                     <corner presence="hidden" thickness="0.1778mm"/>
+                  </border>
+                  <bind match="dataRef" ref="$.QTD_PLANTS"/>
+                  <format>
+                     <picture>num{zzzzzzzzzzzz9}</picture>
+                  </format>
+               </field>
+               <?templateDesigner expand 0?></subform>
+            <bind match="none"/>
+            <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+            <overflow leader="HeaderRow"/>
+            <margin leftInset="0mm"/>
+            <?templateDesigner expand 0?></subform>
+         <draw h="0.17825in" name="Text1" w="190.5mm">
+            <ui>
+               <textEdit/>
+            </ui>
+            <font typeface="Arial"/>
+            <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+            <?renderCache.bounds 537166 10000 0 0 1417 1417 0 0?></draw>
+         <field h="6.35mm" name="GrandTotal" w="60.325mm">
+            <ui>
+               <textEdit>
+                  <border presence="hidden"/>
+                  <margin/>
+               </textEdit>
+            </ui>
+            <font size="9pt" typeface="Times New Roman" weight="bold"/>
+            <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+            <para hAlign="center" vAlign="middle"/>
+            <bind match="dataRef" ref="$.TEXT11"/>
+            <border>
+               <edge/>
+               <edge presence="hidden"/>
+               <edge/>
+               <edge presence="hidden"/>
+               <corner/>
+            </border>
+         </field>
+         <draw h="6.35mm" name="Text2" w="57.15mm">
+            <ui>
+               <textEdit/>
+            </ui>
+            <font typeface="Arial"/>
+            <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+            <border>
+               <edge/>
+               <edge presence="hidden"/>
+               <edge/>
+               <edge presence="hidden"/>
+               <corner/>
+            </border>
+            <?renderCache.bounds 159166 15166 0 0 1417 1417 0 0?></draw>
+         <field h="6.35mm" name="GRTotalValue" w="47.625mm">
+            <ui>
+               <numericEdit>
+                  <border presence="hidden"/>
+                  <margin/>
+               </numericEdit>
+            </ui>
+            <font size="9pt" typeface="Times New Roman" weight="bold"/>
+            <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+            <para hAlign="right" vAlign="middle"/>
+            <value>
+               <decimal fracDigits="-1"/>
+            </value>
+            <event activity="initialize" name="event__initialize">
+               <script>
+$ = sum(REASON_SUB.Row1[*].REASON_VAL)
+</script>
+            </event>
+            <bind match="none"/>
+            <format>
+               <picture>num{zzzzzzzzzzzz9}</picture>
+            </format>
+            <border>
+               <edge/>
+               <edge presence="hidden"/>
+               <edge/>
+               <edge presence="hidden"/>
+               <corner/>
+            </border>
+         </field>
+         <draw h="22.726mm" name="Text1" w="190.5mm">
+            <ui>
+               <textEdit/>
+            </ui>
+            <font typeface="Arial"/>
+            <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+            <?renderCache.bounds 537166 61586 0 0 1417 1417 0 0?></draw>
+         <subform h="41.066mm" w="190.5mm">
+            <bind match="none"/>
+            <field h="13.335mm" hAlign="justify" name="TextField4" w="79.375mm" x="111.125mm" y="12.175mm">
+               <ui>
+                  <textEdit>
+                     <border presence="hidden"/>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font size="9pt" typeface="Times New Roman"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption placement="top" reserve="4.4903mm">
+                  <font baselineShift="0pt" size="9pt" typeface="Times New Roman"/>
+                  <para marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="7484E318-F004-40CE-9842-B743CCD66061">________________________________</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.TEXT3"/>
+            </field>
+            <field h="12.424mm" hAlign="justify" name="TextField4" w="53.975mm" x="111.125mm" y="25.4mm">
+               <ui>
+                  <textEdit>
+                     <border presence="hidden"/>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font size="9pt" typeface="Times New Roman"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption placement="top" reserve="4.5486mm">
+                  <font baselineShift="0pt" size="9pt" typeface="Times New Roman"/>
+                  <para marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="A9CDCBFF-FBF7-4A0B-967E-89FA33B4E6AD">________________________________</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.TEXT10"/>
+            </field>
+            <keep intact="none"/>
+            <?templateDesigner expand 0?></subform>
+         <occur max="-1"/>
+         <?templateDesigner expand 1?></subform>
+      <proto/>
+      <desc>
+         <text name="version">11.0.1.20140218.1.907162.903801</text>
+      </desc>
+      <?templateDesigner expand 1?>
+      <?renderCache.subset "Arial" 0 0 ISO-8859-1 4 68 17 00030006001400160017002800290037003B00470048004C004F0057005B005E0060 #134EFTXdeiltx{}?>
+      <?renderCache.subset "Times New Roman" 0 0 ISO-8859-1 4 4 1 0042_?>
+      <?renderCache.subset "Times New Roman" 1 0 ISO-8859-1 4 12 3 00030010001D -:?></subform>
+   <?templateDesigner DefaultPreviewDynamic 1?>
+   <?templateDesigner DefaultRunAt client?>
+   <?templateDesigner WidowOrphanControl 0?>
+   <?templateDesigner DefaultCaptionFontSettings face:Arial;size:10;weight:normal;style:normal?>
+   <?templateDesigner DefaultValueFontSettings face:Arial;size:10;weight:normal;style:normal?>
+   <?templateDesigner DefaultLanguage JavaScript?>
+   <?acrobat JavaScript strictScoping?>
+   <?templateDesigner Grid show:1, snap:1, units:0, color:ff8080, origin:(0,0), interval:(125000,125000), objsnap:0, guidesnap:0, pagecentersnap:0?>
+   <?templateDesigner SaveTaggedPDF 1?>
+   <?templateDesigner SavePDFWithEmbeddedFonts 1?>
+   <?templateDesigner FormTargetVersion 33?>
+   <?templateDesigner Zoom 98?>
+   <?templateDesigner Rulers horizontal:1, vertical:1, guidelines:1, crosshairs:0?></template>
+<config xmlns="http://www.xfa.org/schema/xci/3.0/">
+   <agent name="designer">
+      <!--  [0..n]  -->
+      <destination>pdf</destination>
+      <pdf>
+         <!--  [0..n]  -->
+         <fontInfo/>
+      </pdf>
+      <common>
+         <template>
+            <base>http://csap01C4D.citrosuco.p4s.local:8024/sap/bc/fp/form/layout/</base>
+         </template>
+      </common>
+   </agent>
+   <present>
+      <!--  [0..n]  -->
+      <pdf>
+         <!--  [0..n]  -->
+         <version>1.7</version>
+         <adobeExtensionLevel>8</adobeExtensionLevel>
+      </pdf>
+      <common>
+         <data>
+            <xsl>
+               <uri/>
+            </xsl>
+            <outputXSL>
+               <uri/>
+            </outputXSL>
+         </data>
+      </common>
+      <xdp>
+         <packets>*</packets>
+      </xdp>
+   </present>
+</config>
+<connectionSet xmlns="http://www.xfa.org/schema/xfa-connection-set/2.8/">
+   <xsdConnection dataDescription="data" name="ZABS_ADBFRM_TERRAIN">
+      <uri/>
+      <rootElement>data</rootElement>
+   </xsdConnection>
+</connectionSet>
+<xfa:datasets xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/">
+   <xfa:data xfa:dataNode="dataGroup"/>
+   <dd:dataDescription xmlns:dd="http://ns.adobe.com/data-description/" dd:name="data">
+      <data>
+         <GT_TERRAIN_DTLS dd:minOccur="0">
+            <DATA dd:maxOccur="-1">
+               <REGION/>
+               <FARM/>
+               <REASON/>
+               <QTD_PLANTS/>
+               <SUB_TOT/>
+               <SUB_TOT_VAL/>
+               <FARM2/>
+               <RBTXT/>
+               <PLTXT/>
+               <RSDESC/>
+            </DATA>
+         </GT_TERRAIN_DTLS>
+         <GT_FARM_SUBTOT1 dd:minOccur="0">
+            <DATA dd:maxOccur="-1">
+               <REASON/>
+               <RSDESC/>
+               <QTD_PLANTS/>
+            </DATA>
+         </GT_FARM_SUBTOT1>
+         <GT_FINAL dd:minOccur="0">
+            <DATA dd:maxOccur="-1">
+               <FARM dd:minOccur="0">
+                  <DATA dd:maxOccur="-1">
+                     <REGION/>
+                     <FARM/>
+                     <REASON/>
+                     <QTD_PLANTS/>
+                     <SUB_TOT/>
+                     <SUB_TOT_VAL/>
+                     <FARM2/>
+                     <RBTXT/>
+                     <RSDESC/>
+                     <PLTXT/>
+                  </DATA>
+               </FARM>
+               <SUBTOT dd:minOccur="0">
+                  <DATA dd:maxOccur="-1">
+                     <FARM/>
+                     <FARM2/>
+                     <SUB_TOT/>
+                     <QTD_PLANTS/>
+                  </DATA>
+               </SUBTOT>
+               <FARM_NO/>
+            </DATA>
+         </GT_FINAL>
+         <DATE/>
+         <TEXT/>
+         <GV_LANGU/>
+         <GV_DATBI/>
+         <GV_DATAB/>
+         <GV_RBTXT/>
+         <GV_REGTXT/>
+         <TEXT1/>
+         <TEXT2/>
+         <TEXT3/>
+         <TEXT4/>
+         <TEXT5/>
+         <TEXT6/>
+         <TEXT7/>
+         <TEXT8/>
+         <TEXT9/>
+         <TEXT10/>
+         <TEXT11/>
+         <TEXT12/>
+         <TEXT13/>
+         <TEXT14/>
+         <GT_FARM_SUBTOT dd:minOccur="0">
+            <DATA dd:maxOccur="-1">
+               <REASON/>
+               <QTD_PLANTS/>
+            </DATA>
+         </GT_FARM_SUBTOT>
+      </data>
+   </dd:dataDescription>
+</xfa:datasets>
+<localeSet xmlns="http://www.xfa.org/schema/xfa-locale-set/2.7/">
+   <locale desc="English (United States)" name="en_US">
+      <calendarSymbols name="gregorian">
+         <monthNames>
+            <month>January</month>
+            <month>February</month>
+            <month>March</month>
+            <month>April</month>
+            <month>May</month>
+            <month>June</month>
+            <month>July</month>
+            <month>August</month>
+            <month>September</month>
+            <month>October</month>
+            <month>November</month>
+            <month>December</month>
+         </monthNames>
+         <monthNames abbr="1">
+            <month>Jan</month>
+            <month>Feb</month>
+            <month>Mar</month>
+            <month>Apr</month>
+            <month>May</month>
+            <month>Jun</month>
+            <month>Jul</month>
+            <month>Aug</month>
+            <month>Sep</month>
+            <month>Oct</month>
+            <month>Nov</month>
+            <month>Dec</month>
+         </monthNames>
+         <dayNames>
+            <day>Sunday</day>
+            <day>Monday</day>
+            <day>Tuesday</day>
+            <day>Wednesday</day>
+            <day>Thursday</day>
+            <day>Friday</day>
+            <day>Saturday</day>
+         </dayNames>
+         <dayNames abbr="1">
+            <day>Sun</day>
+            <day>Mon</day>
+            <day>Tue</day>
+            <day>Wed</day>
+            <day>Thu</day>
+            <day>Fri</day>
+            <day>Sat</day>
+         </dayNames>
+         <meridiemNames>
+            <meridiem>AM</meridiem>
+            <meridiem>PM</meridiem>
+         </meridiemNames>
+         <eraNames>
+            <era>BC</era>
+            <era>AD</era>
+         </eraNames>
+      </calendarSymbols>
+      <datePatterns>
+         <datePattern name="full">EEEE, MMMM D, YYYY</datePattern>
+         <datePattern name="long">MMMM D, YYYY</datePattern>
+         <datePattern name="med">MMM D, YYYY</datePattern>
+         <datePattern name="short">M/D/YY</datePattern>
+      </datePatterns>
+      <timePatterns>
+         <timePattern name="full">h:MM:SS A Z</timePattern>
+         <timePattern name="long">h:MM:SS A Z</timePattern>
+         <timePattern name="med">h:MM:SS A</timePattern>
+         <timePattern name="short">h:MM A</timePattern>
+      </timePatterns>
+      <dateTimeSymbols>GyMdkHmsSEDFwWahKzZ</dateTimeSymbols>
+      <numberPatterns>
+         <numberPattern name="numeric">z,zz9.zzz</numberPattern>
+         <numberPattern name="currency">$z,zz9.99|($z,zz9.99)</numberPattern>
+         <numberPattern name="percent">z,zz9%</numberPattern>
+      </numberPatterns>
+      <numberSymbols>
+         <numberSymbol name="decimal">.</numberSymbol>
+         <numberSymbol name="grouping">,</numberSymbol>
+         <numberSymbol name="percent">%</numberSymbol>
+         <numberSymbol name="minus">-</numberSymbol>
+         <numberSymbol name="zero">0</numberSymbol>
+      </numberSymbols>
+      <currencySymbols>
+         <currencySymbol name="symbol">$</currencySymbol>
+         <currencySymbol name="isoname">USD</currencySymbol>
+         <currencySymbol name="decimal">.</currencySymbol>
+      </currencySymbols>
+      <typefaces>
+         <typeface name="Myriad Pro"/>
+         <typeface name="Minion Pro"/>
+         <typeface name="Courier Std"/>
+         <typeface name="Adobe Pi Std"/>
+         <typeface name="Adobe Hebrew"/>
+         <typeface name="Adobe Arabic"/>
+         <typeface name="Adobe Thai"/>
+         <typeface name="Kozuka Gothic Pro-VI M"/>
+         <typeface name="Kozuka Mincho Pro-VI R"/>
+         <typeface name="Adobe Ming Std L"/>
+         <typeface name="Adobe Song Std L"/>
+         <typeface name="Adobe Myungjo Std M"/>
+         <typeface name="Adobe Devanagari"/>
+      </typefaces>
+   </locale>
+</localeSet>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.4-c005 78.150055, 2013/08/07-22:58:47        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:desc="http://ns.adobe.com/xfa/promoted-desc/" rdf:about="">
+         <xmp:MetadataDate>2020-11-20T14:31:25Z</xmp:MetadataDate>
+         <xmp:CreatorTool>Adobe LiveCycle Designer 11.0</xmp:CreatorTool>
+         <pdf:Producer>Adobe LiveCycle Designer 11.0</pdf:Producer>
+         <xmpMM:DocumentID>uuid:6c2f3c07-04a4-4ecf-9ef6-327b7c2e71c0</xmpMM:DocumentID>
+         <desc:version rdf:parseType="Resource">
+            <rdf:value>11.0.1.20140218.1.907162.903801</rdf:value>
+            <desc:ref>/template/subform[1]</desc:ref>
+         </desc:version>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta></xdp:xdp>

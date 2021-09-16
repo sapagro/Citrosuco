@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>ABS Master Data Uploader</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Error while creating container</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Excel</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Test</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Error while creating container</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Excel</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Test</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <I18N_LINES>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+   </I18N_LINES>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>AGRIPLAN_BUDGET_UPDATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Agriplan&apos;s Budget Data Update</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>ATTRIBUTE_GROUPS_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Attribute groups Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>DYNPRO_BDC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Start a new screen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>DYNPRO_FILL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Dynpro Fill</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>FIELD_BDC</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Field BDC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>FIELD_FILL</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Field Fill</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MC_DISMODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Modo de processamento para CALL TRANSACTION USING...</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MC_ERRMODE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Modo de processamento para CALL TRANSACTION USING...</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MC_NOBIEND</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>SY-BINPT=SPACE após fim de dados em CALL TRANSACTION USING..</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MC_NOBINPT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>SY-BINPT=SPACE em CALL TRANSACTION USING...</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MC_RACOMMIT</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>COMMIT WORK não finalizado após CALL TRANSACTION USING...</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MC_TRUE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Código de um caractere</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MEASUREMENT_DOCUMENT_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Measurement documents Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>MS_BDCDATA</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Batch input nova estrutura do campo de tabela</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>READ_EXCEL_FILE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Read excel file</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_BUDGET</CLSNAME>
+     <CMPNAME>STRUCTURE_BUILD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Structure build</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>View single function</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPRA</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPRA</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMPRA</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRA</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\FU:/AGRI/FMPR_VIEW_SINGLE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>  DATA: lv_tabix_enhanc    TYPE sytabix.</item>
+      <item>  DATA: lwa_prfac_enhanc   TYPE /agri/s_fmprfac.</item>
+      <item>  DATA: lwa_pritm_enhanc   TYPE /agri/s_fmpritm.</item>
+      <item>  DATA: lwa_prref_enhanc   TYPE /agri/s_fmprref.</item>
+      <item>  DATA: lwa_prhrq_enhanc   TYPE /agri/s_fmprhrq.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS:</item>
+      <item>        &lt;lwa_prhrq_enhanc&gt; TYPE /agri/s_fmprhrq,</item>
+      <item>        &lt;lwa_pritm_enhanc&gt; TYPE /agri/s_fmpritm.</item>
+      <item/>
+      <item>  CLEAR es_prdoc.</item>
+      <item>  IF i_prnum IS INITIAL OR</item>
+      <item>     i_gjahr IS INITIAL.</item>
+      <item>    RAISE no_data_exists.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/FMPR_READ_SINGLE&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_prnum        = i_prnum</item>
+      <item>      i_gjahr        = i_gjahr</item>
+      <item>    IMPORTING</item>
+      <item>      es_prhdr       = es_prdoc-x-prhdr</item>
+      <item>      es_prref       = es_prdoc-x-prref</item>
+      <item>      et_pritm       = es_prdoc-x-pritm[]</item>
+      <item>      et_prptr       = es_prdoc-x-prptr[]</item>
+      <item>      et_preqp       = es_prdoc-x-preqp[]</item>
+      <item>      et_prqlt       = es_prdoc-x-prqlt[]</item>
+      <item>      et_prtm        = es_prdoc-x-prtm[]</item>
+      <item>      et_prhrq       = es_prdoc-x-prhrq[]</item>
+      <item>      et_prtrl       = es_prdoc-x-prtrl[]</item>
+      <item>      et_prvag       = es_prdoc-x-prvag[]</item>
+      <item>      et_prfac       = es_prdoc-x-prfac[]</item>
+      <item>    EXCEPTIONS</item>
+      <item>      no_data_exists = 1</item>
+      <item>      OTHERS         = 2.</item>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>    RAISE no_data_exists.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  es_prdoc-prnum = i_prnum.</item>
+      <item>  es_prdoc-gjahr = i_gjahr.</item>
+      <item>  es_prdoc-y = es_prdoc-x.</item>
+      <item/>
+      <item>  IF es_prdoc-x-prhdr-cltckt = /agri/cl_fm_master_ticket=&gt;mc_tck_superior.</item>
+      <item>    LOOP AT es_prdoc-x-prhrq ASSIGNING &lt;lwa_prhrq_enhanc&gt;.</item>
+      <item>      CALL METHOD /agri/cl_fm_master_ticket=&gt;get_details</item>
+      <item>        EXPORTING</item>
+      <item>          i_prnum          = &lt;lwa_prhrq_enhanc&gt;-r_prnum</item>
+      <item>          i_gjahr          = &lt;lwa_prhrq_enhanc&gt;-r_gjahr</item>
+      <item>        IMPORTING</item>
+      <item>          es_prref         = lwa_prref_enhanc</item>
+      <item>        EXCEPTIONS</item>
+      <item>          ticket_not_found = 1</item>
+      <item>          OTHERS           = 2.</item>
+      <item>      READ TABLE es_prdoc-x-pritm INTO lwa_pritm_enhanc</item>
+      <item>            WITH KEY pritm = &lt;lwa_prhrq_enhanc&gt;-posnr.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        lwa_pritm_enhanc-r_prnum = &lt;lwa_prhrq_enhanc&gt;-r_prnum.</item>
+      <item>*        lwa_pritm_enhanc-charg   = lwa_prref_enhanc-charg.</item>
+      <item>        MODIFY es_prdoc-x-pritm FROM lwa_pritm_enhanc</item>
+      <item>         INDEX sy-tabix TRANSPORTING r_prnum.</item>
+      <item/>
+      <item>        READ TABLE es_prdoc-x-prfac INTO lwa_prfac_enhanc</item>
+      <item>             INDEX sy-tabix.</item>
+      <item>        IF sy-subrc = 0.</item>
+      <item>          lwa_prfac_enhanc-prnui = &lt;lwa_prhrq_enhanc&gt;-r_prnum.</item>
+      <item>          MODIFY es_prdoc-x-prfac FROM lwa_prfac_enhanc</item>
+      <item>           INDEX sy-tabix TRANSPORTING prnui.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ELSE.</item>
+      <item>    LOOP AT es_prdoc-x-pritm ASSIGNING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item>      lv_tabix_enhanc = sy-tabix.</item>
+      <item>*      &lt;lwa_pritm_enhanc&gt;-charg   = es_prdoc-x-prref-charg.</item>
+      <item>      READ TABLE es_prdoc-x-prhrq INTO lwa_prhrq_enhanc</item>
+      <item>        WITH KEY clref = /agri/cl_fm_master_ticket=&gt;mc_tck_superior.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        &lt;lwa_pritm_enhanc&gt;-r_prnum = lwa_prhrq_enhanc-r_prnum.</item>
+      <item/>
+      <item>        READ TABLE es_prdoc-x-prfac INTO lwa_prfac_enhanc</item>
+      <item>             INDEX lv_tabix_enhanc.</item>
+      <item>        IF sy-subrc = 0.</item>
+      <item>          lwa_prfac_enhanc-prnui = lwa_prhrq_enhanc-r_prnum.</item>
+      <item>          MODIFY es_prdoc-x-prfac FROM lwa_prfac_enhanc</item>
+      <item>           INDEX sy-tabix TRANSPORTING prnui.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BECF2CE3168DA88F</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BECF2CE3168DA88F</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>030</LENGTH>
+       <TEXT>View single function</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_VIEW_SINGLE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BECF2CE3168DA88F</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,997 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Update Scale Items</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPRM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPRM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:ITEMS_DATA_UPDATE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:   lv_modified_enhanc       TYPE char1,</item>
+      <item>        lv_valid_enhanc          TYPE char01,</item>
+      <item>        lv_porcent_enhanc        TYPE /agri/fmdistrpc,</item>
+      <item>        lv_index_enhanc          TYPE sytabix,</item>
+      <item>        lv_cnt_enhanc            TYPE  i,</item>
+      <item>        lv_dist_enhanc           TYPE /agri/fmdistrpc,</item>
+      <item>        lv_lines_enhanc          TYPE int4,</item>
+      <item>        lwa_item_enhanc          TYPE  /agri/s_fmpritm,</item>
+      <item>        lwa_pritm_enhanc         TYPE /agri/s_fmpritm.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS:</item>
+      <item>        &lt;lwa_pritm_enhanc&gt;       TYPE /agri/s_fmpritm,</item>
+      <item>        &lt;lwa_mod_row_enhanc&gt;     TYPE lvc_s_modi,</item>
+      <item>        &lt;lwa_item_enhanc_layout&gt; TYPE /agri/s_fmpritm_fcat.</item>
+      <item/>
+      <item>  CLEAR: /agri/s_fmprhdr-dirwgth.</item>
+      <item>  CHECK gs_variables-document_mode NE c_mode_display.</item>
+      <item/>
+      <item>  DESCRIBE TABLE gs_prdoc_infocus-x-pritm LINES lv_lines_enhanc.</item>
+      <item/>
+      <item>  IF gs_variables-initiator IS INITIAL.</item>
+      <item>    gs_variables-initiator = c_log_initiator-check.</item>
+      <item>    PERFORM messages_initialize USING  gs_variables-initiator</item>
+      <item>                                       c_log_subobject-check</item>
+      <item>                                       gs_prdoc_infocus-x-prhdr.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  lv_modified_enhanc = ref_grid_items-&gt;data_modified_check( ).</item>
+      <item>  IF lv_modified_enhanc EQ c_true OR</item>
+      <item>     gs_variables-manual_changes IS NOT INITIAL.</item>
+      <item>    CALL METHOD ref_grid_items-&gt;check_changed_data</item>
+      <item>      IMPORTING</item>
+      <item>        e_valid = lv_valid_enhanc.</item>
+      <item>    IF lv_valid_enhanc IS INITIAL.</item>
+      <item>      CLEAR ok_code.</item>
+      <item>      EXIT.</item>
+      <item>    ELSE.</item>
+      <item>      gs_variables-refresh_items_grid = c_true.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ok_code EQ c_fcode-save OR</item>
+      <item>    ok_code EQ c_fcode-closure.</item>
+      <item/>
+      <item>    PERFORM weight_recalculate.</item>
+      <item/>
+      <item>  ELSEIF gt_items_mod_rows[] IS NOT INITIAL.</item>
+      <item/>
+      <item>    CLEAR gs_variables-errors.</item>
+      <item>    LOOP AT gt_pritm ASSIGNING &lt;lwa_item_enhanc_layout&gt;.</item>
+      <item>      lv_index_enhanc = sy-tabix.</item>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>      IF &lt;lwa_item_enhanc_layout&gt;-pritm IS INITIAL.</item>
+      <item>        PERFORM current_item_number_get CHANGING &lt;lwa_item_enhanc_layout&gt;-pritm.</item>
+      <item>        &lt;lwa_item_enhanc_layout&gt;-updkz = c_updkz_new.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CLEAR lwa_pritm_enhanc.</item>
+      <item>      MOVE-CORRESPONDING &lt;lwa_item_enhanc_layout&gt; TO lwa_pritm_enhanc.</item>
+      <item>      READ TABLE gs_prdoc_infocus-x-pritm ASSIGNING &lt;lwa_pritm_enhanc&gt;</item>
+      <item>                                           WITH KEY pritm = &lt;lwa_item_enhanc_layout&gt;-pritm</item>
+      <item>                                                    prnum = &lt;lwa_item_enhanc_layout&gt;-prnum.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        APPEND INITIAL LINE TO gs_prdoc_infocus-x-pritm.</item>
+      <item>        READ TABLE gs_prdoc_infocus-x-pritm INDEX lv_index_enhanc ASSIGNING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS ASSIGNED AND &lt;lwa_pritm_enhanc&gt; IS ASSIGNED.</item>
+      <item>      IF &lt;lwa_item_enhanc_layout&gt;-cmnum IS NOT INITIAL</item>
+      <item>          AND &lt;lwa_item_enhanc_layout&gt;-tplnr IS NOT INITIAL.</item>
+      <item/>
+      <item>***        LOOP AT gt_pritm TRANSPORTING NO FIELDS</item>
+      <item>***                                      WHERE cmnum = &lt;lwa_item_enhanc_layout&gt;-cmnum</item>
+      <item>***                                       AND  tplnr = &lt;lwa_item_enhanc_layout&gt;-tplnr.</item>
+      <item>***          lv_cnt_enhanc = lv_cnt_enhanc + 1.</item>
+      <item>***          IF lv_cnt_enhanc GT 1.</item>
+      <item>***            gs_variables-errors = c_true.</item>
+      <item>***            MESSAGE ID &apos;/AGRI/FMPR&apos; TYPE c_msg_type-error</item>
+      <item>***                                    NUMBER &apos;158&apos;</item>
+      <item>***                                    INTO sy-msgli.</item>
+      <item>***            DELETE gs_prdoc_infocus-x-pritm WHERE pritm EQ &lt;lwa_item_enhanc_layout&gt;-pritm.</item>
+      <item>***            DELETE gt_pritm WHERE pritm EQ &lt;lwa_item_enhanc_layout&gt;-pritm.</item>
+      <item>***            message_simple space.</item>
+      <item>***          ENDIF.</item>
+      <item>***        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF &lt;lwa_item_enhanc_layout&gt; IS NOT ASSIGNED.</item>
+      <item>        PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CLEAR:lv_cnt_enhanc.</item>
+      <item/>
+      <item>      gs_variables-data_changed = c_true.</item>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS ASSIGNED AND &lt;lwa_item_enhanc_layout&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>      MOVE /agri/s_fmprhdr-gewei TO &lt;lwa_item_enhanc_layout&gt;-uomunit.</item>
+      <item>      MOVE-CORRESPONDING &lt;lwa_item_enhanc_layout&gt; TO &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item>* Call item update subroutine</item>
+      <item>      PERFORM item_update USING lv_index_enhanc CHANGING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item/>
+      <item>* Determining update mode</item>
+      <item>      IF &lt;lwa_pritm_enhanc&gt; IS ASSIGNED AND</item>
+      <item>         &lt;lwa_pritm_enhanc&gt;-updkz NE c_updkz_new</item>
+      <item>         AND ok_code NE c_fcode-save.</item>
+      <item>        &lt;lwa_pritm_enhanc&gt;-updkz = c_updkz_update.</item>
+      <item>        &lt;lwa_item_enhanc_layout&gt;-updkz = c_updkz_update.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      UNASSIGN &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>* Check for 100%</item>
+      <item>    LOOP AT gs_prdoc_infocus-x-pritm  INTO lwa_item_enhanc.</item>
+      <item>      CHECK lwa_item_enhanc-distrpc IS NOT INITIAL.</item>
+      <item>      lv_dist_enhanc = lv_dist_enhanc + lwa_item_enhanc-distrpc.</item>
+      <item>      IF lv_dist_enhanc GT 100.</item>
+      <item>        gs_variables-errors = c_true.</item>
+      <item>        MESSAGE ID &apos;/AGRI/FMPR&apos; TYPE c_msg_type-error</item>
+      <item>                                NUMBER &apos;005&apos;</item>
+      <item>                                INTO sy-msgli.</item>
+      <item>        CLEAR: lwa_item_enhanc-distrpc,</item>
+      <item>               lwa_item_enhanc-wbwght.</item>
+      <item>        MODIFY gs_prdoc_infocus-x-pritm FROM lwa_item_enhanc</item>
+      <item>        INDEX sy-tabix  TRANSPORTING distrpc wbwght.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    CLEAR: gs_variables-counter,</item>
+      <item>           gt_items_mod_rows[].</item>
+      <item/>
+      <item>    gs_variables-refresh_items_grid = c_true.</item>
+      <item>    PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>  ENDIF.</item>
+      <item>EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\IC:/AGRI/LFMPRMF0C\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lt_ausp       TYPE tt_ausp,</item>
+      <item>        lwa_pritm     TYPE /agri/s_fmpritm_fcat,</item>
+      <item>        lwa_pritm_a   TYPE /agri/s_fmpritm,</item>
+      <item>        lt_charts     TYPE zt_fmpr_charact,</item>
+      <item>        lv_lev1_terr  TYPE char6,</item>
+      <item>        lv_lev2_terr  TYPE numc5,</item>
+      <item>        lv_int4_field TYPE int4,</item>
+      <item>        lv_matnr      TYPE matnr.</item>
+      <item/>
+      <item>  INCLUDE zfmfp_inc_fill_items IF FOUND.</item>
+      <item>*FORM fill_items_citro USING lv_msgid TYPE any</item>
+      <item>*                               lv_msgtyp TYPE any</item>
+      <item>*                               lv_msgnro TYPE any.</item>
+      <item>*</item>
+      <item>*  DATA: lv_tabix     TYPE sytabix,</item>
+      <item>*        lv_subrc     TYPE sysubrc.</item>
+      <item>*  DATA: ls_cmdetail  TYPE /agri/s_fmcmdetail.</item>
+      <item>*  DATA: ls_return    TYPE bapiret2,</item>
+      <item>*        lt_ausp      TYPE tt_ausp,</item>
+      <item>*        ls_aghdr     TYPE /agri/s_gmaghdr.</item>
+      <item>*  DATA: lwa_tplnr    TYPE /agri/s_gltplnr,</item>
+      <item>*        lwa_flhdr    TYPE /agri/s_glflot.</item>
+      <item>*  DATA: lwa_pritm    TYPE /agri/s_fmpritm_fcat,</item>
+      <item>*        lwa_pritm_a  TYPE /agri/s_fmpritm.</item>
+      <item>*  DATA: lt_tplnr     TYPE /agri/t_gltplnr,</item>
+      <item>*        lt_charts    TYPE zt_fmpr_charact,</item>
+      <item>*        lwa_charts   TYPE zsc_fmpr_charact,</item>
+      <item>*        lv_lev1_terr TYPE char6,</item>
+      <item>*        lv_lev2_terr TYPE numc5,</item>
+      <item>*        lv_terr_lev1 TYPE int4,</item>
+      <item>*        lv_order_int TYPE int4,</item>
+      <item>*        lv_move_int  TYPE int4,</item>
+      <item>*        lv_terr_lev2 TYPE int4,</item>
+      <item>*        lv_matnr     TYPE matnr,</item>
+      <item>*        lt_flhdr     TYPE /agri/t_glflot,</item>
+      <item>*        lt_flcma     TYPE /agri/t_glflcma.</item>
+      <item>*  DATA: lt_func_locs TYPE /agri/t_gmagfl.</item>
+      <item>*</item>
+      <item>*  DATA: lref_mm_utilities TYPE REF TO /agri/cl_fmpr_mm_controller.</item>
+      <item>*  DATA: lref_own_produce  TYPE REF TO /agri/cl_fmpr_own_produce.</item>
+      <item>*</item>
+      <item>*  CHECK gs_prdoc_infocus IS NOT INITIAL.</item>
+      <item>*</item>
+      <item>** Get current item</item>
+      <item>*  READ TABLE gt_pritm INTO lwa_pritm</item>
+      <item>*                  WITH KEY pritm = gs_variables-item_infocus.</item>
+      <item>*  IF sy-subrc = 0.</item>
+      <item>*    lv_tabix = sy-tabix.</item>
+      <item>*</item>
+      <item>*PERFORM CLASS_BATCH_GET USING &apos;Z_FRUTA_MP&apos;</item>
+      <item>*                        CHANGING lt_charts.</item>
+      <item>*PERFORM batch_details_get USING lwa_pritm-zzhbatch</item>
+      <item>*                          CHANGING lt_ausp</item>
+      <item>*                                   lv_matnr.</item>
+      <item>*lwa_pritm-cmnum = &apos;LARANJA&apos;.</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;RC_FR_TALH&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO DATA(lwa_ausp)</item>
+      <item>*                    WITH KEY atinn = lwa_charts-IMERK.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-ATFLV to lv_terr_lev2.</item>
+      <item>* lv_lev2_terr = lv_terr_lev2.</item>
+      <item>* endif.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR: lwa_charts.</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;RC_FR_COD_IM&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-IMERK.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atflv to lv_terr_lev1.</item>
+      <item>*      lv_lev1_terr = lv_terr_lev1.</item>
+      <item>* endif.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*if lv_lev1_terr is NOT INITIAL</item>
+      <item>*  AND lv_lev2_terr is NOT INITIAL.</item>
+      <item>*  CONCATENATE lv_lev1_terr &apos;-&apos; lv_lev2_terr INTO lwa_pritm-tplnr.</item>
+      <item>*  CONDENSE lwa_pritm-tplnr NO-GAPS.</item>
+      <item>*</item>
+      <item>*  CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_INPUT&apos;</item>
+      <item>*   EXPORTING</item>
+      <item>*     input           = lwa_pritm-tplnr</item>
+      <item>*  IMPORTING</item>
+      <item>*    OUTPUT           = lwa_pritm-tplnr</item>
+      <item>*  EXCEPTIONS</item>
+      <item>*    NOT_FOUND        = 1</item>
+      <item>*    NOT_ACTIVE       = 2</item>
+      <item>*    OTHERS           = 3.</item>
+      <item>*</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_CL_ORDEM&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>*</item>
+      <item>* MOVE lwa_ausp-atflv to lv_order_int.</item>
+      <item>* MOVE lv_order_int to lwa_pritm-zzhaufnr.</item>
+      <item>* endif.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_PLACA_SERV_INT&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atwrt to lwa_pritm-zzsrebo2.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR:lv_move_int.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;RC_FR_PLACA_CR&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atwrt to lwa_pritm-ZZSREBO1.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR:lv_move_int.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_MECANIZADO&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>* MOVE lv_move_int to lwa_pritm-ZZLLIFNR.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR:lv_move_int.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_CL_MOVINT&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>* MOVE lv_move_int to lwa_pritm-ZZTLIFNR.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR:lv_move_int.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_CL_LIDER&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>* MOVE lv_move_int to lwa_pritm-ZZLDLIFNR.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR:lv_move_int.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_CL_TURMA&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>* MOVE lv_move_int to lwa_pritm-ZZTURMA.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*CLEAR:lv_move_int.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_PLACA_SERV_INT&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>* MOVE lwa_ausp-atwrt to lwa_pritm-zztlifnr.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_CL_CAIXINHA_RATEIO&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>*  MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>*  MOVE lv_move_int to lwa_pritm-zzsboxq.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_MECANIZADO_ILAT&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>**  MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>**  MOVE lv_move_int to lwa_pritm-ZZINLAT.</item>
+      <item>*  MOVE lwa_ausp-atflv to lwa_pritm-ZZINLAT.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_MECANIZADO_ILONG&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>**  MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>**  MOVE lv_move_int to lwa_pritm-ZZINLONG.</item>
+      <item>*  MOVE lwa_ausp-atflv to lwa_pritm-ZZINLONG.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_MECANIZADO_FLONG&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>**  MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>**  MOVE lv_move_int to lwa_pritm-ZZFILAT.</item>
+      <item>*  MOVE lwa_ausp-atflv to lwa_pritm-ZZFILAT.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*READ TABLE lt_charts INTO lwa_charts</item>
+      <item>*                     WITH KEY ATNAM = &apos;ABS_MECANIZADO_FLAT&apos;.</item>
+      <item>*IF sy-subrc eq 0.</item>
+      <item>*READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>*                    WITH KEY atinn = lwa_charts-imerk.</item>
+      <item>* if sy-subrc eq 0.</item>
+      <item>**  MOVE lwa_ausp-atflv to lv_move_int.</item>
+      <item>**  MOVE lv_move_int to lwa_pritm-ZZFILONG.</item>
+      <item>*  MOVE lwa_ausp-atflv to lwa_pritm-ZZFILONG.</item>
+      <item>*ENDIF.</item>
+      <item>*ENDIF.</item>
+      <item>*</item>
+      <item>*</item>
+      <item>*</item>
+      <item>*</item>
+      <item>*CLEAR: lv_move_int,</item>
+      <item>*       lwa_charts,</item>
+      <item>*       lv_lev1_terr,</item>
+      <item>*       lv_move_int,</item>
+      <item>*       lv_lev2_terr,</item>
+      <item>*       lv_order_int.</item>
+      <item>*</item>
+      <item>*        MODIFY gt_pritm FROM lwa_pritm INDEX lv_tabix.</item>
+      <item>*</item>
+      <item>*        MOVE-CORRESPONDING lwa_pritm TO lwa_pritm_a.</item>
+      <item>*        MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_a INDEX lv_tabix.</item>
+      <item>*</item>
+      <item>* ENDIF.</item>
+      <item>*</item>
+      <item>*ENDFORM.</item>
+      <item>*</item>
+      <item>*FORM CLASS_BATCH_GET USING VALUE(lv_klass)</item>
+      <item>*                     CHANGING lt_KSML TYPE zt_fmpr_charact.</item>
+      <item>*</item>
+      <item>*</item>
+      <item>*  DATA: lt_KLAH TYPE TABLE OF KLAH.</item>
+      <item>*  select * from klah</item>
+      <item>*         into table lt_klah</item>
+      <item>*         where</item>
+      <item>*    ( class eq lv_klass ).</item>
+      <item>*    if lt_klah[] is not initial.</item>
+      <item>*      select * from ksml as l inner join cabn as n</item>
+      <item>*               on  l~imerk eq n~atinn</item>
+      <item>*               into CORRESPONDING FIELDS OF TABLE lt_ksml</item>
+      <item>*        for all entries in lt_klah</item>
+      <item>*      where</item>
+      <item>*    ( l~clint  eq lt_klah-clint )</item>
+      <item>*      and ( l~klart  eq &apos;023&apos; ).</item>
+      <item>*    ENDIF.</item>
+      <item>*ENDFORM.</item>
+      <item/>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\IC:/AGRI/LFMPRMF0B\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>*FORM batch_details_get USING lv_batch TYPE charg_d</item>
+      <item>*                       CHANGING lt_ausp TYPE tt_ausp</item>
+      <item>*                                lv_matnr TYPE matnr.</item>
+      <item>*</item>
+      <item>*  TYPES: ltype_cuobn TYPE RANGE OF cuobn.</item>
+      <item>*  DATA: lr_cuobn  TYPE ltype_cuobn,</item>
+      <item>*        lwa_cuobn LIKE LINE OF lr_cuobn.</item>
+      <item>*</item>
+      <item>*  SELECT * FROM mcha</item>
+      <item>*    INTO TABLE @DATA(lt_mcha)</item>
+      <item>*    WHERE werks = @/agri/s_fmprhdr-werks</item>
+      <item>*      AND charg = @lv_batch.</item>
+      <item>*</item>
+      <item>*  IF sy-subrc EQ 0.</item>
+      <item>*    READ TABLE lt_mcha INTO DATA(lwa_mcha) INDEX 1.</item>
+      <item>*    IF sy-subrc EQ 0.</item>
+      <item>*      MOVE lwa_mcha-matnr TO lv_matnr.</item>
+      <item>*    ENDIF.</item>
+      <item>*</item>
+      <item>*    SELECT * FROM mch1</item>
+      <item>*      INTO TABLE @DATA(lt_mch1)</item>
+      <item>*      FOR ALL ENTRIES IN @lt_mcha[]</item>
+      <item>*     WHERE matnr = @lt_mcha-matnr</item>
+      <item>*       AND charg = @lt_mcha-charg.</item>
+      <item>*</item>
+      <item>*    IF sy-subrc EQ 0.</item>
+      <item>*      LOOP AT lt_mch1 INTO DATA(lwa_mch1).</item>
+      <item>*        lwa_cuobn-sign   = &apos;I&apos;.</item>
+      <item>*        lwa_cuobn-option = &apos;EQ&apos;.</item>
+      <item>*        lwa_cuobn-low    = lwa_mch1-cuobj_bm.</item>
+      <item>*        APPEND lwa_cuobn TO lr_cuobn.</item>
+      <item>*      ENDLOOP.</item>
+      <item>*</item>
+      <item>*      SELECT *</item>
+      <item>*        FROM ausp</item>
+      <item>*        INTO TABLE lt_ausp</item>
+      <item>*       WHERE objek IN lr_cuobn[]</item>
+      <item>*         AND klart = &apos;023&apos;.</item>
+      <item>*    ENDIF.</item>
+      <item>*  ENDIF.</item>
+      <item>*</item>
+      <item>*ENDFORM.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:FUNCLOC_VALUE_CHECK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:   lv_tabix_enhanc     TYPE sytabix,</item>
+      <item>        lv_subrc_enhanc     TYPE sysubrc,</item>
+      <item>        lwa_flcma           TYPE /agri/s_glflcma.</item>
+      <item>  DATA: ls_cmdetail_enhanc  TYPE /agri/s_fmcmdetail.</item>
+      <item>  DATA: ls_return_enhanc    TYPE bapiret2,</item>
+      <item>        ls_aghdr_enhanc     TYPE /agri/s_gmaghdr.</item>
+      <item>  DATA: lwa_tplnr_enhanc    TYPE /agri/s_gltplnr,</item>
+      <item>        lwa_flhdr_enhanc    TYPE /agri/s_glflot.</item>
+      <item>  DATA: lwa_pritm_enhanc    TYPE /agri/s_fmpritm_fcat,</item>
+      <item>        lwa_pritm_enhanc_a  TYPE /agri/s_fmpritm.</item>
+      <item>  DATA: lt_tplnr_enhanc     TYPE /agri/t_gltplnr,</item>
+      <item>        lt_flhdr_enhanc     TYPE /agri/t_glflot,</item>
+      <item>        ls_flot_low         TYPE /AGRI/GLFLOT,</item>
+      <item>        ls_flot_high        TYPE /AGRI/GLFLOT,</item>
+      <item>        lv_TPLNR_FL_LEV1    TYPE /AGRI/GLTPLNR_FL,</item>
+      <item>        lt_flcma_enhanc     TYPE /agri/t_glflcma.</item>
+      <item>  DATA: lt_func_locs_enhanc TYPE /agri/t_gmagfl.</item>
+      <item/>
+      <item>  DATA: lref_mm_utilities_enhanc TYPE REF TO /agri/cl_fmpr_mm_controller.</item>
+      <item>  DATA: lref_own_produce_enhanc  TYPE REF TO /agri/cl_fmpr_own_produce.</item>
+      <item/>
+      <item>* Check document infocus</item>
+      <item>  CHECK gs_prdoc_infocus IS NOT INITIAL.</item>
+      <item>*  CHECK gs_prdoc_infocus-prnum &lt;&gt; text-006.</item>
+      <item/>
+      <item>* Get current item</item>
+      <item>  READ TABLE gt_pritm INTO lwa_pritm_enhanc</item>
+      <item>                  WITH KEY pritm = gs_variables-item_infocus.</item>
+      <item>  IF sy-subrc = 0.</item>
+      <item>    lv_tabix_enhanc = sy-tabix.</item>
+      <item/>
+      <item>* Crop/terrain</item>
+      <item>    IF lwa_pritm_enhanc-cmnum IS NOT INITIAL AND</item>
+      <item>       lwa_pritm_enhanc-tplnr IS NOT INITIAL.</item>
+      <item/>
+      <item>      lwa_tplnr_enhanc-tplnr_fl = lwa_pritm_enhanc-tplnr.</item>
+      <item>      APPEND lwa_tplnr_enhanc TO lt_tplnr_enhanc.</item>
+      <item/>
+      <item>* Get Functional location</item>
+      <item>      CALL FUNCTION &apos;/AGRI/GLFL_READ&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          it_tplnr       = lt_tplnr_enhanc</item>
+      <item>        IMPORTING</item>
+      <item>          et_flhdr       = lt_flhdr_enhanc</item>
+      <item>          et_flcma       = lt_flcma_enhanc</item>
+      <item>        EXCEPTIONS</item>
+      <item>          no_data_exists = 1</item>
+      <item>          OTHERS         = 2.</item>
+      <item>      IF sy-subrc &lt;&gt; 0.</item>
+      <item>        MESSAGE e041(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>        message_simple c_false.</item>
+      <item>        gs_variables-errors = c_true.</item>
+      <item>*      CLEAR: lwa_pritm_enhanc-tplnr.</item>
+      <item>*      PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>* Check status / Deletion indicator</item>
+      <item>      DELETE lt_flhdr_enhanc WHERE kfrst &lt;&gt; /agri/cl_fmpr_process_ticket=&gt;mc_kfrst OR</item>
+      <item>                            loevm = /agri/cl_fmpr_process_ticket=&gt;mc_loevm_x.</item>
+      <item>      IF lt_flhdr_enhanc[] IS INITIAL.</item>
+      <item>        MESSAGE e042(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>        message_simple c_false.</item>
+      <item>        gs_variables-errors = c_true.</item>
+      <item>*      CLEAR: lwa_pritm_enhanc-tplnr.</item>
+      <item>*      PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>        EXIT.</item>
+      <item>      ELSE.</item>
+      <item>* Check crop season</item>
+      <item>        DELETE lt_flcma_enhanc WHERE  datab &gt; gs_prdoc_infocus-x-prhdr-datum OR</item>
+      <item>                               datbi &lt; gs_prdoc_infocus-x-prhdr-datum OR</item>
+      <item>                               loevm = /agri/cl_fmpr_process_ticket=&gt;mc_loevm_x OR</item>
+      <item>                               cmnum &lt;&gt; lwa_pritm_enhanc-cmnum OR</item>
+      <item>                               astat &lt;&gt; /agri/cl_fmpr_process_ticket=&gt;mc_astat_a.&quot; OR</item>
+      <item>*                               class &lt;&gt; /agri/cl_fmpr_process_ticket=&gt;mc_appl_farming.</item>
+      <item>        IF lt_flcma_enhanc[] IS INITIAL.</item>
+      <item>          MESSAGE e105(/agri/fmpr) INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>*        CLEAR: lwa_pritm_enhanc.</item>
+      <item>*        PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        DESCRIBE TABLE lt_flcma_enhanc LINES sy-tfill.</item>
+      <item>        IF sy-tfill &gt; 1 .</item>
+      <item>          MESSAGE e106(/agri/fmpr) INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>*        CLEAR: lwa_pritm_enhanc-tplnr.</item>
+      <item>*        PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>          EXIT.</item>
+      <item>          ELSE.</item>
+      <item>            READ TABLE lt_flcma_enhanc INTO lwa_flcma INDEX 1.</item>
+      <item>            if sy-subrc eq 0.</item>
+      <item>              MOVE: lwa_flcma-YAUFNR to lwa_pritm_enhanc-aufnr,</item>
+      <item>                    lwa_flcma-YMATNR to lwa_pritm_enhanc-plnbez.</item>
+      <item>             endif.</item>
+      <item>        ENDIF.</item>
+      <item>        READ TABLE lt_flhdr_enhanc INTO lwa_flhdr_enhanc INDEX 1.</item>
+      <item>        IF sy-subrc = 0.</item>
+      <item/>
+      <item/>
+      <item/>
+      <item>          SELECT SINGLE * FROM /AGRI/GLFLOT INTO ls_flot_low</item>
+      <item>                                WHERE tplnr_fl = lwa_flhdr_enhanc-tplnr_fl.</item>
+      <item>if ls_flot_low is NOT INITIAL.</item>
+      <item>            SELECT SINGLE * FROM /AGRI/GLFLOT INTO ls_flot_high</item>
+      <item>                                WHERE tplnr_fl = ls_flot_low-tplma.</item>
+      <item>ENDIF.</item>
+      <item>if ls_flot_high is NOT INITIAL.</item>
+      <item>          SELECT SINGLE LIFNR FROM /AGRI/GLFLPTR INTO lwa_pritm_enhanc-parnr</item>
+      <item>                              WHERE PTRNO = ls_flot_high-ptrno.</item>
+      <item>endif.</item>
+      <item>*          lwa_pritm_enhanc-parnr  = lwa_flhdr_enhanc-owner.</item>
+      <item>          MOVE  lwa_flhdr_enhanc-stort TO lwa_pritm_enhanc-stort.</item>
+      <item>* Check for owner</item>
+      <item>          IF lwa_pritm_enhanc-parnr IS INITIAL.</item>
+      <item>            MESSAGE e076(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>            message_simple c_false.</item>
+      <item>            gs_variables-errors = c_true.</item>
+      <item>*          CLEAR: lwa_pritm_enhanc-tplnr.</item>
+      <item>*          PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>            EXIT.</item>
+      <item>          ELSE.</item>
+      <item>            lwa_pritm_enhanc-parvw = lwa_flhdr_enhanc-owrol.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>* Check for ownership</item>
+      <item>          IF lwa_flhdr_enhanc-ownshp NE c_ownership-own.</item>
+      <item>            MESSAGE e083(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>            message_simple c_false.</item>
+      <item>            gs_variables-errors = c_true.</item>
+      <item>*          CLEAR lwa_pritm_enhanc.</item>
+      <item>*          PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>            EXIT.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>* Instance</item>
+      <item>          CREATE OBJECT lref_mm_utilities_enhanc.</item>
+      <item/>
+      <item>* Get functional location from agreement</item>
+      <item>          CALL METHOD lref_mm_utilities_enhanc-&gt;agreement_validate</item>
+      <item>            EXPORTING</item>
+      <item>              i_owner      = lwa_pritm_enhanc-parnr</item>
+      <item>              i_cmnum      = lwa_pritm_enhanc-cmnum</item>
+      <item>              i_budat      = gs_prdoc_infocus-x-prhdr-datum</item>
+      <item>              i_tplnr      = lwa_pritm_enhanc-tplnr</item>
+      <item>            IMPORTING</item>
+      <item>              e_subrc      = lv_subrc_enhanc</item>
+      <item>              es_return    = ls_return_enhanc</item>
+      <item>              es_aghdr     = ls_aghdr_enhanc</item>
+      <item>              et_func_locs = lt_func_locs_enhanc.</item>
+      <item>          IF lv_subrc_enhanc = 0. &quot; The agreement is optional for own produce</item>
+      <item/>
+      <item>* Check terrain owner/ agreement owner</item>
+      <item>            IF lwa_pritm_enhanc-parnr &lt;&gt; ls_aghdr_enhanc-owner.</item>
+      <item>              MESSAGE e107(/agri/fmpr) INTO sy-msgli</item>
+      <item>                 WITH ls_aghdr_enhanc-knuma_ag</item>
+      <item>                      lwa_pritm_enhanc-tplnr.</item>
+      <item>              message_simple c_false.</item>
+      <item>              gs_variables-errors = c_true.</item>
+      <item>*            CLEAR: lwa_pritm_enhanc.</item>
+      <item>*            PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>              EXIT.</item>
+      <item>            ENDIF.</item>
+      <item/>
+      <item>            READ TABLE lt_func_locs_enhanc TRANSPORTING NO FIELDS</item>
+      <item>                                    WITH KEY tplnr_fl = lwa_pritm_enhanc-tplnr.</item>
+      <item>            IF sy-subrc &lt;&gt; 0.</item>
+      <item>              MESSAGE e077(/agri/fmpr) INTO sy-msgli</item>
+      <item>                 WITH lwa_pritm_enhanc-tplnr</item>
+      <item>                      ls_aghdr_enhanc-knuma_ag</item>
+      <item>                      lwa_pritm_enhanc-parnr.</item>
+      <item>              message_simple c_false.</item>
+      <item>              gs_variables-errors = c_true.</item>
+      <item>*            CLEAR: lwa_pritm_enhanc.</item>
+      <item>*            PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>              EXIT.</item>
+      <item>            ELSE.</item>
+      <item>              lwa_pritm_enhanc-knuma_ag = ls_aghdr_enhanc-knuma_ag.</item>
+      <item>            ENDIF.</item>
+      <item/>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item/>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>* Check material</item>
+      <item>      IF lwa_pritm_enhanc-plnbez IS INITIAL.</item>
+      <item/>
+      <item>      PERFORM crop_master_material_get USING lv_msgid lv_msgtyp lv_msgnro.</item>
+      <item>*** Instance</item>
+      <item>**        CREATE OBJECT lref_own_produce_enhanc</item>
+      <item>**          EXPORTING</item>
+      <item>**            i_prnum          = gs_prdoc_infocus-prnum</item>
+      <item>**            i_gjahr          = gs_prdoc_infocus-gjahr</item>
+      <item>**          EXCEPTIONS</item>
+      <item>**            ticket_not_found = 1</item>
+      <item>**            OTHERS           = 2.</item>
+      <item>**        IF sy-subrc &lt;&gt; 0.</item>
+      <item>*** Ticket not found</item>
+      <item>**          MESSAGE e031(/agri/fmpr) INTO sy-msgli</item>
+      <item>**             WITH gs_prdoc_infocus-prnum gs_prdoc_infocus-gjahr.</item>
+      <item>**          message_simple c_false.</item>
+      <item>**          gs_variables-errors = c_true.</item>
+      <item>***        CLEAR: lwa_pritm_enhanc.</item>
+      <item>***        PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>**          EXIT.</item>
+      <item>**        ENDIF.</item>
+      <item>**</item>
+      <item>*** Set Functional Location</item>
+      <item>**        lref_own_produce_enhanc-&gt;set_functional_location( lwa_pritm_enhanc-tplnr ).</item>
+      <item>**</item>
+      <item>*** Set Crop Number</item>
+      <item>**        lref_own_produce_enhanc-&gt;set_crop_master( lwa_pritm_enhanc-cmnum ).</item>
+      <item>**</item>
+      <item>*** Get crop details</item>
+      <item>**        CALL METHOD lref_own_produce_enhanc-&gt;get_crop_details</item>
+      <item>**          IMPORTING</item>
+      <item>**            es_cmdetail                   = ls_cmdetail_enhanc</item>
+      <item>**          EXCEPTIONS</item>
+      <item>**            functional_location_not_found = 1</item>
+      <item>**            scale_master_not_found        = 2</item>
+      <item>**            assignment_not_found          = 3</item>
+      <item>**            crop_master_not_found         = 4</item>
+      <item>**            OTHERS                        = 5.</item>
+      <item>**        IF sy-subrc = 0.</item>
+      <item>**          lwa_pritm_enhanc-plnbez = ls_cmdetail_enhanc-rmatnr.</item>
+      <item>**          PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>**        ELSE.</item>
+      <item>*** Receiver material and owner not found</item>
+      <item>**          MESSAGE e043(/agri/fmpr) INTO sy-msgli WITH lwa_pritm_enhanc-tplnr.</item>
+      <item>**          message_simple c_false.</item>
+      <item>**          gs_variables-errors = c_true.</item>
+      <item>***        CLEAR: lwa_pritm_enhanc.</item>
+      <item>***        PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>**          EXIT.</item>
+      <item>**        ENDIF.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    ELSE.</item>
+      <item/>
+      <item>      IF lwa_pritm_enhanc-tplnr IS INITIAL.</item>
+      <item/>
+      <item>        CLEAR: lwa_pritm_enhanc-parnr, lwa_pritm_enhanc-parvw, lwa_pritm_enhanc-knuma_ag,</item>
+      <item>               lwa_pritm_enhanc-plnbez, lwa_pritm_enhanc-cmnum.</item>
+      <item>        MODIFY gt_pritm FROM lwa_pritm_enhanc INDEX lv_tabix_enhanc</item>
+      <item>          TRANSPORTING parnr parvw knuma_ag plnbez cmnum plnbez aufnr.</item>
+      <item/>
+      <item>        MOVE-CORRESPONDING lwa_pritm_enhanc TO lwa_pritm_enhanc_a.</item>
+      <item>        MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_enhanc_a INDEX lv_tabix_enhanc</item>
+      <item>          TRANSPORTING parnr parvw knuma_ag plnbez cmnum plnbez aufnr.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:FUNCLOC_VALUE_CHECK1\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>***  DATA: lv_tabix_enhanc    TYPE sytabix.</item>
+      <item>***  DATA: lwa_tplnr_enhanc   TYPE /agri/s_gltplnr,</item>
+      <item>***        lwa_flhdr_enhanc   TYPE /agri/s_glflot.</item>
+      <item>***  DATA: lwa_pritm_enhanc   TYPE /agri/s_fmpritm_fcat,</item>
+      <item>***        lwa_pritm_enhanc_a TYPE /agri/s_fmpritm.</item>
+      <item>***  DATA: lt_tplnr_enhanc    TYPE /agri/t_gltplnr,</item>
+      <item>***        lt_flhdr_enhanc    TYPE /agri/t_glflot,</item>
+      <item>***        lt_flcma_enhanc    TYPE /agri/t_glflcma.</item>
+      <item>***</item>
+      <item>**** Check document infocus</item>
+      <item>***  CHECK gs_prdoc_infocus IS NOT INITIAL.</item>
+      <item>***</item>
+      <item>**** Get current item</item>
+      <item>***  READ TABLE gt_pritm INTO lwa_pritm_enhanc</item>
+      <item>***                  WITH KEY pritm = gs_variables-item_infocus.</item>
+      <item>***  IF sy-subrc = 0.</item>
+      <item>***    lv_tabix_enhanc = sy-tabix.</item>
+      <item>***</item>
+      <item>**** Crop</item>
+      <item>***    IF lwa_pritm_enhanc-cmnum IS NOT INITIAL AND</item>
+      <item>***       lwa_pritm_enhanc-tplnr IS NOT INITIAL.</item>
+      <item>***</item>
+      <item>***      lwa_tplnr_enhanc-tplnr_fl = lwa_pritm_enhanc-tplnr.</item>
+      <item>***      APPEND lwa_tplnr_enhanc TO lt_tplnr_enhanc.</item>
+      <item>***</item>
+      <item>**** Get Functional location</item>
+      <item>***      CALL FUNCTION &apos;/AGRI/GLFL_READ&apos;</item>
+      <item>***        EXPORTING</item>
+      <item>***          it_tplnr       = lt_tplnr_enhanc</item>
+      <item>***        IMPORTING</item>
+      <item>***          et_flhdr       = lt_flhdr_enhanc</item>
+      <item>***          et_flcma       = lt_flcma_enhanc</item>
+      <item>***        EXCEPTIONS</item>
+      <item>***          no_data_exists = 1</item>
+      <item>***          OTHERS         = 2.</item>
+      <item>***      IF sy-subrc &lt;&gt; 0.</item>
+      <item>***        MESSAGE e041(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>***        message_simple c_false.</item>
+      <item>***        gs_variables-errors = c_true.</item>
+      <item>****      CLEAR lwa_pritm_enhanc-tplnr.</item>
+      <item>****      PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***        EXIT.</item>
+      <item>***      ENDIF.</item>
+      <item>***</item>
+      <item>**** Check status / Deletion indicator</item>
+      <item>***      DELETE lt_flhdr_enhanc WHERE kfrst &lt;&gt; /agri/cl_fmpr_process_ticket=&gt;mc_kfrst OR</item>
+      <item>***                            loevm = /agri/cl_fmpr_process_ticket=&gt;mc_loevm_x.</item>
+      <item>***      IF lt_flhdr_enhanc[] IS INITIAL.</item>
+      <item>***        MESSAGE e042(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>***        message_simple c_false.</item>
+      <item>***        gs_variables-errors = c_true.</item>
+      <item>****      CLEAR lwa_pritm_enhanc-tplnr.</item>
+      <item>****      PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***        EXIT.</item>
+      <item>***      ELSE.</item>
+      <item>**** Check crop season</item>
+      <item>***        DELETE lt_flcma_enhanc WHERE  datab &gt; gs_prdoc_infocus-x-prhdr-datum OR</item>
+      <item>***                               datbi &lt; gs_prdoc_infocus-x-prhdr-datum OR</item>
+      <item>***                               loevm = /agri/cl_fmpr_process_ticket=&gt;mc_loevm_x OR</item>
+      <item>***                               cmnum &lt;&gt; lwa_pritm_enhanc-cmnum OR</item>
+      <item>***                               astat &lt;&gt; /agri/cl_fmpr_process_ticket=&gt;mc_astat_a.&quot; OR</item>
+      <item>****                               class &lt;&gt; /agri/cl_fmpr_process_ticket=&gt;mc_appl_farming.</item>
+      <item>***        IF lt_flcma_enhanc[] IS INITIAL.</item>
+      <item>***          MESSAGE e105(/agri/fmpr) INTO sy-msgli.</item>
+      <item>***          message_simple c_false.</item>
+      <item>***          gs_variables-errors = c_true.</item>
+      <item>****        CLEAR lwa_pritm_enhanc.</item>
+      <item>****        PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***          EXIT.</item>
+      <item>***        ENDIF.</item>
+      <item>***</item>
+      <item>***        DESCRIBE TABLE lt_flcma_enhanc LINES sy-tfill.</item>
+      <item>***        IF sy-tfill &gt; 1 .</item>
+      <item>***          MESSAGE e106(/agri/fmpr) INTO sy-msgli.</item>
+      <item>***          message_simple c_false.</item>
+      <item>***          gs_variables-errors = c_true.</item>
+      <item>****        CLEAR lwa_pritm_enhanc-tplnr.</item>
+      <item>****        PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***          EXIT.</item>
+      <item>***        ENDIF.</item>
+      <item>***</item>
+      <item>***        READ TABLE lt_flhdr_enhanc INTO lwa_flhdr_enhanc INDEX 1.</item>
+      <item>***        IF sy-subrc = 0.</item>
+      <item>***          lwa_pritm_enhanc-parnr  = lwa_flhdr_enhanc-owner.</item>
+      <item>***</item>
+      <item>**** Check for owner</item>
+      <item>***          IF lwa_pritm_enhanc-parnr IS INITIAL.</item>
+      <item>***            MESSAGE e076(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>***            message_simple c_false.</item>
+      <item>***            gs_variables-errors = c_true.</item>
+      <item>****          CLEAR lwa_pritm_enhanc.</item>
+      <item>****          PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***            EXIT.</item>
+      <item>***          ELSE.</item>
+      <item>***            lwa_pritm_enhanc-parvw = lwa_flhdr_enhanc-owrol.</item>
+      <item>***          ENDIF.</item>
+      <item>***</item>
+      <item>**** Check for ownership</item>
+      <item>***          IF lwa_flhdr_enhanc-ownshp NE c_ownership-third_party.</item>
+      <item>***            MESSAGE e083(/agri/fmpr) WITH lwa_pritm_enhanc-tplnr INTO sy-msgli.</item>
+      <item>***            message_simple c_false.</item>
+      <item>***            gs_variables-errors = c_true.</item>
+      <item>****          CLEAR: lwa_pritm_enhanc.</item>
+      <item>****          PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***            EXIT.</item>
+      <item>***          ENDIF.</item>
+      <item>***</item>
+      <item>***        ENDIF.</item>
+      <item>***</item>
+      <item>***      ENDIF.</item>
+      <item>***</item>
+      <item>***      PERFORM item_modify USING lv_tabix_enhanc lwa_pritm_enhanc.</item>
+      <item>***</item>
+      <item>***    ELSE.</item>
+      <item>***</item>
+      <item>***      IF lwa_pritm_enhanc-tplnr IS INITIAL.</item>
+      <item>***</item>
+      <item>***        CLEAR: lwa_pritm_enhanc-parnr, lwa_pritm_enhanc-parvw, lwa_pritm_enhanc-cmnum.</item>
+      <item>***        MODIFY gt_pritm FROM lwa_pritm_enhanc INDEX lv_tabix_enhanc</item>
+      <item>***          TRANSPORTING parnr parvw cmnum.</item>
+      <item>***</item>
+      <item>***        MOVE-CORRESPONDING lwa_pritm_enhanc TO lwa_pritm_enhanc_a.</item>
+      <item>***        MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_enhanc_a INDEX lv_tabix_enhanc</item>
+      <item>***          TRANSPORTING parnr parvw cmnum.</item>
+      <item>***</item>
+      <item>***      ENDIF.</item>
+      <item>***</item>
+      <item>***    ENDIF.</item>
+      <item>***</item>
+      <item>***  ENDIF.</item>
+      <item/>
+      <item>EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:REFERENCE_BATCH_DEFAULT\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:FCODE_CLOS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item> DATA: lv_error TYPE abap_bool VALUE abap_false.</item>
+      <item/>
+      <item> PERFORM distrib_confirmation_check.</item>
+      <item/>
+      <item>*-- Save before closure</item>
+      <item>* PERFORM document_infocus_save USING c_true space.</item>
+      <item>  PERFORM zabs_document_infocus_save USING c_true c_true lv_error.</item>
+      <item/>
+      <item>  IF lv_error EQ abap_false.</item>
+      <item>    IF gs_prdoc_infocus-x-prhdr-zarrend EQ abap_true.</item>
+      <item>*-- Atenção: Imóvel arrendado!</item>
+      <item>      MESSAGE i080(zfmfp).</item>
+      <item>    ELSEIF gs_prdoc_infocus-x-prhdr-zdevol_total  EQ abap_true.</item>
+      <item>*-- Atenção: Devolução Total!</item>
+      <item>      MESSAGE i087(zfmfp).</item>
+      <item>    ELSE.</item>
+      <item>*-- Closure</item>
+      <item>      PERFORM document_infocus_close USING c_true.</item>
+      <item>      PERFORM worklist_update.</item>
+      <item>      CLEAR gs_variables-data_changed.</item>
+      <item>      PERFORM document_infocus_set USING gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>                                         gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BDBFE02CBDF921F3</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BDBFE02CBDF921F3</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>028</LENGTH>
+       <TEXT>Update Scale Items</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_UPDATE_ITEMS</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BDBFE02CBDF921F3</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

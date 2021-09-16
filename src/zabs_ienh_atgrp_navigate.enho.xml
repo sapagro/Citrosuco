@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Attribute Group Navigate</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLATM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLATM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLATM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLATM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLATM\FO:FCODE_AGNV\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA: lwa_selected_row_new TYPE lvc_s_row,</item>
+      <item>      lwa_atgrp_new TYPE /agri/s_gklah.</item>
+      <item/>
+      <item>  DATA: lt_clint_new TYPE /agri/t_gclint.</item>
+      <item/>
+      <item>  CHECK NOT gt_selected_rows[] IS INITIAL.</item>
+      <item/>
+      <item>  LOOP AT gt_selected_rows INTO lwa_selected_row_new.</item>
+      <item>    READ TABLE gt_atgrp_where_used</item>
+      <item>     INTO lwa_atgrp_new</item>
+      <item>     INDEX lwa_selected_row_new-index</item>
+      <item>     TRANSPORTING clint.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      APPEND lwa_atgrp_new-clint TO lt_clint_new.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  CHECK NOT lt_clint_new[] IS INITIAL.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/GLAG_PROCESS&apos; DESTINATION &apos;NONE&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      it_clint                      = lt_clint_new[]</item>
+      <item>      i_mode                        = c_mode_display</item>
+      <item>      i_display_only                = c_true</item>
+      <item>*     i_Gappl                       = gs_attr_environment-epapp</item>
+      <item>    EXCEPTIONS</item>
+      <item>      invalid_parameter_combination = 1</item>
+      <item>      no_data_to_process            = 2</item>
+      <item>      OTHERS                        = 3.</item>
+      <item>  IF sy-subrc NE 0.</item>
+      <item>    IF sy-msgid IS NOT INITIAL AND sy-msgno IS NOT INITIAL.</item>
+      <item>    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno</item>
+      <item>            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.</item>
+      <item>    message_simple space.</item>
+      <item>    EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA4A31CA58F94B8F8</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA4A31CA58F94B8F8</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>036</LENGTH>
+       <TEXT>Attribute Group Navigate</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ATGRP_NAVIGATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA4A31CA58F94B8F8</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

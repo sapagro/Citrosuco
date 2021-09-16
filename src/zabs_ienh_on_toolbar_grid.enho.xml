@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Add Custom Button on Toolbar</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\TY:LCL_EVENT_HANDLER\ME:ON_TOOLBAR_GRID\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  IF sy-tcode EQ &apos;/AGRI/GLMD23&apos;</item>
+      <item>  AND sy-cprog EQ &apos;/AGRI/GLMD_MASS_PROCESS&apos;</item>
+      <item>  AND sender EQ ref_grid_attributes_mass</item>
+      <item>  AND gs_variables-document_mode NE c_mode_display.</item>
+      <item>    DATA: lv_text_aux TYPE itex132.</item>
+      <item>    IF sy-langu EQ &apos;P&apos;.</item>
+      <item>      lv_text_aux = &apos;Nova linha&apos;.</item>
+      <item>    ELSE.</item>
+      <item>      lv_text_aux = &apos;New line&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    toolbar_button_insert e_object-&gt;mt_toolbar lwa_button space</item>
+      <item>      &apos;MDADD&apos; icon_insert_row</item>
+      <item>      lv_text_aux space.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDB83C4A12E8F2E3183</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDB83C4A12E8F2E3183</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>042</LENGTH>
+       <TEXT>Add Custom Button on Toolbar</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ON_TOOLBAR_GRID</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDB83C4A12E8F2E3183</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

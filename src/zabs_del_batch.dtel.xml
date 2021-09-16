@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_BATCH</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>ZABS_DOM_BATCH</DOMNAME>
+    <HEADLEN>07</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>40</SCRLEN3>
+    <DDTEXT>Batch</DDTEXT>
+    <REPTEXT>Batch</REPTEXT>
+    <SCRTEXT_S>Batch</SCRTEXT_S>
+    <SCRTEXT_M>Batch</SCRTEXT_M>
+    <SCRTEXT_L>Batch</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Lote</DDTEXT>
+     <REPTEXT>Lote</REPTEXT>
+     <SCRTEXT_S>Lote</SCRTEXT_S>
+     <SCRTEXT_M>Lote</SCRTEXT_M>
+     <SCRTEXT_L>Lote</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

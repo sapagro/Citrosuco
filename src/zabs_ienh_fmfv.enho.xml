@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Harvest Prioritization Create Changes</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMFV_DPC_EXT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMFV_DPC_EXT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMFV_DPC_EXT=========CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMFV_DPC_EXT=========CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMFV_DPC_EXT\IN:/IWBEP/IF_MGW_APPL_SRV_RUNTIME\ME:CREATE_DEEP_ENTITY\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item/>
+      <item>  DATA: BEGIN OF ls_fvdetails1.</item>
+      <item>      INCLUDE        TYPE /agri/cl_fmfv_mpc=&gt;ts_fvmhdr.</item>
+      <item>  DATA: ftabset TYPE /agri/cl_fmfv_mpc=&gt;tt_ftab,</item>
+      <item>        END OF ls_fvdetails1.</item>
+      <item/>
+      <item>*-- Internal tables</item>
+      <item>  DATA: lt_fvpfd1         TYPE /agri/t_fmfvpfd,</item>
+      <item>        lt_messages1      TYPE /agri/t_gprolog,</item>
+      <item>        lt_varnm1         TYPE /agri/t_fmvarnm,</item>
+      <item>        lt_fvdoc1         TYPE /agri/t_fmfv_doc,</item>
+      <item>        lt_dd03l1         TYPE TABLE OF dd03l,</item>
+      <item>*-- Work Areas</item>
+      <item>        lwa_dd03l1        TYPE dd03l,</item>
+      <item>        lwa_fvhdr1        TYPE /agri/s_fmfvhdr,</item>
+      <item>        ls_filedname1     TYPE /agri/cl_fmfv_mpc=&gt;ts_ftab,</item>
+      <item>        lwa_fvpfd1        TYPE /agri/s_fmfvpfd,</item>
+      <item>        lwa_fvdoc1        TYPE /agri/s_fmfv_doc,</item>
+      <item>        lwa_message1      TYPE /agri/s_gprolog,</item>
+      <item>*-- Variables</item>
+      <item>        lv_msgno1         TYPE symsgno,</item>
+      <item>*-- Class reference</item>
+      <item>        lo_msg_container1 TYPE REF TO /iwbep/if_message_container.</item>
+      <item/>
+      <item>  DATA: lv_varnm TYPE /agri/fmvarnm.</item>
+      <item/>
+      <item>  lo_msg_container1 = mo_context-&gt;get_message_container( ).</item>
+      <item/>
+      <item/>
+      <item>  io_data_provider-&gt;read_entry_data( IMPORTING es_data =  ls_fvdetails1 ).</item>
+      <item/>
+      <item>  TRANSLATE ls_fvdetails1-varnm TO UPPER CASE.</item>
+      <item/>
+      <item>  MOVE-CORRESPONDING ls_fvdetails1 TO lwa_fvhdr1.</item>
+      <item/>
+      <item>  SELECT * FROM dd03l                           &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>    INTO TABLE lt_dd03l1</item>
+      <item>    WHERE tabname = &apos;/AGRI/S_FMHPCSH&apos;.</item>
+      <item/>
+      <item>  SORT: lt_dd03l1 BY fieldname.</item>
+      <item/>
+      <item>  LOOP AT ls_fvdetails1-ftabset INTO ls_filedname1.</item>
+      <item>    TRANSLATE ls_filedname1-varnm TO UPPER CASE.</item>
+      <item>    MOVE-CORRESPONDING ls_filedname1 TO lwa_fvpfd1.</item>
+      <item/>
+      <item>    READ TABLE lt_dd03l1 INTO lwa_dd03l1</item>
+      <item>         WITH KEY fieldname = lwa_fvpfd1-fname BINARY SEARCH.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      lwa_fvpfd1-delem    = lwa_dd03l1-rollname.</item>
+      <item>      lwa_fvpfd1-datatype = lwa_dd03l1-datatype.</item>
+      <item>      lwa_fvpfd1-decimals = lwa_dd03l1-decimals.</item>
+      <item>      lwa_fvpfd1-leng     = lwa_dd03l1-leng.</item>
+      <item>      lwa_fvpfd1-fdpos    = lwa_dd03l1-position.</item>
+      <item>    ENDIF.</item>
+      <item>    APPEND lwa_fvpfd1 TO lt_fvpfd1.</item>
+      <item>    CLEAR lwa_fvpfd1.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>   lwa_fvdoc1-varnm = lwa_fvhdr1-varnm.</item>
+      <item>   MOVE-CORRESPONDING lwa_fvhdr1 TO lwa_fvdoc1-x-fvhdr.</item>
+      <item>   MOVE-CORRESPONDING lwa_fvhdr1 TO lwa_fvdoc1-y-fvhdr.</item>
+      <item>   lwa_fvdoc1-y-fvpfd[] = lt_fvpfd1[].</item>
+      <item/>
+      <item>   READ TABLE lt_fvpfd1 INTO lwa_fvpfd1 WITH KEY updkz = &apos;D&apos;.</item>
+      <item>   IF sy-subrc = 0.</item>
+      <item>     DELETE lt_fvpfd1 INDEX sy-tabix.</item>
+      <item>     lwa_fvdoc1-x-fvpfd[] = lt_fvpfd1[].</item>
+      <item>   ELSE.</item>
+      <item>     lwa_fvdoc1-x-fvpfd = lt_fvpfd1[].</item>
+      <item>   ENDIF.</item>
+      <item>   APPEND lwa_fvdoc1 TO lt_fvdoc1.</item>
+      <item/>
+      <item>  CASE ls_fvdetails1-updkz.</item>
+      <item>    WHEN &apos;I&apos;.</item>
+      <item/>
+      <item>    SELECT SINGLE varnm</item>
+      <item>            FROM /agri/fmfvhdr</item>
+      <item>            INTO lv_varnm</item>
+      <item>            WHERE varnm = ls_fvdetails1-varnm.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*      MESSAGE e004(/agri/fmfv) WITH /agri/s_fmfvhdr-varnm.</item>
+      <item>       lwa_message1-msgid = &apos;/AGRI/FMFV&apos;.</item>
+      <item>       lwa_message1-msgno = &apos;004&apos;.</item>
+      <item>       lwa_message1-msgty = &apos;E&apos;.</item>
+      <item>       lwa_message1-msgv1 = ls_fvdetails1-varnm.</item>
+      <item>       APPEND lwa_message1 TO lt_messages1.</item>
+      <item/>
+      <item>     ELSE.</item>
+      <item/>
+      <item>     CALL FUNCTION &apos;/AGRI/FMFV_SAVE&apos;</item>
+      <item>*      EXPORTING</item>
+      <item>*        I_SET_UPDATE_TASK       = &apos;X&apos;</item>
+      <item>*        I_COMMIT_WORK           = &apos;X&apos;</item>
+      <item>       CHANGING</item>
+      <item>         ct_fvdoc    = lt_fvdoc1</item>
+      <item>         ct_messages = lt_messages1</item>
+      <item>       EXCEPTIONS</item>
+      <item>         no_change   = 1</item>
+      <item>         OTHERS      = 2.</item>
+      <item>     IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>     ENDIF.</item>
+      <item/>
+      <item>     IF sy-subrc EQ 0.</item>
+      <item>       lwa_message1-msgid = &apos;/AGRI/FMFV&apos;.</item>
+      <item>       lwa_message1-msgno = &apos;007&apos;.</item>
+      <item>       lwa_message1-msgty = &apos;S&apos;.</item>
+      <item>       lwa_message1-msgv1 = lwa_fvhdr1-varnm.</item>
+      <item>       APPEND lwa_message1 TO lt_messages1.</item>
+      <item>     ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    WHEN &apos;U&apos;.</item>
+      <item/>
+      <item>     CALL FUNCTION &apos;/AGRI/FMFV_SAVE&apos;</item>
+      <item>       CHANGING</item>
+      <item>         ct_fvdoc    = lt_fvdoc1</item>
+      <item>         ct_messages = lt_messages1</item>
+      <item>       EXCEPTIONS</item>
+      <item>         no_change   = 1</item>
+      <item>         OTHERS      = 2.</item>
+      <item>     IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>     ENDIF.</item>
+      <item/>
+      <item>     IF sy-subrc = 0.</item>
+      <item>       lwa_message1-msgid = &apos;/AGRI/FMFV&apos;.</item>
+      <item>       lwa_message1-msgno = &apos;007&apos;.</item>
+      <item>       lwa_message1-msgty = &apos;S&apos;.</item>
+      <item>       lwa_message1-msgv1 = lwa_fvhdr1-varnm.</item>
+      <item>       APPEND lwa_message1 TO lt_messages1.</item>
+      <item>     ELSE.</item>
+      <item>       lwa_message1-msgid = &apos;/AGRI/GLOBAL&apos;.</item>
+      <item>       lwa_message1-msgno = &apos;322&apos;.</item>
+      <item>       lwa_message1-msgty = &apos;E&apos;.</item>
+      <item>       lwa_message1-msgv1 = lwa_fvhdr1-varnm.</item>
+      <item>       APPEND lwa_message1 TO lt_messages1.</item>
+      <item>     ENDIF.</item>
+      <item/>
+      <item>    WHEN &apos;D&apos;.</item>
+      <item/>
+      <item>      IF lwa_fvdoc1 IS NOT INITIAL.</item>
+      <item>        CALL FUNCTION &apos;/AGRI/FMFV_DELETE&apos;</item>
+      <item>          CHANGING</item>
+      <item>            cs_fvdoc = lwa_fvdoc1</item>
+      <item>          EXCEPTIONS</item>
+      <item>            OTHERS   = 1.</item>
+      <item/>
+      <item>        IF sy-subrc = 0.</item>
+      <item>          lwa_message1-msgid = &apos;/AGRI/FMFV&apos;.</item>
+      <item>          lwa_message1-msgno = &apos;006&apos;.</item>
+      <item>          lwa_message1-msgty = &apos;S&apos;.</item>
+      <item>          lwa_message1-msgv1 = lwa_fvhdr1-varnm.</item>
+      <item>          APPEND lwa_message1 TO lt_messages1.</item>
+      <item>        ELSE.</item>
+      <item>          lwa_message1-msgid = &apos;/AGRI/FMFV&apos;.</item>
+      <item>          lwa_message1-msgno = &apos;003&apos;.</item>
+      <item>          lwa_message1-msgty = &apos;S&apos;.</item>
+      <item>          lwa_message1-msgv1 = lwa_fvhdr1-varnm.</item>
+      <item>          APPEND lwa_message1 TO lt_messages1.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    WHEN OTHERS.</item>
+      <item>  ENDCASE.</item>
+      <item/>
+      <item>   copy_data_to_ref( EXPORTING is_data = ls_fvdetails1</item>
+      <item>                     CHANGING  cr_data = er_deep_entity ).</item>
+      <item/>
+      <item>*-- Preapring messages sending to Fiori in Header</item>
+      <item>  IF lt_messages1 IS NOT INITIAL.</item>
+      <item>    LOOP AT lt_messages1 INTO lwa_message1.</item>
+      <item>      CLEAR:lv_msgno1.</item>
+      <item>      lv_msgno1 = lwa_message1-msgno.</item>
+      <item>      lo_msg_container1-&gt;add_message(</item>
+      <item>             EXPORTING iv_msg_type               = lwa_message1-msgty</item>
+      <item>                       iv_msg_id                 = lwa_message1-msgid</item>
+      <item>                       iv_msg_number             = lv_msgno1</item>
+      <item>                       iv_msg_v1                 = lwa_message1-msgv1</item>
+      <item>                       iv_msg_v2                 = lwa_message1-msgv2</item>
+      <item>                       iv_msg_v3                 = lwa_message1-msgv3</item>
+      <item>                       iv_msg_v4                 = lwa_message1-msgv4</item>
+      <item>                       iv_add_to_response_header = abap_true ).</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item> RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BFFAD53920835368</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BFFAD53920835368</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>056</LENGTH>
+       <TEXT>Harvest Prioritization Create Changes</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_FMFV</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BFFAD53920835368</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

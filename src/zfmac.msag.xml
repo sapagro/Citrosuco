@@ -1,0 +1,584 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZFMAC</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Measurement Point Document</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Please Enter Terrain</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Plese Enter Crop</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Crop &amp;1 dosen&apos;t exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Enter one or more Measurement Document to search</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Document &amp;1 is locked by user &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Crop area &amp;1 has been saved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Changes were not saved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Enter Terrain</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Enter Measurement Group</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Enter Crop</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Measurement Document &amp;1 cannot be saved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Crop area &amp;1 deleted</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Select Characteristic</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Enter a Valid Attribute Group</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Enter a Valid Characteristic</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Data Saved Successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Characteristic &amp; already exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>No Attribute Group assigned to Terrain &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>No active crop season found with &amp; and &amp; on &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>No Attribute Group assigned for &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>No data found</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>No attributes available in attribute group &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Enter Characteristic Value</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Enter Level</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Action Canceled</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Terrain &amp; is inactive</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Enter Measurement Document Type</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Level not maintained for document type</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Enter atleast one Characteristic Value</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>No Document Type found</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>No Assignments available</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>No data to process</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Enter Equipment</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Equipment &amp; not maintained for terrain &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Measurement Document type crop area</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Enter Valid On</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Attribute &amp; does not belongs to Group &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>No Items available</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Enter Crop Season Counter</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Enter Crop Season Start Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Enter Crop Season End Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>&amp; does not belongs to &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>No Terrain assigned for Equipment &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>You are not authorized to create Measurement Document of type &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>You are not authorized to change Measurement Document of type &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>You are not authorized to display Measurement Document of type &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>No Measurement Group &amp;1 with level &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>No Item data</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>You are not authorized to create Mass Measurement Document</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>050</MSGNR>
+     <TEXT>You are not authorized to view one or more Measurement Document type</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>051</MSGNR>
+     <TEXT>You are not authorized to delete Measurement Document of type &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>Measurement group &amp;1 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>Equipment &amp;1 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>054</MSGNR>
+     <TEXT>No terrains exists to save</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>Enter Measured By</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>056</MSGNR>
+     <TEXT>Enter Measurement Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>057</MSGNR>
+     <TEXT>Enter Measurement Time</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>058</MSGNR>
+     <TEXT>Attribute &amp;1 cannot be deleted; it is not editable</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>059</MSGNR>
+     <TEXT>Attribute &amp;1 cannot be changed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>060</MSGNR>
+     <TEXT>Available memory is insufficient; restart the transaction</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>061</MSGNR>
+     <TEXT>No measurements entered. Document cannot be saved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>062</MSGNR>
+     <TEXT>Measurement date cannot be greater than current date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>063</MSGNR>
+     <TEXT>No valid data exists for selection</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>064</MSGNR>
+     <TEXT>Measurements were no selected; verify selection</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>065</MSGNR>
+     <TEXT>Inventory not available for batch &amp;1. Document cannot be saved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>066</MSGNR>
+     <TEXT>Measurement date should be in Crop Season validity date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>067</MSGNR>
+     <TEXT>Activity &amp;1 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>068</MSGNR>
+     <TEXT>Expected harvest date is not in crop season validity</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>070</MSGNR>
+     <TEXT>This field is mandatory.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>071</MSGNR>
+     <TEXT>The crop area can not deleted</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>072</MSGNR>
+     <TEXT>No exists data for the query</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>073</MSGNR>
+     <TEXT>duplicated terrain</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>074</MSGNR>
+     <TEXT>Terrains used in another crop area</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>075</MSGNR>
+     <TEXT>The datas for create the copy are incorrect</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>076</MSGNR>
+     <TEXT>the row choosed it&apos;s empty</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>077</MSGNR>
+     <TEXT>That terrain already in other crop area</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>078</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Centro trabalho &amp;3 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>079</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Calendário &amp;3 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>080</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Centro trabalho &amp;3 inex. p/ centro &amp;4.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>081</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Centro de trabalho &amp;3 atualizado c/ sucesso.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>082</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Centro de trabalho &amp;3 não foi atualizado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>083</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Parada programada &amp;3 atualizada c/ sucesso.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>084</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Parada programada &amp;3 não foi atualizada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>085</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Existe registro de mesma chave.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>086</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Turno &amp;3 atualizado c/ sucesso.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>087</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Parada programada &amp;3 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>088</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Turno &amp;3 existente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>089</MSGNR>
+     <TEXT>Excel linha &amp;1 aba &amp;2: Parada programada &amp;3 existente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>090</MSGNR>
+     <TEXT>Talhão &amp;1 não existe no Centro &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>091</MSGNR>
+     <TEXT>Não existe safra válida para o Terreno &amp;1 no período informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>092</MSGNR>
+     <TEXT>O Terreno &amp;1 já foi atribuído à Área de Cultivo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>093</MSGNR>
+     <TEXT>Terreno &amp;1 duplicado! Favor ajustar os dados informados.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>094</MSGNR>
+     <TEXT>Para o Terreno &amp;1/Tarefa &amp;2, o Volume de Calda excede 4.000 m3/ha!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMAC</ARBGB>
+     <MSGNR>095</MSGNR>
+     <TEXT>Não é permitida a atribuição de talhão sem selecionar a safra!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

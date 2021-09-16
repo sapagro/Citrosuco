@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Parâmetros de Seleção</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>PROG</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>ZABS_REP_GLAM_LIST_DISPLAY</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>PROG</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>ZABS_REP_GLAM_LIST_DISPLAY</ORG_MAIN_NAME>
+    <PROGRAMNAME>ZABS_REP_GLAM_LIST_DISPLAY</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>ZABS_REP_GLAM_LIST_DISPLAY</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:ZABS_REP_GLAM_LIST_DISPLAY\IC:/AGRI/GLOBAL_CONSTANTS\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>      lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>      ls_text            TYPE rsseltexts,</item>
+      <item>      lt_text            TYPE TABLE OF rsseltexts.</item>
+      <item/>
+      <item>lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>IF sy-tcode EQ &apos;ZABS_GLAM05&apos;.</item>
+      <item>  INCLUDE zabs_inc_glam05_sel_options IF FOUND.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>INITIALIZATION.</item>
+      <item>  z1_text = &apos;Parâmetros Adicionais&apos;.</item>
+      <item/>
+      <item>  LOOP AT SCREEN.</item>
+      <item>    IF screen-name EQ &apos;%_P_IVDAT_%_APP_%-TEXT&apos;.</item>
+      <item>      %_p_ivdat_%_app_%-text = &apos;Data de Fechamento&apos;.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEAB7D0BD64B0AA2DBF</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEAB7D0BD64B0AA2DBF</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>032</LENGTH>
+       <TEXT>Parâmetros de Seleção</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_GLAM05_SELECT_SCREEN</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEAB7D0BD64B0AA2DBF</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Document Update</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMFPM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMFPM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMFPM\IC:/AGRI/LFMFPMF0D\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZDOCUMENTS_MASS_UPDATE</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zdocuments_mass_update USING lv_commit_wor</item>
+      <item>                         CHANGING lt_fpdoc TYPE /agri/t_fmfp_doc</item>
+      <item>                                  lv_subrc TYPE sy-subrc.</item>
+      <item/>
+      <item>  DATA: lwa_fpdoc   TYPE /agri/s_fmfp_doc,</item>
+      <item>        lt_aufnr    TYPE /agri/t_fmaufnr,</item>
+      <item>        lt_messages TYPE /agri/t_gprolog,</item>
+      <item>        ls_message  TYPE /agri/s_gprolog.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/FMFP_SAVE&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_set_update_task = &apos;X&apos;</item>
+      <item>      i_commit_work     = &apos; &apos; &quot;lv_commit_work</item>
+      <item>    CHANGING</item>
+      <item>      ct_fpdoc          = lt_fpdoc</item>
+      <item>      ct_messages       = lt_messages</item>
+      <item>    EXCEPTIONS</item>
+      <item>      no_change         = 1</item>
+      <item>      OTHERS            = 2.</item>
+      <item>  lv_subrc  = sy-subrc.</item>
+      <item>  LOOP AT lt_messages INTO ls_message.</item>
+      <item>    MESSAGE ID ls_message-msgid TYPE ls_message-msgty</item>
+      <item>       NUMBER ls_message-msgno WITH ls_message-msgv1</item>
+      <item>       ls_message-msgv2 ls_message-msgv3 ls_message-msgv4</item>
+      <item>                  INTO sy-msgli.</item>
+      <item>    message_simple space.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lv_subrc EQ 0.</item>
+      <item/>
+      <item>    LOOP AT lt_fpdoc INTO lwa_fpdoc.</item>
+      <item>*      PERFORM messages_context_set USING lwa_fpdoc-x-fphdr.</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-success NUMBER &apos;007&apos;</item>
+      <item>                       WITH lwa_fpdoc-aufnr INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDLOOP.</item>
+      <item>*    MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-success NUMBER &apos;015&apos;</item>
+      <item>*                            INTO sy-msgli.</item>
+      <item>*    message_simple space.</item>
+      <item>  ELSE.</item>
+      <item>    IF lv_subrc EQ 1.</item>
+      <item>      MESSAGE ID &apos;/AGRI/GLOBAL&apos; TYPE c_msg_type-success NUMBER &apos;322&apos;</item>
+      <item>                                                        INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ELSE.</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMFP&apos; TYPE c_msg_type-error NUMBER &apos;016&apos;</item>
+      <item>                              INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZDOCUMENTS_MASS_UPDATE</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA4F235DD6FBEBE08</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA4F235DD6FBEBE08</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>Document Update</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_DOC_UPDATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA4F235DD6FBEBE08</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

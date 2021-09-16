@@ -1,0 +1,3 @@
+FUNCTION-POOL ZABS_FG_SHP_IDRESOURCE.       "MESSAGE-ID ..
+
+* INCLUDE LZABS_FG_SHP_IDRESOURCED...        " Local class definition

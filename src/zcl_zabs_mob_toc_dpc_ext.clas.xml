@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Data Provider Secondary Class</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Invalid user</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Task Order Confirmation is scheduled for processing</ENTRY>
+     <LENGTH>102</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Error in Task Order processing</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Usuário Inválido</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>A confirmação da ordem da tarefa está agendada para processamento</ENTRY>
+       <LENGTH>102</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Erro no processamento do pedido de tarefa</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <I18N_LINES>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+   </I18N_LINES>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>C_SOURCE_QUALITY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Quality Inspection Lot</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>C_SOURCE_TASKORDER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Task Order Confirmation</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>C_UPDKZ_DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Update indicator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>DELETE_FROM_DATABASE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DELETE_FROM_DATABASE</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>EXCEPTION_MESSAGES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>EXCEPTION_MESSAGES</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_DELTA_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Delta Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EMPLOYEE_ROLES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: EMPLOYEE ROLE Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_REASONLIST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: ReasonList</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ROUTE_TERRAIN_DTLS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Route Terrain Details</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_SKIP_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Skip Token Method</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TERRAINSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: TerrainSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOCOMPONENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoComponents_Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOMATERIAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoMaterial_Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOOPERATIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoOperations_Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOTASKORDERS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoTaskOrdersSet_Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>REQUEST_HEADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Request header for data compression</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_TOC_DPC_EXT</CLSNAME>
+     <CMPNAME>TASK_ORDER_CONFIRM</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Task Order Confirm</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_IRRUOM</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>MEINS</DOMNAME>
+    <HEADLEN>55</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>40</SCRLEN3>
+    <DDTEXT>Unit of Measure for Total Irrigation Quantity</DDTEXT>
+    <REPTEXT>UOM for Total Irrigation Quantity</REPTEXT>
+    <SCRTEXT_S>UOM</SCRTEXT_S>
+    <SCRTEXT_M>UOM for Total Irriga</SCRTEXT_M>
+    <SCRTEXT_L>UOM for Total Irrigation Quantity</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Unidade de medida para a quantidade total de irrigação</DDTEXT>
+     <REPTEXT>UDM para a quantidade total de irrigação</REPTEXT>
+     <SCRTEXT_S>UDM</SCRTEXT_S>
+     <SCRTEXT_M>UDM irrigação total</SCRTEXT_M>
+     <SCRTEXT_L>UDM para a quantidade total de irrigação</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

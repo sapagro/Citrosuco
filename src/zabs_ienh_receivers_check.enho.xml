@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Verificar Usuários Aprovadores</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GACM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GACM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGACM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGACM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGACM\FO:RECEIVER_DATA_PREPARE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;ls_mddoc_infocus&gt; TYPE /agri/s_glmd_doc.</item>
+      <item/>
+      <item>  DATA(lv_glmdm) = abap_false.</item>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  IF sy-tcode EQ &apos;/AGRI/GLMDM&apos;</item>
+      <item>  OR sy-tcode EQ &apos;/AGRI/GLMD23&apos;.</item>
+      <item>    ASSIGN (&apos;(/AGRI/SAPLGLMDU)GS_MDDOC_INFOCUS&apos;) TO &lt;ls_mddoc_infocus&gt;.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      IF &lt;ls_mddoc_infocus&gt;-x-mdhdr-tplnr_fl IS NOT INITIAL.</item>
+      <item>        SELECT SINGLE tplnr_fl, iwerk, swerk</item>
+      <item>          FROM /agri/glflot</item>
+      <item>          INTO @DATA(ls_glflot)</item>
+      <item>         WHERE tplnr_fl = @&lt;ls_mddoc_infocus&gt;-x-mdhdr-tplnr_fl.</item>
+      <item>        IF sy-subrc EQ 0</item>
+      <item>        AND ls_glflot-iwerk IS NOT INITIAL.</item>
+      <item>          SELECT *</item>
+      <item>            FROM zabst_usr_centro</item>
+      <item>            INTO TABLE @DATA(lt_usr_centro)</item>
+      <item>           WHERE werks = @ls_glflot-iwerk.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            lv_glmdm = abap_true.</item>
+      <item/>
+      <item>            DATA(lt_receiver_x) = lt_receiver[].</item>
+      <item>            DATA(lt_acprs_x) = lt_acprs[].</item>
+      <item/>
+      <item>            LOOP AT lt_acprs_x INTO DATA(ls_acprs).</item>
+      <item>              DATA(lv_tabix) = sy-tabix.</item>
+      <item>              IF ls_acprs-prtyp EQ c_proc_type-user.</item>
+      <item>                READ TABLE lt_usr_centro INTO DATA(ls_usr_centro)</item>
+      <item>                  WITH KEY bname = ls_acprs-procr(12) BINARY SEARCH.</item>
+      <item>                IF sy-subrc NE 0.</item>
+      <item>                  DELETE lt_acprs_x INDEX lv_tabix.</item>
+      <item>                ENDIF.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDLOOP.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_glmdm EQ abap_true.</item>
+      <item>*--Receiver Data Prepare</item>
+      <item>*--Add the recipients email address</item>
+      <item>    PERFORM zabs_receiver_data_prepare TABLES lt_receiver_x</item>
+      <item>                                        USING lt_acprs_x</item>
+      <item>                                              is_sender</item>
+      <item>                                     CHANGING lv_sender_url.</item>
+      <item/>
+      <item>    lt_receiver[] = lt_receiver_x[].</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK lv_glmdm = abap_false.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGACM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGACM\IC:/AGRI/LGACMF0R\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_RECEIVER_DATA_PREPARE</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*      --&gt;P_LT_RECEIVER  text</item>
+      <item>*      --&gt;P_IS_ACHDR  text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_receiver_data_prepare TABLES lt_receiver   STRUCTURE somlreci1</item>
+      <item>                                 USING lt_acprs      TYPE /agri/t_gacprs</item>
+      <item>                                       is_sender     TYPE /agri/s_tgsfsnd</item>
+      <item>                              CHANGING lv_sender_url TYPE so_recname.</item>
+      <item/>
+      <item>  DATA: lwa_receiver TYPE somlreci1,</item>
+      <item>        lwa_acrecpt  TYPE /agri/s_gacprs,</item>
+      <item>        lv_url       TYPE so_recname,</item>
+      <item>        lt_telephone TYPE /agri/t_gactlnmbr,</item>
+      <item>        lt_url       TYPE /agri/t_gacurl,</item>
+      <item>        lwa_url      TYPE /agri/s_gacurl,</item>
+      <item>        lwa_dg_corig LIKE LINE OF gt_dg_corig.</item>
+      <item/>
+      <item>  LOOP AT lt_acprs INTO lwa_acrecpt.</item>
+      <item>    PERFORM procr_url_or_phone_no_get TABLES lt_receiver</item>
+      <item>                                      USING  lwa_acrecpt-prtyp</item>
+      <item>                                             lwa_acrecpt-procr</item>
+      <item>                                             lwa_acrecpt-parvw.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>***Rel E_SP1</item>
+      <item>***sending mails to CC to Original Proc</item>
+      <item>  LOOP AT gt_dg_corig INTO lwa_dg_corig</item>
+      <item>                      WHERE corig IS NOT INITIAL.</item>
+      <item>    PERFORM procr_url_or_phone_no_get TABLES lt_receiver</item>
+      <item>                                      USING  lwa_dg_corig-prtyp</item>
+      <item>                                             lwa_dg_corig-procr</item>
+      <item>                                             space.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>***Send as Bcc/Cc</item>
+      <item>  IF is_sender-ccsnr  IS NOT INITIAL</item>
+      <item>  OR is_sender-bccsn  IS NOT INITIAL.</item>
+      <item>    CALL FUNCTION &apos;/AGRI/GAC_PROCESSOR_ADRC_GET&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        i_prtyp = c_proc_type-user</item>
+      <item>        i_procr = sy-uname</item>
+      <item>      CHANGING</item>
+      <item>        ct_url  = lt_url.</item>
+      <item/>
+      <item>    IF lt_url IS NOT INITIAL AND</item>
+      <item>       is_sender-ccsnr  IS NOT INITIAL.</item>
+      <item>      READ TABLE lt_url INTO lwa_url INDEX 1.</item>
+      <item>      lv_url = lwa_url-url.</item>
+      <item>      TRANSLATE lv_url TO LOWER CASE.</item>
+      <item>      IF lv_url IS NOT INITIAL.</item>
+      <item>        lwa_receiver-receiver = lv_url.</item>
+      <item>        lwa_receiver-rec_type = &apos;U&apos;.</item>
+      <item>        lwa_receiver-notif_del = c_true.</item>
+      <item>        lwa_receiver-notif_ndel = c_true.</item>
+      <item>        lwa_receiver-copy = c_true.</item>
+      <item>        APPEND lwa_receiver TO lt_receiver.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>    IF lt_url IS NOT INITIAL AND</item>
+      <item>       is_sender-bccsn  IS NOT INITIAL.</item>
+      <item>      READ TABLE lt_url INTO lwa_url INDEX 1.</item>
+      <item>      lv_url = lwa_url-url.</item>
+      <item>      TRANSLATE lv_url TO LOWER CASE.</item>
+      <item>      IF lv_url IS NOT INITIAL.</item>
+      <item>        lwa_receiver-receiver = lv_url.</item>
+      <item>        lwa_receiver-rec_type = &apos;U&apos;.</item>
+      <item>        lwa_receiver-notif_del = c_true.</item>
+      <item>        lwa_receiver-notif_ndel = c_true.</item>
+      <item>        lwa_receiver-blind_copy = c_true.</item>
+      <item>        APPEND lwa_receiver TO lt_receiver.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>****Sender</item>
+      <item>  CHECK is_sender IS NOT INITIAL.</item>
+      <item>  CHECK is_sender-prtyp NE c_proc_type-user.</item>
+      <item>  CALL FUNCTION &apos;/AGRI/GAC_PROCESSOR_ADRC_GET&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_prtyp     = is_sender-prtyp</item>
+      <item>      i_procr     = is_sender-procr</item>
+      <item>    CHANGING</item>
+      <item>      ct_url      = lt_url.</item>
+      <item/>
+      <item>  READ TABLE lt_url INTO lwa_url INDEX 1.</item>
+      <item>  lv_sender_url = lwa_url-url.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZABS_RECEIVER_DATA_PREPARE</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDABBC07B8D8F4AB42F</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDABBC07B8D8F4AB42F</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>045</LENGTH>
+       <TEXT>Verificar Usuários Aprovadores</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_RECEIVERS_CHECK</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDABBC07B8D8F4AB42F</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

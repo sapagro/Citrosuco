@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Attribue display</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:GENERAL_ATTRIBUTE_FCAT_PREPARE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>STATICS: ls_dfies_new TYPE dfies.</item>
+      <item/>
+      <item>  DATA: lt_x031l_new TYPE dd_x031l_table,</item>
+      <item>        lwa_x031l_new TYPE x031l.</item>
+      <item/>
+      <item>  DATA: lv_subrc_new   TYPE sy-subrc,</item>
+      <item>        lv_tabname_new TYPE ddobjname,</item>
+      <item>        lv_fieldname_new TYPE dfies-lfieldname.</item>
+      <item/>
+      <item>  IF gs_variables-attribute_description IS INITIAL.</item>
+      <item>    IF ls_athdr-atsch IS INITIAL.</item>
+      <item>      ls_fcat-intlen = ls_fcat-outputlen</item>
+      <item>                     = ls_athdr-anzst.</item>
+      <item>    ELSE.</item>
+      <item>      ls_fcat-intlen = ls_fcat-outputlen</item>
+      <item>                     = strlen( ls_athdr-atsch ).</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    ls_fcat-inttype  = ls_fcat-datatype = c_int_data_type-char.</item>
+      <item>*    ls_fcat-inttype  = ls_fcat-datatype = ls_athdr-atfor.</item>
+      <item/>
+      <item>****60E_SP1 - ECI - 593</item>
+      <item>    IF ls_athdr-atfor EQ c_atfor-date.</item>
+      <item>      ls_fcat-inttype = ls_fcat-datatype = c_data_type-date.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    lv_tabname_new = ls_fcat-ref_table = ls_athdr-attab.</item>
+      <item>    lv_fieldname_new = ls_fcat-ref_field = ls_athdr-atfel.</item>
+      <item/>
+      <item>    ls_fcat-lowercase   = ls_athdr-atkle.</item>
+      <item/>
+      <item>    IF NOT ls_athdr-atprt IS INITIAL.</item>
+      <item>      ls_fcat-checktable = ls_athdr-atprt.</item>
+      <item/>
+      <item>****60d_SP2 - If check table is present and tablename and fieldname</item>
+      <item>****is not prsesent than it will give dump</item>
+      <item>****so we need fill reftable and ref_field.</item>
+      <item/>
+      <item>      IF  ls_fcat-ref_table IS INITIAL</item>
+      <item>      AND ls_fcat-ref_field IS INITIAL.</item>
+      <item>        CALL FUNCTION &apos;DDIF_NAMETAB_GET&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            tabname   = ls_athdr-atprt</item>
+      <item>          TABLES</item>
+      <item>            x031l_tab = lt_x031l_new[]</item>
+      <item>          EXCEPTIONS</item>
+      <item>            not_found = 1</item>
+      <item>            OTHERS    = 2.</item>
+      <item/>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          LOOP AT lt_x031l_new INTO lwa_x031l_new WHERE dtyp NE &apos;CLNT&apos;.</item>
+      <item>            EXIT.</item>
+      <item>          ENDLOOP.</item>
+      <item/>
+      <item>***60E_SP3 ECDM #1698_10</item>
+      <item>*          ls_fcat-ref_table = ls_athdr-atprt.</item>
+      <item>*          ls_fcat-ref_field = lwa_x031l_new-fieldname.</item>
+      <item/>
+      <item>          lv_tabname_new   = ls_fcat-ref_table = ls_athdr-atprt.</item>
+      <item>          lv_fieldname_new = ls_fcat-ref_field = lwa_x031l_new-fieldname.</item>
+      <item>***60E_SP3 ECDM #1698_10 - END</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      ls_fcat-checktable = &apos;!&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ELSE.</item>
+      <item/>
+      <item>    ls_fcat-lowercase   = c_true.</item>
+      <item/>
+      <item>    lv_tabname_new = ls_fcat-ref_table = &apos;/AGRI/S_GLMDSCRFIELDS&apos;.</item>
+      <item>    lv_fieldname_new = ls_fcat-ref_field = &apos;ATWTB&apos;.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>    IF ( ls_dfies_new-tabname NE lv_tabname_new AND</item>
+      <item>       lv_tabname_new IS NOT INITIAL )</item>
+      <item>    OR ( ls_dfies_new-fieldname NE lv_fieldname_new AND</item>
+      <item>       lv_fieldname_new IS NOT INITIAL ).</item>
+      <item/>
+      <item>    CLEAR ls_dfies_new.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;DDIF_NAMETAB_GET&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        tabname    = lv_tabname_new</item>
+      <item>        lfieldname = lv_fieldname_new</item>
+      <item>      IMPORTING</item>
+      <item>        dfies_wa   = ls_dfies_new</item>
+      <item>      EXCEPTIONS</item>
+      <item>        not_found  = 1</item>
+      <item>        OTHERS     = 2.</item>
+      <item/>
+      <item>    CHECK sy-subrc EQ 0.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_dfies_new IS NOT INITIAL AND</item>
+      <item>     ls_dfies_new-tabname EQ lv_tabname_new.</item>
+      <item/>
+      <item>    IF ls_dfies_new-intlen GT 50.</item>
+      <item>      ls_dfies_new-intlen = 50.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF ls_dfies_new-outputlen GT 50.</item>
+      <item>      ls_dfies_new-outputlen = 50.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    ls_fcat-intlen = ls_dfies_new-intlen.</item>
+      <item>    ls_fcat-outputlen = ls_dfies_new-outputlen.</item>
+      <item>    ls_fcat-decimals = ls_dfies_new-decimals.</item>
+      <item>    ls_fcat-datatype = ls_dfies_new-datatype.</item>
+      <item>    ls_fcat-inttype = ls_dfies_new-inttype.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM attribute_edit_check USING ls_athdr</item>
+      <item>                                     space</item>
+      <item>                                     c_true</item>
+      <item>                                     c_true</item>
+      <item>                            CHANGING lv_subrc_new.</item>
+      <item>  IF lv_subrc_new IS INITIAL.</item>
+      <item>    ls_fcat-edit = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA29191B40D0322A1</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA29191B40D0322A1</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>026</LENGTH>
+       <TEXT>Attribue display</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ATTR_DISPLAY</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA29191B40D0322A1</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

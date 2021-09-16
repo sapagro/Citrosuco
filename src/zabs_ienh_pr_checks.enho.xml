@@ -1,0 +1,1001 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Implicit enhancement for Produce Receipts</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPRM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPRM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:REQUIRED_DATA_CHECK_008\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lv_pritm_new  TYPE /agri/fmpritem,</item>
+      <item>        lwa_prnum_new TYPE /agri/s_fmprnum,</item>
+      <item>        lt_prnum_new  TYPE /agri/t_fmprnum.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS:</item>
+      <item>        &lt;lwa_pritm_new&gt; TYPE /agri/s_fmpritm.</item>
+      <item/>
+      <item>* Check document infocus</item>
+      <item>  CHECK gs_prdoc_infocus IS NOT INITIAL.</item>
+      <item/>
+      <item>* Clear</item>
+      <item>  CLEAR: lt_prnum_new[], lv_pritm_new.</item>
+      <item/>
+      <item>*&gt;&gt; Header</item>
+      <item>* Produce type</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-fldty IS INITIAL.</item>
+      <item>    MESSAGE e157(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Company code</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-bukrs IS INITIAL.</item>
+      <item>    MESSAGE e062(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Document date</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-datum IS INITIAL.</item>
+      <item>    MESSAGE e063(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Posting date</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-budat IS INITIAL.</item>
+      <item>    MESSAGE e064(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Gross weight</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-brgew IS INITIAL.</item>
+      <item>    MESSAGE e065(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Weight when empty</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-obgew IS INITIAL.</item>
+      <item>    MESSAGE e066(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Net weight</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-ntgew IS INITIAL.</item>
+      <item>    MESSAGE e067(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Unit</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-gewei IS INITIAL.</item>
+      <item>    MESSAGE e068(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>*&gt;&gt; Items</item>
+      <item>  IF gs_prdoc_infocus-x-pritm[] IS INITIAL.</item>
+      <item>    MESSAGE e073(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    message_simple c_false.</item>
+      <item>    gs_variables-errors = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT gs_prdoc_infocus-x-pritm ASSIGNING &lt;lwa_pritm_new&gt;.</item>
+      <item/>
+      <item>* Crop</item>
+      <item>    IF &lt;lwa_pritm_new&gt;-cmnum IS INITIAL.</item>
+      <item>* Crop is required</item>
+      <item>      MESSAGE e059(/agri/fmpr) INTO sy-msgli.</item>
+      <item>      message_simple c_false.</item>
+      <item>      gs_variables-errors = c_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>** Material</item>
+      <item>*    IF &lt;lwa_pritm_new&gt;-plnbez IS INITIAL.</item>
+      <item>** Material is required</item>
+      <item>*      MESSAGE e058(/agri/fmpr) INTO sy-msgli.</item>
+      <item>*      message_simple c_false.</item>
+      <item>*      gs_variables-errors = c_true.</item>
+      <item>*    ENDIF.</item>
+      <item/>
+      <item>* Functional location</item>
+      <item>    IF &lt;lwa_pritm_new&gt;-tplnr IS INITIAL.</item>
+      <item>* Functional location is required</item>
+      <item>      MESSAGE e060(/agri/fmpr) INTO sy-msgli.</item>
+      <item>      message_simple c_false.</item>
+      <item>      gs_variables-errors = c_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>* Vendor is required</item>
+      <item>    IF &lt;lwa_pritm_new&gt;-parnr IS INITIAL.</item>
+      <item>* Vendor is required</item>
+      <item>      MESSAGE e061(/agri/fmpr) INTO sy-msgli.</item>
+      <item>      message_simple c_false.</item>
+      <item>      gs_variables-errors = c_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>* Weight options</item>
+      <item>    IF gs_gtart IS NOT INITIAL.</item>
+      <item/>
+      <item>      IF gs_gtart-fldop = c_true.      &quot; Field</item>
+      <item>        IF &lt;lwa_pritm_new&gt;-calwgth IS INITIAL.</item>
+      <item>          MESSAGE e168(/agri/fmpr) INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>        ENDIF.</item>
+      <item>      ELSEIF gs_gtart-wbwop = c_true.  &quot; Weight Bridge Weight</item>
+      <item>        IF &lt;lwa_pritm_new&gt;-wbwght IS INITIAL.</item>
+      <item>          MESSAGE e169(/agri/fmpr) INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>        ENDIF.</item>
+      <item>      ELSE.                            &quot; Field + Weight Bridge Weight</item>
+      <item>        IF &lt;lwa_pritm_new&gt;-calwgth IS INITIAL.</item>
+      <item>          MESSAGE e168(/agri/fmpr) INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>        ENDIF.</item>
+      <item>        IF &lt;lwa_pritm_new&gt;-wbwght IS INITIAL.</item>
+      <item>          MESSAGE e169(/agri/fmpr) INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF gs_gtart-nrcase = c_numbering_case-manual.</item>
+      <item>* Ticket number is required. Please enter the ticket number for item</item>
+      <item>        IF &lt;lwa_pritm_new&gt;-r_prnum IS INITIAL.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_OUTPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = &lt;lwa_pritm_new&gt;-pritm</item>
+      <item>            IMPORTING</item>
+      <item>              output = lv_pritm_new.</item>
+      <item>***Extended Additional Syntax Check 1_3 ATC  1709 PQ</item>
+      <item>          MESSAGE e186(/agri/fmpr)</item>
+      <item>*          WITH lv_pritm_new</item>
+      <item>          INTO sy-msgli. &quot;#EC*</item>
+      <item>****</item>
+      <item>          message_simple c_false.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>          CLEAR lv_pritm_new.</item>
+      <item>        ELSE.</item>
+      <item>          lwa_prnum_new-prnum = &lt;lwa_pritm_new&gt;-r_prnum.</item>
+      <item>          lwa_prnum_new-gjahr = gs_prdoc_infocus-gjahr.</item>
+      <item>          APPEND lwa_prnum_new TO lt_prnum_new.</item>
+      <item>          CLEAR lwa_prnum_new.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  PERFORM inspection_setup_check.</item>
+      <item/>
+      <item>  IF lt_prnum_new[] IS NOT INITIAL.</item>
+      <item>    PERFORM ticket_number_exist USING lt_prnum_new.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  RETURN.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:DOCUMENT_INFOCUS_LOCK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item> DATA: lv_msgv1_new TYPE sy-msgv1,</item>
+      <item>       lv_msgli_new TYPE sy-msgli.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;ENQUEUE_/AGRI/EZ_FMPR&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      mode_/agri/fmprhdr = &apos;E&apos;</item>
+      <item>      mandt              = sy-mandt</item>
+      <item>      prnum              = lv_prnum</item>
+      <item>      gjahr              = lv_gjahr</item>
+      <item>*     x_prnum            = lv_prnum</item>
+      <item>*     x_gjahr            = lv_gjahr</item>
+      <item>*     _SCOPE             = &apos;2&apos;</item>
+      <item>*     _WAIT              = &apos; &apos;</item>
+      <item>*     _COLLECT           = &apos; &apos;</item>
+      <item>    EXCEPTIONS</item>
+      <item>      foreign_lock       = 1</item>
+      <item>      system_failure     = 2</item>
+      <item>      OTHERS             = 3.</item>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>    lv_subrc = sy-subrc.</item>
+      <item>    lv_msgv1_new = sy-msgv1.</item>
+      <item>    MESSAGE w017(/agri/fmpr) WITH lv_prnum lv_msgv1_new INTO lv_msgli_new.</item>
+      <item>    sy-msgli = lv_msgli_new.</item>
+      <item>    message_simple c_false.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  RETURN.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:FCODE_EXCLUDES_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF lc_fcode,</item>
+      <item>               user_function6        TYPE syucomm VALUE &apos;USF6&apos;,</item>
+      <item>               user_function7        TYPE syucomm VALUE &apos;USF7&apos;,</item>
+      <item>               user_function8        TYPE syucomm VALUE &apos;USF8&apos;,</item>
+      <item>               user_function9        TYPE syucomm VALUE &apos;USF9&apos;,</item>
+      <item>             END OF lc_fcode.</item>
+      <item/>
+      <item>  CASE sy-dynnr.</item>
+      <item>    WHEN c_screen-main_screen OR</item>
+      <item>         c_screen-overview.</item>
+      <item>    IF gs_variables-document_mode EQ c_mode_change AND</item>
+      <item>       gs_prdoc_infocus IS NOT INITIAL AND</item>
+      <item>       gs_prdoc_infocus-x-prhdr-lic_plate IS NOT INITIAL AND</item>
+      <item>       gs_prdoc_infocus-x-prhdr-zzmobile IS INITIAL.</item>
+      <item>      DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function1.</item>
+      <item>      IF sy-langu EQ &apos;P&apos;.</item>
+      <item>       gs_variables-user_function1 = &apos;Obter lotes&apos;.</item>
+      <item>      ELSE.</item>
+      <item>       gs_variables-user_function1 = &apos;Get Batches&apos;.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*    IF gs_variables-document_mode EQ c_mode_change</item>
+      <item>*    AND gs_prdoc_infocus IS NOT INITIAL.</item>
+      <item>    IF gs_prdoc_infocus IS NOT INITIAL.</item>
+      <item>      IF gs_prdoc_infocus-x-prhdr-status NE c_ticket_status-closed.</item>
+      <item>        DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function2.</item>
+      <item>        IF sy-langu EQ &apos;P&apos;.</item>
+      <item>          gs_variables-user_function2 = &apos;Concluir Ticket&apos;.</item>
+      <item>        ELSE.</item>
+      <item>          gs_variables-user_function2 = &apos;Close Ticket&apos;.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF gs_prdoc_infocus-x-prhdr-status NE c_ticket_status-saved.</item>
+      <item>        DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function3.</item>
+      <item>        IF sy-langu EQ &apos;P&apos;.</item>
+      <item>          gs_variables-user_function3 = &apos;Reiniciar Status&apos;.</item>
+      <item>        ELSE.</item>
+      <item>          gs_variables-user_function3 = &apos;Reset Status&apos;.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function5.</item>
+      <item>      IF sy-langu EQ &apos;P&apos;.</item>
+      <item>        gs_variables-user_function5 = &apos;Inativar Ticket&apos;.</item>
+      <item>      ELSE.</item>
+      <item>        gs_variables-user_function5 = &apos;Inactivate Ticket&apos;.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function4.</item>
+      <item>      IF sy-langu EQ &apos;P&apos;.</item>
+      <item>        gs_variables-user_function = &apos;Limpar Log&apos;.</item>
+      <item>      ELSE.</item>
+      <item>        gs_variables-user_function = &apos;Clear Log&apos;.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDCASE.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\DA:GS_VARIABLES\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>  DATA: user_function(40).</item>
+      <item>  DATA: user_function1(40).</item>
+      <item>  DATA: user_function2(40).</item>
+      <item>  DATA: user_function3(40).</item>
+      <item>  DATA: user_function4(40).</item>
+      <item>  DATA: user_function5(40).</item>
+      <item>  DATA: user_function6(40).</item>
+      <item>  DATA: user_function7(40).</item>
+      <item>  DATA: user_function8(40).</item>
+      <item>  DATA: user_function9(40).</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:FCODE_PROCESSING\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lwa_fmprhdr_bd TYPE /agri/fmprhdr,</item>
+      <item>        lv_dist_enhanc TYPE /agri/fmdistrpc.</item>
+      <item/>
+      <item>  CONSTANTS: BEGIN OF lc_fcode,</item>
+      <item>               user_function6        TYPE syucomm VALUE &apos;USF6&apos;,</item>
+      <item>               user_function7        TYPE syucomm VALUE &apos;USF7&apos;,</item>
+      <item>               user_function8        TYPE syucomm VALUE &apos;USF8&apos;,</item>
+      <item>               user_function9        TYPE syucomm VALUE &apos;USF9&apos;,</item>
+      <item>             END OF lc_fcode.</item>
+      <item/>
+      <item>  IF fcode EQ c_fcode-user_function1</item>
+      <item>  AND gs_prdoc_infocus-x-prhdr-lic_plate IS NOT INITIAL.</item>
+      <item/>
+      <item>   SELECT in_licplate, charg</item>
+      <item>     FROM zabs_ilp_btch</item>
+      <item>     INTO TABLE @DATA(lt_batch)</item>
+      <item>    WHERE in_licplate EQ @gs_prdoc_infocus-x-prhdr-lic_plate(7)</item>
+      <item>      AND weighbridge EQ @abap_true</item>
+      <item>      AND loevm       EQ @space.</item>
+      <item>     IF sy-subrc NE 0.</item>
+      <item>       MESSAGE ID zcl_abs_abap_maintain=&gt;c_custom_msg_class TYPE c_msg_type-info</item>
+      <item>                                NUMBER &apos;115&apos; WITH gs_prdoc_infocus-x-prhdr-lic_plate.</item>
+      <item>      RETURN.</item>
+      <item>     ENDIF.</item>
+      <item/>
+      <item>   CLEAR gs_variables-errors.</item>
+      <item>   LOOP AT lt_batch INTO DATA(ls_batch).</item>
+      <item>     DATA(lv_tabix) = sy-tabix.</item>
+      <item>     READ TABLE gt_pritm ASSIGNING FIELD-SYMBOL(&lt;lwa_item_enhanc_layout&gt;)</item>
+      <item>                                          INDEX lv_tabix.</item>
+      <item>     IF sy-subrc EQ 0.</item>
+      <item>       DATA(lv_index_enhanc) = lv_tabix.</item>
+      <item>       &lt;lwa_item_enhanc_layout&gt;-zzhbatch = ls_batch-charg.</item>
+      <item/>
+      <item>       CHECK &lt;lwa_item_enhanc_layout&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>       IF &lt;lwa_item_enhanc_layout&gt;-pritm IS INITIAL.</item>
+      <item>         PERFORM current_item_number_get CHANGING &lt;lwa_item_enhanc_layout&gt;-pritm.</item>
+      <item>         &lt;lwa_item_enhanc_layout&gt;-updkz = c_updkz_new.</item>
+      <item>       ENDIF.</item>
+      <item/>
+      <item>       READ TABLE gs_prdoc_infocus-x-pritm ASSIGNING FIELD-SYMBOL(&lt;lwa_pritm_enhanc&gt;)</item>
+      <item>                                            WITH KEY pritm = &lt;lwa_item_enhanc_layout&gt;-pritm</item>
+      <item>                                                     prnum = &lt;lwa_item_enhanc_layout&gt;-prnum.</item>
+      <item>       IF sy-subrc NE 0.</item>
+      <item>         APPEND INITIAL LINE TO gs_prdoc_infocus-x-pritm.</item>
+      <item>         READ TABLE gs_prdoc_infocus-x-pritm INDEX lv_index_enhanc ASSIGNING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item>       ENDIF.</item>
+      <item/>
+      <item>       IF &lt;lwa_item_enhanc_layout&gt; IS NOT ASSIGNED.</item>
+      <item>         PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>         EXIT.</item>
+      <item>       ENDIF.</item>
+      <item/>
+      <item>      gs_variables-data_changed = c_true.</item>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS ASSIGNED AND &lt;lwa_item_enhanc_layout&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>      MOVE gs_prdoc_infocus-x-prhdr-gewei TO &lt;lwa_item_enhanc_layout&gt;-uomunit.</item>
+      <item>      MOVE-CORRESPONDING &lt;lwa_item_enhanc_layout&gt; TO &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item>* Call item update subroutine</item>
+      <item>      PERFORM item_update USING lv_index_enhanc CHANGING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item>      UNASSIGN &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item>     ENDIF.</item>
+      <item>   ENDLOOP.</item>
+      <item/>
+      <item>   gs_variables-refresh_items_grid = c_true.</item>
+      <item/>
+      <item>   IF gs_variables-errors IS INITIAL.</item>
+      <item>     gs_prdoc_infocus-x-prhdr-zzmobile = &apos;N&apos;.</item>
+      <item>   ENDIF.</item>
+      <item/>
+      <item>  ELSEIF fcode EQ &apos;QRCODE&apos;.</item>
+      <item/>
+      <item>    DATA : lv_valid           TYPE char1 VALUE &apos;X&apos;,</item>
+      <item>           lv_qrcode          TYPE string,</item>
+      <item>           lt_rows            TYPE lvc_t_row,</item>
+      <item>           lv_lines           TYPE sy-tabix,</item>
+      <item>           lv_msgid           TYPE sy-msgid,</item>
+      <item>           lv_msgtyp          TYPE sy-msgty,</item>
+      <item>           lv_msgnro          TYPE sy-msgno,</item>
+      <item>           lv_modified_enhanc TYPE char1,</item>
+      <item>           lv_valid_enhanc    TYPE char01,</item>
+      <item>           lv_porcent_enhanc  TYPE /agri/fmdistrpc,</item>
+      <item>           lv_cnt_enhanc      TYPE  i,</item>
+      <item>           lv_lines_enhanc    TYPE int4,</item>
+      <item>           lwa_item_enhanc    TYPE  /agri/s_fmpritm,</item>
+      <item>           lwa_pritm_enhanc   TYPE /agri/s_fmpritm.</item>
+      <item/>
+      <item>    FIELD-SYMBOLS: &lt;lwa_mod_row_enhanc&gt;     TYPE lvc_s_modi.</item>
+      <item/>
+      <item>    CALL METHOD ref_grid_items-&gt;get_selected_rows</item>
+      <item>      IMPORTING</item>
+      <item>        et_index_rows = lt_rows.</item>
+      <item/>
+      <item>    DESCRIBE TABLE lt_rows LINES lv_lines.</item>
+      <item/>
+      <item>    IF lv_lines IS INITIAL.</item>
+      <item>*-- Atenção: Selecione uma linha!</item>
+      <item>      MESSAGE i165(zfmfp).</item>
+      <item>      RETURN.</item>
+      <item>    ELSEIF lv_lines GT 1.</item>
+      <item>*-- Atenção: Selecione somente uma linha!</item>
+      <item>      MESSAGE i166(zfmfp).</item>
+      <item>      RETURN.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE lt_rows INTO DATA(lwa_rows) INDEX 1.</item>
+      <item/>
+      <item>    READ TABLE gt_pritm ASSIGNING &lt;lwa_item_enhanc_layout&gt; INDEX lwa_rows-index.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*--Calling Qrcode screen</item>
+      <item>      CALL FUNCTION &apos;ZABS_FM_QRCODE&apos;</item>
+      <item>        CHANGING</item>
+      <item>          cv_qrcode = &lt;lwa_item_enhanc_layout&gt;-zzqrcode.</item>
+      <item/>
+      <item>      CLEAR gs_variables-errors.</item>
+      <item>      DATA(lt_pritm_aux) = gt_pritm[].</item>
+      <item>      DELETE lt_pritm_aux WHERE pritm IS INITIAL.</item>
+      <item>      lv_index_enhanc = lines( lt_pritm_aux ) + 1.</item>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>      IF &lt;lwa_item_enhanc_layout&gt;-pritm IS INITIAL.</item>
+      <item>        PERFORM current_item_number_get CHANGING &lt;lwa_item_enhanc_layout&gt;-pritm.</item>
+      <item>        &lt;lwa_item_enhanc_layout&gt;-updkz = c_updkz_new.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CLEAR lwa_pritm_enhanc.</item>
+      <item>      MOVE-CORRESPONDING &lt;lwa_item_enhanc_layout&gt; TO lwa_pritm_enhanc.</item>
+      <item>      READ TABLE gs_prdoc_infocus-x-pritm ASSIGNING &lt;lwa_pritm_enhanc&gt;</item>
+      <item>                                           WITH KEY pritm = &lt;lwa_item_enhanc_layout&gt;-pritm</item>
+      <item>                                                    prnum = &lt;lwa_item_enhanc_layout&gt;-prnum.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        APPEND INITIAL LINE TO gs_prdoc_infocus-x-pritm.</item>
+      <item>        READ TABLE gs_prdoc_infocus-x-pritm INDEX lv_index_enhanc ASSIGNING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS ASSIGNED AND &lt;lwa_pritm_enhanc&gt; IS ASSIGNED.</item>
+      <item/>
+      <item>      IF &lt;lwa_item_enhanc_layout&gt; IS NOT ASSIGNED.</item>
+      <item>        PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CLEAR:lv_cnt_enhanc.</item>
+      <item/>
+      <item>      gs_variables-data_changed = c_true.</item>
+      <item>      CHECK &lt;lwa_item_enhanc_layout&gt; IS ASSIGNED AND &lt;lwa_item_enhanc_layout&gt; IS NOT INITIAL.</item>
+      <item/>
+      <item>      MOVE /agri/s_fmprhdr-gewei TO &lt;lwa_item_enhanc_layout&gt;-uomunit.</item>
+      <item>      MOVE-CORRESPONDING &lt;lwa_item_enhanc_layout&gt; TO &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item>* Call item update subroutine</item>
+      <item>      PERFORM item_update USING lv_index_enhanc CHANGING &lt;lwa_pritm_enhanc&gt;.</item>
+      <item/>
+      <item/>
+      <item>* Determining update mode</item>
+      <item>      IF &lt;lwa_pritm_enhanc&gt; IS ASSIGNED AND</item>
+      <item>         &lt;lwa_pritm_enhanc&gt;-updkz NE c_updkz_new</item>
+      <item>         AND ok_code NE c_fcode-save.</item>
+      <item>        &lt;lwa_pritm_enhanc&gt;-updkz = c_updkz_update.</item>
+      <item>        &lt;lwa_item_enhanc_layout&gt;-updkz = c_updkz_update.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>**   IF gs_variables-errors IS INITIAL. &quot; Wave 3 changes</item>
+      <item>**     gs_prdoc_infocus-x-prhdr-zzmobile = &apos;Q&apos;.</item>
+      <item>**   ENDIF.</item>
+      <item/>
+      <item>* Check for 100%</item>
+      <item>      READ TABLE gs_prdoc_infocus-x-pritm ASSIGNING &lt;lwa_pritm_enhanc&gt;</item>
+      <item>                                          WITH KEY pritm = &lt;lwa_pritm_enhanc&gt;-pritm.</item>
+      <item>      IF sy-subrc IS INITIAL.</item>
+      <item>        CHECK lwa_item_enhanc-distrpc IS NOT INITIAL.</item>
+      <item>        lv_dist_enhanc = lv_dist_enhanc + lwa_item_enhanc-distrpc.</item>
+      <item>        IF lv_dist_enhanc GT 100.</item>
+      <item>          gs_variables-errors = c_true.</item>
+      <item>          MESSAGE ID &apos;/AGRI/FMPR&apos; TYPE c_msg_type-error</item>
+      <item>                                  NUMBER &apos;005&apos;</item>
+      <item>                                  INTO sy-msgli.</item>
+      <item>          CLEAR: lwa_item_enhanc-distrpc,</item>
+      <item>                 lwa_item_enhanc-wbwght.</item>
+      <item>          MODIFY gs_prdoc_infocus-x-pritm FROM lwa_item_enhanc</item>
+      <item>          INDEX sy-tabix  TRANSPORTING distrpc wbwght.</item>
+      <item>          message_simple space.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CLEAR: gs_variables-counter,</item>
+      <item>           gt_items_mod_rows[].</item>
+      <item/>
+      <item>    gs_variables-refresh_items_grid = c_true.</item>
+      <item>    PERFORM messages_display USING gs_variables-initiator.</item>
+      <item/>
+      <item>   IF gs_variables-errors IS INITIAL. &quot; Wave 3 changes</item>
+      <item>     gs_prdoc_infocus-x-prhdr-zzmobile = &apos;Q&apos;.</item>
+      <item>   ENDIF.</item>
+      <item/>
+      <item>*-- Reiniciar Status</item>
+      <item>  ELSEIF fcode EQ c_fcode-user_function3</item>
+      <item>    AND gs_variables-document_mode EQ c_mode_change</item>
+      <item>    AND gs_prdoc_infocus-x-prhdr-status NE c_ticket_status-saved.</item>
+      <item/>
+      <item>    gs_variables-initiator = c_log_initiator-check.</item>
+      <item>    PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                      c_log_subobject-check</item>
+      <item>                                      gs_prdoc_infocus-x-prhdr.</item>
+      <item/>
+      <item>*-- Call Authority Check</item>
+      <item>     AUTHORITY-CHECK OBJECT &apos;ZABS_PRM&apos;</item>
+      <item>      ID &apos;FLDTY&apos; FIELD gs_prdoc_infocus-x-prhdr-fldty</item>
+      <item>      ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>*-- Sem autorização para modificar status do ticket!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-error</item>
+      <item>        NUMBER &apos;191&apos; INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>*-- Message</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SELECT SINGLE *</item>
+      <item>      FROM /agri/fmprhdr</item>
+      <item>      INTO lwa_fmprhdr_bd</item>
+      <item>     WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>       AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      UPDATE /agri/fmprhdr SET status = c_ticket_status-saved</item>
+      <item>        WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>          AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>      gs_prdoc_infocus-x-prhdr-status = c_ticket_status-saved.</item>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item>      gs_variables-document_mode = c_mode_display.</item>
+      <item>      PERFORM document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                         gs_prdoc_infocus-gjahr.</item>
+      <item/>
+      <item>*-- Status &apos;S&apos; atribuído ao Ticket &amp;1!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-success</item>
+      <item>        NUMBER &apos;192&apos; WITH gs_prdoc_infocus-x-prhdr-prnum INTO sy-msgli.</item>
+      <item/>
+      <item>      message_simple c_false.</item>
+      <item/>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*-- Concluir Ticket</item>
+      <item>  ELSEIF fcode EQ c_fcode-user_function2</item>
+      <item>    AND gs_variables-document_mode EQ c_mode_change</item>
+      <item>    AND gs_prdoc_infocus-x-prhdr-status NE c_ticket_status-closed.</item>
+      <item/>
+      <item>    gs_variables-initiator = c_log_initiator-check.</item>
+      <item>    PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                      c_log_subobject-check</item>
+      <item>                                      gs_prdoc_infocus-x-prhdr.</item>
+      <item/>
+      <item>*-- Call Authority Check</item>
+      <item>     AUTHORITY-CHECK OBJECT &apos;ZABS_PRM&apos;</item>
+      <item>      ID &apos;FLDTY&apos; FIELD gs_prdoc_infocus-x-prhdr-fldty</item>
+      <item>      ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>*-- Sem autorização para modificar status do ticket!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-error</item>
+      <item>        NUMBER &apos;191&apos; INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>*-- Message</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SELECT SINGLE *</item>
+      <item>      FROM /agri/fmprhdr</item>
+      <item>      INTO lwa_fmprhdr_bd</item>
+      <item>     WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>       AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      UPDATE /agri/fmprhdr SET status = c_ticket_status-closed</item>
+      <item>        WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>          AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>      gs_prdoc_infocus-x-prhdr-status = c_ticket_status-closed.</item>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item>      gs_variables-document_mode = c_mode_display.</item>
+      <item/>
+      <item>      PERFORM document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                         gs_prdoc_infocus-gjahr.</item>
+      <item/>
+      <item>*-- Ticket &amp;1 concluído!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-success</item>
+      <item>        NUMBER &apos;190&apos; WITH gs_prdoc_infocus-x-prhdr-prnum INTO sy-msgli.</item>
+      <item/>
+      <item>      message_simple c_false.</item>
+      <item/>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item>*-- Inativar Ticket</item>
+      <item>  ELSEIF fcode EQ c_fcode-user_function5</item>
+      <item>       AND gs_variables-document_mode EQ c_mode_change.</item>
+      <item/>
+      <item>    gs_variables-initiator = c_log_initiator-check.</item>
+      <item>    PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                       c_log_subobject-check</item>
+      <item>                                       gs_prdoc_infocus-x-prhdr.</item>
+      <item/>
+      <item>*-- Call Authority Check</item>
+      <item>    AUTHORITY-CHECK OBJECT &apos;ZABS_PRM&apos;</item>
+      <item>     ID &apos;FLDTY&apos; FIELD gs_prdoc_infocus-x-prhdr-fldty</item>
+      <item>     ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>*-- Sem autorização para modificar status do ticket!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-error</item>
+      <item>        NUMBER &apos;191&apos; INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>*-- Message</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SELECT SINGLE *</item>
+      <item>      FROM /agri/fmprhdr</item>
+      <item>      INTO lwa_fmprhdr_bd</item>
+      <item>     WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>       AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      UPDATE /agri/fmprhdr SET status = c_ticket_status-inac_rvsl</item>
+      <item>        WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>          AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>      gs_prdoc_infocus-x-prhdr-status = c_ticket_status-inac_rvsl.</item>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item>      gs_variables-document_mode = c_mode_display.</item>
+      <item/>
+      <item>      PERFORM document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                         gs_prdoc_infocus-gjahr.</item>
+      <item/>
+      <item>*-- Ticket &amp;1 inativado!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-success</item>
+      <item>        NUMBER &apos;247&apos; WITH gs_prdoc_infocus-x-prhdr-prnum INTO sy-msgli.</item>
+      <item/>
+      <item>      message_simple c_false.</item>
+      <item/>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item>*-- Limpar Log</item>
+      <item>  ELSEIF fcode EQ c_fcode-user_function4</item>
+      <item>     AND gs_variables-document_mode EQ c_mode_change.</item>
+      <item>*     AND gs_prdoc_infocus-x-prhdr-status NE c_ticket_status-saved.</item>
+      <item/>
+      <item>    gs_variables-initiator = c_log_initiator-check.</item>
+      <item>    PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                      c_log_subobject-check</item>
+      <item>                                      gs_prdoc_infocus-x-prhdr.</item>
+      <item/>
+      <item>*-- Call Authority Check</item>
+      <item>    AUTHORITY-CHECK OBJECT &apos;ZABS_PRM&apos;</item>
+      <item>      ID &apos;FLDTY&apos; FIELD gs_prdoc_infocus-x-prhdr-fldty</item>
+      <item>      ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>*-- Sem autorização para limpar log do ticket!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-error</item>
+      <item>        NUMBER &apos;262&apos; INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>*-- Message</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SELECT SINGLE *</item>
+      <item>      FROM /agri/fmprhdr</item>
+      <item>      INTO lwa_fmprhdr_bd</item>
+      <item>     WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>       AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      UPDATE /agri/fmprhdr SET status = c_ticket_status-saved</item>
+      <item>                               cltckt = /agri/cl_fm_master_ticket=&gt;mc_tck_normal</item>
+      <item>        WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>          AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>      DELETE FROM /agri/fmprstat</item>
+      <item>        WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>          AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>      DELETE FROM /agri/fmprhrq</item>
+      <item>        WHERE prnum = gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>          AND gjahr = gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item/>
+      <item>      gs_prdoc_infocus-x-prhdr-status = c_ticket_status-saved.</item>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item>      gs_variables-document_mode = c_mode_display.</item>
+      <item>      PERFORM document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                         gs_prdoc_infocus-gjahr.</item>
+      <item/>
+      <item>*-- O log do Ticket &amp;1 foi apagado!</item>
+      <item>      MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-success</item>
+      <item>        NUMBER &apos;263&apos; WITH gs_prdoc_infocus-x-prhdr-prnum INTO sy-msgli.</item>
+      <item/>
+      <item>      message_simple c_false.</item>
+      <item/>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF. &quot;fcode</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:FCODE_DICH\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lv_answer_x TYPE char1.</item>
+      <item/>
+      <item>  IF gs_variables-overview_mode = c_mode_change.</item>
+      <item/>
+      <item>    PERFORM changes_confirm CHANGING lv_answer_x.</item>
+      <item>    IF lv_answer_x NE &apos;A&apos;.</item>
+      <item/>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item/>
+      <item>      IF gs_variables-document_mode NE c_mode_display.</item>
+      <item>        PERFORM document_infocus_unlock</item>
+      <item>                                  USING gs_prdoc_infocus-prnum</item>
+      <item>                                        gs_prdoc_infocus-gjahr.</item>
+      <item>        PERFORM document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                           gs_prdoc_infocus-gjahr.</item>
+      <item>        gs_variables-document_mode = c_mode_display.</item>
+      <item>        gs_variables-document_mode = c_mode_display.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    ELSE.</item>
+      <item/>
+      <item>      CLEAR: lv_answer_x, ok_code.</item>
+      <item>      PERFORM document_infocus_save USING c_true c_true.</item>
+      <item>      PERFORM document_infocus_unlock USING gs_prdoc_infocus-prnum</item>
+      <item>                                            gs_prdoc_infocus-gjahr.</item>
+      <item/>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item>      gs_variables-document_mode = c_mode_display.</item>
+      <item/>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ELSE.</item>
+      <item/>
+      <item>    DATA(lv_authorized) = abap_true.</item>
+      <item>*-- Call Authority Check</item>
+      <item>     AUTHORITY-CHECK OBJECT &apos;ZABS_PRM&apos;</item>
+      <item>      ID &apos;FLDTY&apos; FIELD gs_prdoc_infocus-x-prhdr-fldty</item>
+      <item>      ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>      lv_authorized = abap_false.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_authorized = abap_false.</item>
+      <item>      IF gs_prdoc_infocus-x-prhdr-status = c_ticket_status-closed OR</item>
+      <item>         gs_prdoc_infocus-x-prhdr-status = c_ticket_status-inac_rvsl OR</item>
+      <item>         gs_prdoc_infocus-x-prhdr-clref  = /agri/cl_fm_master_ticket=&gt;mc_ref_reverse.</item>
+      <item>        gs_variables-overview_mode = c_mode_display.</item>
+      <item>        gs_variables-document_mode = c_mode_display.</item>
+      <item>      ELSE.</item>
+      <item>        gs_variables-overview_mode = c_mode_change.</item>
+      <item>        gs_variables-document_mode = c_mode_change.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>*      IF gs_prdoc_infocus-x-prhdr-status = c_ticket_status-closed.</item>
+      <item>        gs_variables-overview_mode = c_mode_change.</item>
+      <item>        gs_variables-document_mode = c_mode_change.</item>
+      <item>*      ELSEIF gs_prdoc_infocus-x-prhdr-status = c_ticket_status-inac_rvsl</item>
+      <item>*          OR gs_prdoc_infocus-x-prhdr-clref  = /agri/cl_fm_master_ticket=&gt;mc_ref_reverse.</item>
+      <item>*        gs_variables-overview_mode = c_mode_display.</item>
+      <item>*        gs_variables-document_mode = c_mode_display.</item>
+      <item>*      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    PERFORM zabs_document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                            gs_prdoc_infocus-gjahr.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\IC:/AGRI/LFMPRMF0F\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_DOCUMENT_INFOCUS_SET</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_document_infocus_set USING value(lv_prnum) TYPE /agri/fmprnum</item>
+      <item>                                     value(lv_gjahr) TYPE gjahr.</item>
+      <item/>
+      <item>  DATA: lv_activity    TYPE activ_auth,</item>
+      <item>        lv_subrc       TYPE sy-subrc,</item>
+      <item>**** ESP6 Task #30035 - Global Text Engine Integration</item>
+      <item>*        lv_txtgr  TYPE txtgr,</item>
+      <item>        lv_txtgr  TYPE /agri/gtxtgr.</item>
+      <item>****</item>
+      <item/>
+      <item>  PERFORM document_data_initialize USING c_true.</item>
+      <item/>
+      <item>  IF lv_prnum IS INITIAL.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM document_infocus_read USING lv_prnum</item>
+      <item>                                      lv_gjahr.</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-brgew LT 0 OR</item>
+      <item>     gs_prdoc_infocus-x-prhdr-obgew LT 0 OR</item>
+      <item>     gs_prdoc_infocus-x-prhdr-ntgew LT 0.</item>
+      <item/>
+      <item>    PERFORM document_data_initialize USING c_true.</item>
+      <item>    MESSAGE e120(/agri/fmpr) INTO sy-msgli</item>
+      <item>       WITH gs_prdoc_infocus-prnum</item>
+      <item>            gs_prdoc_infocus-gjahr.</item>
+      <item>    message_simple c_false.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Document class control</item>
+      <item>  PERFORM doc_class_ctrl_get_settings USING gs_prdoc_infocus-x-prhdr-bukrs</item>
+      <item>                                            gs_prdoc_infocus-x-prhdr-gtart</item>
+      <item>                                            gs_prdoc_infocus-x-prhdr-fldty.</item>
+      <item/>
+      <item>    DATA(lv_authorized) = abap_true.</item>
+      <item>*-- Call Authority Check</item>
+      <item>     AUTHORITY-CHECK OBJECT &apos;ZABS_PRM&apos;</item>
+      <item>      ID &apos;FLDTY&apos; FIELD gs_prdoc_infocus-x-prhdr-fldty</item>
+      <item>      ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>      lv_authorized = abap_false.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  IF lv_authorized = abap_false.</item>
+      <item>    IF gs_prdoc_infocus-x-prhdr-status = gs_gtart-s_stat OR &quot;c_ticket_status-closed.</item>
+      <item>       gs_prdoc_infocus-x-prhdr-status = c_ticket_status-inac_rvsl OR</item>
+      <item>       gs_prdoc_infocus-x-prhdr-clref  = /agri/cl_fm_master_ticket=&gt;mc_ref_reverse.</item>
+      <item>        gs_variables-document_mode = c_mode_display.</item>
+      <item>      MESSAGE s057(/agri/fmpr) INTO sy-msgli</item>
+      <item>         WITH gs_prdoc_infocus-prnum</item>
+      <item>              gs_prdoc_infocus-gjahr.</item>
+      <item>      message_simple c_false.</item>
+      <item>    ELSE.</item>
+      <item>      gs_variables-document_mode = gs_variables-overview_mode.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    gs_variables-document_mode = gs_variables-overview_mode.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF gs_variables-document_mode = c_mode_display.</item>
+      <item>    lv_activity = c_authorization_activity-display.</item>
+      <item>  ELSE.</item>
+      <item>    lv_activity = c_authorization_activity-change.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM authority_check USING gs_prdoc_infocus-x-prhdr</item>
+      <item>                                lv_activity</item>
+      <item>                       CHANGING lv_subrc.</item>
+      <item>  IF lv_subrc NE 0.</item>
+      <item/>
+      <item>    IF lv_activity EQ c_authorization_activity-change.</item>
+      <item>      gs_variables-overview_mode = gs_variables-document_mode</item>
+      <item>                                 = c_mode_display.</item>
+      <item>    ELSE.</item>
+      <item>      gs_variables-errors = c_true.</item>
+      <item>      PERFORM document_data_initialize USING c_true.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF gs_variables-document_mode = c_mode_change.</item>
+      <item>*    IF gs_prdoc_infocus-prnum &lt;&gt; lv_prnum AND</item>
+      <item>*       gs_prdoc_infocus-gjahr &lt;&gt; lv_gjahr.</item>
+      <item/>
+      <item>    PERFORM document_infocus_lock USING lv_prnum</item>
+      <item>                                        lv_gjahr</item>
+      <item>                               CHANGING lv_subrc.</item>
+      <item>    IF lv_subrc &lt;&gt; 0.</item>
+      <item>      gs_variables-document_mode =</item>
+      <item>      gs_variables-overview_mode = c_mode_display.</item>
+      <item>    ENDIF.</item>
+      <item>*    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>****Text and Notes.</item>
+      <item>  IF gs_prdoc_infocus-x-prhdr-txtgr IS NOT INITIAL.</item>
+      <item>    lv_txtgr = gs_prdoc_infocus-x-prhdr-txtgr.</item>
+      <item>  ELSE.</item>
+      <item>    lv_txtgr = gs_gtart-txtgr.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM text_maintain USING lv_txtgr</item>
+      <item>                              c_object-text_object</item>
+      <item>                    CHANGING  gs_variables-data_changed.</item>
+      <item/>
+      <item>  PERFORM notes_refresh USING gs_prdoc_infocus-x-prhdr-prnum.</item>
+      <item>*--call type control subroutine here... to read config tables</item>
+      <item/>
+      <item>* Get scale settings</item>
+      <item>  PERFORM scale_master_get_settings USING gs_prdoc_infocus-x-prhdr-bukrs</item>
+      <item>                                          gs_prdoc_infocus-x-prhdr-wscale.</item>
+      <item/>
+      <item>* Weight direction</item>
+      <item>  gs_variables-kwght = gs_gtart-kwght.</item>
+      <item/>
+      <item>****Additional Data</item>
+      <item>  REFRESH gt_additional_data.</item>
+      <item>  PERFORM additional_fields_prepare.</item>
+      <item/>
+      <item>* Refresh items grid</item>
+      <item>  gs_variables-refresh_items_grid = c_true.</item>
+      <item>  gs_variables-refresh_equipment_grid = c_true.</item>
+      <item>  gs_variables-refresh_quality_grid = c_true.</item>
+      <item>  gs_variables-refresh_additional_data_grid = c_true.</item>
+      <item>  gs_variables-refresh_factors_grid = c_true.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZABS_DOCUMENT_INFOCUS_SET</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9B9B747FC05F5B03F</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B9B747FC05F5B03F</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>062</LENGTH>
+       <TEXT>Implicit enhancement for Produce Receipts</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B9B747FC05F5B03F</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>062</LENGTH>
+       <TEXT>Melhorias implicitas para balança</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_CHECKS</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9B9B747FC05F5B03F</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

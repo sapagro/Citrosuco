@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Measurement Document Checks</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:MD_HEADER_DATA_CHECK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  /agri/s_glmdhdr-cmnum = /agri/s_glflcma-cmnum.</item>
+      <item/>
+      <item>  IF ls_mdhdr-mdtyp IS INITIAL.</item>
+      <item>    lv_subrc = 4.</item>
+      <item>    SET CURSOR FIELD &apos;/AGRI/S_GLMDHDR-MDTYP&apos;.</item>
+      <item>    MESSAGE ID &apos;/AGRI/GLMD&apos; TYPE &apos;E&apos; NUMBER &apos;027&apos; INTO sy-msgli.</item>
+      <item>    message_simple space.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SELECT SINGLE aslvl</item>
+      <item>    FROM /agri/tglmdtyp</item>
+      <item>    INTO ls_mdhdr-aslvl</item>
+      <item>   WHERE mdtyp EQ ls_mdhdr-mdtyp.</item>
+      <item>  IF sy-subrc NE 0 OR ls_mdhdr-aslvl IS INITIAL.</item>
+      <item>    lv_subrc = 4.</item>
+      <item>    MESSAGE e028(/agri/glmd) INTO sy-msgli.</item>
+      <item>    message_simple space.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK ok_code NE c_fcode-select.</item>
+      <item/>
+      <item>  IF ls_mdhdr-aslvl EQ c_measurement_level-crop_seasons.</item>
+      <item/>
+      <item>    IF gs_variables-document_mode EQ c_mode_create.</item>
+      <item/>
+      <item>      IF ls_mdhdr-mpgrp IS INITIAL.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        MESSAGE e009(/agri/glmd) INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF ls_mdhdr-tplnr_fl IS INITIAL.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        MESSAGE e008(/agri/glmd) INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF /agri/s_glflcma-cmnum IS INITIAL.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        MESSAGE e010(/agri/glmd) INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF NOT /agri/s_glmdscrfields-vdate IS INITIAL.</item>
+      <item>        /agri/s_glflcma-datab = /agri/s_glmdscrfields-vdate.</item>
+      <item>      ELSEIF /agri/s_glflcma-datab IS INITIAL.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        MESSAGE e036(/agri/glmd) INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      SELECT SINGLE * FROM /agri/glflcma</item>
+      <item>               INTO CORRESPONDING FIELDS OF /agri/s_glflcma</item>
+      <item>              WHERE tplnr_fl  EQ ls_mdhdr-tplnr_fl &quot;#EC CI_NOORDER</item>
+      <item>                AND cmnum     EQ /agri/s_glflcma-cmnum</item>
+      <item>                AND datab     LE /agri/s_glflcma-datab</item>
+      <item>                AND datbi     GE /agri/s_glflcma-datab</item>
+      <item>                AND loevm     EQ space</item>
+      <item>                AND astat     EQ c_crop_season_status-active</item>
+      <item>*-- SOC - Don&apos;t consider the replanting crop season while create the measurement document</item>
+      <item>                AND zzreplant NE abap_true.</item>
+      <item>*-- EOC - Don&apos;t consider the replanting crop season while create the measurement document</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        lv_subrc = 4.</item>
+      <item>        MESSAGE e019(/agri/glmd)</item>
+      <item>           WITH ls_mdhdr-tplnr_fl /agri/s_glflcma-cmnum</item>
+      <item>                /agri/s_glflcma-datab INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>        EXIT.</item>
+      <item>      ELSE.</item>
+      <item>        ls_mdhdr-contr = /agri/s_glflcma-contr.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CLEAR: ls_mdhdr-equnr.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF ls_mdhdr-mdate GT sy-datum.</item>
+      <item>      lv_subrc = 4.</item>
+      <item>      MESSAGE e062(/agri/glmd) INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      EXIT.</item>
+      <item>    ELSEIF NOT ls_mdhdr-mdate IS INITIAL AND</item>
+      <item>           ls_mdhdr-mdate NOT BETWEEN /agri/s_glflcma-datab</item>
+      <item>                                  AND /agri/s_glflcma-datbi.</item>
+      <item>      lv_subrc = 4.</item>
+      <item>      MESSAGE e066(/agri/glmd) INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>   RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:MD_HEADER_UPDATE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>*-- Local Declarations</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lt_constants       TYPE zabs_tty_vkey_const.</item>
+      <item/>
+      <item>*  IF sy-uname EQ &apos;T_H.KABABE&apos;.</item>
+      <item>*    BREAK-POINT.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>*-- Populate the status profile based on the measurement document type</item>
+      <item>*-- and measurement group maintained in variant table</item>
+      <item>  IF  ls_header-updkz EQ c_updkz_new</item>
+      <item>  AND ls_header-mpgrp IS NOT INITIAL.</item>
+      <item>*  AND ls_header-stsma IS INITIAL.</item>
+      <item>    CALL METHOD zcl_abs_get_variants=&gt;get_constant_multiple</item>
+      <item>      EXPORTING</item>
+      <item>        iv_objid     = zcl_abs_abap_maintain=&gt;c_objid_md_status_profile</item>
+      <item>        iv_k1val     = zcl_abs_abap_maintain=&gt;c_key_measurement_type</item>
+      <item>        iv_k2val     = ls_header-mdtyp</item>
+      <item>      IMPORTING</item>
+      <item>        et_constants = lt_constants.</item>
+      <item/>
+      <item>    READ TABLE lt_constants INTO DATA(ls_constants)</item>
+      <item>          WITH KEY cnval1 = ls_header-mpgrp.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>     DATA(lv_stsma) = ls_constants-cnval2.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_old_header-mdtyp NE ls_header-mdtyp.</item>
+      <item>     PERFORM authority_check USING ls_header</item>
+      <item>                                   c_authorization_activity-create</item>
+      <item>                                   c_msg_type-error</item>
+      <item>                          CHANGING lv_subrc.</item>
+      <item>     IF lv_subrc &lt;&gt; 0.</item>
+      <item>       CLEAR gs_variables-document_mode.</item>
+      <item>       EXIT.</item>
+      <item>     ENDIF.</item>
+      <item/>
+      <item>     PERFORM mdoc_type_control_read USING ls_header-mdtyp</item>
+      <item>                                 CHANGING lv_subrc.</item>
+      <item>     IF lv_subrc NE 0.</item>
+      <item>       EXIT.</item>
+      <item>     ENDIF.</item>
+      <item>     MOVE-CORRESPONDING gs_tglmdtyp TO ls_header.</item>
+      <item>     PERFORM text_maintain USING ls_header-txtgr</item>
+      <item>                                 c_object-text_object</item>
+      <item>                        CHANGING gs_variables-data_changed.</item>
+      <item>   ENDIF.</item>
+      <item/>
+      <item>  IF  ls_header-updkz EQ c_updkz_new</item>
+      <item>  AND ls_header-mpgrp IS NOT INITIAL.</item>
+      <item>    ls_header-stsma = lv_stsma.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header-muser IS INITIAL.</item>
+      <item>    ls_header-muser = sy-uname.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header-mdate IS INITIAL.</item>
+      <item>    ls_header-mdate = sy-datum.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header-mtime IS INITIAL.</item>
+      <item>    ls_header-mtime = sy-uzeit.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header NE ls_old_header.</item>
+      <item>    gs_variables-data_changed = c_true.</item>
+      <item>    IF ls_header-updkz NE c_updkz_new.</item>
+      <item>      ls_header-updkz = c_updkz_update.</item>
+      <item>    ENDIF.</item>
+      <item>    MOVE-CORRESPONDING ls_header TO gs_mddoc_infocus-x-mdhdr.</item>
+      <item>* {   INSERT         C4DK903770                                        1</item>
+      <item>    IF ls_header-updkz EQ c_updkz_new AND</item>
+      <item>      gs_mddoc_infocus-x-mdhdr-objnr IS INITIAL.</item>
+      <item>      PERFORM status_object_create USING gs_mddoc_infocus-x-mdhdr-stsma</item>
+      <item>                                CHANGING gs_mddoc_infocus-x-mdhdr-objnr.</item>
+      <item/>
+      <item>      PERFORM status_update.</item>
+      <item>    ENDIF.</item>
+      <item>* }   INSERT</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  RETURN.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9B6EE06C72D7AAACF</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B6EE06C72D7AAACF</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>041</LENGTH>
+       <TEXT>Measurement Document Checks</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B6EE06C72D7AAACF</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>041</LENGTH>
+       <TEXT>Verificações do documento de medição</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_MD_CHECKS</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9B6EE06C72D7AAACF</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

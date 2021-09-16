@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Infocus Save</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPRM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPRM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\IC:/AGRI/LFMPRMF0D\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_DOCUMENT_INFOCUS_SAVE</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_document_infocus_save USING lv_set_infocus      TYPE any</item>
+      <item>                                      lv_display_messages TYPE any</item>
+      <item>                                      lv_error            TYPE any.</item>
+      <item/>
+      <item>  DATA: lv_subrc_x      TYPE sysubrc,</item>
+      <item>        lv_stop_save_x  TYPE xfeld,</item>
+      <item>        ls_message_x    TYPE /agri/s_gprolog,</item>
+      <item>        lt_prdoc_x      TYPE /agri/t_fmpr_doc,</item>
+      <item>        lt_messages_x   TYPE /agri/t_gprolog.</item>
+      <item/>
+      <item>  CHECK gs_variables-errors IS INITIAL.</item>
+      <item/>
+      <item>  PERFORM field_value_conversions USING &apos;2&apos;.</item>
+      <item>  CHECK gs_variables-errors IS INITIAL.</item>
+      <item/>
+      <item>  gs_variables-initiator = c_log_initiator-save.</item>
+      <item>  PERFORM messages_initialize USING gs_variables-initiator</item>
+      <item>                                    c_log_subobject-save</item>
+      <item>                                    gs_prdoc_infocus-x-prhdr.</item>
+      <item/>
+      <item>* Complete document: status / posting date</item>
+      <item>  PERFORM document_infocus_complete.</item>
+      <item>  IF gs_variables-errors = c_true.</item>
+      <item>    PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    PERFORM document_infocus_set USING gs_prdoc_infocus-prnum</item>
+      <item>                                       gs_prdoc_infocus-gjahr.</item>
+      <item>    gs_variables-document_mode = c_mode_display.</item>
+      <item>    gs_variables-overview_mode = c_mode_display.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Sendind QM characteristics</item>
+      <item>  IF gs_prdoc_infocus-x-prqlt[] IS INITIAL AND</item>
+      <item>       gs_prdoc_infocus-x-prhdr-status &lt;&gt; gs_gtart-s_stat. &quot;c_ticket_status-closed.</item>
+      <item>    PERFORM quality_data_display.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>*--call badi Document check</item>
+      <item>  PERFORM badi_document_check USING gs_prdoc_infocus</item>
+      <item>                           CHANGING lv_stop_save_x.</item>
+      <item/>
+      <item>  IF lv_stop_save_x IS INITIAL.</item>
+      <item>    APPEND gs_prdoc_infocus TO lt_prdoc_x.</item>
+      <item>    CALL FUNCTION &apos;/AGRI/FMPR_SAVE&apos;</item>
+      <item>      EXPORTING</item>
+      <item>*       I_SET_UPDATE_TASK = &apos;X&apos;</item>
+      <item>*       I_COMMIT_WORK     = &apos;X&apos;</item>
+      <item>        iref_text         = ref_text</item>
+      <item>      CHANGING</item>
+      <item>        ct_prdoc          = lt_prdoc_x</item>
+      <item>        ct_messages       = lt_messages_x</item>
+      <item>      EXCEPTIONS</item>
+      <item>        no_change         = 1</item>
+      <item>        OTHERS            = 2.</item>
+      <item/>
+      <item>    lv_subrc_x = sy-subrc.</item>
+      <item>    READ TABLE  lt_messages_x WITH KEY msgty = &apos;E&apos;</item>
+      <item>       TRANSPORTING NO FIELDS.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      IF lv_subrc_x NE 1.</item>
+      <item>        lv_subrc_x = 4.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE lt_prdoc_x INTO gs_prdoc_infocus INDEX 1.</item>
+      <item/>
+      <item>    LOOP AT lt_messages_x INTO ls_message_x.</item>
+      <item>      MESSAGE ID ls_message_x-msgid TYPE ls_message_x-msgty</item>
+      <item>                                NUMBER ls_message_x-msgno</item>
+      <item>                                  WITH ls_message_x-msgv1</item>
+      <item>                                       ls_message_x-msgv2</item>
+      <item>                                       ls_message_x-msgv3</item>
+      <item>                                       ls_message_x-msgv4</item>
+      <item>                                  INTO sy-msgli.</item>
+      <item>      message_simple c_false.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF lv_subrc_x NE 0.</item>
+      <item>      IF lv_subrc_x EQ 1.</item>
+      <item>        MESSAGE ID &apos;/AGRI/GLOBAL&apos; TYPE c_msg_type-success</item>
+      <item>                               NUMBER &apos;322&apos;</item>
+      <item>                                 INTO sy-msgli.</item>
+      <item>        message_simple c_false.</item>
+      <item>      ELSE.</item>
+      <item>        MESSAGE ID &apos;/AGRI/FMPR&apos; TYPE c_msg_type-error</item>
+      <item>                              NUMBER &apos;009&apos;</item>
+      <item>                                INTO sy-msgli.</item>
+      <item>        message_simple c_false.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      MESSAGE ID &apos;/AGRI/FMPR&apos; TYPE c_msg_type-success</item>
+      <item>                            NUMBER &apos;007&apos;</item>
+      <item>                              WITH gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>                              INTO sy-msgli.</item>
+      <item>      message_simple c_false.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_display_messages EQ c_true.</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lv_subrc_x = 0.</item>
+      <item/>
+      <item>      PERFORM worklist_update.</item>
+      <item>      CLEAR gs_variables-data_changed.</item>
+      <item>      IF lv_set_infocus EQ c_true.</item>
+      <item>        PERFORM document_infocus_set USING</item>
+      <item>                                  gs_prdoc_infocus-x-prhdr-prnum</item>
+      <item>                                  gs_prdoc_infocus-x-prhdr-gjahr.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    lv_error = abap_true.</item>
+      <item>    IF lv_display_messages EQ c_true.</item>
+      <item>      PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;zabs_document_infocus_save</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA1FE2A4CD9D3611F</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA1FE2A4CD9D3611F</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>022</LENGTH>
+       <TEXT>Infocus Save</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_INFOCUS_SAVE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA1FE2A4CD9D3611F</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

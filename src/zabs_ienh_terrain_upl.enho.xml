@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Terrain Upload</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_GLUPLOAD_MASTER_DATA</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_GLUPLOAD_MASTER_DATA</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_GLUPLOAD_MASTER_DATA=CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_CL_UPLOAD_MASTER_DATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_GLUPLOAD_MASTER_DATA=CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_GLUPLOAD_MASTER_DATA=CP\EX:TERRAINS_CREATE\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item> DATA: lt_klah_temp  TYPE tt_klah,</item>
+      <item>       lt_attributes TYPE /agri/t_gathdr,</item>
+      <item>       lt_atgrp      TYPE /agri/t_gatg_attr,</item>
+      <item>       lwa_attr_val  TYPE auspdata,</item>
+      <item>       lv_valid.</item>
+      <item/>
+      <item>  DATA(lt_glflatv_temp) = lt_glflatv.</item>
+      <item>  SORT lt_glflatv_temp BY class.</item>
+      <item>  DELETE ADJACENT DUPLICATES FROM lt_glflatv_temp COMPARING class.</item>
+      <item/>
+      <item>  IF lt_glflatv_temp[] IS NOT INITIAL.</item>
+      <item>    SELECT *</item>
+      <item>      FROM klah</item>
+      <item>      INTO TABLE lt_klah_temp</item>
+      <item>      FOR ALL ENTRIES IN lt_glflatv_temp</item>
+      <item>     WHERE class EQ lt_glflatv_temp-class.</item>
+      <item/>
+      <item>    CALL METHOD /agri/cl_gattr_utils=&gt;attribute_groups_attr_read</item>
+      <item>      EXPORTING</item>
+      <item>        it_klah                   = lt_klah_temp</item>
+      <item>        i_agtyp                   = &apos;X91&apos;</item>
+      <item>        i_no_composite_attributes = abap_true</item>
+      <item>      IMPORTING</item>
+      <item>        et_atgrp                  = lt_atgrp</item>
+      <item>        et_athdr                  = lt_attributes.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT lt_glflatv INTO lwa_glflatv.</item>
+      <item/>
+      <item>  CALL METHOD /agri/cl_gattr_utils=&gt;attribute_value_check</item>
+      <item>    EXPORTING</item>
+      <item>      i_agtyp              = &apos;X91&apos;</item>
+      <item>      i_atinn              = lwa_glflatv-atinn</item>
+      <item>      i_atwrt              = lwa_glflatv-atwrt</item>
+      <item>    IMPORTING</item>
+      <item>      et_messages          = lt_messages</item>
+      <item>    CHANGING</item>
+      <item>      cs_attr_val          = lwa_attr_val</item>
+      <item>      c_valid              = lv_valid.</item>
+      <item/>
+      <item>  IF lv_valid IS INITIAL.</item>
+      <item>    APPEND LINES OF lt_messages TO lt_mess_collect.</item>
+      <item>    CLEAR lt_messages.</item>
+      <item/>
+      <item>      lwa_message-msgid = &apos;ZABS_MSGCLS&apos;.</item>
+      <item>      lwa_message-msgno = 146.</item>
+      <item>      lwa_message-msgty = &apos;E&apos;.</item>
+      <item>      lwa_message-msgv1 = lwa_glflot-tplnr_fl.</item>
+      <item>      lwa_message-msgv2 = lwa_glflatv-atinn.</item>
+      <item>      lwa_message-msgv3 = lwa_glflatv-atwrt.</item>
+      <item>      lwa_message-msgv4 = sy-msgv4.</item>
+      <item>      APPEND lwa_message TO lt_mess_collect.</item>
+      <item/>
+      <item>    DATA(lv_flag) = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  ENDLOOP. &quot;lt_glflatv</item>
+      <item/>
+      <item>IF lv_flag IS INITIAL.</item>
+      <item/>
+      <item>  LOOP AT lt_glihpa ASSIGNING FIELD-SYMBOL(&lt;lfs_ihpa&gt;).</item>
+      <item/>
+      <item>   SELECT SINGLE * FROM tpar INTO @data(lwa_tpar)</item>
+      <item>   WHERE parvw = @&lt;lfs_ihpa&gt;-parvw. &quot;#EC CI_SEL_NESTED</item>
+      <item/>
+      <item>    CASE lwa_tpar-nrart.</item>
+      <item>      WHEN &apos;KU&apos;.</item>
+      <item>        &lt;lfs_ihpa&gt;-kunnr =  &lt;lfs_ihpa&gt;-parnr.</item>
+      <item>      WHEN &apos;LI&apos;.</item>
+      <item>        &lt;lfs_ihpa&gt;-lifnr = &lt;lfs_ihpa&gt;-parnr.</item>
+      <item>      WHEN &apos;PE&apos;.</item>
+      <item>        &lt;lfs_ihpa&gt;-pernr = &lt;lfs_ihpa&gt;-parnr.</item>
+      <item>      WHEN &apos;AP&apos;.</item>
+      <item>        &lt;lfs_ihpa&gt;-parnr = &lt;lfs_ihpa&gt;-parnr.</item>
+      <item>***E SP2 Business Partner</item>
+      <item>      WHEN &apos;XP&apos;.</item>
+      <item>        &lt;lfs_ihpa&gt;-ablad = &lt;lfs_ihpa&gt;-parnr.</item>
+      <item>    ENDCASE.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item>ELSE.</item>
+      <item/>
+      <item> CLEAR lv_flag.</item>
+      <item> CONTINUE.</item>
+      <item/>
+      <item>ENDIF. &quot;lt_messages</item>
+      <item/>
+      <item>&quot;PM Object Location and Account Assignment</item>
+      <item>    READ TABLE lt_tr04 ASSIGNING &lt;lwa_tr04&gt; WITH KEY tplnr = &lt;lwa_tr01&gt;-tplnr_fl.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*      MOVE-CORRESPONDING &lt;lwa_tr04&gt; TO lwa_gliloa.</item>
+      <item>      lwa_glflot-eqfnr = &lt;lwa_tr04&gt;-eqfnr.</item>
+      <item>*      lwa_gliloa-updkz = c_structures-tr_in.</item>
+      <item>      lwa_glflot-swerk = &lt;lwa_tr04&gt;-swerk.</item>
+      <item>    ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_GLUPLOAD_MASTER_DATA=CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_GLUPLOAD_MASTER_DATA\ME:STRUCTURE_BUILD\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>IF i_structure EQ &apos;/AGRI/S_TR_SHEET1&apos;.</item>
+      <item/>
+      <item>  LOOP AT ct_table ASSIGNING &lt;lwa_data&gt; WHERE sheet = &apos;1&apos;</item>
+      <item>                                          AND fieldname = &apos;GAREA&apos;. &quot;#EC CI_STDSEQ</item>
+      <item/>
+      <item>    TRANSLATE &lt;lwa_data&gt;-value USING &apos;,.. &apos;.</item>
+      <item>    CONDENSE &lt;lwa_data&gt;-value NO-GAPS.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEA9FAA1C127C44FF81</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA9FAA1C127C44FF81</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>024</LENGTH>
+       <TEXT>Terrain Upload</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_TERRAIN_UPL</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEA9FAA1C127C44FF81</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>/AGRI/GLMD23 Prepare Fieldcat</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:FIELD_CATALOG_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_fcat_x TYPE lvc_t_fcat,</item>
+      <item>        lv_structure_name_x TYPE dd02l-tabname VALUE &apos;ZABS_STR_GLMDSNP&apos;.</item>
+      <item/>
+      <item>  IF gv_custom_grid EQ abap_true</item>
+      <item>  AND c_structure_name-default_fields EQ c_structure_name-default_fields.</item>
+      <item>    CALL FUNCTION &apos;LVC_FIELDCATALOG_MERGE&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        i_structure_name       = lv_structure_name_x</item>
+      <item>      CHANGING</item>
+      <item>        ct_fieldcat            = lt_fcat_x</item>
+      <item>      EXCEPTIONS ##FM_SUBRC_OK</item>
+      <item>        inconsistent_interface = 1</item>
+      <item>        program_error          = 2</item>
+      <item>        OTHERS                 = 3.</item>
+      <item/>
+      <item>    LOOP AT lt_fcat_x ASSIGNING &lt;lwa_fcat&gt;.</item>
+      <item>      CASE &lt;lwa_fcat&gt;-fieldname.</item>
+      <item>        WHEN &apos;CONTR&apos; OR &apos;UPDKZ&apos; OR &apos;STYLES&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-tech = &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>        WHEN &apos;ASLVL&apos;.</item>
+      <item>          IF NOT gs_variables-measurement_level IS INITIAL.</item>
+      <item>            &lt;lwa_fcat&gt;-tech = &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>          ELSE.</item>
+      <item>            &lt;lwa_fcat&gt;-drdn_hndl = &apos;1&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-drdn_alias = c_true.</item>
+      <item>            &lt;lwa_fcat&gt;-edit = c_false.</item>
+      <item>            &lt;lwa_fcat&gt;-convexit = c_grid_dropdown-convexit1.</item>
+      <item>            &lt;lwa_fcat&gt;-key = c_true.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN &apos;MDOCM&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-key = c_true.</item>
+      <item>        WHEN  &apos;TPLNR_FL&apos; .</item>
+      <item>          IF gs_variables-characteristics_display IS INITIAL.</item>
+      <item>            &lt;lwa_fcat&gt;-tech = &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN &apos;CMNUM&apos; OR &apos;DATAB&apos; OR &apos;DATBI&apos;.</item>
+      <item>          IF gs_variables-characteristics_display NE c_measurement_level-crop_seasons</item>
+      <item>          AND gs_variables-characteristics_display NE c_measurement_level-harvest.</item>
+      <item>            &lt;lwa_fcat&gt;-tech = &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN &apos;EQUNR&apos;.</item>
+      <item>          IF gs_variables-characteristics_display NE c_measurement_level-irrigation.</item>
+      <item>            &lt;lwa_fcat&gt;-tech = &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN &apos;MPGRP&apos;.</item>
+      <item>          IF sy-dynnr NE c_screen-measurements_display.</item>
+      <item>            &lt;lwa_fcat&gt;-tech = &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN &apos;MUSER&apos; OR &apos;MDATE&apos; OR &apos;MTIME&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-edit = c_true.</item>
+      <item>        WHEN &apos;GYEAR&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-key = c_true.</item>
+      <item>          &lt;lwa_fcat&gt;-reptext   = &apos;Plantio&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_l = &apos;Plantio&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_m = &apos;Plantio&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_s = &apos;Plantio&apos;.</item>
+      <item>        WHEN &apos;YMATNR&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-key = c_true.</item>
+      <item>          &lt;lwa_fcat&gt;-reptext   = &apos;Cód.var.&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_l = &apos;Cód.var.&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_m = &apos;Cód.var.&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_s = &apos;Cód.var.&apos;.</item>
+      <item>        WHEN &apos;MAKTX&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-reptext   = &apos;Nome var.&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_l = &apos;Nome var.&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_m = &apos;Nome var.&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_s = &apos;Nome var.&apos;.</item>
+      <item>        WHEN &apos;MENGE&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-key = c_true.</item>
+      <item>          &lt;lwa_fcat&gt;-reptext   = &apos;Árvores&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_l = &apos;Árvores&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_m = &apos;Árvores&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-scrtext_s = &apos;Árvores&apos;.</item>
+      <item>        WHEN &apos;PLTXT&apos;    OR &apos;MEINS&apos;    OR &apos;PARTNER&apos;</item>
+      <item>          OR &apos;NAME1&apos;    OR &apos;FLORADA1&apos; OR &apos;FLORADA2&apos;</item>
+      <item>          OR &apos;FLORADA3&apos; OR &apos;TOTAL&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-key = c_true.</item>
+      <item>          IF &lt;lwa_fcat&gt;-fieldname EQ &apos;PARTNER&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-reptext   = &apos;Cód.Fornecedor&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-scrtext_l = &apos;Cód.Fornecedor&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-scrtext_m = &apos;Cód.Fornecedor&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-scrtext_s = &apos;Cód.Forn.&apos;.</item>
+      <item>          ELSEIF &lt;lwa_fcat&gt;-fieldname EQ &apos;NAME1&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-reptext   = &apos;Nome Fornecedor&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-scrtext_l = &apos;Nome Fornecedor&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-scrtext_m = &apos;Nome Fornecedor&apos;.</item>
+      <item>            &lt;lwa_fcat&gt;-scrtext_s = &apos;Nome Forn.&apos;.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN OTHERS.</item>
+      <item>          &lt;lwa_fcat&gt;-f4availabl = c_true.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    lt_fcat[] = lt_fcat_x[].</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEB85A79311A490E5A9</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEB85A79311A490E5A9</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>044</LENGTH>
+       <TEXT>/AGRI/GLMD23 Prepare Fieldcat</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_GLMD23_FCAT</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEB85A79311A490E5A9</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

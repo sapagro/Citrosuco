@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Verificar Nº item da Ordem</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMFPM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMFPM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMFPM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMFPM\FO:FCODE_IINS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lwa_fpitm_ofcat_aux TYPE /agri/s_fmfpitm_fcat,</item>
+      <item>        lwa_fpitm_o_aux     TYPE /agri/s_fmfpitm_fcat,</item>
+      <item>        lv_lines_aux        TYPE sy-tabix,</item>
+      <item>        lv_posnr_aux        TYPE co_posnr.</item>
+      <item/>
+      <item>  DATA(lt_item_aux) = gt_fpitm_fcat[].</item>
+      <item>  SORT lt_item_aux BY posnr DESCENDING.</item>
+      <item>  READ TABLE lt_item_aux INTO DATA(ls_item_aux) INDEX 1.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_posnr_aux = ls_item_aux-posnr + 1.</item>
+      <item>    READ TABLE gs_fpdoc_infocus-x-fpcom INTO DATA(lwa_fpcom)</item>
+      <item>      WITH KEY aufnr = /agri/s_fmfphdr-aufnr</item>
+      <item>               posnr = lv_posnr_aux.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      ADD 1 TO lv_posnr_aux.</item>
+      <item>    ENDIF.</item>
+      <item>    lwa_fpitm_ofcat_aux-aufnr  = /agri/s_fmfphdr-aufnr.</item>
+      <item>    lwa_fpitm_ofcat_aux-posnr  = lv_posnr_aux.</item>
+      <item>    lwa_fpitm_ofcat_aux-actdt  = sy-datum.</item>
+      <item>    lwa_fpitm_ofcat_aux-sicon  = icon_yellow_light.</item>
+      <item>    lwa_fpitm_ofcat_aux-action = c_true.</item>
+      <item>    lwa_fpitm_ofcat_aux-unpln  = c_true.</item>
+      <item>    APPEND lwa_fpitm_ofcat_aux TO gt_fpitm_fcat.</item>
+      <item/>
+      <item>    CALL METHOD ref_grid_items-&gt;tables_display_refresh</item>
+      <item>      CHANGING</item>
+      <item>        it_outtab = gt_fpitm_fcat.</item>
+      <item/>
+      <item>    CLEAR: gs_variables-refresh_items_grid.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDB82CEE6D8BD1C2A1D</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDB82CEE6D8BD1C2A1D</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>039</LENGTH>
+       <TEXT>Verificar Nº item da Ordem</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_FCODE_IINS</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDB82CEE6D8BD1C2A1D</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

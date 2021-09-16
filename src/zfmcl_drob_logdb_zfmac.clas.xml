@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZFMCL_DROB_LOGDB_ZFMAC</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>Classe de empacotador para banco dados lógico ZFMAC</DESCRIPT>
+    <STATE>1</STATE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZFMCL_DROB_LOGDB_ZFMAC</CLSNAME>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZFMCL_DROB_LOGDB_ZFMAC</CLSNAME>
+     <CMPNAME>CO_LOGDBNAME</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Nome do banco de dados lógico</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

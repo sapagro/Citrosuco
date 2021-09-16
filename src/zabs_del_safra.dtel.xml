@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_SAFRA</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>ZABS_DOM_SAFRA</DOMNAME>
+    <HEADLEN>05</HEADLEN>
+    <SCRLEN1>05</SCRLEN1>
+    <SCRLEN2>05</SCRLEN2>
+    <SCRLEN3>05</SCRLEN3>
+    <DDTEXT>Safra</DDTEXT>
+    <REPTEXT>Safra</REPTEXT>
+    <SCRTEXT_S>Safra</SCRTEXT_S>
+    <SCRTEXT_M>Safra</SCRTEXT_M>
+    <SCRTEXT_L>Safra</SCRTEXT_L>
+    <DTELMASTER>P</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Safra</DDTEXT>
+     <REPTEXT>Safra</REPTEXT>
+     <SCRTEXT_S>Safra</SCRTEXT_S>
+     <SCRTEXT_M>Safra</SCRTEXT_M>
+     <SCRTEXT_L>Safra</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

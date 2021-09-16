@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Get Caixas Rateio</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>ENHO</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>ZABS_IENH_PR_UPDATE_ITEMS</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>ENHO</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>ZABS_IENH_PR_UPDATE_ITEMS</ORG_MAIN_NAME>
+    <PROGRAMNAME>ZABS_IENH_PR_UPDATE_ITEMS</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>ZABS_IENH_PR_UPDATE_ITEMS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\IC:/AGRI/LFMPRMF0C\SE:END\EN:ZABS_IENH_PR_UPDATE_ITEMS\FO:CHECK_BATCH\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA: BEGIN OF mch1_key,</item>
+      <item>        matnr LIKE mcha-matnr,</item>
+      <item>        charg LIKE mcha-charg.</item>
+      <item>DATA: END OF mch1_key.</item>
+      <item/>
+      <item>        DATA:lv_KLASSE_D TYPE KLASSE_D value &apos;Z_FRUTA_MP&apos;,</item>
+      <item>             lv_obtab    TYPE TABELLE VALUE &apos;MCH1&apos;,</item>
+      <item>             lv_objek    TYPE CUOBN,</item>
+      <item>             lv_tplnr    TYPE /AGRI/GLTPLNR_FL,</item>
+      <item>             lv_int8     TYPE DECFLOAT34.</item>
+      <item/>
+      <item>IF LWA_PRITM-PRITM IS NOT INITIAL.</item>
+      <item/>
+      <item>    mch1_key-matnr = LV_MATNR.</item>
+      <item>    mch1_key-charg = lwa_pritm-zzhbatch.</item>
+      <item>     lv_objek = mch1_key.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_NBAGS&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            SELECT in_LICPLATE, charg, mackey</item>
+      <item>              FROM ZABS_ILP_BTCH</item>
+      <item>              INTO TABLE @DATA(tl_ilp_batch)</item>
+      <item>              WHERE charg eq @lwa_pritm-zzhbatch</item>
+      <item>                AND loevm eq @space.</item>
+      <item/>
+      <item>              READ TABLE tl_ilp_batch INTO DATA(sl_ilp_batch) INDEX 1.</item>
+      <item>              IF sy-subrc eq 0.</item>
+      <item>                SELECT mackey, avg_cxn</item>
+      <item>                  FROM ZABS_AC_BGGRP</item>
+      <item>                  INTO TABLE @DATA(tl_ac_bggrp)</item>
+      <item>                  WHERE mackey eq @sl_ilp_batch-mackey.</item>
+      <item/>
+      <item>                  IF sy-subrc eq 0.</item>
+      <item>                     SORT tl_ac_bggrp by mackey.</item>
+      <item>                     READ TABLE tl_ac_bggrp INTO DATA(sl_ac_bggrp) INDEX 1.</item>
+      <item>*                    SELECT SINGLE *</item>
+      <item>*                     FROM klah</item>
+      <item>*                     INTO @DATA(ls_klah)</item>
+      <item>*                    WHERE class EQ @lv_KLASSE_D.</item>
+      <item/>
+      <item>                      SELECT SINGLE cuobj</item>
+      <item>                      FROM inob INTO @DATA(lv_cuobj)</item>
+      <item>                      WHERE klart EQ &apos;023&apos; &quot;ls_klah-klart</item>
+      <item>                      AND obtab EQ @lv_obtab &quot;&apos;MCH1&apos; &quot;class-obtab</item>
+      <item>                      AND objek EQ @lv_objek. &quot;class-objek.</item>
+      <item/>
+      <item>                SELECT SINGLE *</item>
+      <item>                 FROM ausp</item>
+      <item>                 INTO @DATA(ls_ausp)</item>
+      <item>                  WHERE objek EQ @lv_cuobj</item>
+      <item>                    AND atinn eq @lwa_charts-imerk</item>
+      <item>                    AND klart = &apos;023&apos;.</item>
+      <item/>
+      <item>                   MOVE: lwa_ausp-atflv TO lv_int4_field.</item>
+      <item/>
+      <item>             lwa_pritm_a-zzsboxq = ( ( sl_ac_bggrp-avg_cxn * lv_int4_field ) ) / ( 3 / 2 ).</item>
+      <item>             lwa_pritm-zzsboxq = lwa_pritm_a-zzsboxq.</item>
+      <item>             MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_a INDEX lv_tabix.</item>
+      <item>                  ENDIF.</item>
+      <item/>
+      <item/>
+      <item>              ENDIF.</item>
+      <item/>
+      <item>*            MOVE: lwa_ausp-atflv TO lv_int4_field,</item>
+      <item>*                  lv_int4_field TO lwa_pritm-zzsboxq.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>IF lwa_pritm-tplnr IS INITIAL.</item>
+      <item/>
+      <item>          CLEAR lwa_charts.</item>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;RC_FR_COD_IM&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atwrt TO lv_int4_field.</item>
+      <item>            lv_lev1_terr = lv_int4_field.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>          CLEAR lwa_charts.</item>
+      <item>          READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;RC_FR_TALH&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atwrt TO lv_int4_field.</item>
+      <item>            lv_lev2_terr = lv_int4_field.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lv_lev1_terr IS NOT INITIAL</item>
+      <item>        AND lv_lev2_terr IS NOT INITIAL.</item>
+      <item>          CONCATENATE lv_lev1_terr &apos;-&apos; lv_lev2_terr INTO lv_tplnr.</item>
+      <item>          CONDENSE lv_tplnr NO-GAPS.</item>
+      <item/>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input      = lv_tplnr</item>
+      <item>            IMPORTING</item>
+      <item>              output     = lv_tplnr</item>
+      <item>            EXCEPTIONS</item>
+      <item>              not_found  = 1</item>
+      <item>              not_active = 2</item>
+      <item>              OTHERS     = 3.</item>
+      <item/>
+      <item>   lwa_pritm-tplnr = lv_tplnr.</item>
+      <item>   LWA_PRITM_A-tplnr = lv_tplnr.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_TRANSBORDO&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            lwa_pritm-zztransbordo = lwa_ausp-atwrt.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>     READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_CL_ORDEM&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atwrt TO lv_int4_field.</item>
+      <item>            MOVE lv_int4_field TO lwa_pritm-zzhaufnr.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_PLACA_SERV_INT&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atwrt TO lwa_pritm-zzsrebo2.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;RC_FR_PLACA_CR&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atwrt TO lwa_pritm-zzsrebo1.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_MECANIZADO&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE: lwa_ausp-atwrt TO lv_int4_field,</item>
+      <item>                  lv_int4_field TO lwa_pritm-zzllifnr.</item>
+      <item>            CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                input  = lwa_pritm-zzllifnr</item>
+      <item>              IMPORTING</item>
+      <item>                output = lwa_pritm-zzllifnr.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_CL_MOVINT&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE: lwa_ausp-atwrt TO lv_int4_field,</item>
+      <item>                  lv_int4_field TO lwa_pritm-zztlifnr.</item>
+      <item>            CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                input  = lwa_pritm-zztlifnr</item>
+      <item>              IMPORTING</item>
+      <item>                output = lwa_pritm-zztlifnr.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_CL_LIDER&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE: lwa_ausp-atflv TO lv_int4_field,</item>
+      <item>                  lv_int4_field TO lwa_pritm-zzldlifnr.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_CL_TURMA&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE: lwa_ausp-atwrt TO lv_int4_field,</item>
+      <item>                  lv_int4_field TO lwa_pritm-zzturma.</item>
+      <item>            UNPACK lwa_pritm-zzturma TO lwa_pritm-zzturma.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_CL_CAIXINHA_RATEIO&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE: lwa_ausp-atflv TO lv_int4_field,</item>
+      <item>                  lv_int4_field TO lwa_pritm-zzsboxq.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_DATA_COLHEITA&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE: lwa_ausp-atflv TO lv_int4_field.</item>
+      <item>            WRITE lv_int4_field TO lwa_pritm-zzdata_colheita.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_MECANIZADO_ILAT&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atflv TO lwa_pritm-zzinlat.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_MECANIZADO_ILONG&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atflv TO lwa_pritm-zzinlong.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>           WITH KEY atnam = &apos;ABS_MECANIZADO_FLONG&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atflv TO lwa_pritm-zzfilong.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_MECANIZADO_FLAT&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atflv TO lwa_pritm-zzfilat.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>*-- Populate BIN</item>
+      <item>        READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_BIN&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            MOVE lwa_ausp-atwrt TO lwa_pritm-zzbin.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        MOVE-CORRESPONDING lwa_pritm to lwa_pritm_a.</item>
+      <item>    MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_a INDEX lv_tabix.</item>
+      <item>    MODIFY gt_pritm FROM lwa_pritm INDEX lv_tabix.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF lv_boxq IS NOT INITIAL .</item>
+      <item>        move lv_boxq to lwa_pritm-zzsboxq.</item>
+      <item>                MOVE-CORRESPONDING lwa_pritm to lwa_pritm_a.</item>
+      <item>    MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_a INDEX lv_tabix.</item>
+      <item>    MODIFY gt_pritm FROM lwa_pritm INDEX lv_tabix.</item>
+      <item>ELSEIF LWA_PRITM_A-ZZSBOXQ IS INITIAL.</item>
+      <item>          READ TABLE lt_charts INTO lwa_charts</item>
+      <item>          WITH KEY atnam = &apos;ABS_CL_CAIXINHA_RATEIO&apos; BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          READ TABLE lt_ausp INTO lwa_ausp</item>
+      <item>            WITH KEY atinn = lwa_charts-imerk BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>             MOVE: lwa_ausp-atflv TO lv_int8,</item>
+      <item>                   lv_int8 TO lwa_pritm-zzsboxq.</item>
+      <item>            ENDIF.</item>
+      <item>        MOVE-CORRESPONDING lwa_pritm to lwa_pritm_a.</item>
+      <item>    MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_a INDEX lv_tabix.</item>
+      <item>    MODIFY gt_pritm FROM lwa_pritm INDEX lv_tabix.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        lwa_pritm-zzhbatch = lv_batch.</item>
+      <item>    MOVE-CORRESPONDING lwa_pritm to lwa_pritm_a.</item>
+      <item>    MODIFY gs_prdoc_infocus-x-pritm FROM lwa_pritm_a INDEX lv_tabix.</item>
+      <item>    MODIFY gt_pritm FROM lwa_pritm INDEX lv_tabix.</item>
+      <item>endif.</item>
+     </SOURCE>
+     <PARENT_FULL_NAME>%ENCLOSING_ENHANCEMENT%</PARENT_FULL_NAME>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEBB9C5BDE1B3CD2579</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEBB9C5BDE1B3CD2579</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>027</LENGTH>
+       <TEXT>Get Caixas Rateio</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_GET_CAIXAS_RATEIO</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEBB9C5BDE1B3CD2579</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

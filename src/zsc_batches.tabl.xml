@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZSC_BATCHES</TABNAME>
+    <TABCLASS>INTTAB</TABCLASS>
+    <EXCLASS>3</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>LOTE</FIELDNAME>
+     <ROLLNAME>CHARG_D</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>CAIXAS_LIQUIDAS</FIELDNAME>
+     <ROLLNAME>ZABS_DEL_CXLIQ</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <REFTABLE>/AGRI/FMPRITM</REFTABLE>
+     <REFFIELD>MEINSH</REFFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>CAIXAS_REFUGO</FIELDNAME>
+     <ROLLNAME>ZABS_DEL_CXREF</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <REFTABLE>/AGRI/FMPRITM</REFTABLE>
+     <REFFIELD>MEINSH</REFFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+   </DD03P_TABLE>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD02_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Lotes recebidos na indústria</DDTEXT>
+    </item>
+   </DD02_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

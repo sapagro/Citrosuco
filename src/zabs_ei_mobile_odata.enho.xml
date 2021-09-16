@@ -1,0 +1,660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Mobile MDM</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_MOBILE_DPC_EXT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_MOBILE_DPC_EXT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_MOBILE_DPC_EXT\ME:GET_MEASUREMENTS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item> TYPES: BEGIN OF ltyp_glflot_eh,</item>
+      <item>             tplnr_fl TYPE /agri/glflot-tplnr_fl,</item>
+      <item>             strno    TYPE /agri/glstrno,</item>
+      <item>           END OF ltyp_glflot_eh.</item>
+      <item>    TYPES: BEGIN OF ltyp_mdhdr_eh,</item>
+      <item>             mdocm    TYPE /agri/glmdhdr-mdocm,</item>
+      <item>             aslvl    TYPE /agri/glmdhdr-aslvl,</item>
+      <item>             tplnr_fl TYPE /agri/glmdhdr-tplnr_fl,</item>
+      <item>             contr    TYPE /agri/glmdhdr-contr,</item>
+      <item>             cmnum    TYPE /agri/glmdhdr-cmnum,</item>
+      <item>             equnr    TYPE /agri/glmdhdr-equnr,</item>
+      <item>             mpgrp    TYPE /agri/glmdhdr-mpgrp,</item>
+      <item>             muser    TYPE /agri/glmdhdr-muser,</item>
+      <item>             mdate    TYPE /agri/glmdhdr-mdate,</item>
+      <item>             mtime    TYPE /agri/glmdhdr-mtime,</item>
+      <item>           END OF ltyp_mdhdr_eh.</item>
+      <item/>
+      <item>    TYPES: BEGIN OF ltyp_mditm_eh,</item>
+      <item>             mdocm TYPE /agri/glmditm-mdocm,</item>
+      <item>             mditm TYPE /agri/glmditm-mditm,</item>
+      <item>             atnam TYPE /agri/glmditm-atnam,</item>
+      <item>             atwrt TYPE /agri/glmditm-atwrt,</item>
+      <item>             cunit TYPE /agri/glmditm-cunit,</item>
+      <item>             atflv TYPE /agri/glmditm-atflv,</item>
+      <item>             atwtb TYPE /agri/s_glmditm_fcat-atwtb,</item>
+      <item>           END OF ltyp_mditm_eh.</item>
+      <item>    TYPES: BEGIN OF ltyp_klah_eh,</item>
+      <item>             klart TYPE klah-klart,</item>
+      <item>             class TYPE klah-class,</item>
+      <item>           END OF ltyp_klah_eh.</item>
+      <item/>
+      <item>    DATA : lt_filter_eh         TYPE /iwbep/t_mgw_select_option.</item>
+      <item>    DATA : ls_filter_eh         TYPE /iwbep/s_mgw_select_option.</item>
+      <item>***  DATA : ls_converted_keys LIKE LINE OF et_entityset.</item>
+      <item>    DATA : lo_filter_eh         TYPE REF TO /iwbep/if_mgw_req_filter.</item>
+      <item>    DATA : lv_filter_str_eh     TYPE string.</item>
+      <item>    DATA : lrt_tplnr_eh         TYPE RANGE OF /agri/gltplnr_fl.</item>
+      <item>    DATA : lrt_cmnum_eh         TYPE RANGE OF /agri/glcmnum.</item>
+      <item>    DATA : lrt_aslvl_eh         TYPE RANGE OF /agri/glaslvl.</item>
+      <item>    DATA : lrt_atnam_eh         TYPE RANGE OF /agri/gatnam.</item>
+      <item>    DATA : ls_atnam_eh          LIKE LINE OF lrt_atnam_eh.</item>
+      <item>    DATA : lrt_equnr_eh   TYPE RANGE OF /agri/glequnr,</item>
+      <item>           lv_atinn_eh    TYPE atinn,</item>
+      <item>           lt_strno_eh    TYPE TABLE OF /agri/glstrno,</item>
+      <item>           lt_glflot_eh   TYPE TABLE OF /agri/glflot,</item>
+      <item>           ls_glflot_eh   TYPE /agri/glflot,</item>
+      <item>           lrt_aedat_eh   TYPE RANGE OF aedat,</item>
+      <item>           ls_aedat_eh    LIKE LINE OF lrt_aedat_eh,</item>
+      <item>           lt_tplnr_fl_eh TYPE TABLE OF ltyp_glflot_eh. &quot;/agri/gltplnr_fl.</item>
+      <item/>
+      <item>    DATA : lt_mdhdr_eh             TYPE TABLE OF ltyp_mdhdr_eh, &quot;/agri/t_glmdhdr,</item>
+      <item>           lt_mditm_eh             TYPE TABLE OF ltyp_mditm_eh, &quot;/agri/s_glmditm_fcat,</item>
+      <item>           lt_mdatv_eh             TYPE TABLE OF /agri/glmdatv, &quot;/agri/s_glmditm_fcat,</item>
+      <item>           ls_mdhdr_eh             TYPE ltyp_mdhdr_eh, &quot;/agri/s_glmdhdr,</item>
+      <item>           ls_mditm_eh             TYPE ltyp_mditm_eh, &quot;/agri/s_glmditm_fcat,</item>
+      <item>           ls_mdatv_eh             TYPE /agri/glmdatv, &quot;ltyp_mditm_eh,&quot;/agri/s_glmditm_fcat,</item>
+      <item>           lv_atwtb_eh             TYPE /agri/gatwtb_50,</item>
+      <item>           lt_athdr_eh             TYPE /agri/t_gathdr,</item>
+      <item>           lt_athdr_tmp            TYPE /agri/t_gathdr,</item>
+      <item>           ls_athdr_eh             TYPE /agri/s_gathdr,</item>
+      <item>           ls_athdr_tmp_eh         TYPE /agri/s_gathdr,</item>
+      <item>           lwa_athdr_eh            TYPE /agri/s_gathdr,</item>
+      <item>           lt_klah_eh              TYPE TABLE OF ltyp_klah_eh, &quot;tt_klah,</item>
+      <item>           lt_klah_tmp_eh          TYPE tt_klah,</item>
+      <item>           ls_klah_tmp_eh          LIKE LINE OF lt_klah_tmp_eh,</item>
+      <item>           ls_klah_eh              TYPE ltyp_klah_eh,</item>
+      <item>           lt_messages_eh          TYPE /agri/t_gprolog,</item>
+      <item>           ls_messages_eh          TYPE /agri/s_gprolog,</item>
+      <item>           lv_entity_type_eh       TYPE string,</item>
+      <item>           lv_msgcateg_eh(15),</item>
+      <item>           lo_message_container_eh TYPE REF TO /iwbep/if_message_container,</item>
+      <item>           lv_not_created_eh,</item>
+      <item>           lv_atwrt_eh             TYPE /agri/gatwrt,</item>
+      <item>           lv_msgno_eh             TYPE symsgno,</item>
+      <item>           ls_entityset_eh         LIKE LINE OF et_entityset,</item>
+      <item>*         lo_message_container_eh TYPE REF TO /iwbep/if_message_container.</item>
+      <item>           lrt_route TYPE RANGE OF /agri/gl_route,</item>
+      <item>           lt_rtusr             TYPE TABLE OF /agri/glrtusr,</item>
+      <item>           lt_rtfla             TYPE TABLE OF /agri/glrtfla.</item>
+      <item/>
+      <item>    lo_filter_eh     = io_tech_request_context-&gt;get_filter( ).</item>
+      <item>    lt_filter_eh     = lo_filter_eh-&gt;get_filter_select_options( ).</item>
+      <item>    lv_filter_str_eh = lo_filter_eh-&gt;get_filter_string( ).</item>
+      <item/>
+      <item>* Check if the supplied filter is supported by standard gateway runtime process</item>
+      <item>    IF  lv_filter_str_eh IS NOT INITIAL</item>
+      <item>    AND lt_filter_eh[]   IS INITIAL.</item>
+      <item>      &quot; If the string of the Filter System Query Option is not automatically converted into</item>
+      <item>      &quot; filter option table (lt_filter_select_options), then the filtering combination is not supported</item>
+      <item>      &quot; Log message in the application log</item>
+      <item>      me-&gt;/iwbep/if_sb_dpc_comm_services~log_message(</item>
+      <item>        EXPORTING</item>
+      <item>          iv_msg_type   = &apos;E&apos;</item>
+      <item>          iv_msg_id     = &apos;/IWBEP/MC_SB_DPC_ADM&apos;</item>
+      <item>          iv_msg_number = 025 ).</item>
+      <item>      &quot; Raise Exception</item>
+      <item>      RAISE EXCEPTION TYPE /iwbep/cx_mgw_tech_exception</item>
+      <item>        EXPORTING</item>
+      <item>          textid = /iwbep/cx_mgw_tech_exception=&gt;internal_error.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>* Maps filter table lines to function module parameters</item>
+      <item>    LOOP AT lt_filter_eh INTO ls_filter_eh.</item>
+      <item>      CASE ls_filter_eh-property.</item>
+      <item>        WHEN &apos;TPLNR_FL&apos;.</item>
+      <item>          lo_filter_eh-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter_eh</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_tplnr_eh ).</item>
+      <item>        WHEN &apos;CMNUM&apos;.</item>
+      <item>          lo_filter_eh-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter_eh</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_cmnum_eh ).</item>
+      <item>        WHEN &apos;ASLVL&apos;.</item>
+      <item>          lo_filter_eh-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter_eh</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_aslvl_eh ).</item>
+      <item>        WHEN &apos;ATNAM&apos;.</item>
+      <item>          lo_filter_eh-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter_eh</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_atnam_eh ).</item>
+      <item>          READ TABLE lrt_atnam_eh INTO ls_atnam_eh INDEX 1.</item>
+      <item>          CALL FUNCTION &apos;/AGRI/G_CONV_EXIT_ATINN_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              i_input  = ls_atnam_eh-low</item>
+      <item>            IMPORTING</item>
+      <item>              o_output = lv_atinn_eh.</item>
+      <item>        WHEN &apos;EQUNR&apos;.</item>
+      <item>          lo_filter_eh-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter_eh</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_equnr_eh ).</item>
+      <item>*-- SOC by T_C.KARANAM</item>
+      <item>        WHEN &apos;ROUTE&apos;.</item>
+      <item>          lo_filter_eh-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter_eh</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_route ).</item>
+      <item>*-- EOC by T_C.KARANAM</item>
+      <item>        WHEN OTHERS.</item>
+      <item>          &quot; Log message in the application log</item>
+      <item>          me-&gt;/iwbep/if_sb_dpc_comm_services~log_message(</item>
+      <item>            EXPORTING</item>
+      <item>              iv_msg_type   = &apos;E&apos;</item>
+      <item>              iv_msg_id     = &apos;/IWBEP/MC_SB_DPC_ADM&apos;</item>
+      <item>              iv_msg_number = 020</item>
+      <item>              iv_msg_v1     = ls_filter_eh-property ).</item>
+      <item>          &quot; Raise Exception</item>
+      <item>          RAISE EXCEPTION TYPE /iwbep/cx_mgw_tech_exception</item>
+      <item>            EXPORTING</item>
+      <item>              textid = /iwbep/cx_mgw_tech_exception=&gt;internal_error.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    ls_aedat_eh-sign   = &apos;I&apos;.</item>
+      <item>    ls_aedat_eh-option = &apos;BT&apos;.</item>
+      <item>    ls_aedat_eh-low    = sy-datum - 1.</item>
+      <item>    ls_aedat_eh-high   = sy-datum.</item>
+      <item>    APPEND ls_aedat_eh TO lrt_aedat_eh.</item>
+      <item/>
+      <item>*-- SOC by T_C.KARANAM</item>
+      <item>    IF lrt_route IS NOT INITIAL.</item>
+      <item>      SELECT * FROM /agri/glrtusr</item>
+      <item>             INTO TABLE lt_rtusr</item>
+      <item>             WHERE route IN lrt_route</item>
+      <item>               AND bname EQ sy-uname.</item>
+      <item>    ELSE.</item>
+      <item>      SELECT * FROM /agri/glrtusr</item>
+      <item>       INTO TABLE lt_rtusr</item>
+      <item>       WHERE bname EQ sy-uname.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lt_rtusr IS NOT INITIAL.</item>
+      <item>      SELECT * FROM /agri/glrtfla</item>
+      <item>            INTO TABLE lt_rtfla</item>
+      <item>        FOR ALL ENTRIES IN lt_rtusr                &quot;#EC CI_NO_TRANSFORM</item>
+      <item>            WHERE route EQ lt_rtusr-route.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lt_rtfla IS NOT INITIAL.</item>
+      <item>      SELECT tplnr_fl strno</item>
+      <item>        FROM /agri/glflot</item>
+      <item>        INTO TABLE lt_tplnr_fl_eh</item>
+      <item>         FOR ALL ENTRIES IN lt_rtfla</item>
+      <item>        WHERE tplnr_fl EQ lt_rtfla-tplnr_fl.</item>
+      <item>        IF sy-subrc EQ 0 AND lrt_tplnr_eh IS NOT INITIAL.</item>
+      <item>          DELETE lt_tplnr_fl_eh WHERE strno NOT IN lrt_tplnr_eh.</item>
+      <item>        ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*    SELECT tplnr_fl</item>
+      <item>*      FROM /agri/glflot</item>
+      <item>*      INTO TABLE lt_tplnr_fl_eh</item>
+      <item>*      WHERE strno IN lrt_tplnr_eh.</item>
+      <item/>
+      <item>*-- EOC by T_C.KARANAM</item>
+      <item/>
+      <item>    IF lt_tplnr_fl_eh IS NOT INITIAL.</item>
+      <item>      SELECT * FROM /agri/glmdhdr             &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>        INTO CORRESPONDING FIELDS OF TABLE lt_mdhdr_eh</item>
+      <item>        FOR ALL ENTRIES IN lt_tplnr_fl_eh             &quot;#EC CI_NO_TRANSFORM</item>
+      <item>        WHERE aslvl    IN lrt_aslvl_eh</item>
+      <item>                 AND tplnr_fl EQ lt_tplnr_fl_eh-tplnr_fl</item>
+      <item>                 AND cmnum    IN lrt_cmnum_eh</item>
+      <item>                 AND equnr    IN lrt_equnr_eh</item>
+      <item>                 AND erdat    IN lrt_aedat_eh.</item>
+      <item>    ELSE.</item>
+      <item>      SELECT * FROM /agri/glmdhdr             &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>        INTO CORRESPONDING FIELDS OF TABLE lt_mdhdr_eh</item>
+      <item>        WHERE aslvl     IN lrt_aslvl_eh</item>
+      <item>           AND cmnum    IN lrt_cmnum_eh</item>
+      <item>           AND equnr    IN lrt_equnr_eh</item>
+      <item>           AND erdat    IN lrt_aedat_eh.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      SORT lt_mdhdr_eh BY mdocm. &quot; Changed on 1809 PQ</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>      lo_message_container_eh = mo_context-&gt;get_message_container( ).</item>
+      <item>      ls_messages_eh-msgty = &apos;S&apos;.</item>
+      <item>      ls_messages_eh-msgid = &apos;/AGRI/GLOBAL&apos;.</item>
+      <item>      lv_msgno_eh = &apos;751&apos;.</item>
+      <item>      lo_message_container_eh-&gt;add_message(</item>
+      <item>        EXPORTING           iv_msg_type                       = ls_messages_eh-msgty</item>
+      <item>                            iv_msg_id                         = ls_messages_eh-msgid</item>
+      <item>                            iv_msg_number                     = lv_msgno_eh</item>
+      <item>                            iv_msg_v1                         = ls_messages_eh-msgv1</item>
+      <item>                            iv_msg_v2                         = ls_messages_eh-msgv2</item>
+      <item>                            iv_msg_v3                         = ls_messages_eh-msgv3</item>
+      <item>                            iv_msg_v4                         = ls_messages_eh-msgv4</item>
+      <item>                            iv_add_to_response_header         = abap_true ).</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF lt_mdhdr_eh IS NOT INITIAL.</item>
+      <item>      IF lv_atinn_eh IS NOT INITIAL.</item>
+      <item>        SELECT * FROM /agri/glmdatv           &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>          INTO CORRESPONDING FIELDS OF TABLE lt_mdatv_eh</item>
+      <item>              FOR ALL ENTRIES IN lt_mdhdr_eh          &quot;#EC CI_NO_TRANSFORM</item>
+      <item>          WHERE mdocm EQ lt_mdhdr_eh-mdocm</item>
+      <item>            AND atinn EQ lv_atinn_eh.</item>
+      <item>      ELSE.</item>
+      <item>        SELECT * FROM /agri/glmdatv           &quot;#EC CI_ALL_FIELDS_NEEDED</item>
+      <item>                 INTO CORRESPONDING FIELDS OF TABLE lt_mdatv_eh</item>
+      <item>                 FOR ALL ENTRIES IN lt_mdhdr_eh       &quot;#EC CI_NO_TRANSFORM</item>
+      <item>                 WHERE mdocm EQ lt_mdhdr_eh-mdocm.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    SELECT klart class</item>
+      <item>      FROM /agri/glagha</item>
+      <item>      INTO TABLE lt_klah_eh</item>
+      <item>      WHERE aslvl IN lrt_aslvl_eh.</item>
+      <item/>
+      <item>    LOOP AT lt_klah_eh INTO ls_klah_eh.</item>
+      <item>*    ls_klah_eh-klart = &apos;X90&apos;.</item>
+      <item>      ls_klah_tmp_eh-class = ls_klah_eh-class.</item>
+      <item>      ls_klah_tmp_eh-klart = ls_klah_eh-klart.</item>
+      <item>      APPEND ls_klah_tmp_eh TO lt_klah_tmp_eh.</item>
+      <item>      CLEAR: ls_klah_eh,ls_klah_tmp_eh.</item>
+      <item>    ENDLOOP.</item>
+      <item>*  ls_klah_eh-klart = &apos;X90&apos;.</item>
+      <item/>
+      <item>*  CALL METHOD /agri/cl_gattr_utils=&gt;attribute_groups_attr_read</item>
+      <item>*    EXPORTING</item>
+      <item>*      it_klah  = lt_klah_tmp_eh</item>
+      <item>*      i_agtyp  = ls_klah_eh-klart</item>
+      <item>*    IMPORTING</item>
+      <item>*      et_athdr = lt_athdr_eh.</item>
+      <item/>
+      <item>   CALL METHOD /agri/cl_gattr_utils=&gt;attribute_groups_attr_read</item>
+      <item>     EXPORTING</item>
+      <item>       it_klah                   = lt_klah_tmp_eh</item>
+      <item>       i_agtyp                   = &apos;X90&apos;</item>
+      <item>*       i_no_composite_attributes = &apos; &apos;</item>
+      <item>     IMPORTING</item>
+      <item>*       et_atgrp                  =</item>
+      <item>*       et_cattr                  =</item>
+      <item>       et_athdr                  = lt_athdr_eh.</item>
+      <item>*       et_atvrref                =</item>
+      <item>*       et_cawn                   =</item>
+      <item>       .</item>
+      <item/>
+      <item>sort lt_athdr_eh by atnam.</item>
+      <item>*    CALL METHOD /agri/cl_gattr_utils=&gt;attribute_groups_attr_read</item>
+      <item>*      EXPORTING</item>
+      <item>*        it_klah  = lt_klah_tmp_eh</item>
+      <item>*        i_agtyp  = ls_klah_eh-klart</item>
+      <item>**       i_no_composite_attributes = &apos; &apos;</item>
+      <item>*      IMPORTING</item>
+      <item>**       et_atgrp =</item>
+      <item>**       et_cattr =</item>
+      <item>*        et_athdr = lt_athdr_eh</item>
+      <item>**       et_atvrref                =</item>
+      <item>**       et_cawn  =</item>
+      <item>*      .</item>
+      <item/>
+      <item>    SORT: lt_mdatv_eh BY mdocm,</item>
+      <item>          lt_mdhdr_eh BY mdocm.</item>
+      <item/>
+      <item>    LOOP AT lt_mdatv_eh INTO ls_mdatv_eh.</item>
+      <item/>
+      <item>      READ TABLE lt_mdhdr_eh INTO ls_mdhdr_eh WITH KEY mdocm = ls_mdatv_eh-mdocm</item>
+      <item>                                        BINARY SEARCH.</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_OUTPUT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          input  = ls_mdhdr_eh-tplnr_fl</item>
+      <item>        IMPORTING</item>
+      <item>          output = ls_mdhdr_eh-tplnr_fl.</item>
+      <item/>
+      <item>      ls_entityset_eh-aslvl  =   ls_mdhdr_eh-aslvl.</item>
+      <item>      ls_entityset_eh-tplnr_fl  =   ls_mdhdr_eh-tplnr_fl.</item>
+      <item>      ls_entityset_eh-contr  =   ls_mdhdr_eh-contr.</item>
+      <item>      ls_entityset_eh-cmnum  =   ls_mdhdr_eh-cmnum.</item>
+      <item>      ls_entityset_eh-equnr  =   ls_mdhdr_eh-equnr.</item>
+      <item>      ls_entityset_eh-muser  =   ls_mdhdr_eh-muser.</item>
+      <item>      ls_entityset_eh-mdate  =   ls_mdhdr_eh-mdate.</item>
+      <item>      ls_entityset_eh-mtime  =   ls_mdhdr_eh-mtime.</item>
+      <item>      ls_entityset_eh-class  =   ls_mdhdr_eh-mpgrp.</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;/AGRI/G_CONV_EXIT_ATINN_OUTPUT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          i_input  = ls_mdatv_eh-atinn</item>
+      <item>        IMPORTING</item>
+      <item>          o_output = ls_mditm_eh-atnam.</item>
+      <item/>
+      <item/>
+      <item>*      CALL METHOD /agri/cl_gattr_utils=&gt;attribute_groups_attr_read</item>
+      <item>*        EXPORTING</item>
+      <item>*          i_agtyp  = &apos;X90&apos; &quot;c_agtyp-measurements</item>
+      <item>*          it_klah  = lt_klah_tmp_eh[]</item>
+      <item>*        IMPORTING</item>
+      <item>**         et_atgrp = gt_attr_groups[]</item>
+      <item>**         et_cattr = gt_comp_attr_groups[]</item>
+      <item>*          et_athdr = lt_athdr_eh[].</item>
+      <item>**      et_cawn    = gt_cawn[]</item>
+      <item>**      et_atvrref = gt_atvrref[].</item>
+      <item>*</item>
+      <item>*      SORT lt_athdr_eh BY atnam. &quot;Changed on 1809 PQ</item>
+      <item>      READ TABLE lt_athdr_eh INTO ls_athdr_eh</item>
+      <item>                      WITH KEY atnam = ls_mditm_eh-atnam BINARY SEARCH.</item>
+      <item/>
+      <item> IF NOT ls_mdatv_eh-atwrt IS INITIAL</item>
+      <item>  OR NOT ls_mdatv_eh-atflv IS INITIAL</item>
+      <item>  OR NOT ls_athdr_eh-inval IS INITIAL.</item>
+      <item/>
+      <item>   ls_athdr_tmp_eh = ls_athdr_eh.</item>
+      <item/>
+      <item>    CLEAR ls_athdr_tmp_eh-msehi.</item>
+      <item/>
+      <item>   IF NOT ls_mdatv_eh-atwrt IS INITIAL</item>
+      <item>    OR NOT ls_mdatv_eh-atflv IS INITIAL</item>
+      <item>    OR NOT ls_athdr_eh-inval IS INITIAL.</item>
+      <item/>
+      <item>      CALL METHOD /agri/cl_gattr_utils=&gt;attr_value_for_display_prepare</item>
+      <item>        EXPORTING</item>
+      <item>          i_agtyp       = &apos;X90&apos; &quot;ls_mdatv_eh-mdocm&quot;c_agtyp-measurements</item>
+      <item>*         i_application = gs_application-epapp</item>
+      <item>          i_value_descr = &apos;X&apos; &quot;c_true</item>
+      <item>*         i_value_descr = lv_value_descr</item>
+      <item>          is_athdr      = ls_athdr_tmp_eh</item>
+      <item>        CHANGING</item>
+      <item>          c_atwrt       = ls_mdatv_eh-atwrt</item>
+      <item>          c_atflv       = ls_mdatv_eh-atflv</item>
+      <item>          c_atwtb       = lv_atwtb_eh.</item>
+      <item/>
+      <item>      IF NOT ls_athdr_tmp_eh-rcura IS INITIAL.</item>
+      <item>        IF ls_athdr_tmp_eh-msehi IS INITIAL.</item>
+      <item>          ls_entityset_eh-cunit = ls_athdr_eh-msehi.</item>
+      <item>        ENDIF.</item>
+      <item>      ELSE.</item>
+      <item>        ls_entityset_eh-cunit = ls_athdr_eh-msehi.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>       IF NOT lwa_athdr_eh-runta IS INITIAL.</item>
+      <item/>
+      <item>        READ TABLE lt_athdr_eh INTO lwa_athdr_eh</item>
+      <item>        WITH KEY atnam = ls_athdr_eh-runta.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item/>
+      <item>          IF NOT lv_atwrt_eh IS INITIAL.</item>
+      <item>            ls_athdr_tmp_eh-msehi = lv_atwrt_eh.  &quot;#EC CI_FLDEXT_OK</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item> ENDIF.</item>
+      <item>*    IF ls_mditm_eh-atwtb IS INITIAL.</item>
+      <item>*      ls_mdatv_eh-atwtb = ls_mdatv_eh-atwrt.</item>
+      <item>*    ENDIF.</item>
+      <item/>
+      <item>      CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_OUTPUT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          input  = ls_mdatv_eh-mdocm</item>
+      <item>        IMPORTING</item>
+      <item>          output = ls_mdatv_eh-mdocm.</item>
+      <item/>
+      <item>      ls_entityset_eh-atbez = ls_athdr_eh-atbez.</item>
+      <item>      ls_entityset_eh-mdocm = ls_mdatv_eh-mdocm.</item>
+      <item>*    ls_entityset_eh-mditm = ls_mdatv_eh-mditm.</item>
+      <item>      ls_entityset_eh-atnam = ls_mditm_eh-atnam.</item>
+      <item>      ls_entityset_eh-atwrt = ls_mdatv_eh-atwrt.</item>
+      <item>*    ls_entityset_eh-cunit = ls_mdatv_eh-cunit.</item>
+      <item>*   ls_entityset_eh-atflv = ls_mditm_eh-atflv.</item>
+      <item>*   ls_entityset_eh-atwtb = ls_mditm_eh-atwtb.</item>
+      <item>*    MOVE-CORRESPONDING ls_mditm_eh TO ls_entityset_eh.</item>
+      <item>      APPEND ls_entityset_eh TO et_entityset.</item>
+      <item>      CLEAR ls_entityset_eh.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    RETURN.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_GL_MOBILE_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_MOBILE_DPC_EXT=======CP\EX:/AGRI/EP_MOBILE_ODATA_50\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>    TYPES : BEGIN OF ltyp_cabnt,</item>
+      <item>              atinn TYPE cabnt-atinn,</item>
+      <item>              atbez TYPE cabnt-atbez,</item>
+      <item>            END OF ltyp_cabnt.</item>
+      <item/>
+      <item>    DATA : lt_filter         TYPE /iwbep/t_mgw_select_option.</item>
+      <item>    DATA : ls_filter         TYPE /iwbep/s_mgw_select_option.</item>
+      <item>    DATA : ls_converted_keys LIKE LINE OF et_entityset.</item>
+      <item>    DATA : lo_filter         TYPE REF TO /iwbep/if_mgw_req_filter.</item>
+      <item>    DATA : lv_filter_str     TYPE string.</item>
+      <item>    DATA : lrt_aslvl TYPE RANGE OF /agri/glaslvl,</item>
+      <item>           lrt_class TYPE RANGE OF /AGRI/GATGRP.</item>
+      <item/>
+      <item>    DATA: lv_aslvl     TYPE /agri/glaslvl,</item>
+      <item>          lt_cabnt     TYPE TABLE OF ltyp_cabnt, &quot;cabnt,</item>
+      <item>          ls_cabnt     TYPE ltyp_cabnt, &quot;cabnt,</item>
+      <item>          lt_klah      TYPE tt_klah,</item>
+      <item>          ls_klah      LIKE LINE OF lt_klah,</item>
+      <item>          lt_athdr     TYPE /agri/t_gathdr,</item>
+      <item>          ls_athdr     TYPE /agri/s_gathdr,</item>
+      <item>          lt_atgrp     TYPE /agri/t_gatg_attr,</item>
+      <item>          ls_atgrp     TYPE /agri/s_gatg_attr,</item>
+      <item>          lt_ataoa     TYPE /AGRI/T_GATAOA,</item>
+      <item>          ls_ataoa     TYPE /AGRI/s_GATAOA,</item>
+      <item>          lt_agha      TYPE TABLE OF /agri/glagha,</item>
+      <item>          ls_agha      TYPE /agri/glagha,</item>
+      <item>          lt_atinn     TYPE /agri/t_gatinn,</item>
+      <item>          ls_atinn     TYPE /agri/s_gatinn,</item>
+      <item>          lt_atdoc     TYPE /agri/t_gatdoc,</item>
+      <item>          ls_atdoc     TYPE /agri/s_gatdoc,</item>
+      <item>          ls_entityset LIKE LINE OF et_entityset.</item>
+      <item/>
+      <item>    lo_filter     = io_tech_request_context-&gt;get_filter( ).</item>
+      <item>    lt_filter     = lo_filter-&gt;get_filter_select_options( ).</item>
+      <item>    lv_filter_str = lo_filter-&gt;get_filter_string( ).</item>
+      <item/>
+      <item>* Check if the supplied filter is supported by standard gateway runtime process</item>
+      <item>    IF  lv_filter_str IS NOT INITIAL</item>
+      <item>    AND lt_filter[]   IS INITIAL.</item>
+      <item>      &quot; If the string of the Filter System Query Option is not automatically converted into</item>
+      <item>      &quot; filter option table (lt_filter_select_options), then the filtering combination is not supported</item>
+      <item>      &quot; Log message in the application log</item>
+      <item>      me-&gt;/iwbep/if_sb_dpc_comm_services~log_message(</item>
+      <item>        EXPORTING</item>
+      <item>          iv_msg_type   = &apos;E&apos;</item>
+      <item>          iv_msg_id     = &apos;/IWBEP/MC_SB_DPC_ADM&apos;</item>
+      <item>          iv_msg_number = 025 ).</item>
+      <item>      &quot; Raise Exception</item>
+      <item>      RAISE EXCEPTION TYPE /iwbep/cx_mgw_tech_exception</item>
+      <item>        EXPORTING</item>
+      <item>          textid = /iwbep/cx_mgw_tech_exception=&gt;internal_error.</item>
+      <item/>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>* Get key table information</item>
+      <item>    io_tech_request_context-&gt;get_converted_source_keys(</item>
+      <item>      IMPORTING</item>
+      <item>        es_key_values  = ls_converted_keys ).</item>
+      <item/>
+      <item>* Maps filter table lines to function module parameters</item>
+      <item>    LOOP AT lt_filter INTO ls_filter.</item>
+      <item/>
+      <item>      CASE ls_filter-property.</item>
+      <item>        WHEN &apos;ASLVL&apos;.</item>
+      <item>          lo_filter-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_aslvl ).</item>
+      <item/>
+      <item>                   WHEN &apos;CLASS&apos;.</item>
+      <item>          lo_filter-&gt;convert_select_option(</item>
+      <item>            EXPORTING</item>
+      <item>              is_select_option = ls_filter</item>
+      <item>            IMPORTING</item>
+      <item>              et_select_option = lrt_class ).</item>
+      <item>        WHEN OTHERS.</item>
+      <item>          &quot; Log message in the application log</item>
+      <item>          me-&gt;/iwbep/if_sb_dpc_comm_services~log_message(</item>
+      <item>            EXPORTING</item>
+      <item>              iv_msg_type   = &apos;E&apos;</item>
+      <item>              iv_msg_id     = &apos;/IWBEP/MC_SB_DPC_ADM&apos;</item>
+      <item>              iv_msg_number = 020</item>
+      <item>              iv_msg_v1     = ls_filter-property ).</item>
+      <item>          &quot; Raise Exception</item>
+      <item>          RAISE EXCEPTION TYPE /iwbep/cx_mgw_tech_exception</item>
+      <item>            EXPORTING</item>
+      <item>              textid = /iwbep/cx_mgw_tech_exception=&gt;internal_error.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    SELECT *</item>
+      <item>      FROM /agri/glagha</item>
+      <item>      INTO CORRESPONDING FIELDS OF TABLE lt_agha&quot;lt_klah</item>
+      <item>      WHERE class in lrt_class</item>
+      <item>        and klart eq &apos;X90&apos;</item>
+      <item>        and aslvl IN lrt_aslvl.</item>
+      <item/>
+      <item>    LOOP AT lt_agha INTO ls_agha.</item>
+      <item>      REFRESH: lt_klah,lt_atgrp,lt_athdr,lt_cabnt.</item>
+      <item>      MOVE-CORRESPONDING ls_agha TO ls_klah.</item>
+      <item>      ls_klah-klart = &apos;X90&apos;.</item>
+      <item>      APPEND ls_klah TO lt_klah.</item>
+      <item/>
+      <item>      CALL METHOD /agri/cl_gattr_utils=&gt;attribute_groups_attr_read</item>
+      <item>        EXPORTING</item>
+      <item>          it_klah  = lt_klah</item>
+      <item>          i_agtyp  = ls_klah-klart</item>
+      <item>        IMPORTING</item>
+      <item>          et_atgrp = lt_atgrp</item>
+      <item>          et_athdr = lt_athdr.</item>
+      <item/>
+      <item>      READ TABLE lt_atgrp INTO ls_atgrp INDEX 1.</item>
+      <item/>
+      <item>      IF lt_athdr IS NOT INITIAL.</item>
+      <item>        SELECT atinn atbez                           &quot;#EC CI_SEL_NESTED</item>
+      <item>          FROM cabnt</item>
+      <item>          INTO CORRESPONDING FIELDS OF TABLE lt_cabnt</item>
+      <item>          FOR ALL ENTRIES IN lt_athdr</item>
+      <item>          WHERE atinn = lt_athdr-atinn</item>
+      <item>            AND spras = sy-langu.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>    LOOP AT ls_atgrp-ataoa INTO ls_ataoa.</item>
+      <item>      READ TABLE lt_athdr INTO ls_athdr with KEY atinn = ls_ataoa-atinn.</item>
+      <item>        ls_entityset-class = ls_atgrp-atgrp.</item>
+      <item>        ls_entityset-atnam = ls_athdr-atnam.</item>
+      <item>        ls_entityset-atfor = ls_athdr-atfor.</item>
+      <item>        ls_entityset-anzst = ls_athdr-anzst.</item>
+      <item>        ls_entityset-atbez = ls_athdr-atbez.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;CONVERSION_EXIT_LUNIT_OUTPUT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            input          = ls_athdr-msehi</item>
+      <item>*           LANGUAGE       = SY-LANGU</item>
+      <item>          IMPORTING</item>
+      <item>*           LONG_TEXT      =</item>
+      <item>            output         = ls_entityset-cunit &quot;ls_athdr-msehi</item>
+      <item>*           SHORT_TEXT     =</item>
+      <item>          EXCEPTIONS</item>
+      <item>            unit_not_found = 1</item>
+      <item>            OTHERS         = 2.</item>
+      <item>        IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>        ENDIF.</item>
+      <item>*      MOVE-CORRESPONDING ls_agha TO ls_entityset.</item>
+      <item>        ls_entityset-erdat   =  ls_agha-erdat  .</item>
+      <item>        ls_entityset-aedat   =  ls_agha-aedat  .</item>
+      <item>        ls_entityset-aslvl   =  ls_agha-aslvl  .</item>
+      <item>        ls_entityset-ernam   =  ls_agha-ernam  .</item>
+      <item>        ls_entityset-aenam   =  ls_agha-aenam  .</item>
+      <item>        ls_entityset-erzet   =  ls_agha-erzet  .</item>
+      <item>        ls_entityset-aezet   =  ls_agha-aezet  .</item>
+      <item/>
+      <item>        APPEND ls_entityset TO et_entityset.</item>
+      <item>*        SORT et_entityset BY atnam.</item>
+      <item>        CLEAR: ls_entityset,ls_ataoa,ls_athdr.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>*** Getting Delta token</item>
+      <item>  CALL METHOD me-&gt;get_delta_token</item>
+      <item>    EXPORTING</item>
+      <item>      io_tech_request_context  = io_tech_request_context</item>
+      <item>      mr_service_document_name = mr_service_document_name</item>
+      <item>      mr_service_version       = mr_service_version</item>
+      <item>      it_entityset             = et_entityset</item>
+      <item>    IMPORTING</item>
+      <item>      es_response_context      = es_response_context.</item>
+      <item/>
+      <item>exit.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BD9E2F1EBB9C6053</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BD9E2F1EBB9C6053</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>020</LENGTH>
+       <TEXT>Mobile MDM</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_EI_MOBILE_ODATA</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BD9E2F1EBB9C6053</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Create Order Yard</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMPR_OWN_PRODUCE</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMPR_OWN_PRODUCE</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMPR_OWN_PRODUCE=====CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMPR_OWN_PRODUCE=====CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMPR_OWN_PRODUCE\ME:PROCESS_EXECUTE_300\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item> DATA: lt_stack               TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>       lt_formatted_stack     TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>       lt_msgs                TYPE zabs_tty_sls_msgs,</item>
+      <item>       lv_bukrs_enhanc        TYPE bukrs,</item>
+      <item>       lv_aufnr_enhanc        TYPE aufnr,</item>
+      <item>       lv_werks_enhanc        TYPE werks_d,</item>
+      <item>       lv_ntgew_enhanc        TYPE ntgew,</item>
+      <item>       lv_gewei_enhanc        TYPE gewei,</item>
+      <item>       lv_charg_enhanc        TYPE charg_d,</item>
+      <item>       lv_batch_automt        TYPE charg_d,</item>
+      <item>       lv_autbn_enhanc        TYPE autbn_cus,</item>
+      <item>       lv_xchpf_enhanc        TYPE xchpf,</item>
+      <item>       lv_posnr_x             TYPE co_posnr VALUE 1,</item>
+      <item>       lv_classnum_enhanc     TYPE klasse_d,</item>
+      <item>       lv_initiator_enhanc    TYPE /agri/gdescr,</item>
+      <item>       ls_header_enhanc       TYPE bapi2017_gm_head_01,</item>
+      <item>       ls_item_enhanc         TYPE bapi2017_gm_item_create,</item>
+      <item>       ls_matdoc_enhanc       TYPE bapi2017_gm_head_ret,</item>
+      <item>       lwa_return_enhanc      TYPE bapiret2,</item>
+      <item>       lt_return_enhanc       TYPE TABLE OF bapiret2,</item>
+      <item>       ls_prdoc_enhanc        TYPE /agri/s_fmprdoc,</item>
+      <item>       lt_prvarec_enhanc      TYPE /agri/t_fmprvarec,</item>
+      <item>       lt_allocvalues_enhance TYPE /agri/t_fmallocvalues,</item>
+      <item>       lref_document_process_enhanc TYPE REF TO /agri/cl_fm_document_process.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_return_enhanc&gt; TYPE bapiret2.</item>
+      <item/>
+      <item>* Company code</item>
+      <item>  lv_bukrs_enhanc = get_company_code( ms_master-werks ).</item>
+      <item/>
+      <item>* &lt;300-1&gt;/&lt;300-2&gt;: Get yard order</item>
+      <item>  CALL METHOD get_yard_order</item>
+      <item>    EXPORTING</item>
+      <item>      i_bukrs               = lv_bukrs_enhanc</item>
+      <item>      i_matnr               = i_matnr</item>
+      <item>      i_yaufnr              = i_yaufnr</item>
+      <item>    IMPORTING</item>
+      <item>      e_aufnr               = lv_aufnr_enhanc</item>
+      <item>      e_werks               = lv_werks_enhanc</item>
+      <item>    EXCEPTIONS</item>
+      <item>      order_not_found       = 1</item>
+      <item>      order_types_not_found = 2</item>
+      <item>      status_not_found      = 3</item>
+      <item>      OTHERS                = 4.</item>
+      <item/>
+      <item>  IF sy-subrc = 0.</item>
+      <item>* &lt;300-3&gt;: Get quantity to confirm from document class settings</item>
+      <item>    CALL METHOD get_quantity_to_post</item>
+      <item>      IMPORTING</item>
+      <item>        e_ntgew = lv_ntgew_enhanc</item>
+      <item>        e_gewei = lv_gewei_enhanc.</item>
+      <item/>
+      <item>*    IF sy-uname EQ &apos;T_M.ALFREDO&apos;</item>
+      <item>*    OR sy-uname EQ &apos;T_T.KONNO&apos;.</item>
+      <item>*      BREAK-POINT.</item>
+      <item>*    ENDIF.</item>
+      <item/>
+      <item>* Determine if the Goods movement was done</item>
+      <item>    ls_prdoc_enhanc = get_subprocess_document( i_prnum   = is_prhdr-prnum</item>
+      <item>                                               i_gjahr   = is_prhdr-gjahr</item>
+      <item>                                               i_setproc = i_setproc</item>
+      <item>                                               i_idproc  = i_idproc ).</item>
+      <item>    IF ls_prdoc_enhanc-pdokar1 IS INITIAL.</item>
+      <item/>
+      <item>* Instance</item>
+      <item>      CREATE OBJECT lref_document_process_enhanc.</item>
+      <item/>
+      <item>* &lt;300-4&gt;: Goods movements to yard order</item>
+      <item>      CALL METHOD lref_document_process_enhanc-&gt;make_movement_material</item>
+      <item>        EXPORTING</item>
+      <item>          i_aufnr   = lv_aufnr_enhanc</item>
+      <item>          i_matnr   = i_matnr</item>
+      <item>          i_ntgew   = lv_ntgew_enhanc</item>
+      <item>          i_gewei   = lv_gewei_enhanc</item>
+      <item>          i_budat   = i_budat</item>
+      <item>          i_bldat   = i_bldat</item>
+      <item>          i_testrun = i_testrun</item>
+      <item>          i_setproc = i_setproc</item>
+      <item>          i_idproc  = i_idproc</item>
+      <item>          i_prnum   = is_prhdr-prnum</item>
+      <item>          i_gjahr   = is_prhdr-gjahr</item>
+      <item>          i_bukrs   = lv_bukrs_enhanc</item>
+      <item>        IMPORTING</item>
+      <item>          es_matdoc = ls_matdoc_enhanc</item>
+      <item>        CHANGING</item>
+      <item>          ct_return = lt_return_enhanc</item>
+      <item>          cs_header = ls_header_enhanc</item>
+      <item>          cs_item   = ls_item_enhanc</item>
+      <item>          c_subrc   = c_subrc.</item>
+      <item>    ELSE.</item>
+      <item>      ls_matdoc_enhanc-mat_doc  = ls_prdoc_enhanc-pdokar1.</item>
+      <item>      ls_matdoc_enhanc-doc_year = ls_prdoc_enhanc-pdokar2.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    c_subrc = 4.</item>
+      <item>    MESSAGE e139(/agri/fmpr) INTO sy-msgli.</item>
+      <item>    lwa_return_enhanc-id         = sy-msgid.</item>
+      <item>    lwa_return_enhanc-type       = sy-msgty.</item>
+      <item>    lwa_return_enhanc-number     = sy-msgno.</item>
+      <item>    lwa_return_enhanc-message_v1 = sy-msgv1.</item>
+      <item>    lwa_return_enhanc-message_v2 = sy-msgv2.</item>
+      <item>    lwa_return_enhanc-message_v3 = sy-msgv3.</item>
+      <item>    lwa_return_enhanc-message_v4 = sy-msgv4.</item>
+      <item>    APPEND lwa_return_enhanc TO lt_return_enhanc.</item>
+      <item/>
+      <item>    INSERT INITIAL LINE INTO TABLE lt_msgs ASSIGNING FIELD-SYMBOL(&lt;lwa_msg&gt;).</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      &lt;lwa_msg&gt;-msgid  = sy-msgid.</item>
+      <item>      &lt;lwa_msg&gt;-msgty  = &apos;I&apos;.</item>
+      <item>      &lt;lwa_msg&gt;-msgno  = sy-msgno.</item>
+      <item>      &lt;lwa_msg&gt;-msgv1  = sy-msgv1.</item>
+      <item>      &lt;lwa_msg&gt;-msgv2  = sy-msgv2.</item>
+      <item>      &lt;lwa_msg&gt;-msgv3  = sy-msgv3.</item>
+      <item>      &lt;lwa_msg&gt;-msgv4  = sy-msgv4.</item>
+      <item>      &lt;lwa_msg&gt;-lineno = &apos;999999&apos;.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>* Get last released Yard order / Plant / Storage location</item>
+      <item>    SELECT k~aufnr, k~plnbez, a~objnr, p~dwerk AS werks, p~lgort      &quot;#EC CI_BUFFJOIN</item>
+      <item>           FROM afko AS k</item>
+      <item>     INNER JOIN aufk AS a</item>
+      <item>             ON k~aufnr = a~aufnr</item>
+      <item>     INNER JOIN afpo AS p</item>
+      <item>             ON k~aufnr = p~aufnr</item>
+      <item>     INNER JOIN t001k AS t</item>
+      <item>             ON a~werks = t~bwkey</item>
+      <item>           INTO TABLE @DATA(lt_prdord_x)</item>
+      <item>          WHERE k~aufnr  = @i_yaufnr</item>
+      <item>*            AND k~plnbez = @i_matnr</item>
+      <item>            AND p~posnr  = @lv_posnr_x</item>
+      <item>            AND p~projn  = @ms_flcma-proid.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      READ TABLE lt_prdord_x INTO DATA(ls_prodord_x) INDEX 1.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        IF ls_prodord_x-plnbez NE i_matnr.</item>
+      <item>*-- Material do talhão diferente de material da ordem de produção</item>
+      <item>          INSERT INITIAL LINE INTO TABLE lt_msgs ASSIGNING &lt;lwa_msg&gt;.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;lwa_msg&gt;-msgid  = &apos;ZFMFP&apos;.</item>
+      <item>            &lt;lwa_msg&gt;-msgty  = &apos;I&apos;.</item>
+      <item>            &lt;lwa_msg&gt;-msgno  = 094.</item>
+      <item>            &lt;lwa_msg&gt;-msgv1  = sy-msgv1.</item>
+      <item>            &lt;lwa_msg&gt;-msgv2  = sy-msgv2.</item>
+      <item>            &lt;lwa_msg&gt;-msgv3  = sy-msgv3.</item>
+      <item>            &lt;lwa_msg&gt;-msgv4  = sy-msgv4.</item>
+      <item>            &lt;lwa_msg&gt;-lineno = &apos;999999&apos;.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lt_msgs[] IS NOT INITIAL.</item>
+      <item>    CALL FUNCTION &apos;ZABS_FM_MEMORY_MSGS&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        it_messages = lt_msgs.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* IfIf real execution</item>
+      <item>  CHECK i_testrun IS INITIAL.</item>
+      <item/>
+      <item>* Check for return code</item>
+      <item>  IF c_subrc IS INITIAL.</item>
+      <item/>
+      <item>* Check batch management indicator</item>
+      <item>    lv_xchpf_enhanc = get_batch_indicator( i_matnr ).</item>
+      <item>    IF lv_xchpf_enhanc = &apos;X&apos;.</item>
+      <item/>
+      <item>* BADI get reference</item>
+      <item>      IF mref_badi_fmpr_all IS NOT BOUND.</item>
+      <item/>
+      <item>        TRY.</item>
+      <item>            GET BADI mref_badi_fmpr_all.</item>
+      <item>            ##no_handler</item>
+      <item>          CATCH cx_badi_not_implemented.</item>
+      <item>        ENDTRY.</item>
+      <item/>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>* Check if some implementation exist</item>
+      <item>      IF mref_badi_fmpr_all IS BOUND.</item>
+      <item/>
+      <item>* BADI get classification values</item>
+      <item>        CALL BADI mref_badi_fmpr_all-&gt;get_classification_values</item>
+      <item>          EXPORTING</item>
+      <item>            i_prnum        = is_prhdr-prnum</item>
+      <item>            i_gjahr        = is_prhdr-gjahr</item>
+      <item>          CHANGING</item>
+      <item>            ct_allocvalues = lt_allocvalues_enhance.</item>
+      <item/>
+      <item>        IF lt_allocvalues_enhance[] IS NOT INITIAL.</item>
+      <item>* Get class number</item>
+      <item>          lv_classnum_enhanc = get_appl_batch_control( i_werks = lv_werks_enhanc ).  &quot; Yard order plant</item>
+      <item/>
+      <item>* Determine batch generation mode</item>
+      <item>          lv_autbn_enhanc = get_batch_generation_mode( ).</item>
+      <item>          CASE lv_autbn_enhanc.</item>
+      <item>            WHEN mc_autbn_active.      &quot; Automatic (From Material Document)</item>
+      <item>* Get batch number</item>
+      <item>              lv_charg_enhanc =  get_batch( is_matdoc = ls_matdoc_enhanc ).</item>
+      <item/>
+      <item>            WHEN mc_autbn_inactive.    &quot; Manual (From Produce Receipt)</item>
+      <item>* Get batch number</item>
+      <item>              lv_charg_enhanc =  get_batch( i_prnum  = is_prhdr-prnum</item>
+      <item>                                            i_gjahr  = is_prhdr-gjahr ).</item>
+      <item>          ENDCASE.</item>
+      <item/>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>*          Check ls_matdoc_enhanc-mat_doc is not initial</item>
+      <item>*            and ls_matdoc_enhanc-doc_year is not initial.</item>
+      <item>*</item>
+      <item>*              CALL METHOD /agri/cl_fmpr_own_produce=&gt;batch_document_get</item>
+      <item>*              EXPORTING</item>
+      <item>*                i_mblnr = ls_matdoc_enhanc-mat_doc</item>
+      <item>*                i_mjahr = ls_matdoc_enhanc-doc_year</item>
+      <item>*              IMPORTING</item>
+      <item>*                e_charg = lv_batch_automt.</item>
+      <item>*</item>
+      <item>** Set classification</item>
+      <item>*          CALL METHOD set_batch_classification</item>
+      <item>*            EXPORTING</item>
+      <item>*              i_matnr        = i_matnr</item>
+      <item>*              i_charg        = lv_batch_automt</item>
+      <item>*              i_classnum     = lv_classnum_enhanc</item>
+      <item>*              it_allocvalues = lt_allocvalues_enhance</item>
+      <item>*            RECEIVING</item>
+      <item>*              et_return      = lt_return_enhanc.</item>
+      <item>*</item>
+      <item>*          READ TABLE lt_return_enhanc TRANSPORTING NO FIELDS WITH KEY type = &apos;E&apos;.</item>
+      <item>*          IF sy-subrc = 0.</item>
+      <item>*            c_subrc = 4.</item>
+      <item>*          ENDIF.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item/>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Consider only error messages</item>
+      <item>  DELETE lt_return_enhanc WHERE type = &apos;S&apos; OR type = &apos;W&apos; OR type = &apos;I&apos;.</item>
+      <item/>
+      <item>* There are some messages?</item>
+      <item>  IF NOT lt_return_enhanc[] IS INITIAL.</item>
+      <item/>
+      <item>* Description</item>
+      <item>    lv_initiator_enhanc = get_initiator( ).</item>
+      <item/>
+      <item>* Initilize log messages</item>
+      <item>    CALL METHOD initilize_messages</item>
+      <item>      EXPORTING</item>
+      <item>        i_object    = i_object</item>
+      <item>        i_subobject = i_subobject</item>
+      <item>        i_initiator = lv_initiator_enhanc.</item>
+      <item/>
+      <item>* Add messages to application log</item>
+      <item>    LOOP AT lt_return_enhanc ASSIGNING &lt;lwa_return_enhanc&gt;.</item>
+      <item>      MESSAGE ID &lt;lwa_return_enhanc&gt;-id</item>
+      <item>            TYPE &lt;lwa_return_enhanc&gt;-type</item>
+      <item>          NUMBER &lt;lwa_return_enhanc&gt;-number</item>
+      <item>            WITH &lt;lwa_return_enhanc&gt;-message_v1</item>
+      <item>                 &lt;lwa_return_enhanc&gt;-message_v2</item>
+      <item>                 &lt;lwa_return_enhanc&gt;-message_v3</item>
+      <item>                 &lt;lwa_return_enhanc&gt;-message_v4</item>
+      <item>            INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>* Save Messges</item>
+      <item>    messages_save lv_initiator_enhanc space.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Write process variables</item>
+      <item>  CALL METHOD write_variables_300</item>
+      <item>    EXPORTING</item>
+      <item>      is_item    = ls_item_enhanc</item>
+      <item>      is_header  = ls_header_enhanc</item>
+      <item>    CHANGING</item>
+      <item>      ct_prvarec = lt_prvarec_enhanc.</item>
+      <item/>
+      <item>* Execution RCP</item>
+      <item>  CALL METHOD execute_rcp</item>
+      <item>    EXPORTING</item>
+      <item>      it_prvarec = lt_prvarec_enhanc</item>
+      <item>      i_bukrs    = lv_bukrs_enhanc</item>
+      <item>      i_prnum    = is_prhdr-prnum</item>
+      <item>      i_gjahr    = is_prhdr-gjahr</item>
+      <item>      i_setproc  = i_setproc</item>
+      <item>      i_idproc   = i_idproc</item>
+      <item>      i_mblnr    = ls_matdoc_enhanc-mat_doc</item>
+      <item>      i_lgnumber = gs_log_variables-log_number</item>
+      <item>      i_subrc    = c_subrc.</item>
+      <item/>
+      <item>  EXIT.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BDE7B355DA2983D6</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BDE7B355DA2983D6</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>027</LENGTH>
+       <TEXT>Create Order Yard</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_CLASS_OWNPROD_300</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BDE7B355DA2983D6</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

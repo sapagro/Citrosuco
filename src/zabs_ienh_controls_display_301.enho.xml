@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Controls Display 0301</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLAM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLAM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLAM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAM\FO:CONTROLS_DISPLAY_0301\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_custom) = abap_false.</item>
+      <item>  READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY kind        = &apos;EVENT&apos;</item>
+      <item>             progname    = &apos;ZABS_REP_GLAM_LIST_DISPLAY&apos;</item>
+      <item>             includename = &apos;ZABS_REP_GLAM_LIST_DISPLAY&apos;</item>
+      <item>             event       = &apos;END-OF-SELECTION&apos;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_custom = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_custom EQ abap_true.</item>
+      <item>    PERFORM zabs_controls_display_0301.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAM\IC:/AGRI/LGLAMF0C\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>FORM zabs_controls_display_0301.</item>
+      <item/>
+      <item>  DATA: lt_asset_summary    LIKE gt_asset_summary,</item>
+      <item>        ls_variant          TYPE disvariant,</item>
+      <item>        ls_layout           TYPE lvc_s_layo,</item>
+      <item>        lv_input            TYPE i,</item>
+      <item>        lv_structure        TYPE dd02l-tabname,</item>
+      <item>        lv_title            TYPE lvc_title,</item>
+      <item>        ls_row_no           TYPE lvc_s_roid,</item>
+      <item>        ls_col_no           TYPE lvc_s_col,</item>
+      <item>        ls_row_info         TYPE lvc_s_row,</item>
+      <item>        ls_col_info         TYPE lvc_s_col,</item>
+      <item>        ls_environment      TYPE /agri/s_glvc_environment,</item>
+      <item>        lt_fcat             TYPE lvc_t_fcat,</item>
+      <item>        lt_toolbar_excludes TYPE ui_functions,</item>
+      <item>        lt_sort             TYPE lvc_t_sort.</item>
+      <item/>
+      <item>  IF ref_container_asset_summary IS INITIAL.</item>
+      <item>    CREATE OBJECT ref_container_asset_summary</item>
+      <item>      EXPORTING</item>
+      <item>        container_name              = &apos;/AGRI/SAPLGLAM_0301_CC&apos;</item>
+      <item>      EXCEPTIONS</item>
+      <item>        cntl_error                  = 1</item>
+      <item>        cntl_system_error           = 2</item>
+      <item>        create_error                = 3</item>
+      <item>        lifetime_error              = 4</item>
+      <item>        lifetime_dynpro_dynpro_link = 5</item>
+      <item>        OTHERS                      = 6.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ref_grid_asset_summary IS INITIAL.</item>
+      <item/>
+      <item>    ls_environment-switchoff_performance = c_true.</item>
+      <item>    ls_layout-sel_mode = &apos;A&apos;.</item>
+      <item>    ls_layout-stylefname = &apos;STYLES&apos;.</item>
+      <item>    ls_layout-cwidth_opt = c_true.</item>
+      <item>    ls_layout-info_fname = &apos;ROWCOLOR&apos;.</item>
+      <item/>
+      <item>    CREATE OBJECT ref_grid_asset_summary</item>
+      <item>      EXPORTING</item>
+      <item>        i_parent           = ref_container_asset_summary</item>
+      <item>        is_lvc_environment = ls_environment</item>
+      <item>      EXCEPTIONS</item>
+      <item>        error_cntl_create = 1</item>
+      <item>        error_cntl_init   = 2</item>
+      <item>        error_cntl_link   = 3</item>
+      <item>        error_dp_create   = 4</item>
+      <item>        OTHERS            = 5.</item>
+      <item/>
+      <item>    ls_variant-report = gs_variables-program.</item>
+      <item>    ls_variant-handle = c_variant_handle-asset_summary.</item>
+      <item/>
+      <item>    PERFORM toolbar_buttons_exclude CHANGING lt_toolbar_excludes.</item>
+      <item/>
+      <item>    PERFORM control_events_register.</item>
+      <item/>
+      <item>    PERFORM sort_table_prepare CHANGING lt_sort.</item>
+      <item/>
+      <item>    PERFORM field_catalog_prepare USING c_structure_name-asset_summary</item>
+      <item>                               CHANGING lt_fcat.</item>
+      <item/>
+      <item>    LOOP AT lt_fcat ASSIGNING FIELD-SYMBOL(&lt;lwa_fcat&gt;).</item>
+      <item>      CASE &lt;lwa_fcat&gt;-fieldname.</item>
+      <item>        WHEN &apos;DATAB&apos; OR &apos;IVDAT&apos; OR &apos;CHARG_IN&apos; OR &apos;CHARG_INF&apos;</item>
+      <item>          OR &apos;EXHAD&apos; OR &apos;AGEID&apos; OR &apos;DAYTH&apos;.</item>
+      <item>          &lt;lwa_fcat&gt;-no_out = c_true.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF sy-uname EQ &apos;T_H.KABABE&apos;.</item>
+      <item>      BREAK-POINT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    LOOP AT gt_asset_summary INTO DATA(ls_asset_summary).</item>
+      <item>      READ TABLE lt_asset_summary ASSIGNING FIELD-SYMBOL(&lt;ls_asset_summary&gt;)</item>
+      <item>        WITH KEY ivcat    = ls_asset_summary-ivcat</item>
+      <item>                 tplnr_fl = ls_asset_summary-tplnr_fl</item>
+      <item>                 cmnum    = ls_asset_summary-cmnum</item>
+      <item>                 meins    = ls_asset_summary-meins.</item>
+      <item>      IF sy-subrc NE 0.</item>
+      <item>        APPEND ls_asset_summary TO lt_asset_summary.</item>
+      <item>      ELSE.</item>
+      <item>        ADD ls_asset_summary-menge TO &lt;ls_asset_summary&gt;-menge.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>*    IF sy-uname EQ &apos;T_H.KABABE&apos;.</item>
+      <item>      gt_asset_summary[] = lt_asset_summary[].</item>
+      <item>*    ENDIF.</item>
+      <item/>
+      <item>    CALL METHOD ref_grid_asset_summary-&gt;set_table_for_first_display</item>
+      <item>      EXPORTING</item>
+      <item>*       I_BUFFER_ACTIVE               =</item>
+      <item>*       I_BYPASSING_BUFFER            =</item>
+      <item>*       I_CONSISTENCY_CHECK           =</item>
+      <item>*       I_STRUCTURE_NAME              =</item>
+      <item>        is_variant                    = ls_variant</item>
+      <item>        i_save                        = &apos;A&apos;</item>
+      <item>*       I_DEFAULT                     = &apos;X&apos;</item>
+      <item>        is_layout                     = ls_layout</item>
+      <item>*       IS_PRINT                      =</item>
+      <item>*       IT_SPECIAL_GROUPS             =</item>
+      <item>        it_toolbar_excluding          = lt_toolbar_excludes</item>
+      <item>*       IT_HYPERLINK                  =</item>
+      <item>*       IT_ALV_GRAPHICS               =</item>
+      <item>*       IT_EXCEPT_QINFO               =</item>
+      <item>      CHANGING</item>
+      <item>        it_outtab                     = gt_asset_summary</item>
+      <item>        it_fieldcatalog               = lt_fcat</item>
+      <item>        it_sort                       = lt_sort</item>
+      <item>*       IT_FILTER                     =</item>
+      <item>      EXCEPTIONS</item>
+      <item>        invalid_parameter_combination = 1</item>
+      <item>        program_error                 = 2</item>
+      <item>        too_many_lines                = 3</item>
+      <item>        OTHERS                        = 4.</item>
+      <item/>
+      <item>  ELSEIF gs_variables-refresh_asset_summary_grid = c_true.</item>
+      <item/>
+      <item>    CLEAR gs_variables-refresh_asset_summary_grid.</item>
+      <item/>
+      <item>    PERFORM grid_data_get USING ref_grid_asset_summary</item>
+      <item>                       CHANGING lt_sort[]</item>
+      <item>                                lt_fcat</item>
+      <item>                                ls_row_no</item>
+      <item>                                ls_col_no</item>
+      <item>                                ls_row_info</item>
+      <item>                                ls_col_info</item>
+      <item>                                ls_layout.</item>
+      <item/>
+      <item>    PERFORM grid_data_set  USING ref_grid_asset_summary</item>
+      <item>                        CHANGING gt_asset_summary</item>
+      <item>                                 lt_fcat[]</item>
+      <item>                                 lt_sort[]</item>
+      <item>                                 ls_row_no</item>
+      <item>                                 ls_col_no</item>
+      <item>                                 ls_row_info</item>
+      <item>                                 ls_col_info</item>
+      <item>                                 ls_layout.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;controls_display_0301</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAAF8B81E16B8064CD</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAAF8B81E16B8064CD</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>032</LENGTH>
+       <TEXT>Controls Display 0301</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_CONTROLS_DISPLAY_301</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAAF8B81E16B8064CD</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

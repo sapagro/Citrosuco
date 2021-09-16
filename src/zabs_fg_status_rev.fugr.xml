@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Func Group for Status Reversal</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZABS_FG_STATUS_REVF01</SOBJ_NAME>
+    <SOBJ_NAME>LZABS_FG_STATUS_REVTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZABS_FG_STATUS_REV</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZABS_FM_STATUS_REVERSAL</FUNCNAME>
+     <SHORT_TEXT>Func Module for Status Reversal</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>LT_OCNUM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/T_FMOCNUM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/T_GPROLOG</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>LT_OCNUM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Order Confirmation</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_MESSAGES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Process Log Message</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

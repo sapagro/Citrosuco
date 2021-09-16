@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_WAPA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <APPLNAME>Z12345</APPLNAME>
+    <APPLCLAS>/UI5/CL_UI5_BSP_APPLICATION</APPLCLAS>
+    <APPLEXT>Z12345</APPLEXT>
+    <SECURITY>X</SECURITY>
+    <ORIGLANG>P</ORIGLANG>
+    <MODIFLANG>E</MODIFLANG>
+    <TEXT>Teste 12345</TEXT>
+   </ATTRIBUTES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

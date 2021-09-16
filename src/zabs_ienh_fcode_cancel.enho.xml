@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Cancel Document</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\IC:/AGRI/LGLMDMF0F\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  zabs_fcode_cancel</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM fcode_zcancel.</item>
+      <item>*</item>
+      <item>  DATA: lv_answer_x   TYPE c,</item>
+      <item>        lv_view_x     TYPE i,</item>
+      <item>        lv_subrc_x    TYPE sy-subrc,</item>
+      <item>        lv_text_x(70) TYPE c,</item>
+      <item>        lv_mdocm_x    TYPE /agri/glmdocm.</item>
+      <item/>
+      <item>*-- Cancelar documento de medição &amp;1?</item>
+      <item>  MESSAGE s081(zfmfp) WITH gs_mddoc_infocus-mdocm INTO lv_text_x.</item>
+      <item>  lv_mdocm_x = gs_mddoc_infocus-mdocm.</item>
+      <item>  REPLACE &apos;&amp;1&apos; WITH lv_mdocm_x INTO lv_text_x.</item>
+      <item>  popup_to_confirm text-010 lv_text_x c_true lv_answer_x.</item>
+      <item/>
+      <item>  CHECK lv_answer_x EQ &apos;1&apos;.</item>
+      <item/>
+      <item>  gs_variables-initiator =  c_log_initiator-check.</item>
+      <item>  PERFORM messages_initialize USING  gs_variables-initiator</item>
+      <item>                                     c_log_subobject-check</item>
+      <item>                                     gs_mddoc_infocus-x-mdhdr.</item>
+      <item/>
+      <item>*-- Call Authority Check</item>
+      <item>   AUTHORITY-CHECK OBJECT &apos;ZABS_MDTYP&apos;</item>
+      <item>    ID &apos;MDTYP&apos; FIELD gs_mddoc_infocus-x-mdhdr-mdtyp</item>
+      <item>    ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>*-- Sem autorização para cancelar documento de medição do tipo &amp;1</item>
+      <item>    MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-error NUMBER &apos;084&apos;</item>
+      <item>      WITH gs_mddoc_infocus-x-mdhdr-mdtyp INTO sy-msgli.</item>
+      <item>    message_simple space.</item>
+      <item>    PERFORM message_context_set USING gs_mddoc_infocus-x-mdhdr.</item>
+      <item>    PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>  ELSE.</item>
+      <item>     CALL FUNCTION &apos;ZABS_FM_GLMD_CANCEL&apos;</item>
+      <item>       EXPORTING</item>
+      <item>         i_cancel = abap_true</item>
+      <item>       CHANGING</item>
+      <item>         cs_mddoc = gs_mddoc_infocus.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;fcode_zcancel</item>
+      <item/>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  zabs_fcode_reverse</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM fcode_zreverse.</item>
+      <item>*</item>
+      <item>  DATA: lv_answer_x   TYPE c,</item>
+      <item>        lv_view_x     TYPE i,</item>
+      <item>        lv_subrc_x    TYPE sy-subrc,</item>
+      <item>        lv_text_x(70) TYPE c,</item>
+      <item>        lv_mdocm_x    TYPE /agri/glmdocm.</item>
+      <item/>
+      <item>*-- Desfazer cancelamento do documento de medição &amp;1?</item>
+      <item>  MESSAGE s083(zfmfp) WITH gs_mddoc_infocus-mdocm INTO lv_text_x.</item>
+      <item>  lv_mdocm_x = gs_mddoc_infocus-mdocm.</item>
+      <item>  REPLACE &apos;&amp;1&apos; WITH lv_mdocm_x INTO lv_text_x.</item>
+      <item>  popup_to_confirm text-010 lv_text_x c_true lv_answer_x.</item>
+      <item/>
+      <item>  CHECK lv_answer_x EQ &apos;1&apos;.</item>
+      <item/>
+      <item>  gs_variables-initiator =  c_log_initiator-check.</item>
+      <item>  PERFORM messages_initialize USING  gs_variables-initiator</item>
+      <item>                                     c_log_subobject-check</item>
+      <item>                                     gs_mddoc_infocus-x-mdhdr.</item>
+      <item/>
+      <item>*-- Call Authority Check</item>
+      <item>   AUTHORITY-CHECK OBJECT &apos;ZABS_MDTYP&apos;</item>
+      <item>    ID &apos;MDTYP&apos; FIELD gs_mddoc_infocus-x-mdhdr-mdtyp</item>
+      <item>    ID &apos;ACTVT&apos; FIELD c_authorization_activity-delete.</item>
+      <item/>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>*-- Sem autorização para desfazer cancelamento do docto. medição tipo &amp;1</item>
+      <item>    MESSAGE ID &apos;ZFMFP&apos; TYPE c_msg_type-error NUMBER &apos;085&apos;</item>
+      <item>      WITH gs_mddoc_infocus-x-mdhdr-mdtyp INTO sy-msgli.</item>
+      <item>    message_simple space.</item>
+      <item>    PERFORM message_context_set USING gs_mddoc_infocus-x-mdhdr.</item>
+      <item>    PERFORM messages_display USING gs_variables-initiator.</item>
+      <item>  ELSE.</item>
+      <item>     CALL FUNCTION &apos;ZABS_FM_GLMD_CANCEL&apos;</item>
+      <item>       EXPORTING</item>
+      <item>         i_cancel = abap_false</item>
+      <item>       CHANGING</item>
+      <item>         cs_mddoc = gs_mddoc_infocus.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;fcode_zreverse</item>
+      <item/>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  FCODE_MASS_DOC_ADD</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM fcode_mass_doc_add .</item>
+      <item/>
+      <item>  DATA: lt_fcat      TYPE lvc_t_fcat,</item>
+      <item>        lt_rows      TYPE lvc_t_row,</item>
+      <item>        lwa_row      TYPE lvc_s_row,</item>
+      <item>        lv_mdocm(18) TYPE n.</item>
+      <item/>
+      <item>  IF &lt;gt_mddata&gt; IS ASSIGNED.</item>
+      <item>    DATA(lt_mdsnp) = gt_mdsnp[].</item>
+      <item>    SORT lt_mdsnp BY mdocm DESCENDING.</item>
+      <item>    LOOP AT gt_selected_rows INTO DATA(ls_selected_row).</item>
+      <item>*    READ TABLE lt_mdsnp INTO DATA(lwa_mdsnp) INDEX 1.</item>
+      <item>    READ TABLE lt_mdsnp INTO DATA(lwa_last_doc) INDEX 1.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      TRANSLATE lwa_last_doc-mdocm USING &apos;$ &apos;.</item>
+      <item>      CONDENSE lwa_last_doc-mdocm.</item>
+      <item>      lv_mdocm = lwa_last_doc-mdocm + 1.</item>
+      <item>    ENDIF.</item>
+      <item>    READ TABLE lt_mdsnp INTO DATA(lwa_mdsnp) INDEX ls_selected_row-index.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>*      TRANSLATE lwa_mdsnp-mdocm USING &apos;$ &apos;.</item>
+      <item>*      CONDENSE lwa_mdsnp-mdocm.</item>
+      <item>*      lv_mdocm = lwa_mdsnp-mdocm + 1.</item>
+      <item>*      READ TABLE &lt;gt_mddata&gt; ASSIGNING FIELD-SYMBOL(&lt;lwa_data&gt;) INDEX 1.</item>
+      <item>      READ TABLE &lt;gt_mddata&gt; ASSIGNING FIELD-SYMBOL(&lt;lwa_data&gt;) INDEX ls_selected_row-index.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        PERFORM field_catalog_prepare USING c_structure_name-default_fields</item>
+      <item>                                   CHANGING lt_fcat.</item>
+      <item>*-- &lt;gt_mddata&gt;[]</item>
+      <item>        INSERT INITIAL LINE INTO TABLE &lt;gt_mddata&gt;</item>
+      <item>          ASSIGNING FIELD-SYMBOL(&lt;lwa_new_mddata&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          DATA(lv_new_mddata) = abap_true.</item>
+      <item>        ELSE.</item>
+      <item>          lv_new_mddata = abap_false.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lv_new_mddata EQ abap_true.</item>
+      <item>          LOOP AT lt_fcat INTO DATA(lwa_fcat).</item>
+      <item>            ASSIGN COMPONENT lwa_fcat-fieldname</item>
+      <item>              OF STRUCTURE &lt;lwa_data&gt; TO FIELD-SYMBOL(&lt;lv_source&gt;).</item>
+      <item>            IF sy-subrc EQ 0.</item>
+      <item>*-- Update &lt;gt_mddata&gt;[]</item>
+      <item>              IF lv_new_mddata EQ abap_true.</item>
+      <item>                ASSIGN COMPONENT lwa_fcat-fieldname</item>
+      <item>                  OF STRUCTURE &lt;lwa_new_mddata&gt; TO FIELD-SYMBOL(&lt;lv_target1&gt;).</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  &lt;lv_target1&gt; = &lt;lv_source&gt;.</item>
+      <item>                  IF lwa_fcat-fieldname EQ &apos;MDOCM&apos;.</item>
+      <item>                    &lt;lv_target1&gt; = &apos;$$&apos; &amp;&amp; lv_mdocm.</item>
+      <item>                  ENDIF.</item>
+      <item>                ENDIF.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDLOOP.</item>
+      <item>          SORT &lt;gt_mddata&gt; BY (&apos;MDOCM&apos;).</item>
+      <item>          SORT gt_mddoc BY mdocm.</item>
+      <item>        ENDIF.</item>
+      <item>**-- gt_mddoc[]</item>
+      <item>*        READ TABLE gt_mddoc INTO DATA(lwa_mddoc_ref) INDEX 1.</item>
+      <item>        READ TABLE gt_mddoc INTO DATA(lwa_mddoc_ref) INDEX ls_selected_row-index.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          INSERT INITIAL LINE INTO TABLE gt_mddoc ASSIGNING FIELD-SYMBOL(&lt;lwa_new_mddoc&gt;).</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;lwa_new_mddoc&gt; = lwa_mddoc_ref.</item>
+      <item>            LOOP AT lt_fcat INTO lwa_fcat.</item>
+      <item>              ASSIGN COMPONENT lwa_fcat-fieldname</item>
+      <item>                OF STRUCTURE &lt;lwa_new_mddoc&gt; TO FIELD-SYMBOL(&lt;lv_target&gt;).</item>
+      <item>              IF sy-subrc EQ 0.</item>
+      <item>                ASSIGN COMPONENT lwa_fcat-fieldname</item>
+      <item>                  OF STRUCTURE lwa_mddoc_ref TO &lt;lv_source&gt;.</item>
+      <item>                IF sy-subrc EQ 0.</item>
+      <item>                  &lt;lv_target&gt; = &lt;lv_source&gt;.</item>
+      <item>                ENDIF.</item>
+      <item>              ENDIF.</item>
+      <item>              IF lwa_fcat-fieldname EQ &apos;MDOCM&apos;.</item>
+      <item>                &lt;lv_target&gt; = &apos;$$&apos; &amp;&amp; lv_mdocm.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDLOOP.</item>
+      <item>            &lt;lwa_new_mddoc&gt;-x-mdhdr-mdocm = &lt;lwa_new_mddoc&gt;-mdocm.</item>
+      <item>            REFRESH &lt;lwa_new_mddoc&gt;-x-mdatv.</item>
+      <item>            REFRESH &lt;lwa_new_mddoc&gt;-x-mditm.</item>
+      <item>            SORT gt_mddoc BY mdocm.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>*-- gt_mdsnp[]</item>
+      <item>        INSERT INITIAL LINE INTO TABLE gt_mdsnp ASSIGNING FIELD-SYMBOL(&lt;lwa_new_mdsnp&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lwa_new_mdsnp&gt; = lwa_mdsnp.</item>
+      <item>          CONCATENATE &apos;$$&apos; lv_mdocm INTO &lt;lwa_new_mdsnp&gt;-mdocm.</item>
+      <item>          SORT gt_mdsnp BY mdocm.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item>    gs_variables-manual_changes = abap_true.</item>
+      <item>    gs_variables-data_changed = abap_true.</item>
+      <item>    gs_variables-refresh_output_table = abap_true.</item>
+      <item>    gs_variables-refresh_display_output_table = abap_true.</item>
+      <item>    REFRESH gt_selected_rows.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  gs_variables-attr_manual_changes = abap_true.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; FCODE_MASS_DOC_ADD</item>
+      <item>*&amp;----------------------------------------------------</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAA283BF06AB22A1D6</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAA283BF06AB22A1D6</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>Cancel Document</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_FCODE_CANCEL</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAA283BF06AB22A1D6</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

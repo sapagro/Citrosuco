@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Sort Entries</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\FO:GET_SELECTION_DATA\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lt_temp            LIKE gt_mdsnp.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_mass_proc) = abap_false.</item>
+      <item>  LOOP AT lt_formatted_stack INTO DATA(ls_formatted_stack).</item>
+      <item>    IF ls_formatted_stack-progname EQ &apos;/AGRI/GLMD_MASS_PROCESS&apos;.</item>
+      <item>      lv_mass_proc = abap_true.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lv_mass_proc = abap_true.</item>
+      <item>    DATA(lt_aux) = gt_mdsnp[].</item>
+      <item/>
+      <item>    LOOP AT lt_aux ASSIGNING FIELD-SYMBOL(&lt;ls_aux&gt;).</item>
+      <item>      CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_OUTPUT&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          input = &lt;ls_aux&gt;-tplnr_fl</item>
+      <item>        IMPORTING</item>
+      <item>          output = &lt;ls_aux&gt;-tplnr_fl.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    SORT lt_aux BY tplnr_fl ASCENDING.</item>
+      <item>    LOOP AT lt_aux INTO DATA(ls_aux).</item>
+      <item>      READ TABLE gt_mdsnp INTO lwa_mdsnp</item>
+      <item>        WITH KEY mdocm = ls_aux-mdocm.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        INSERT INITIAL LINE INTO TABLE lt_temp</item>
+      <item>          ASSIGNING FIELD-SYMBOL(&lt;ls_temp&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;ls_temp&gt; = lwa_mdsnp.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF lv_aslvl NE c_measurement_level-irrigation.</item>
+      <item>      gt_mdsnp[] = lt_temp[].</item>
+      <item>    ELSEIF lv_aslvl EQ c_measurement_level-irrigation.</item>
+      <item>      SORT gt_mdsnp BY equnr.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CLEAR lv_mdocm.</item>
+      <item>    LOOP AT gt_mdsnp ASSIGNING FIELD-SYMBOL(&lt;lwa_mdsnp&gt;).</item>
+      <item>      lv_mdocm = lv_mdocm + 1.</item>
+      <item>      CONCATENATE &apos;$$&apos; lv_mdocm INTO &lt;lwa_mdsnp&gt;-mdocm.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_mass_proc EQ abap_true</item>
+      <item>  AND lv_aslvl EQ c_measurement_level-crop_seasons</item>
+      <item>  AND lt_cskey[] IS NOT INITIAL.</item>
+      <item>    gv_custom_grid = abap_true.</item>
+      <item>  ELSE.</item>
+      <item>    gv_custom_grid = abap_false.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  REFRESH gt_glflcma_x.</item>
+      <item/>
+      <item>  IF gv_custom_grid = abap_true.</item>
+      <item>    SELECT * FROM /agri/glflcma</item>
+      <item>      INTO TABLE @gt_glflcma_x</item>
+      <item>      FOR ALL ENTRIES IN @lt_cskey</item>
+      <item>     WHERE tplnr_fl EQ @lt_cskey-tplnr_fl</item>
+      <item>       AND contr EQ @lt_cskey-contr</item>
+      <item>       AND astat EQ &apos;A&apos;</item>
+      <item>       AND loevm EQ @space.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SELECT *</item>
+      <item>        FROM makt</item>
+      <item>        INTO TABLE @gt_makt_x</item>
+      <item>        FOR ALL ENTRIES IN @gt_glflcma_x</item>
+      <item>       WHERE matnr = @gt_glflcma_x-ymatnr</item>
+      <item>         AND spras = @sy-langu.</item>
+      <item/>
+      <item>      SORT gt_makt_x BY matnr.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDAA0BB43AB7A9EF11D</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDAA0BB43AB7A9EF11D</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>022</LENGTH>
+       <TEXT>Sort Entries</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_SORT_ENTRIES</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDAA0BB43AB7A9EF11D</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

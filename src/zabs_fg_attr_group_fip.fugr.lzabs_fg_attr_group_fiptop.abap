@@ -1,0 +1,3 @@
+FUNCTION-POOL ZABS_FG_ATTR_GROUP_FIP.       "MESSAGE-ID ..
+
+* INCLUDE LZABS_FG_ATTR_GROUP_FIPD...        " Local class definition

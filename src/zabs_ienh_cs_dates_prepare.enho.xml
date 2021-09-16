@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Crop Seasons Date Change</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLCSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLCSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_DATES_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>*--BOC- T_T.KONNO-05.28.21</item>
+      <item>  DATA(lv_custom_prog) = abap_false.</item>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item>  READ TABLE lt_formatted_stack INTO DATA(ls_formatted_stack)</item>
+      <item>    WITH KEY progname    = &apos;ZABS_REP_ATUALIZA_SAFRA&apos;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_custom_prog = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item>*--EOC- T_T.KONNO-05.28.21</item>
+      <item/>
+      <item>  IF gs_csdoc_infocus-x-cshdr-updkz EQ c_updkz_new</item>
+      <item>  AND /agri/s_glflcma-zzdate IS NOT INITIAL.</item>
+      <item>    gs_csdoc_infocus-x-cshdr-datbi = /agri/s_glflcma-zzdate.</item>
+      <item>    CLEAR /agri/s_glflcma-zzdate.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF gs_csdoc_infocus-x-cshdr-datbi IS NOT INITIAL.</item>
+      <item>    lwa_cshdr-datbi = gs_csdoc_infocus-x-cshdr-datbi.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lv_custom_prog EQ abap_true.</item>
+      <item>    gs_csdoc_infocus-x-cshdr-exhad = /agri/s_glflcma-exhad.</item>
+      <item>    lwa_cshdr-exhad = /agri/s_glflcma-exhad.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDAA092693FFC26A9DC</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDAA092693FFC26A9DC</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>036</LENGTH>
+       <TEXT>Crop Seasons Date Change</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_CS_DATES_PREPARE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDAA092693FFC26A9DC</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

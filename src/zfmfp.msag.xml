@@ -1,0 +1,4211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZFMFP</ARBGB>
+    <MASTERLANG>P</MASTERLANG>
+    <STEXT>Field Planning</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>File types other than TXT/XLS/XLSX/CSV are not supported</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>No data to upload</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Linha Excel &amp;1:</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Nenhuma ordem de processo selecionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Selecione somente uma ordem de processo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Nenhuma ordem de tarefa selecionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Selecione somente uma ordem de tarefa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Ordem de tarefa inexistente para a linha selecionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Ordem de processo inexistente para a linha selecionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Selecione somente um terreno!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Verifique Turma e ID informados. Turma &amp;1 ID &amp;2 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Informe a turma que será modificada. Campo de preenchimento obrigatório</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Informe a descrição da nova turma. Campo de preenchimento obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Informe o código da nova turma. Campo de preenchimento obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Turma &amp;1 existe. Escolha outro código para a turma.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Informe o status. Campo de preenchimento obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Não existe registro válido em HR para nº pessoal &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Nº pessoal &amp;1 não está ativo.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>As informações não foram gravadas. É necessário informar um participante.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Não é possível gravar. Existem &amp;1 ocorrências para o nº pessoal &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Os dados foram atualizados com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Turma &amp;1 eliminada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Informe o ID da nova turma. Campo de preenchimento obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Turma &amp;1 ID &amp;2 existe. Crie outra combinação de Turma e ID.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>O Campo ID deve contar somente números!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Informe o ID que será modificado. Campo de preenchimento obrigatório</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>O campo &amp;1 é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Informe a Dose e a Unidade de Medida antes de gravar!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Grave a Receita antes de atualizar os produtos similares!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Insumo &amp;1 não utilizado na Receita &amp;2! Revise os dados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Crie ou selecione uma Lista Técnica Alt. antes de gravar a Receita!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>Item &amp;1: Lote &amp;2 atribuído ao material &amp;3. Utilize outro lote!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>O Lote &amp;1 está atribuído ao material &amp;2 e será apagado do item &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>Ordem de Processo &amp;1 criada p/ talhão &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Erro ao criar Ordem de Processo p/ talhão &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>Ordem &amp;1 criada p/ talhão &amp;2 processo &amp;3.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Favor verificar infotipo 0002 p/ nº pessoal &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Atualize o tipo de propriedade!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>062</MSGNR>
+     <TEXT>Fill in all mandatory fields</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>063</MSGNR>
+     <TEXT>Informar Tipo de documento de medição</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>066</MSGNR>
+     <TEXT>Documento de medição &amp;1 inexistente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>069</MSGNR>
+     <TEXT>Comprador &amp;1 inexistente no Centro &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>070</MSGNR>
+     <TEXT>Sem autorização para aplicar Alçadas de Aprovação</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>071</MSGNR>
+     <TEXT>Item &amp;1. Não é permitido valor negativo &amp;2 para Caixas Líquidas.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>072</MSGNR>
+     <TEXT>Item &amp;1. Não é permitido valor negativo &amp;2 para Caixas Refugo.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>073</MSGNR>
+     <TEXT>Saldo insuficiente na Ordem Colheita &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>074</MSGNR>
+     <TEXT>Nenhum status modificado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>076</MSGNR>
+     <TEXT>Selecione ao menos um Terreno!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>077</MSGNR>
+     <TEXT>*VERIFICAR TIPOS DE RECEITA (ZFMRCTYP)*</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>078</MSGNR>
+     <TEXT>Talhão não permitido para colheita (Ordem Pátio).</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>079</MSGNR>
+     <TEXT>Saldo insuficiente na Ordem Pátio &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>080</MSGNR>
+     <TEXT>Atenção: Imóvel arrendado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>081</MSGNR>
+     <TEXT>Cancel measurement document &amp;1?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>082</MSGNR>
+     <TEXT>Measurement document &amp;1 canceled</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>083</MSGNR>
+     <TEXT>Reverse measurement document cancellation &amp;1?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>084</MSGNR>
+     <TEXT>You are not authorized to cancel Measurement Document of type &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>085</MSGNR>
+     <TEXT>You are not authorized to reverse Measurement Document of type &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>086</MSGNR>
+     <TEXT>There are no valid terrains for selection!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>087</MSGNR>
+     <TEXT>Atenção: Devolução Total!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>088</MSGNR>
+     <TEXT>Batch Cancellation</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>089</MSGNR>
+     <TEXT>Batch Discard</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>090</MSGNR>
+     <TEXT>Cancel</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>091</MSGNR>
+     <TEXT>Cotinue</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>092</MSGNR>
+     <TEXT>Batch Cancellation</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>093</MSGNR>
+     <TEXT>Do you want to continue to do batch cancellation?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>095</MSGNR>
+     <TEXT>Clique sobre a aba &quot;Parceiros&quot; para criar o Parceiro de Negócios!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>096</MSGNR>
+     <TEXT>Parceiro de Negócios FC &amp;1 atribuído ao Terreno!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>097</MSGNR>
+     <TEXT>Linha selecionada já possui Ordem Tarefa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>098</MSGNR>
+     <TEXT>Ordem Tarefa já encerrada tecnicamente!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>099</MSGNR>
+     <TEXT>Parâmetro obrigatório: Informe a Data de lançamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>100</MSGNR>
+     <TEXT>Parâmetro obrigatório: Informe o Material!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>101</MSGNR>
+     <TEXT>Parâmetro obrigatório: Informe o Centro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>102</MSGNR>
+     <TEXT>BP not created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>103</MSGNR>
+     <TEXT>BP &amp;1 created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>104</MSGNR>
+     <TEXT>Já existe colheita para talhão &amp;1 no período de carência!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>105</MSGNR>
+     <TEXT>Selecione ao menos um Terreno!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>106</MSGNR>
+     <TEXT>Não existe Ordem Tarefa para o Terreno selecionado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>107</MSGNR>
+     <TEXT>Atenção! Grave os terrenos antes de gravar a receita!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>108</MSGNR>
+     <TEXT>A receita foi gravada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>109</MSGNR>
+     <TEXT>Grave o terreno &amp;1 na tela anterior.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>110</MSGNR>
+     <TEXT>Atenção: Verificar Épocas de Cultura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>112</MSGNR>
+     <TEXT>Shift &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>114</MSGNR>
+     <TEXT>Não existem registros para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>115</MSGNR>
+     <TEXT>Atenção: Lembre-se de calcular o Bal.Hídrico para o período anterior!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>116</MSGNR>
+     <TEXT>Não existem registros na tabela de irrigação!!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>133</MSGNR>
+     <TEXT>Atenção: Informar a Data! Parâmetro de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>134</MSGNR>
+     <TEXT>Atenção: Informar o Projeto! Parâmetro de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>135</MSGNR>
+     <TEXT>Atenção: Informar a Fazenda! Parâmetro de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>136</MSGNR>
+     <TEXT>A Receita &amp;1 não possui Insumo Principal!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>138</MSGNR>
+     <TEXT>Produto Similar &amp;1 inexistente no Centro &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>139</MSGNR>
+     <TEXT>MARA-MTART do Insumo &amp;1 é diferente do param. no Tipo de Receita &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>141</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>142</MSGNR>
+     <TEXT>Material Tarefa &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>143</MSGNR>
+     <TEXT>Talhão &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>144</MSGNR>
+     <TEXT>Unidade de Medida &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>145</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 atualizada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>146</MSGNR>
+     <TEXT>Número de Ticket &amp; inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>147</MSGNR>
+     <TEXT>Ticket &amp;1 já existe!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>148</MSGNR>
+     <TEXT>O Lote Colheita &amp;1 está atribuído ao item &amp;1 do ticket &amp;2 e será apagado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>149</MSGNR>
+     <TEXT>Terreno &amp;1 inexiste.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>150</MSGNR>
+     <TEXT>Terreno &amp;1 Cultura &amp;2 Variante &amp;3 Safra &amp;4 não encontrado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>151</MSGNR>
+     <TEXT>Diretório inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>152</MSGNR>
+     <TEXT>Arquivo inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>153</MSGNR>
+     <TEXT>O Lote Colheita &amp;1 está atribuído ao ticket &amp;2 e será apagado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>154</MSGNR>
+     <TEXT>Documento de Medição &amp;1 está cancelado. Selecione documento válido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>156</MSGNR>
+     <TEXT>Ordem &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>157</MSGNR>
+     <TEXT>Ordem &amp;1 marcada para eliminação.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>158</MSGNR>
+     <TEXT>Terreno &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>159</MSGNR>
+     <TEXT>Data Final anterior à Data Inicial.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>160</MSGNR>
+     <TEXT>Data Inicial inválida.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>161</MSGNR>
+     <TEXT>Data Final inválida.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>162</MSGNR>
+     <TEXT>Não existem informações válidas no arquivo selecionado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>163</MSGNR>
+     <TEXT>Verificar Linha &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>164</MSGNR>
+     <TEXT>Atenção: Utilize o botão &quot;Ler QR Code&quot; para a leitura do QR Code!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>165</MSGNR>
+     <TEXT>Atenção: Selecione uma linha!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>166</MSGNR>
+     <TEXT>Atenção: Selecione somente uma linha!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>167</MSGNR>
+     <TEXT>O produto foi eliminado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>168</MSGNR>
+     <TEXT>Nenhuma linha selecionada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>169</MSGNR>
+     <TEXT>Selecionar somente uma linha!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>176</MSGNR>
+     <TEXT>A coluna Transbordo pode ser preenchida com o valores &apos;X&apos; ou vazio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>177</MSGNR>
+     <TEXT>Cadastrar Movimentação Interna na tabela ZABSV_TRAN_TYP!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>187</MSGNR>
+     <TEXT>Verificar CM/MI do BP!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>188</MSGNR>
+     <TEXT>CM/MI bloqueado no BP!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>189</MSGNR>
+     <TEXT>Batch &amp;1 incorreto! Enviar batches originados na fazenda!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>190</MSGNR>
+     <TEXT>Ticket &amp;1 concluído!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>191</MSGNR>
+     <TEXT>Sem autorização para modificar status do ticket!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>192</MSGNR>
+     <TEXT>Status &apos;S&apos; atribuído ao Ticket &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>193</MSGNR>
+     <TEXT>Ticket &amp;1 reiniciado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>194</MSGNR>
+     <TEXT>Informar fornecedor função FO antes de criar fornecedor imóvel função FC!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>195</MSGNR>
+     <TEXT>Clique sobre a aba &quot;Parceiros&quot; p/ atualizar o endereço do Parceiro FC!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>196</MSGNR>
+     <TEXT>Não existe fornecedor imóvel função FC para atualização de endereço!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>198</MSGNR>
+     <TEXT>Parceiro de Negócios &amp;1 atualizado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>199</MSGNR>
+     <TEXT>Unidade de Distância &amp;1 Inválida.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>200</MSGNR>
+     <TEXT>Unidade de Distância não informada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>202</MSGNR>
+     <TEXT>Centro de Processamento &amp;1 inválido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>203</MSGNR>
+     <TEXT>Distância não informada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>204</MSGNR>
+     <TEXT>Rota &amp;1 inválida.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>205</MSGNR>
+     <TEXT>Rota não informada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>206</MSGNR>
+     <TEXT>Não existem Áreas de Cultivo para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>207</MSGNR>
+     <TEXT>O parâmetro &apos;Criado por&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>208</MSGNR>
+     <TEXT>O parâmetro &apos;Data de Criação&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>209</MSGNR>
+     <TEXT>Não existem registros para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>210</MSGNR>
+     <TEXT>Versão &amp;1 criada para a Área de Cultivo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>211</MSGNR>
+     <TEXT>Já existe versão inicial para a Área de Cultivo &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>212</MSGNR>
+     <TEXT>Não existem versões de orçamento para a Área de Cultivo &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>213</MSGNR>
+     <TEXT>Selecione a versão a ser copiada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>214</MSGNR>
+     <TEXT>Versão &amp;1 inexistente para a Área de Cultivo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>222</MSGNR>
+     <TEXT>Parâmetro Imóvel Arrendado inválido! Pressione F4 em casos de dúvidas!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>224</MSGNR>
+     <TEXT>Viagem &amp;1 criado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>225</MSGNR>
+     <TEXT>Centro &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>226</MSGNR>
+     <TEXT>Sem autorização para encerrar o Ticket!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>227</MSGNR>
+     <TEXT>O Tipo de Viagem deve ser informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>228</MSGNR>
+     <TEXT>Tipo de Viagem &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>229</MSGNR>
+     <TEXT>Usuário &amp;1 não possui autorização para o grupo de medições &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>230</MSGNR>
+     <TEXT>Receita &amp;1 não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>231</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>232</MSGNR>
+     <TEXT>Código de tarefa &amp;1 não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>233</MSGNR>
+     <TEXT>Insumo &amp;1 não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>234</MSGNR>
+     <TEXT>Data &amp; inválida.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>235</MSGNR>
+     <TEXT>Dados de Orçamento atualizados com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>236</MSGNR>
+     <TEXT>Tipo &amp;1 da Receita &amp;2 não é de Orçamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>237</MSGNR>
+     <TEXT>Receita &amp;1 não possui insumo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>238</MSGNR>
+     <TEXT>Área de Cultivo não informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>239</MSGNR>
+     <TEXT>Código de tarefa não informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>240</MSGNR>
+     <TEXT>Receita não informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>241</MSGNR>
+     <TEXT>Material insumo não informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>242</MSGNR>
+     <TEXT>BP não pode ser criado. Verificar preenchimento CNPJ.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>243</MSGNR>
+     <TEXT>BP não pode ser criado. Verificar preenchimento CPF.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>244</MSGNR>
+     <TEXT>Período não informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>245</MSGNR>
+     <TEXT>Tipo de Viagem &amp;1 inválido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>246</MSGNR>
+     <TEXT>Viagem não finalizada. Reenviar.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>247</MSGNR>
+     <TEXT>Ticket &amp;1 inativado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>248</MSGNR>
+     <TEXT>A operação &amp;1 exige receita!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>249</MSGNR>
+     <TEXT>Não existe safra válida para o talhão &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>250</MSGNR>
+     <TEXT>O parâmetro Centro é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>251</MSGNR>
+     <TEXT>O parâmetro Material é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>252</MSGNR>
+     <TEXT>Informar a Data de Criação do Ponto de Inspeção!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>253</MSGNR>
+     <TEXT>Verificar Grupo de Atributos.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>254</MSGNR>
+     <TEXT>As folhas BDO informadas não existem.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>255</MSGNR>
+     <TEXT>As folhas BDO informadas não possuem itens.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>256</MSGNR>
+     <TEXT>As frotas informadas são inválidas.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>257</MSGNR>
+     <TEXT>A frota &amp;1 não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>258</MSGNR>
+     <TEXT>A folha de confirmação BDO &amp;1 não existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>259</MSGNR>
+     <TEXT>A folha de confirmação BDO deve ser informada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>260</MSGNR>
+     <TEXT>A posição do item é de preenchimento obrigatório.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>261</MSGNR>
+     <TEXT>Folha BDO &amp;1 não possui item &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>262</MSGNR>
+     <TEXT>Sem autorização para limpar log do ticket!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>263</MSGNR>
+     <TEXT>O log do Ticket &amp;1 foi apagado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>264</MSGNR>
+     <TEXT>A frota &amp;1 não existe no centro de trabalho &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>265</MSGNR>
+     <TEXT>N° pessoal &amp;1 está inativo</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>267</MSGNR>
+     <TEXT>Coluna &apos;Caixas Rateio&apos; deve ser preenchida para todos os itens!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>268</MSGNR>
+     <TEXT>Talhão &amp;1 não pertence a fazenda dessa viagem.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>270</MSGNR>
+     <TEXT>O parâmetro &apos;Área de Cultivo&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>271</MSGNR>
+     <TEXT>O parâmetro &apos;Período&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>272</MSGNR>
+     <TEXT>O parâmetro &apos;Versão Impressão&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>273</MSGNR>
+     <TEXT>O Layout informado &amp;1 não existe!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>274</MSGNR>
+     <TEXT>Talhão &amp;1 programado p/ colheita na semana!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>275</MSGNR>
+     <TEXT>Selecione o Código de estrutura de terreno!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>276</MSGNR>
+     <TEXT>Fazenda &amp;1 inexistente!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>277</MSGNR>
+     <TEXT>Informe o Código da Fazenda!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>278</MSGNR>
+     <TEXT>Informe somente o Código da Fazenda (sem o talhão)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>279</MSGNR>
+     <TEXT>Valor máximo permitido para Caixas Rateio é 1000.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>280</MSGNR>
+     <TEXT>O Código da Turma é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>281</MSGNR>
+     <TEXT>Inserção Linha &amp;1: já existe entrada de mesma chave.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>282</MSGNR>
+     <TEXT>Atualização Linha &amp;1: entrada inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>283</MSGNR>
+     <TEXT>Nenhum parâmetro informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>284</MSGNR>
+     <TEXT>Eliminação Linha &amp;1: entrada inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>285</MSGNR>
+     <TEXT>Eliminação Linha &amp;1: campo IDRESOURCE deve ser informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>286</MSGNR>
+     <TEXT>Inserção Linha &amp;1: verificar campo obrigatório &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>287</MSGNR>
+     <TEXT>&amp;1 linhas foram inseridas com sucesso.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>288</MSGNR>
+     <TEXT>&amp;1 linhas foram modificadas com sucesso.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>289</MSGNR>
+     <TEXT>&amp;1 linhas foram eliminadas com sucesso.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>290</MSGNR>
+     <TEXT>Informar Área de Cultivo!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>291</MSGNR>
+     <TEXT>Informar Ano!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>292</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 bloqueada pelo usuário &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>293</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 atualizada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>294</MSGNR>
+     <TEXT>Inspection Lot &amp;1 is defined as &quot;Final Evaluation&quot;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>295</MSGNR>
+     <TEXT>Lot &amp;1 Operation &amp;2 is defined as &quot;Final Evaluation&quot;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>296</MSGNR>
+     <TEXT>Ticket com diversas variedades não permitido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>297</MSGNR>
+     <TEXT>A Área de Cultivo deve ser informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>298</MSGNR>
+     <TEXT>A Versão de Origem deve ser informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>299</MSGNR>
+     <TEXT>A Versão de Destino deve ser informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>300</MSGNR>
+     <TEXT>Não existe Versão &amp;1 de Orçamento para Área de Cultivo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>301</MSGNR>
+     <TEXT>Versão &amp;1 de Orçamento já existe para Área de Cultivo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>302</MSGNR>
+     <TEXT>Operação cancelada.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>303</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 inexistente!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>304</MSGNR>
+     <TEXT>Informe a Área de Cultivo para consultar as versões existentes!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>305</MSGNR>
+     <TEXT>As versões de Orçamento da Área de Cultivo &amp;1 foram atualizadas!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>306</MSGNR>
+     <TEXT>Crie a versão clicando sobre o botão &apos;Criar Versão Inicial&apos;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>307</MSGNR>
+     <TEXT>Versão Inicial de Orçamento criada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>308</MSGNR>
+     <TEXT>Já existe Versão Inicial &amp;1 de Orçamento para Área de Cultivo &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>309</MSGNR>
+     <TEXT>Informe a Área de Cultivo para criar a versão inicial de Orçamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>310</MSGNR>
+     <TEXT>Não existe Orçamento para a Área de Cultivo &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>311</MSGNR>
+     <TEXT>Utilize somente letras e números!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>312</MSGNR>
+     <TEXT>O parâmetro &apos;Receita&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>313</MSGNR>
+     <TEXT>O parâmetro &apos;Versão Orçamento/Cenário&apos; é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>314</MSGNR>
+     <TEXT>Backup dos dados de Orçamento realizado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>315</MSGNR>
+     <TEXT>Atenção! Os Itens e os dados de Volume de Calda serão atualizados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>316</MSGNR>
+     <TEXT>Erro ao processar Lote &amp;1 Operação &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>317</MSGNR>
+     <TEXT>Informar o diretório para geração do arquivo PDF!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>318</MSGNR>
+     <TEXT>Informar Centro válido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>319</MSGNR>
+     <TEXT>O Período deve ser informado no formato MM/AAAA!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>320</MSGNR>
+     <TEXT>Informe um Período válido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>321</MSGNR>
+     <TEXT>Informe uma Região válida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>322</MSGNR>
+     <TEXT>O parâmetro Tipo de Ordem é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>323</MSGNR>
+     <TEXT>O parâmetro Centro é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>324</MSGNR>
+     <TEXT>O parâmetro Data de Criação é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>325</MSGNR>
+     <TEXT>Não existem dados para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>326</MSGNR>
+     <TEXT>Ordem &amp; foi atualizada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>327</MSGNR>
+     <TEXT>Erro ao Salvar as Características do Lote!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>328</MSGNR>
+     <TEXT>Erro ao processar movimento &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>329</MSGNR>
+     <TEXT>O parâmetro Data é de preenchimento obrigatório!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>330</MSGNR>
+     <TEXT>Não existem ativos a serem exibidos!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>331</MSGNR>
+     <TEXT>Verificar safra informada! Intervalo maior que 3 anos!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>332</MSGNR>
+     <TEXT>Operação cancelada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>333</MSGNR>
+     <TEXT>Informar Região</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>334</MSGNR>
+     <TEXT>Revisar fluxos de aprovação p/ grupo &amp;1 na transação ZABS_VTMAIN!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>335</MSGNR>
+     <TEXT>Semana/ano não informados.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>336</MSGNR>
+     <TEXT>Código do Imóvel não informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>337</MSGNR>
+     <TEXT>Código do Imóvel &amp;1 inválido.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>339</MSGNR>
+     <TEXT>Não existem dados válidos a serem atualizados na tabela ZABST_SOLIDOSHA</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>340</MSGNR>
+     <TEXT>Os resultados do lote de controle &amp;1 foram criados corretamente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>342</MSGNR>
+     <TEXT>Ocorreram problemas durante o processamento dos resultados do lote &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>343</MSGNR>
+     <TEXT>Nenhuma versão de orçamento encontrada para a Área de Cultivo &amp;1!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>344</MSGNR>
+     <TEXT>A Versão do Orçamento deve ser informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>345</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 Versão &amp;2 inexistente!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>346</MSGNR>
+     <TEXT>Eliminar linhas selecionadas da tabela ZABS_ORCAMENTO?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>347</MSGNR>
+     <TEXT>Selecione pelo menos uma linha!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>348</MSGNR>
+     <TEXT>Gravar alterações na tabela ZABS_ORCAMENTO?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>349</MSGNR>
+     <TEXT>A tabela ZABS_ORCAMENTO foi atualizada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>350</MSGNR>
+     <TEXT>ZFMACM: Área de Cultivo &amp;1 não contém talhões na aba &quot;Item&quot;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>351</MSGNR>
+     <TEXT>ZFMACM: Área de Cultivo &amp;1 não contém informações na aba &quot;Vol.Calda&quot;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>352</MSGNR>
+     <TEXT>Informar Mestre de Cultura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>353</MSGNR>
+     <TEXT>Informar Variante!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>354</MSGNR>
+     <TEXT>Informar Data Final da Época de Cultura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>355</MSGNR>
+     <TEXT>Informar Data Inicial da Época de Cultura!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>356</MSGNR>
+     <TEXT>Não existem Épocas de  Cultura com status &lt;&gt; &apos;C&apos; (Fechado)!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>357</MSGNR>
+     <TEXT>Talhão: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>358</MSGNR>
+     <TEXT>Modif.Gravadas: Talhão &amp;1/Cultura &amp;2/Variante &amp;3/Status &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>359</MSGNR>
+     <TEXT>Não há dados para processamento!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>360</MSGNR>
+     <TEXT>Não existe Docto. de Estimativa p/ Talhão &amp;1/Safra &amp;2/Florada &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>361</MSGNR>
+     <TEXT>Variante &amp;1 não prevista para ampliação!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>362</MSGNR>
+     <TEXT>Erro ao ler calendário fábrica!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>363</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura FORMAÇÃO!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>364</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura FORMAÇÃO!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>365</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem Processo &amp;2 Ordem Tarefa &amp;3 existentes para &amp;4!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>366</MSGNR>
+     <TEXT>Talhão &amp;1: Não existe material &amp;2 em Ordem Processo &amp;3!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>367</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura COLHEITA!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>368</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura COLHEITA!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>369</MSGNR>
+     <TEXT>Talhão &amp;1: Verificar mat.agríc. na Époc.Cult. p/ criar Ordem Pátio!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>370</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem Pátio &amp;2 existe para Época de Cultura &apos;FORMAÇÃO&apos;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>371</MSGNR>
+     <TEXT>Talhão &amp;1: Época de Cultura de MANUTENÇÃO já existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>372</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura MANUTENÇÃO!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>373</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura MANUTENÇÃO!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>374</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem Pátio &amp;2 existe para Época de Cultura &apos;MANUT&amp;COLHEITA&apos;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>375</MSGNR>
+     <TEXT>Ordem Pátio &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>376</MSGNR>
+     <TEXT>Talhão &amp;1: Época de Cultura &amp;2 já existe.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>377</MSGNR>
+     <TEXT>O terreno superior deve ser informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>378</MSGNR>
+     <TEXT>O tipo de dado climático deve ser informado!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>379</MSGNR>
+     <TEXT>A data de referência deve ser informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>380</MSGNR>
+     <TEXT>Não existem terrenos válidos para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>381</MSGNR>
+     <TEXT>Não existem documentos de medição para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>382</MSGNR>
+     <TEXT>Os dados climáticos foram atualizados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>383</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura IMPLANTAÇÃO!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>384</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura IMPLANTAÇÃO!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>385</MSGNR>
+     <TEXT>Informar Centro!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>386</MSGNR>
+     <TEXT>Informar Projeto!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>387</MSGNR>
+     <TEXT>Informar Shift!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>388</MSGNR>
+     <TEXT>Informar Período!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>389</MSGNR>
+     <TEXT>Informar Data Inicial!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>390</MSGNR>
+     <TEXT>Informar Data Final!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>391</MSGNR>
+     <TEXT>&amp;1 não é o primeiro dia do mês [&amp;2]!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>392</MSGNR>
+     <TEXT>&amp;1 não é o último dia do mês [&amp;2]!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>393</MSGNR>
+     <TEXT>Não há dados para processamento! 3o. dia útil do mês: &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>394</MSGNR>
+     <TEXT>Utilizar grupo de medições &apos;FAZ_PREVISAO&apos;!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>395</MSGNR>
+     <TEXT>Não existe doc.medição &apos;FAZ-ESTIMATIVA&apos; para safra e florada informadas!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>396</MSGNR>
+     <TEXT>Não existem talhões atrelados aos projetos informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>397</MSGNR>
+     <TEXT>Não existem projetos para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>398</MSGNR>
+     <TEXT>Não existem dados para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>399</MSGNR>
+     <TEXT>Selecione pelo menos uma linha!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>400</MSGNR>
+     <TEXT>Limite máximo de 7 dias excedido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>401</MSGNR>
+     <TEXT>A taxa de reposição % deve estar compreendido entre os valores 0 e 100!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>402</MSGNR>
+     <TEXT>Planejamento de irrigação atualizado com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>403</MSGNR>
+     <TEXT>Limite máximo de 4 dias excedido!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>404</MSGNR>
+     <TEXT>Lote logístico &amp;1 já atribuído ao ticket &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>405</MSGNR>
+     <TEXT>Aprovadores não encontrados.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>406</MSGNR>
+     <TEXT>Programação de irrigação atualizada com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>407</MSGNR>
+     <TEXT>Informe a Fazenda!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>408</MSGNR>
+     <TEXT>Informe o Projeto!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>409</MSGNR>
+     <TEXT>Informe a Data!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>410</MSGNR>
+     <TEXT>Fazenda &amp;1 inválida!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>411</MSGNR>
+     <TEXT>Não foram encontrados projetos válidos para os parâmetros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>412</MSGNR>
+     <TEXT>Ordem &amp;1 existe para projeto &amp;2.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>413</MSGNR>
+     <TEXT>Projeto: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>414</MSGNR>
+     <TEXT>Sem insumos na receita &amp;1 talhão &amp;2!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>415</MSGNR>
+     <TEXT>Não existe programação para projeto &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>416</MSGNR>
+     <TEXT>Grupo de medição incorreto para o tipo de propriedade do terreno.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>417</MSGNR>
+     <TEXT>Informe a Fazenda!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>418</MSGNR>
+     <TEXT>Informe a Data!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>419</MSGNR>
+     <TEXT>Não existem fazendas para os centros informados!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>420</MSGNR>
+     <TEXT>Talhões informados inválidos!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>421</MSGNR>
+     <TEXT>Informe a Tarefa!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>422</MSGNR>
+     <TEXT>Não existem registros para a data informada!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>423</MSGNR>
+     <TEXT>&amp;1 registros eliminados com sucesso!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <MSGNR>424</MSGNR>
+     <TEXT>Para Tipo Irrigação &apos;PLENO&apos;, não é permitido informar qtde. de dias!</TEXT>
+    </T100>
+   </T100>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <T100T>
+    <T100T>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZFMFP</ARBGB>
+     <STEXT>Field Planning</STEXT>
+    </T100T>
+   </T100T>
+   <T100_TEXTS>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>001</MSGNR>
+     <TEXT>Não são suportados tipos de arquivo diferentes de TXT/XLS/XLSX/CSV</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>002</MSGNR>
+     <TEXT>Não existem dados para upload</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>003</MSGNR>
+     <TEXT>Linha Excel &amp;1:</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>004</MSGNR>
+     <TEXT>Nenhuma ordem de processo selecionada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>005</MSGNR>
+     <TEXT>Selecione somente uma ordem de processo!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>006</MSGNR>
+     <TEXT>Nenhuma ordem de tarefa selecionada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>007</MSGNR>
+     <TEXT>Selecione somente uma ordem de tarefa!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>008</MSGNR>
+     <TEXT>Ordem de tarefa inexistente para a linha selecionada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>009</MSGNR>
+     <TEXT>Ordem de processo inexistente para a linha selecionada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>010</MSGNR>
+     <TEXT>Nenhum terreno selecionado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>011</MSGNR>
+     <TEXT>Selecione somente um terreno!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>012</MSGNR>
+     <TEXT>Terreno inexistente para a linha selecionada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>013</MSGNR>
+     <TEXT>Verifique Turma e ID informados. Turma &amp;1 ID &amp;2 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>014</MSGNR>
+     <TEXT>Informe a turma que será modificada. Campo de preenchimento obrigatório</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>015</MSGNR>
+     <TEXT>Informe a descrição da nova turma. Campo de preenchimento obrigatório.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>016</MSGNR>
+     <TEXT>Informe o código da nova turma. Campo de preenchimento obrigatório.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>017</MSGNR>
+     <TEXT>Turma &amp;1 existe. Escolha outro código para a turma.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>018</MSGNR>
+     <TEXT>Informe o status. Campo de preenchimento obrigatório.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>019</MSGNR>
+     <TEXT>Não existe registro válido em HR para nº pessoal &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>020</MSGNR>
+     <TEXT>Nº pessoal &amp;1 não está ativo.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>021</MSGNR>
+     <TEXT>As informações não foram gravadas. É necessário informar um participante.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>022</MSGNR>
+     <TEXT>Não é possível gravar. Existem &amp;1 ocorrências para o nº pessoal &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>023</MSGNR>
+     <TEXT>Os dados foram atualizados com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>024</MSGNR>
+     <TEXT>Turma &amp;1 eliminada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>025</MSGNR>
+     <TEXT>Informe o ID da nova turma. Campo de preenchimento obrigatório.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>026</MSGNR>
+     <TEXT>Turma &amp;1 ID &amp;2 existe. Crie outra combinação de Turma e ID.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>027</MSGNR>
+     <TEXT>O Campo ID deve conter somente números!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>028</MSGNR>
+     <TEXT>Informe o ID que será modificado. Campo de preenchimento obrigatório</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>029</MSGNR>
+     <TEXT>Os campos de classificação 5 e 6 devem ser diferentes!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>030</MSGNR>
+     <TEXT>Informação necessária para Ponto de Controle: Campo &apos;&amp;1&apos; Valor &apos;&amp;2&apos;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>031</MSGNR>
+     <TEXT>Lote de Controle &amp;1 criado com sucesso.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>032</MSGNR>
+     <TEXT>&amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>033</MSGNR>
+     <TEXT>Selecione um Tipo de Turma disponível no matchcode!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>034</MSGNR>
+     <TEXT>Turma &amp;1 utiliza ID &amp;2. Próximo ID disponível: &amp;3.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>035</MSGNR>
+     <TEXT>ID da turma deve ser diferente de &apos;000&apos;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>036</MSGNR>
+     <TEXT>O campo &amp;1 é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>037</MSGNR>
+     <TEXT>Informe a Dose e a Unidade de Medida para &amp;1 antes de gravar!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>038</MSGNR>
+     <TEXT>Grave a Receita antes de atualizar os produtos similares!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>039</MSGNR>
+     <TEXT>Insumo &amp;1 não utilizado na Receita &amp;2! Revise os dados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>040</MSGNR>
+     <TEXT>Selecione a Lista Técnica Alter. antes de gravar os produtos similares!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>041</MSGNR>
+     <TEXT>Crie ou selecione uma Lista Técnica Alt. antes de gravar a Receita!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>042</MSGNR>
+     <TEXT>Item &amp;1: Lote &amp;2 atribuído ao material &amp;3. Utilize outro lote!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>043</MSGNR>
+     <TEXT>O Lote &amp;1 está atribuído ao material &amp;2 e será apagado do item &amp;3!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>044</MSGNR>
+     <TEXT>Ordem de Processo &amp;1 criada p/ talhão &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>045</MSGNR>
+     <TEXT>Erro ao criar Ordem de Processo p/ talhão &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>046</MSGNR>
+     <TEXT>Ordem &amp;1 criada p/ talhão &amp;2 processo &amp;3.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>047</MSGNR>
+     <TEXT>Favor verificar infotipo 0002 p/ nº pessoal &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>048</MSGNR>
+     <TEXT>Dados atualizados com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>049</MSGNR>
+     <TEXT>Atualize o tipo de propriedade!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>050</MSGNR>
+     <TEXT>Verificar encerramento de floradas pendentes!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>051</MSGNR>
+     <TEXT>Preencher o campo Safra!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>052</MSGNR>
+     <TEXT>Utilizar material &amp;1 nos itens referentes à placa de semi reboque &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>053</MSGNR>
+     <TEXT>Nº ordem * não existente em AUFK (verificar a entrada)</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>054</MSGNR>
+     <TEXT>As modificações não foram gravadas</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>055</MSGNR>
+     <TEXT>Sem autorização para eliminar entrada de produto do tipo &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>056</MSGNR>
+     <TEXT>Carregamento mecanizado &amp;1 inexistente. Favor verificar.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>057</MSGNR>
+     <TEXT>Movimentação interna &amp;1 inexistente. Favor verificar.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>058</MSGNR>
+     <TEXT>Ordem colheita &amp;1 inexistente. Favor verificar.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>059</MSGNR>
+     <TEXT>Bin &amp;1 inexistente. Favor verificar.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>060</MSGNR>
+     <TEXT>Fábrica de destino não informada. Favor verificar.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>061</MSGNR>
+     <TEXT>Não existem dados para os parâmetros informados</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>062</MSGNR>
+     <TEXT>Preencher todos os campos obrigatórios</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>063</MSGNR>
+     <TEXT>Informar Tipo de documento de medição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>064</MSGNR>
+     <TEXT>Informar Grupo de medições</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>065</MSGNR>
+     <TEXT>Informar Centro</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>066</MSGNR>
+     <TEXT>Documento de medição &amp;1 inexistente</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>067</MSGNR>
+     <TEXT>Grupo de medições &amp;1 inexistente</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>068</MSGNR>
+     <TEXT>Centro &amp;1 inexistente</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>069</MSGNR>
+     <TEXT>Comprador &amp;1 inexistente no Centro &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>070</MSGNR>
+     <TEXT>Sem autorização para aplicar Alçadas de Aprovação</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>071</MSGNR>
+     <TEXT>Item &amp;1. Não é permitido valor negativo &amp;2 para Caixas Líquidas.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>072</MSGNR>
+     <TEXT>Item &amp;1. Não é permitido valor negativo &amp;2 para Caixas Refugo.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>073</MSGNR>
+     <TEXT>Saldo insuficiente na Ordem Colheita &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>074</MSGNR>
+     <TEXT>Nenhum status modificado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>075</MSGNR>
+     <TEXT>Item &amp;1: Inserir Placa Semi-Reboque</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>076</MSGNR>
+     <TEXT>Selecione ao menos um Terreno!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>077</MSGNR>
+     <TEXT>*VERIFICAR TIPOS DE RECEITA (ZFMRCTYP)*</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>078</MSGNR>
+     <TEXT>Talhão não permitido para colheita (Ordem Pátio).</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>079</MSGNR>
+     <TEXT>Saldo insuficiente na Ordem Pátio &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>080</MSGNR>
+     <TEXT>Atenção: Imóvel arrendado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>081</MSGNR>
+     <TEXT>Cancelar documento de medição &amp;1?</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>082</MSGNR>
+     <TEXT>Documento de medição &amp;1 cancelado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>083</MSGNR>
+     <TEXT>Desfazer cancelamento do documento de medição &amp;1?</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>084</MSGNR>
+     <TEXT>Sem autorização para cancelar documento de medição do tipo &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>085</MSGNR>
+     <TEXT>Sem autorização para desfazer cancelamento do docto. medição tipo &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>086</MSGNR>
+     <TEXT>Não existem imóveis válidos para seleção!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>087</MSGNR>
+     <TEXT>Atenção: Devolução Total!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>088</MSGNR>
+     <TEXT>Estorno do Lote</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>089</MSGNR>
+     <TEXT>Descarte do Lote</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>090</MSGNR>
+     <TEXT>Cancelar</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>091</MSGNR>
+     <TEXT>Continuar</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>092</MSGNR>
+     <TEXT>Estornar Lote</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>093</MSGNR>
+     <TEXT>Confirmar o estorno do lote?</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>094</MSGNR>
+     <TEXT>Material do talhão diferente de material da ordem de produção</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>095</MSGNR>
+     <TEXT>Clique sobre a aba &quot;Parceiros&quot; para criar o Parceiro de Negócios!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>096</MSGNR>
+     <TEXT>Parceiro de Negócios FC &amp;1 atribuído ao Terreno!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>097</MSGNR>
+     <TEXT>Linha selecionada já possui Ordem Tarefa!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>098</MSGNR>
+     <TEXT>Ordem Tarefa já encerrada tecnicamente!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>099</MSGNR>
+     <TEXT>Parâmetro obrigatório: Informe a Data de lançamento!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>100</MSGNR>
+     <TEXT>Parâmetro obrigatório: Informe o Material!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>101</MSGNR>
+     <TEXT>Parâmetro obrigatório: Informe o Centro!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>102</MSGNR>
+     <TEXT>Parceiro de Negócios não foi criado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>103</MSGNR>
+     <TEXT>Parceiro de Negócios &amp;1 foi criado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>104</MSGNR>
+     <TEXT>Já existe colheita para talhão &amp;1 no período de carência!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>105</MSGNR>
+     <TEXT>Selecione ao menos um Terreno!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>106</MSGNR>
+     <TEXT>Não existe Ordem Tarefa para o Terreno selecionado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>107</MSGNR>
+     <TEXT>Atenção! Grave os terrenos antes de gravar a receita!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>108</MSGNR>
+     <TEXT>A receita foi gravada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>109</MSGNR>
+     <TEXT>Grave o terreno &amp;1 na tela anterior.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>110</MSGNR>
+     <TEXT>Atenção: Verificar Épocas de Cultura!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>111</MSGNR>
+     <TEXT>Safra inexistente para talhão informado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>112</MSGNR>
+     <TEXT>Shift &amp;1 inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>113</MSGNR>
+     <TEXT>Nenhuma linha seleciona!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>114</MSGNR>
+     <TEXT>Não existem registros para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>115</MSGNR>
+     <TEXT>Atenção: Lembre-se de calcular o Bal.Hídrico para o período anterior!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>116</MSGNR>
+     <TEXT>Não existem registros na tabela de irrigação!!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>117</MSGNR>
+     <TEXT>Tipo de Receita &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>118</MSGNR>
+     <TEXT>Centro &amp;1 inválido.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>119</MSGNR>
+     <TEXT>Data Inicial de validade inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>120</MSGNR>
+     <TEXT>Data Final de validade inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>121</MSGNR>
+     <TEXT>Data Final anterior à Data Inicial!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>122</MSGNR>
+     <TEXT>Arquivo Excel não contém dados.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>123</MSGNR>
+     <TEXT>Tarefa &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>124</MSGNR>
+     <TEXT>Tarefa &amp;1 inexistente no Centro &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>125</MSGNR>
+     <TEXT>Tarefa &amp;1 Centro &amp;2 não possui base de cálculo (MARC-AUSME)</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>126</MSGNR>
+     <TEXT>Insumo &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>127</MSGNR>
+     <TEXT>Produto Similar &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>128</MSGNR>
+     <TEXT>O Isumo é de preenchimento obrigatório.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>129</MSGNR>
+     <TEXT>A dose do Insumo deve ser informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>130</MSGNR>
+     <TEXT>A dose do Produto Similar deve ser informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>131</MSGNR>
+     <TEXT>A Unid. de Medida do Produto Similar deve ser informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>132</MSGNR>
+     <TEXT>UM do Produto Similar inválida!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>133</MSGNR>
+     <TEXT>Atenção: Informar a Data! Parâmetro de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>134</MSGNR>
+     <TEXT>Atenção: Informar o Projeto! Parâmetro de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>135</MSGNR>
+     <TEXT>Atenção: Informar a Fazenda! Parâmetro de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>136</MSGNR>
+     <TEXT>A Receita &amp;1 não possui Insumo Principal!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>137</MSGNR>
+     <TEXT>Insumo &amp;1 inexistente no Centro &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>138</MSGNR>
+     <TEXT>Produto Similar &amp;1 inexistente no Centro &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>139</MSGNR>
+     <TEXT>MARA-MTART do Insumo &amp;1 é diferente do param. no Tipo de Receita &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>140</MSGNR>
+     <TEXT>Receita &amp;1 criada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>141</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>142</MSGNR>
+     <TEXT>Material Tarefa &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>143</MSGNR>
+     <TEXT>Talhão &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>144</MSGNR>
+     <TEXT>Unidade de Medida &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>145</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 atualizada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>146</MSGNR>
+     <TEXT>Número de Ticket &amp; inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>147</MSGNR>
+     <TEXT>Ticket &amp;1 já existe!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>148</MSGNR>
+     <TEXT>O Lote Colheita &amp;1 está atribuído ao item &amp;1 do ticket &amp;2 e será apagado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>149</MSGNR>
+     <TEXT>Terreno &amp;1 inexiste.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>150</MSGNR>
+     <TEXT>Terreno &amp;1 Cultura &amp;2 Variante &amp;3 Safra &amp;4 não encontrado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>151</MSGNR>
+     <TEXT>Diretório inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>152</MSGNR>
+     <TEXT>Arquivo inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>153</MSGNR>
+     <TEXT>O Lote Colheita &amp;1 está atribuído ao ticket &amp;2 e será apagado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>154</MSGNR>
+     <TEXT>Documento de Medição &amp;1 está cancelado. Selecione documento válido.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>155</MSGNR>
+     <TEXT>Lote não criado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>156</MSGNR>
+     <TEXT>Ordem &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>157</MSGNR>
+     <TEXT>Ordem &amp;1 marcada para eliminação.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>158</MSGNR>
+     <TEXT>Terreno &amp;1 inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>159</MSGNR>
+     <TEXT>Data Final anterior à Data Inicial.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>160</MSGNR>
+     <TEXT>Data Inicial inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>161</MSGNR>
+     <TEXT>Data Final inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>162</MSGNR>
+     <TEXT>Não existem informações válidas no arquivo selecionado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>163</MSGNR>
+     <TEXT>Verificar Linha &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>164</MSGNR>
+     <TEXT>Atenção: Utilize o botão &quot;Ler QR Code&quot; para a leitura do QR Code!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>165</MSGNR>
+     <TEXT>Atenção: Selecione uma linha!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>166</MSGNR>
+     <TEXT>Atenção: Selecione somente uma linha!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>167</MSGNR>
+     <TEXT>O produto foi eliminado com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>168</MSGNR>
+     <TEXT>Nenhuma linha selecionada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>169</MSGNR>
+     <TEXT>Selecionar somente uma linha!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>170</MSGNR>
+     <TEXT>Verificar SRs permitidos nos dados adicionais!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>171</MSGNR>
+     <TEXT>Não existem dados para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>172</MSGNR>
+     <TEXT>O parâmetro Tipo de Realização deve ser preenchido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>173</MSGNR>
+     <TEXT>O parâmetro Centro deve ser preenchido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>174</MSGNR>
+     <TEXT>O parâmetro Centro de Trabalho deve ser preenchido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>175</MSGNR>
+     <TEXT>Folha de Realização &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>176</MSGNR>
+     <TEXT>A coluna Transbordo pode ser preenchida com o valores &apos;X&apos; ou vazio!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>177</MSGNR>
+     <TEXT>Cadastrar Movimentação Interna na tabela ZABSV_TRAN_TYP!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>178</MSGNR>
+     <TEXT>O parâmetro &apos;Centro&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>179</MSGNR>
+     <TEXT>O parâmetro &apos;Tipo de Ordem&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>180</MSGNR>
+     <TEXT>O parâmetro &apos;Tarefa&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>181</MSGNR>
+     <TEXT>Não existem Ordens para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>182</MSGNR>
+     <TEXT>Impossível anular conclusão técnica Ordem &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>183</MSGNR>
+     <TEXT>Anulação de conclusão técnica efetuada com êxito Ordem &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>184</MSGNR>
+     <TEXT>Mensagem Encerramento Técnico Ordem &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>185</MSGNR>
+     <TEXT>Mensagem Anular Encerramento Técnico Ordem &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>186</MSGNR>
+     <TEXT>Data de Lançamento inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>187</MSGNR>
+     <TEXT>Verificar CM/MI do BP!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>188</MSGNR>
+     <TEXT>CM/MI bloqueado no BP!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>189</MSGNR>
+     <TEXT>Batch &amp;1 incorreto! Enviar batches originados na fazenda!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>190</MSGNR>
+     <TEXT>Ticket &amp;1 concluído!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>191</MSGNR>
+     <TEXT>Sem autorização para modificar status do ticket!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>192</MSGNR>
+     <TEXT>Status &apos;S&apos; atribuído ao Ticket &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>193</MSGNR>
+     <TEXT>Ticket &amp;1 reiniciado com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>194</MSGNR>
+     <TEXT>Informar fornecedor função FO antes de criar fornecedor imóvel função FC!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>195</MSGNR>
+     <TEXT>Clique sobre a aba &quot;Parceiros&quot; p/ atualizar o endereço do Parceiro FC!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>196</MSGNR>
+     <TEXT>Não existe fornecedor imóvel função FC para atualização de endereço!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>198</MSGNR>
+     <TEXT>Parceiro de Negócios &amp;1 atualizado com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>199</MSGNR>
+     <TEXT>Unidade de Distância &amp;1 Inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>200</MSGNR>
+     <TEXT>Unidade de Distância não informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>201</MSGNR>
+     <TEXT>Centro de Processamento não informado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>202</MSGNR>
+     <TEXT>Centro de Processamento &amp;1 inválido.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>203</MSGNR>
+     <TEXT>Distância não informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>204</MSGNR>
+     <TEXT>Rota &amp;1 inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>205</MSGNR>
+     <TEXT>Rota não informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>206</MSGNR>
+     <TEXT>Não existem Áreas de Cultivo para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>207</MSGNR>
+     <TEXT>O parâmetro &apos;Criado por&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>208</MSGNR>
+     <TEXT>O parâmetro &apos;Data de Criação&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>209</MSGNR>
+     <TEXT>Não existem registros para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>210</MSGNR>
+     <TEXT>Versão &amp;1 criada para a Área de Cultivo &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>211</MSGNR>
+     <TEXT>Já existe versão inicial para a Área de Cultivo &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>212</MSGNR>
+     <TEXT>Não existem versões de orçamento para a Área de Cultivo &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>213</MSGNR>
+     <TEXT>Selecione a versão a ser copiada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>214</MSGNR>
+     <TEXT>Versão &amp;1 inexistente para a Área de Cultivo &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>215</MSGNR>
+     <TEXT>A Remessa deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>216</MSGNR>
+     <TEXT>A placa do Semi Reboque 1 deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>217</MSGNR>
+     <TEXT>A Fábrica de Destino deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>218</MSGNR>
+     <TEXT>Fábrica de Destino &amp;1 inválida!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>219</MSGNR>
+     <TEXT>O Centro deve ser informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>220</MSGNR>
+     <TEXT>Centro &amp;1 inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>221</MSGNR>
+     <TEXT>Remessa &amp;1 inválida!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>222</MSGNR>
+     <TEXT>Parâmetro Imóvel Arrendado inválido! Pressione F4 em casos de dúvidas!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>223</MSGNR>
+     <TEXT>Verificar subintervalo 01 do intervalo de numeração ZABS_FMPR!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>224</MSGNR>
+     <TEXT>Viagem &amp;1 criado com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>225</MSGNR>
+     <TEXT>Centro &amp;1 inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>226</MSGNR>
+     <TEXT>Sem autorização para encerrar o Ticket!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>227</MSGNR>
+     <TEXT>O Tipo de Viagem deve ser informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>228</MSGNR>
+     <TEXT>Tipo de Viagem &amp;1 inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>229</MSGNR>
+     <TEXT>Usuário &amp;1 não possui autorização para o grupo de medições &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>230</MSGNR>
+     <TEXT>Receita &amp;1 não existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>231</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 não existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>232</MSGNR>
+     <TEXT>Código de tarefa &amp;1 não existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>233</MSGNR>
+     <TEXT>Insumo &amp;1 não existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>234</MSGNR>
+     <TEXT>Data &amp; inválida.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>235</MSGNR>
+     <TEXT>Dados de Orçamento atualizados com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>236</MSGNR>
+     <TEXT>Tipo &amp;1 da Receita &amp;2 não é de Orçamento!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>237</MSGNR>
+     <TEXT>Receita &amp;1 não possui insumo &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>238</MSGNR>
+     <TEXT>Área de Cultivo não informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>239</MSGNR>
+     <TEXT>Código de tarefa não informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>240</MSGNR>
+     <TEXT>Receita não informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>241</MSGNR>
+     <TEXT>Material insumo não informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>242</MSGNR>
+     <TEXT>BP não pode ser criado. Verificar preenchimento CNPJ.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>243</MSGNR>
+     <TEXT>BP não pode ser criado. Verificar preenchimento CPF.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>244</MSGNR>
+     <TEXT>Período não informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>245</MSGNR>
+     <TEXT>Tipo de Viagem &amp;1 inválido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>246</MSGNR>
+     <TEXT>Viagem não finalizada. Reenviar.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>247</MSGNR>
+     <TEXT>Ticket &amp;1 inativado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>248</MSGNR>
+     <TEXT>A operação &amp;1 exige receita!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>249</MSGNR>
+     <TEXT>Não existe safra válida para o talhão &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>250</MSGNR>
+     <TEXT>O parâmetro Centro é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>251</MSGNR>
+     <TEXT>O parâmetro Material é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>252</MSGNR>
+     <TEXT>Informar a Data de Criação do Ponto de Inspeção!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>253</MSGNR>
+     <TEXT>Verificar Grupo de Atributos.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>254</MSGNR>
+     <TEXT>As folhas BDO informadas não existem.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>255</MSGNR>
+     <TEXT>As folhas BDO informadas não possuem itens.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>256</MSGNR>
+     <TEXT>As frotas informadas são inválidas.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>257</MSGNR>
+     <TEXT>A frota &amp;1 não existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>258</MSGNR>
+     <TEXT>A folha de confirmação BDO &amp;1 não existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>259</MSGNR>
+     <TEXT>A folha de confirmação BDO deve ser informada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>260</MSGNR>
+     <TEXT>A posição do item é de preenchimento obrigatório.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>261</MSGNR>
+     <TEXT>Folha BDO &amp;1 não possui item &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>262</MSGNR>
+     <TEXT>Sem autorização para limpar log do ticket!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>263</MSGNR>
+     <TEXT>O log do Ticket &amp;1 foi apagado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>264</MSGNR>
+     <TEXT>A frota &amp;1 não existe no centro de trabalho &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>265</MSGNR>
+     <TEXT>N° pessoal &amp;1 está inativo</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>266</MSGNR>
+     <TEXT>Viagem salva com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>267</MSGNR>
+     <TEXT>Coluna &apos;Caixas Rateio&apos; deve ser preenchida para todos os itens!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>268</MSGNR>
+     <TEXT>Talhão &amp;1 não pertence a fazenda dessa viagem.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>269</MSGNR>
+     <TEXT>O insumo &amp;1 está sendo utilizado no Agriplan. Não é possível eliminá-lo.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>270</MSGNR>
+     <TEXT>O parâmetro &apos;Área de Cultivo&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>271</MSGNR>
+     <TEXT>O parâmetro &apos;Período&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>272</MSGNR>
+     <TEXT>O parâmetro &apos;Versão Impressão&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>273</MSGNR>
+     <TEXT>O Layout informado &amp;1 não existe!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>274</MSGNR>
+     <TEXT>Talhão &amp;1 programado p/ colheita na semana!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>275</MSGNR>
+     <TEXT>Selecione o Código de estrutura de terreno!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>276</MSGNR>
+     <TEXT>Fazenda &amp;1 inexistente!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>277</MSGNR>
+     <TEXT>Informe o Código da Fazenda!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>278</MSGNR>
+     <TEXT>Informe somente o Código da Fazenda (sem o talhão)!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>279</MSGNR>
+     <TEXT>Valor máximo permitido para Caixas Rateio é 1000.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>280</MSGNR>
+     <TEXT>O Código da Turma é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>281</MSGNR>
+     <TEXT>Inserção Linha &amp;1: já existe entrada de mesma chave.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>282</MSGNR>
+     <TEXT>Atualização Linha &amp;1: entrada inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>283</MSGNR>
+     <TEXT>Nenhum parâmetro informado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>284</MSGNR>
+     <TEXT>Eliminação Linha &amp;1: entrada inexistente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>285</MSGNR>
+     <TEXT>Eliminação Linha &amp;1: campo IDRESOURCE deve ser informado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>286</MSGNR>
+     <TEXT>Inserção Linha &amp;1: verificar campo obrigatório &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>287</MSGNR>
+     <TEXT>&amp;1 linhas foram inseridas com sucesso.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>288</MSGNR>
+     <TEXT>&amp;1 linhas foram modificadas com sucesso.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>289</MSGNR>
+     <TEXT>&amp;1 linhas foram eliminadas com sucesso.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>290</MSGNR>
+     <TEXT>Informar Área de Cultivo!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>291</MSGNR>
+     <TEXT>Informar Ano!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>292</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 bloqueada pelo usuário &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>293</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 atualizada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>294</MSGNR>
+     <TEXT>Lote de Controle &amp;1 definido como &quot;Avaliação Final&quot;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>295</MSGNR>
+     <TEXT>Lote &amp;1 Operação &amp;2 definido como &quot;Avaliação Final&quot;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>296</MSGNR>
+     <TEXT>Ticket com diversas variedades não permitido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>297</MSGNR>
+     <TEXT>A Área de Cultivo deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>298</MSGNR>
+     <TEXT>A Versão de Origem deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>299</MSGNR>
+     <TEXT>A Versão de Destino deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>300</MSGNR>
+     <TEXT>Não existe Versão &amp;1 de Orçamento para Área de Cultivo &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>301</MSGNR>
+     <TEXT>Versão &amp;1 de Orçamento já existe para Área de Cultivo &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>302</MSGNR>
+     <TEXT>Operação cancelada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>303</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 inexistente!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>304</MSGNR>
+     <TEXT>Informe a Área de Cultivo para consultar as versões existentes!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>305</MSGNR>
+     <TEXT>As versões de Orçamento da Área de Cultivo &amp;1 foram atualizadas!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>306</MSGNR>
+     <TEXT>Crie a versão clicando sobre o botão &apos;Criar Versão Inicial&apos;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>307</MSGNR>
+     <TEXT>Versão Inicial de Orçamento criada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>308</MSGNR>
+     <TEXT>Já existe Versão Inicial &amp;1 de Orçamento para Área de Cultivo &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>309</MSGNR>
+     <TEXT>Informe a Área de Cultivo para criar a versão inicial de Orçamento!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>310</MSGNR>
+     <TEXT>Não existe Orçamento para a Área de Cultivo &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>311</MSGNR>
+     <TEXT>Utilize somente letras e números!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>312</MSGNR>
+     <TEXT>O parâmetro &apos;Receita&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>313</MSGNR>
+     <TEXT>O parâmetro &apos;Versão Orçamento/Cenário&apos; é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>314</MSGNR>
+     <TEXT>Backup dos dados de Orçamento realizado com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>315</MSGNR>
+     <TEXT>Atenção! Os Itens e os dados de Volume de Calda serão atualizados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>316</MSGNR>
+     <TEXT>Erro ao processar Lote &amp;1 Operação &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>317</MSGNR>
+     <TEXT>Informar o diretório para geração do arquivo PDF!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>318</MSGNR>
+     <TEXT>Informar Centro válido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>319</MSGNR>
+     <TEXT>O Período deve ser informado no formato MM/AAAA!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>320</MSGNR>
+     <TEXT>Informe um Período válido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>321</MSGNR>
+     <TEXT>Informe uma Região válida!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>322</MSGNR>
+     <TEXT>O parâmetro Tipo de Ordem é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>323</MSGNR>
+     <TEXT>O parâmetro Centro é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>324</MSGNR>
+     <TEXT>O parâmetro Data de Criação é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>325</MSGNR>
+     <TEXT>Não existem dados para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>326</MSGNR>
+     <TEXT>Ordem &amp; foi atualizada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>327</MSGNR>
+     <TEXT>Erro ao Salvar as Características do Lote!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>328</MSGNR>
+     <TEXT>Erro ao processar movimento &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>329</MSGNR>
+     <TEXT>O parâmetro Data é de preenchimento obrigatório!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>330</MSGNR>
+     <TEXT>Não existem ativos a serem exibidos!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>331</MSGNR>
+     <TEXT>Verificar safra informada! Intervalo maior que 3 anos!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>332</MSGNR>
+     <TEXT>Operação cancelada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>333</MSGNR>
+     <TEXT>Informar Região</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>334</MSGNR>
+     <TEXT>Revisar fluxos de aprovação p/ grupo &amp;1 na transação ZABS_VTMAIN!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>335</MSGNR>
+     <TEXT>Semana/ano não informados.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>336</MSGNR>
+     <TEXT>Código do Imóvel não informado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>337</MSGNR>
+     <TEXT>Código do Imóvel &amp;1 inválido.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>338</MSGNR>
+     <TEXT>Tabela ZABST_SOLIDOSHA atualizada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>339</MSGNR>
+     <TEXT>Não existem dados válidos a serem atualizados na tabela ZABST_SOLIDOSHA</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>340</MSGNR>
+     <TEXT>Os resultados do lote de controle &amp;1 foram criados corretamente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>341</MSGNR>
+     <TEXT>Os resultados do lote de controle &amp;1 foram atualizados corretamente.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>342</MSGNR>
+     <TEXT>Ocorreram problemas durante o processamento dos resultados do lote &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>343</MSGNR>
+     <TEXT>Nenhuma versão de orçamento encontrada para a Área de Cultivo &amp;1!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>344</MSGNR>
+     <TEXT>A Versão do Orçamento deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>345</MSGNR>
+     <TEXT>Área de Cultivo &amp;1 Versão &amp;2 inexistente!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>346</MSGNR>
+     <TEXT>Eliminar linhas selecionadas da tabela ZABS_ORCAMENTO?</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>347</MSGNR>
+     <TEXT>Selecione pelo menos uma linha!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>348</MSGNR>
+     <TEXT>Gravar alterações na tabela ZABS_ORCAMENTO?</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>349</MSGNR>
+     <TEXT>A tabela ZABS_ORCAMENTO foi atualizada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>350</MSGNR>
+     <TEXT>ZFMACM: Área de Cultivo &amp;1 não contém talhões na aba &quot;Item&quot;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>351</MSGNR>
+     <TEXT>ZFMACM: Área de Cultivo &amp;1 não contém informações na aba &quot;Vol.Calda&quot;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>352</MSGNR>
+     <TEXT>Informar Mestre de Cultura!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>353</MSGNR>
+     <TEXT>Informar Variante!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>354</MSGNR>
+     <TEXT>Informar Data Final da Época de Cultura!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>355</MSGNR>
+     <TEXT>Informar Data Inicial da Época de Cultura!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>356</MSGNR>
+     <TEXT>Não existem Épocas de  Cultura com status &lt;&gt; &apos;C&apos; (Fechado)!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>357</MSGNR>
+     <TEXT>Talhão: &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>358</MSGNR>
+     <TEXT>Modif.Gravadas: Talhão &amp;1/Cultura &amp;2/Variante &amp;3/Status &amp;4</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>359</MSGNR>
+     <TEXT>Não há dados para processamento!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>360</MSGNR>
+     <TEXT>Não existe Docto. de Estimativa p/ Talhão &amp;1/Safra &amp;2/Florada &amp;3!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>361</MSGNR>
+     <TEXT>Variante &amp;1 não prevista para ampliação!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>362</MSGNR>
+     <TEXT>Erro ao ler calendário fábrica!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>363</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura FORMAÇÃO!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>364</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura FORMAÇÃO!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>365</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem Processo &amp;2 Ordem Tarefa &amp;3 existentes para &amp;4!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>366</MSGNR>
+     <TEXT>Talhão &amp;1: Não existe material &amp;2 em Ordem Processo &amp;3!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>367</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura COLHEITA!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>368</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura COLHEITA!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>369</MSGNR>
+     <TEXT>Talhão &amp;1: Verificar mat.agríc. na Époc.Cult. p/ criar Ordem Pátio!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>370</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem Pátio &amp;2 existe para Época de Cultura &apos;FORMAÇÃO&apos;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>371</MSGNR>
+     <TEXT>Talhão &amp;1: Época de Cultura de MANUTENÇÃO já existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>372</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura MANUTENÇÃO!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>373</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura MANUTENÇÃO!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>374</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem Pátio &amp;2 existe para Época de Cultura &apos;MANUT&amp;COLHEITA&apos;.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>375</MSGNR>
+     <TEXT>Ordem Pátio &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>376</MSGNR>
+     <TEXT>Talhão &amp;1: Época de Cultura &amp;2 já existe.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>377</MSGNR>
+     <TEXT>O terreno superior deve ser informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>378</MSGNR>
+     <TEXT>O tipo de dado climático deve ser informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>379</MSGNR>
+     <TEXT>A data de referência deve ser informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>380</MSGNR>
+     <TEXT>Não existem terrenos válidos para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>381</MSGNR>
+     <TEXT>Não existem documentos de medição para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>382</MSGNR>
+     <TEXT>Os dados climáticos foram atualizados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>383</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 existe p/ processo de cultura IMPLANTAÇÃO!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>384</MSGNR>
+     <TEXT>Talhão &amp;1: Ordem processo &amp;2 criada p/ processo de cultura IMPLANTAÇÃO!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>385</MSGNR>
+     <TEXT>Informar Centro!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>386</MSGNR>
+     <TEXT>Informar Projeto!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>387</MSGNR>
+     <TEXT>Informar Shift!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>388</MSGNR>
+     <TEXT>Informar Período!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>389</MSGNR>
+     <TEXT>Informar Data Inicial!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>390</MSGNR>
+     <TEXT>Informar Data Final!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>391</MSGNR>
+     <TEXT>&amp;1 não é o primeiro dia do mês [&amp;2]!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>392</MSGNR>
+     <TEXT>&amp;1 não é o último dia do mês [&amp;2]!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>393</MSGNR>
+     <TEXT>Não há dados para processamento! 3o. dia útil do mês: &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>394</MSGNR>
+     <TEXT>Utilizar grupo de medições &apos;FAZ_PREVISAO&apos;!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>395</MSGNR>
+     <TEXT>Não existe doc.medição &apos;FAZ-ESTIMATIVA&apos; para safra e florada informadas!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>396</MSGNR>
+     <TEXT>Não existem talhões atrelados aos projetos informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>397</MSGNR>
+     <TEXT>Não existem projetos para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>398</MSGNR>
+     <TEXT>Não existem dados para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>399</MSGNR>
+     <TEXT>Selecione pelo menos uma linha!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>400</MSGNR>
+     <TEXT>Limite máximo de 7 dias excedido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>401</MSGNR>
+     <TEXT>A taxa de reposição % deve estar compreendido entre os valores 0 e 100!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>402</MSGNR>
+     <TEXT>Planejamento de irrigação atualizado com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>403</MSGNR>
+     <TEXT>Limite máximo de 4 dias excedido!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>404</MSGNR>
+     <TEXT>Lote logístico &amp;1 já atribuído ao ticket &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>405</MSGNR>
+     <TEXT>Aprovadores não encontrados.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>406</MSGNR>
+     <TEXT>Programação de irrigação atualizada com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>407</MSGNR>
+     <TEXT>Informe a Fazenda!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>408</MSGNR>
+     <TEXT>Informe o Projeto!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>409</MSGNR>
+     <TEXT>Informe a Data!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>410</MSGNR>
+     <TEXT>Fazenda &amp;1 inválida!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>411</MSGNR>
+     <TEXT>Não foram encontrados projetos válidos para os parâmetros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>412</MSGNR>
+     <TEXT>Ordem &amp;1 existe para projeto &amp;2.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>413</MSGNR>
+     <TEXT>Projeto: &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>414</MSGNR>
+     <TEXT>Sem insumos na receita &amp;1 talhão &amp;2!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>415</MSGNR>
+     <TEXT>Não existe programação para projeto &amp;1.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>416</MSGNR>
+     <TEXT>Grupo de medição incorreto para o tipo de propriedade do terreno.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>417</MSGNR>
+     <TEXT>Informe a Fazenda!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>418</MSGNR>
+     <TEXT>Informe a Data!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>419</MSGNR>
+     <TEXT>Não existem fazendas para os centros informados!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>420</MSGNR>
+     <TEXT>Talhões informados inválidos!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>421</MSGNR>
+     <TEXT>Informe a Tarefa!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>422</MSGNR>
+     <TEXT>Não existem registros para a data informada!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>423</MSGNR>
+     <TEXT>&amp;1 registros eliminados com sucesso!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>424</MSGNR>
+     <TEXT>Para Tipo Irrigação &apos;PLENO&apos;, não é permitido informar qtde. de dias!</TEXT>
+    </item>
+   </T100_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

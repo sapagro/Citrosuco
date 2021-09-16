@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Do not display messages</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPRM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPRM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRM\FO:BADI_DOCUMENT_CHECK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  DATA: lt_messages_x TYPE /agri/t_gprolog.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_message_x&gt; TYPE /agri/s_gprolog.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  DATA(lv_display_msg) = abap_true.</item>
+      <item>  READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY kind        = &apos;FUNCTION&apos;</item>
+      <item>             progname    = &apos;SAPLZFMNTX_RECEIPT&apos;</item>
+      <item>             includename = &apos;LZFMNTX_RECEIPTU01&apos;</item>
+      <item>             event       = &apos;ZFMNTX_PRODUCE_RECEIPT_QTDE&apos;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_display_msg = abap_false.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  PERFORM badi_reference_get.</item>
+      <item/>
+      <item>  IF ref_badi_fmpr_all IS BOUND.</item>
+      <item>    CALL BADI ref_badi_fmpr_all-&gt;document_check</item>
+      <item>      EXPORTING</item>
+      <item>        is_prhdr    = lwa_prdoc-x-prhdr</item>
+      <item>        is_prref    = lwa_prdoc-x-prref</item>
+      <item>        it_pritm    = lwa_prdoc-x-pritm</item>
+      <item>        it_prptr    = lwa_prdoc-x-prptr</item>
+      <item>        it_preqp    = lwa_prdoc-x-preqp</item>
+      <item>        it_prqlt    = lwa_prdoc-x-prqlt</item>
+      <item>        it_prtm     = lwa_prdoc-x-prtm</item>
+      <item>        it_prhrq    = lwa_prdoc-x-prhrq</item>
+      <item>        it_prdoc    = lwa_prdoc-x-prdoc</item>
+      <item>        it_prstat   = lwa_prdoc-x-prstat</item>
+      <item>        it_prtrl    = lwa_prdoc-x-prtrl</item>
+      <item>        it_prvar    = lwa_prdoc-x-prvar</item>
+      <item>        is_yprhdr   = lwa_prdoc-y-prhdr</item>
+      <item>        is_yprref   = lwa_prdoc-y-prref</item>
+      <item>        it_ypritm   = lwa_prdoc-y-pritm</item>
+      <item>        it_yprptr   = lwa_prdoc-y-prptr</item>
+      <item>        it_ypreqp   = lwa_prdoc-y-preqp</item>
+      <item>        it_yprqlt   = lwa_prdoc-y-prqlt</item>
+      <item>        it_yprtm    = lwa_prdoc-y-prtm</item>
+      <item>        it_yprhrq   = lwa_prdoc-y-prhrq</item>
+      <item>        it_yprdoc   = lwa_prdoc-y-prdoc</item>
+      <item>        it_yprstat  = lwa_prdoc-y-prstat</item>
+      <item>        it_yprvar   = lwa_prdoc-y-prvar</item>
+      <item>        it_yprtrl   = lwa_prdoc-y-prtrl</item>
+      <item>      CHANGING</item>
+      <item>        c_stop_save = lv_stop_save</item>
+      <item>        ct_messages = lt_messages_x.</item>
+      <item/>
+      <item>    IF NOT lt_messages_x IS INITIAL.</item>
+      <item>      IF lv_display_msg EQ abap_true.</item>
+      <item>        LOOP AT lt_messages_x ASSIGNING &lt;lwa_message_x&gt;.</item>
+      <item>          MESSAGE ID &lt;lwa_message_x&gt;-msgid TYPE &lt;lwa_message_x&gt;-msgty</item>
+      <item>              NUMBER &lt;lwa_message_x&gt;-msgno</item>
+      <item>                WITH &lt;lwa_message_x&gt;-msgv1</item>
+      <item>                     &lt;lwa_message_x&gt;-msgv2</item>
+      <item>                     &lt;lwa_message_x&gt;-msgv3</item>
+      <item>                     &lt;lwa_message_x&gt;-msgv4</item>
+      <item>                INTO sy-msgli.</item>
+      <item>          message_simple c_false.</item>
+      <item>        ENDLOOP.</item>
+      <item>      ELSE.</item>
+      <item>        READ TABLE lt_messages_x ASSIGNING &lt;lwa_message_x&gt;</item>
+      <item>          WITH KEY msgty = &apos;E&apos;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          MESSAGE ID &lt;lwa_message_x&gt;-msgid TYPE &lt;lwa_message_x&gt;-msgty</item>
+      <item>              NUMBER &lt;lwa_message_x&gt;-msgno</item>
+      <item>                WITH &lt;lwa_message_x&gt;-msgv1</item>
+      <item>                     &lt;lwa_message_x&gt;-msgv2</item>
+      <item>                     &lt;lwa_message_x&gt;-msgv3</item>
+      <item>                     &lt;lwa_message_x&gt;-msgv4</item>
+      <item>                INTO sy-msgli.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDAABBA85E26FF6E456</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDAABBA85E26FF6E456</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>035</LENGTH>
+       <TEXT>Do not display messages</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_DO_NOT_DISPAY_MSG</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDAABBA85E26FF6E456</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

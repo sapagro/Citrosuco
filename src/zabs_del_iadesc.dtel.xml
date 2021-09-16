@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_IADESC</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>ATWRT</DOMNAME>
+    <HEADLEN>55</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>40</SCRLEN3>
+    <DDTEXT>Inventory Activity Description</DDTEXT>
+    <REPTEXT>Inventory Activity Description</REPTEXT>
+    <SCRTEXT_S>In.Act.Des</SCRTEXT_S>
+    <SCRTEXT_M>In.Act.Desc</SCRTEXT_M>
+    <SCRTEXT_L>Inventory Activity Description</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Descr.Ativ.Inv.</DDTEXT>
+     <REPTEXT>Descr.Ativ.Inv.</REPTEXT>
+     <SCRTEXT_S>Des.At.In.</SCRTEXT_S>
+     <SCRTEXT_M>Descr.Ativ.Inv.</SCRTEXT_M>
+     <SCRTEXT_L>Descr.Ativ.Inv.</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

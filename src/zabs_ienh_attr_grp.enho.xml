@@ -1,0 +1,616 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Attribute Group</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLAGM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLAGM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:ASSIGNED_ATTR_DATA_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  assigned_attr_data_prepare                      *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Graying out Custom Identifier and Formula field,*</item>
+      <item>*                      if the datatype of respective field is NUM.     *</item>
+      <item>*                      Graying out Formula field,if No Input Check box *</item>
+      <item>*                      is initial.                                     *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  DATA: lwa_style  TYPE lvc_s_styl.</item>
+      <item/>
+      <item>*--Fectching Characteristic data based on Class Name</item>
+      <item>  IF gs_atgrp_infocus-x-ksml IS NOT INITIAL.</item>
+      <item>  SELECT * FROM cabn</item>
+      <item>  INTO TABLE @DATA(lt_cabn)</item>
+      <item>  FOR ALL ENTRIES IN @gs_atgrp_infocus-x-ksml</item>
+      <item>  WHERE atnam = @gs_atgrp_infocus-x-ksml-atnam.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT gs_atgrp_infocus-x-ksml ASSIGNING FIELD-SYMBOL(&lt;lwa_temp_attr&gt;).</item>
+      <item/>
+      <item>    READ TABLE gt_assigned_attributes ASSIGNING FIELD-SYMBOL(&lt;lwa_assigned_attribute&gt;)</item>
+      <item>                                      WITH KEY clint = &lt;lwa_temp_attr&gt;-clint</item>
+      <item>                                               atnam = &lt;lwa_temp_attr&gt;-atnam.</item>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>     CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    &lt;lwa_temp_attr&gt;-atfor              = &lt;lwa_assigned_attribute&gt;-atfor.</item>
+      <item>    &lt;lwa_assigned_attribute&gt;-zzformula = &lt;lwa_temp_attr&gt;-zzformula.</item>
+      <item>    &lt;lwa_assigned_attribute&gt;-zzident   = &lt;lwa_temp_attr&gt;-zzident.</item>
+      <item/>
+      <item>*--Edit mode if datatype of Identifier field is NUM</item>
+      <item>    lwa_style-fieldname = zcl_abs_abap_maintain=&gt;c_cust_field_ident. &quot;&apos;ZZIDENT&apos;.</item>
+      <item>    IF &lt;lwa_assigned_attribute&gt;-atfor EQ zcl_abs_abap_maintain=&gt;c_attr_datatyp_num.  &quot;&apos;NUM&apos;.</item>
+      <item>      lwa_style-style = /agri/cl_gui_alv_grid=&gt;mc_style_enabled.</item>
+      <item>    ELSE.</item>
+      <item>      CLEAR &lt;lwa_assigned_attribute&gt;-zzident.</item>
+      <item>      lwa_style-style = /agri/cl_gui_alv_grid=&gt;mc_style_disabled.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    INSERT lwa_style INTO TABLE &lt;lwa_assigned_attribute&gt;-styles.</item>
+      <item>    CLEAR lwa_style.</item>
+      <item/>
+      <item>*--Edit Mode if datatype of Formula field is NUM and No Input field is equal to X.</item>
+      <item>    lwa_style-fieldname = zcl_abs_abap_maintain=&gt;c_cust_field_formula. &quot;&apos;ZZFORMULA&apos;.</item>
+      <item>    IF &lt;lwa_assigned_attribute&gt;-atfor EQ zcl_abs_abap_maintain=&gt;c_attr_datatyp_num.  &quot;&apos;NUM&apos;.</item>
+      <item>      READ TABLE lt_cabn INTO DATA(ls_cabn) WITH KEY atnam = &lt;lwa_temp_attr&gt;-atnam</item>
+      <item>                                                     atinp = abap_true.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        lwa_style-style = /agri/cl_gui_alv_grid=&gt;mc_style_enabled.</item>
+      <item>      ELSE.</item>
+      <item>        lwa_style-style = /agri/cl_gui_alv_grid=&gt;mc_style_disabled.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      CLEAR &lt;lwa_assigned_attribute&gt;-zzformula.</item>
+      <item>      lwa_style-style = /agri/cl_gui_alv_grid=&gt;mc_style_disabled.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    INSERT lwa_style INTO TABLE &lt;lwa_assigned_attribute&gt;-styles.</item>
+      <item>    CLEAR lwa_style.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:ATGRP_INFOCUS_SAVE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  atgrp_infocus_save                              *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Inserting,Updating and Deleting records from    *</item>
+      <item>*                      Database Table                                  *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Local data declarations</item>
+      <item>  DATA : lt_zksml  TYPE TABLE OF zabst_ksml,</item>
+      <item>         lwa_zksml TYPE zabst_ksml.</item>
+      <item/>
+      <item>*--Deleting entries from database table</item>
+      <item>  DELETE FROM zabst_ksml WHERE clint EQ gs_atgrp_infocus-clint.</item>
+      <item/>
+      <item>  lwa_zksml-clint = gs_atgrp_infocus-clint.</item>
+      <item>  LOOP AT gs_atgrp_infocus-x-ksml INTO DATA(lwa_ksml_attr).</item>
+      <item>    lwa_zksml-atnam   = lwa_ksml_attr-atnam.</item>
+      <item>    lwa_zksml-ident   = lwa_ksml_attr-zzident.</item>
+      <item>    lwa_zksml-formula = lwa_ksml_attr-zzformula.</item>
+      <item>    APPEND lwa_zksml TO lt_zksml.</item>
+      <item>    CLEAR: lwa_zksml-atnam, lwa_zksml-ident, lwa_zksml-formula.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lt_zksml IS NOT INITIAL.</item>
+      <item>*--Inserting recordes into database table from temporary table</item>
+      <item>   INSERT zabst_ksml FROM TABLE lt_zksml.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:ASSIGNED_ATTR_DATA_UPDATE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  assigned_attr_data_update                       *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Validating Formula Field                        *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  DATA : lt_attributes TYPE zabs_tty_attr_forml,</item>
+      <item>         ls_attributes TYPE zabs_str_attr_forml,</item>
+      <item>         lv_message    TYPE char80.</item>
+      <item/>
+      <item>*--Populating attributes table</item>
+      <item>  LOOP AT lt_assigned_attributes ASSIGNING &lt;lwa_assigned_attribute&gt;.</item>
+      <item>   ls_attributes-atnam = &lt;lwa_assigned_attribute&gt;-atnam.</item>
+      <item>   ls_attributes-ident = &lt;lwa_assigned_attribute&gt;-zzident.</item>
+      <item>   APPEND ls_attributes TO lt_attributes.</item>
+      <item>   CLEAR ls_attributes.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  UNASSIGN &lt;lwa_assigned_attribute&gt;.</item>
+      <item>  LOOP AT lt_assigned_attributes ASSIGNING &lt;lwa_assigned_attribute&gt;</item>
+      <item>                                      WHERE atnam IS NOT INITIAL.</item>
+      <item>     IF &lt;lwa_assigned_attribute&gt;-zzformula IS NOT INITIAL.</item>
+      <item>*--Calling FM to Validate the formula field</item>
+      <item>      IF lt_attributes is NOT INITIAL.</item>
+      <item>      CALL FUNCTION &apos;ZABS_FM_CHECK_FORMULA&apos;</item>
+      <item>        EXPORTING</item>
+      <item>          iv_atnam            = &lt;lwa_assigned_attribute&gt;-atnam</item>
+      <item>          iv_formula          = &lt;lwa_assigned_attribute&gt;-zzformula</item>
+      <item>          it_attributes       = lt_attributes</item>
+      <item>        IMPORTING</item>
+      <item>          ev_subrc            = lv_subrc</item>
+      <item>          ev_message          = lv_message.</item>
+      <item/>
+      <item>      IF lv_subrc IS NOT INITIAL.</item>
+      <item>        MESSAGE e000(zabs_msgcls) WITH lv_message.</item>
+      <item>      ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:ASSIGNED_ATTR_CHECK\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  assigned_attr_check                             *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Validating Custom Fields                        *</item>
+      <item>*                      1.Error message same identifier exits in the    *</item>
+      <item>*                        Identifier field                              *</item>
+      <item>*                      2.Error message if first letter of an identifier*</item>
+      <item>*                        is not a character                            *</item>
+      <item>*                      3.Error message if same Identifier in the       *</item>
+      <item>*                        formula field is allowed                      *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Validating Custom Fields</item>
+      <item>  IF ls_ksml-zzident IS NOT INITIAL.</item>
+      <item>*--Checking whether same identifier exits in the Identifier field</item>
+      <item>    DATA(lt_assigned_attributes) = gt_assigned_attributes.</item>
+      <item/>
+      <item>    DELETE lt_assigned_attributes WHERE atnam = ls_ksml-atnam.</item>
+      <item>    READ TABLE lt_assigned_attributes TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY zzident = ls_ksml-zzident.</item>
+      <item>    IF  sy-subrc EQ 0.</item>
+      <item>      MESSAGE e020(zabs_msgcls)</item>
+      <item>      WITH ls_ksml-atnam INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDIF.</item>
+      <item>*--Checking whether the first letter of an identifier is character or not</item>
+      <item>    IF ls_ksml-zzident(1) NA zcl_abs_abap_maintain=&gt;c_alphabets.&quot;&apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;.</item>
+      <item>      MESSAGE e018(zabs_msgcls)</item>
+      <item>      WITH ls_ksml-atnam INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDIF.</item>
+      <item>*--Error message if same Identifier in the formula field is allowed</item>
+      <item>    IF ls_ksml-zzformula IS NOT INITIAL.</item>
+      <item>     IF ls_ksml-zzformula CS ls_ksml-zzident.</item>
+      <item>       MESSAGE e019(zabs_msgcls)</item>
+      <item>       WITH ls_ksml-atnam INTO sy-msgli.</item>
+      <item>       message_simple space.</item>
+      <item>     ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:FIELD_CATALOG_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  field_catalog_prepare                           *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0F                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Adding Custom Identifier and Formula Fields in  *</item>
+      <item>*                      a grid and in edit mode                         *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Making Identifier and Formula fields visible and edit mode</item>
+      <item>  IF lv_structure EQ c_structure-atgrp_grid.</item>
+      <item>    LOOP AT lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>                    WHERE fieldname EQ zcl_abs_abap_maintain=&gt;c_cust_field_ident    &quot;&apos;ZZIDENT&apos;</item>
+      <item>                    OR    fieldname EQ zcl_abs_abap_maintain=&gt;c_cust_field_formula. &quot;&apos;ZZFORMULA&apos;.</item>
+      <item>      CLEAR : &lt;lwa_fcat&gt;-tech , &lt;lwa_fcat&gt;-no_out.</item>
+      <item>      &lt;lwa_fcat&gt;-edit = c_true.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:ATGRP_INFOCUS_DELETE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  atgrp_infocus_delete                            *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Deleting Attribute Group from Database Table    *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Deleting attribute group from database table</item>
+      <item>  IF lv_save_is_successful EQ c_true.</item>
+      <item>    DELETE FROM zabst_ksml WHERE clint EQ lv_infocus_clint.</item>
+      <item>    CLEAR lv_infocus_clint.</item>
+      <item>  ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLAGM\FO:ATGRP_INFOCUS_DELETE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_ATTR_GRP                              *</item>
+      <item>* Form Name         :  atgrp_infocus_delete                            *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Moving Class Number to local variable for the   *</item>
+      <item>*                      purpose to delete from database table           *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Moving Class number to Local variable</item>
+      <item> DATA(lv_infocus_clint) = gs_atgrp_infocus-clint.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLAGM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\FU:/AGRI/GLAG_CREATE_MASS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA:  lt_klah_all_new TYPE /agri/t_gklah,</item>
+      <item>         lt_klah_new TYPE /agri/t_gklah,</item>
+      <item>         lt_swor_all_new TYPE /agri/t_gswor,</item>
+      <item>         lt_swor_new TYPE /agri/t_gswor,</item>
+      <item>         lt_ksml_all_new TYPE /agri/t_gksml,</item>
+      <item>         lt_ksml_new TYPE /agri/t_gksml,</item>
+      <item>         lt_agtln_all_new TYPE /agri/t_gagtln,</item>
+      <item>         lt_agtln_new TYPE /agri/t_gagtln.</item>
+      <item>  DATA: lwa_klah_new TYPE /agri/s_gklah,</item>
+      <item>        lwa_swor_new TYPE /agri/s_gswor,</item>
+      <item>        lwa_ksml_new TYPE /agri/s_gksml,</item>
+      <item>        lwa_agtln_new TYPE /agri/s_gagtln,</item>
+      <item>        lwa_klah_old_new TYPE /agri/s_gklah,</item>
+      <item>        lwa_agha_new   TYPE /agri/s_glagha,</item>
+      <item>        ls_variant_new TYPE disvariant,</item>
+      <item>        ls_context_new TYPE /agri/s_gag_context.</item>
+      <item/>
+      <item>  DATA: lv_save_is_successful_new,</item>
+      <item>        lv_subrc_new TYPE sy-subrc,</item>
+      <item>        lv_activity_new TYPE activ_auth,</item>
+      <item>        lv_agtyp_new TYPE /agri/gagtyp.</item>
+      <item/>
+      <item>  IF i_agcat IS INITIAL.</item>
+      <item>    RAISE incomplete_parameters.</item>
+      <item>  ELSE.</item>
+      <item>    SELECT SINGLE agtyp</item>
+      <item>      FROM /agri/tglagcat</item>
+      <item>      INTO lv_agtyp_new</item>
+      <item>     WHERE agcat EQ i_agcat.</item>
+      <item>    IF sy-subrc NE 0.</item>
+      <item>      RAISE invalid_parameters.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>****Initialize environment</item>
+      <item>  PERFORM environment_initialize USING space.</item>
+      <item/>
+      <item>  IF i_message_log_init EQ c_true.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;/AGRI/GLAG_MESSAGE_LOG_INIT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        i_initiator = c_log_initiator-atgrp_create</item>
+      <item>        i_plcrule   = i_plcrule.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>****Set Environment Variables</item>
+      <item>  gs_atgrp_environment-mtype = c_maintenance_type-mass.</item>
+      <item>  gs_atgrp_environment-bgcall = c_true.</item>
+      <item>  gs_atgrp_environment-dmode = c_mode_create.</item>
+      <item>  gs_atgrp_environment-omode = c_mode_change.</item>
+      <item/>
+      <item>  lt_klah_all_new[] = it_klah[].</item>
+      <item>  SORT lt_klah_all_new BY clint.</item>
+      <item>  lt_swor_all_new[] = it_swor[].</item>
+      <item>  SORT lt_swor_all_new BY clint spras klpos.</item>
+      <item>  lt_ksml_all_new[] = it_ksml[].</item>
+      <item>  SORT lt_ksml_all_new BY clint posnr adzhl.</item>
+      <item>  lt_agtln_all_new[] = it_agtln[].</item>
+      <item>  SORT lt_agtln_all_new[] BY clint spras txtid.</item>
+      <item/>
+      <item>  lv_activity_new = c_authorization_activity-create.</item>
+      <item>  PERFORM attr_group_authority_check USING lv_activity_new</item>
+      <item>                                  CHANGING lv_subrc_new.</item>
+      <item>  IF lv_subrc_new NE 0.</item>
+      <item>    IF et_messages[] IS REQUESTED</item>
+      <item>    AND i_message_log_init IS NOT INITIAL.</item>
+      <item>      messages_get gs_variables-initiator et_messages.</item>
+      <item>    ENDIF.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT it_klah INTO lwa_klah_new.</item>
+      <item/>
+      <item>    READ TABLE it_agha INTO lwa_agha_new WITH KEY class = lwa_klah_new-class.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      /agri/s_glagha-agcat = lwa_agha_new-agcat.</item>
+      <item>      /agri/s_glagha-mdtyp = lwa_agha_new-mdtyp.</item>
+      <item>      /agri/s_glagha-aslvl = lwa_agha_new-aslvl.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    lwa_klah_new-klart = lv_agtyp_new.</item>
+      <item/>
+      <item>    REFRESH: lt_klah_new, lt_swor_new, lt_ksml_new, lt_agtln_new.</item>
+      <item>    CLEAR: lwa_klah_old_new, lv_subrc_new, lv_save_is_successful_new,</item>
+      <item>           lv_activity_new.</item>
+      <item>    CLEAR ls_context_new.</item>
+      <item/>
+      <item>    PERFORM new_document_data_initialize.</item>
+      <item/>
+      <item>    gs_atgrp_environment-dmode = c_mode_create.</item>
+      <item>    gs_atgrp_environment-omode = c_mode_change.</item>
+      <item/>
+      <item>    MOVE-CORRESPONDING lwa_klah_new TO ls_context_new.</item>
+      <item>    MOVE-CORRESPONDING lwa_klah_new TO /agri/s_gklah.</item>
+      <item>    messages_context_data_set lwa_klah_new-class</item>
+      <item>                              space space</item>
+      <item>                              c_structure-log_context</item>
+      <item>                              ls_context_new.</item>
+      <item/>
+      <item>    PERFORM header_update USING lwa_klah_old_new</item>
+      <item>                       CHANGING lwa_klah_new</item>
+      <item>                                lv_subrc_new.</item>
+      <item>    IF lv_subrc_new NE 0.</item>
+      <item>      PERFORM atgrp_dequeue USING lwa_klah_new-class</item>
+      <item>                                  lwa_klah_new-klart.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>****Process Attribute Group Description</item>
+      <item>    READ TABLE lt_swor_all_new</item>
+      <item>    WITH KEY clint = lwa_klah_new-clint</item>
+      <item>    TRANSPORTING NO FIELDS</item>
+      <item>    BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      LOOP AT lt_swor_all_new INTO lwa_swor_new</item>
+      <item>                          FROM sy-tabix.</item>
+      <item>        IF lwa_swor_new-clint NE lwa_klah_new-clint.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item>        lwa_swor_new-updkz = c_updkz_new.</item>
+      <item>        APPEND lwa_swor_new TO lt_swor_new.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    PERFORM atgrp_description_update_all USING lt_swor_new</item>
+      <item>                                      CHANGING lv_subrc_new.</item>
+      <item>    IF lv_subrc_new NE 0.</item>
+      <item>      PERFORM atgrp_dequeue USING lwa_klah_new-class</item>
+      <item>                                  lwa_klah_new-klart.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>****Process Attributes Assigned to Group</item>
+      <item>    READ TABLE lt_ksml_all_new</item>
+      <item>    WITH KEY clint = lwa_klah_new-clint</item>
+      <item>    TRANSPORTING NO FIELDS</item>
+      <item>    BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      LOOP AT lt_ksml_all_new INTO lwa_ksml_new</item>
+      <item>                          FROM sy-tabix.</item>
+      <item>        IF lwa_ksml_new-clint NE lwa_klah_new-clint.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item>        lwa_ksml_new-updkz = c_updkz_new.</item>
+      <item>        APPEND lwa_ksml_new TO lt_ksml_new.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    PERFORM assigned_attr_update_all USING lt_ksml_new</item>
+      <item>                                  CHANGING lv_subrc_new.</item>
+      <item>    IF lv_subrc_new NE 0.</item>
+      <item>      PERFORM atgrp_dequeue USING lwa_klah_new-class</item>
+      <item>                                  lwa_klah_new-klart.</item>
+      <item>      CONTINUE.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>****Process Attribute Group Description</item>
+      <item>    READ TABLE lt_agtln_all_new</item>
+      <item>    WITH KEY clint = lwa_klah_new-clint</item>
+      <item>    TRANSPORTING NO FIELDS</item>
+      <item>    BINARY SEARCH.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      LOOP AT lt_agtln_all_new INTO lwa_agtln_new</item>
+      <item>                           FROM sy-tabix.</item>
+      <item>        IF lwa_agtln_new-clint NE lwa_klah_new-clint.</item>
+      <item>          EXIT.</item>
+      <item>        ENDIF.</item>
+      <item>        lwa_agtln_new-updkz = c_updkz_new.</item>
+      <item>        APPEND lwa_agtln_new TO lt_agtln_new.</item>
+      <item>      ENDLOOP.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    PERFORM atgrp_text_update_all USING lt_agtln_new.</item>
+      <item/>
+      <item>    PERFORM atgrp_save USING i_commit</item>
+      <item>                             i_set_update_task</item>
+      <item>                    CHANGING gs_atgrp_infocus</item>
+      <item>                             lv_save_is_successful_new.</item>
+      <item>    IF et_klah IS REQUESTED</item>
+      <item>    AND lv_save_is_successful_new EQ c_true.</item>
+      <item>      APPEND gs_atgrp_infocus-x-klah TO et_klah.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF et_messages[] IS REQUESTED</item>
+      <item>  AND i_message_log_init IS NOT INITIAL.</item>
+      <item>    messages_get gs_variables-initiator et_messages.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9A7DD682701FE5F4D</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A7DD682701FE5F4D</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>Attribute Group</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A7DD682701FE5F4D</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>GRupo de Atributos</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ATTR_GRP</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9A7DD682701FE5F4D</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

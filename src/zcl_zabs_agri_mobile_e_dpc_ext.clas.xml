@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Data Provider Secondary Class</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>000</KEY>
+     <ENTRY>Image uploaded successfully.</ENTRY>
+     <LENGTH>56</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>There were errors that occurred during image upload. Contact technical team.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Results recorded successfully</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>The operation has been marked with &quot;Final evaluation&quot; and can&apos;t be treated.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Confirmation date not allowed</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>You are making an appointment with a date in the future</ENTRY>
+     <LENGTH>110</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>006</KEY>
+     <ENTRY>Inspection point is scheduled for processing</ENTRY>
+     <LENGTH>96</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>Error in Inspection point processing</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>010</KEY>
+     <ENTRY>No data for given selection</ENTRY>
+     <LENGTH>54</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>000</KEY>
+       <ENTRY>Imagem carregada com sucesso.</ENTRY>
+       <LENGTH>56</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Ocorreram erros durante o upload da imagem. Entre em contato com a equipe técnica.</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Resultados gravados com sucesso</ENTRY>
+       <LENGTH>58</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>A operação foi marcada com &quot;Avaliação final&quot; e não pode ser tratada.</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Data de confirmação fora do permitido</ENTRY>
+       <LENGTH>58</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Você está realizando apontamento com data no futuro</ENTRY>
+       <LENGTH>110</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>006</KEY>
+       <ENTRY>Ponto de inspeção está agendado para processamento</ENTRY>
+       <LENGTH>96</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Erro no processamento do ponto de inspeção</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>A confirmação da ordem da tarefa está agendada para processamento</ENTRY>
+       <LENGTH>102</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>009</KEY>
+       <ENTRY>Erro no processamento do pedido de tarefa</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>010</KEY>
+       <ENTRY>Sem dados para determinada seleção</ENTRY>
+       <LENGTH>54</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <I18N_LINES>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+   </I18N_LINES>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>ATTRGRP_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: AttributeGroupSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>ATTRIBUTES_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Attributes_extSet Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>ATTRIB_F4SET_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: AttributesF4Set Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>BATCH_F4</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get batch values for tree and fruits</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>CROPSEASON_EXT_GET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Crop Season Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>CROPSEASON_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: CropSeason_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>C_SOURCE_QUALITY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Quality Inspection Lot</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>C_SOURCE_TASKORDER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Task Order Confirmation</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>C_UPDKZ_DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Update indicator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>C_UPDKZ_NEW</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Update indicator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>C_UPDKZ_UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Update indicator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>DELETE_FROM_DATABASE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DELETE_FROM_DATABASE</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>EMPLOYEE_ROLE_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: EMPLOYEE ROLE Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>EMPLOYEE_USERS_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: EMPLOYEE USERS Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>EQUIPMENTEXTSET_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: EquipmentExt</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ATTRGRP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: AttributeGroupSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ATTRIBUTES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Attributes_extSet Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ATTRIB_F4SET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: AttributesF4Set Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_DELTA_TOKEN_EXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Delta Token Ext</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EMPLOYEE_ROLES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: EMPLOYEE ROLE Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EMPLOYEE_USERS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: EMPLOYEE USERS Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EQUIPMENT_SET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Equiprments Header Data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_INSPLOT_ELOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Inspection lot Error log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_INSPPNT_FLDCSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: InspPnt_FeldCombSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_INVENTORYF4</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Inventoryf4 Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_IRRIGATION_TYPES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Irrigation Types</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_MDMEXTEND</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: MeasurementsExtendSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_MDM_ATTR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: MDM_Attr_Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_MDM_ATTR_GRP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: MDM_Attr_GrpSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALCHARF4EXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharF4ExtSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALCHARHIST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharHist_ext</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALCHAR_FETCH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharFetch_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALCHAR_FETCH_V1</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Z28 Inspection Lot Results Data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALITY_OPERATIONS_EXTEND</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Quality Operations Extend</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALITY_TASKORDER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Quality Task Order data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUALTASKORD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualTaskOrdSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUAL_CHAR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharExtSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_QUAL_CHAR_V1</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharExtSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_REASONLISTEXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: ReasonList_ext</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ROUTE_TERRAIN_DTLS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Route Terrain Details</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_SHIFTEXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: ShiftextSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_SKIP_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Skip Token Method</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TERRAINSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Terrain_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TERRQUASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: TerrainQua_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOACT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoActivities_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOCOMPONEXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoComponents_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOMATERIAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoMaterial_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOOPERATIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoOperations_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_WOTASKORDERS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoTaskOrdersSet_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INSPECTION_LOT_FLAG_CHECK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Checks if the operation hasn&apos;t been marked &quot;Final Revision&quot;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INSPECTION_LOT_FLAG_UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Mobile Inspection lot final Confirmation Data Update</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INSPLOTELOG_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: insploterlog</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INSPPNT_FLDCSET_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: InspPnt_FeldCombSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INSPPOINTS_DATA_MAP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Maps data for inspection point user custom fields</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INSPPOINTS_RECORDING_UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>BAPI: Recording of Inspection Points</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INVENTORYF4_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Inventoryf4 Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>INV_ACTIVITY_F4</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Inventory Activity Values</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>IRRIGATIONTYPES_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: IrrigationTypesSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>MATNR_ATT_F4_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Matnr_Attr_F4Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>MDMEXTEND_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: MeasurementsExtendSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>MDM_ATTR_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: MDM_Attr_Set</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>MDM_ATTR_GRP_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: MDM_Attr_GrpSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>NOTES_SAVE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Notes Save</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>ORDER_STATUS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Order_status</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>PREV_PERNR_CHECK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Checks for Change In Pernr</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUALCHARF4EXT_CREATE_ENTITY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualChrF4ExtSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUALCHARF4EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharF4ExtSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUALCHARHIST_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharHist_ext</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUALCHAR_FETCH_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharFetch_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUALOPREXTENDSET_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualOprExtendSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUALTASKORD_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualTaskOrdSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>QUAL_CHAR_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: QualCharExtSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>REASONLISTEXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: ReasonList_ext</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>REQUEST_HEADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Request header for data compression</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>SHIFTEXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: ShiftextSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>TERRAINSET_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: Terrain_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>TERRQUASET_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: TerrainQua_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>UPLOADING_IMGEXT_INSP_POINT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Uploading Images/Document for Inpection point Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOACT_EXT_SET_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoActivities_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOCOMPONEXT_SET_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoComponents_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOMATERIAL_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoMaterial_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOOPERATIONS_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoOperations_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WORK_ORDER_CONFIRM_EXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Work Order Confirmation Extended</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOROUTETERRAINEX_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoRouteTerrainExtendSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOROUTE_EXTSET_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoRoute_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_AGRI_MOBILE_E_DPC_EXT</CLSNAME>
+     <CMPNAME>WOTASKORDERS_EXT_GET_ENTITYSET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Related EntitySet Name: WoTaskOrdersSet_extSet</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+    <LANGU>P</LANGU>
+    <DESCRIPT>ABS Master Data Uploader</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Error while creating container</ENTRY>
+     <LENGTH>60</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Excel</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Test</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Error while creating container</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Excel</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Test</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <I18N_LINES>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+   </I18N_LINES>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>ATTRIBUTE_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Attributes Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>ATTRIBUTE_GROUPS_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Attribute groups create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>CROP_MASTER_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Crop Master Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>CROP_SEASON_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Crop Season Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>IRRIGATION_EQUIP_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Irrigation Equipment Create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>MEASUREMENT_DOCUMENT_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Measurement documents create</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>READ_EXCEL_FILE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Read excel file</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>STRUCTURE_BUILD</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Structure build</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ABS_GLUPLOAD_CROP_SEASON</CLSNAME>
+     <CMPNAME>TERRAINS_CREATE</CMPNAME>
+     <LANGU>P</LANGU>
+     <DESCRIPT>Terrains create</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Data Provider Secondary Class</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>New</ENTRY>
+     <LENGTH>13</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Nv.</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <I18N_LINES>
+    <item>
+     <LANGUAGE>P</LANGUAGE>
+    </item>
+   </I18N_LINES>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>ADD_MESSAGES_TO_MSG_CONTAINER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add messages to Container</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>CREATE_ACCOMPLISHMENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create Accomplishment</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACCITEMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Accomplishment items</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_ACTIVITIES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Activities</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_DELTA_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Delta Token</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EMPLOYEES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Employees</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_EMPLOYEES_NP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Employees (Non-Productive)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_FLEET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Fleet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_FLEET_NP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Fleet (Non-Productive)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_TASK_ORDS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get Task Orders</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>GET_USER_ROLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get User Role</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_ZABS_MOB_MCN_CNF_DPC_EXT</CLSNAME>
+     <CMPNAME>POPULATE_ACCOMPLISHMENT_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Populate Accomplishment header</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

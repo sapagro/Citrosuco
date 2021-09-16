@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Class Own Produce</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FM_DOCUMENT_PROCESS</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FM_DOCUMENT_PROCESS</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FM_DOCUMENT_PROCESS==CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FM_DOCUMENT_PROCESS==CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FM_DOCUMENT_PROCESS\ME:MAKE_MOVEMENT_MATERIAL\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA: lt_item_enhanc     TYPE TABLE OF bapi2017_gm_item_create,</item>
+      <item>      lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>      lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>      lt_msgs            TYPE zabs_tty_sls_msgs,</item>
+      <item>      ls_return_enhanc   TYPE bapiret2,</item>
+      <item>      ls_prhdr           TYPE /agri/fmprhdr,</item>
+      <item>      ls_prhdr_highlevel TYPE /agri/fmprhdr,</item>
+      <item>      lt_pritm           TYPE /agri/t_fmpritm,</item>
+      <item>      lt_pritm_highlevel TYPE /agri/t_fmpritm,</item>
+      <item>      lv_weeks           TYPE yosemana_cota,</item>
+      <item>      lv_imov            TYPE yoimov,</item>
+      <item>      lv_talh            TYPE yotalhao,</item>
+      <item>      lt_prhrq           TYPE /agri/t_fmprhrq,</item>
+      <item>      lt_prdoc_enhanc    TYPE /agri/t_fmpr_doc,</item>
+      <item>      lwa_prdoc_enhanc   TYPE /agri/s_fmpr_doc,</item>
+      <item>      ls_prhdr_enhanc    TYPE /agri/fmprhdr.</item>
+      <item/>
+      <item>DATA: lref_ownprod TYPE REF TO /agri/cl_fmpr_own_produce .</item>
+      <item/>
+      <item>FIELD-SYMBOLS: &lt;lwa_pritm&gt;           TYPE /agri/s_fmpritm,</item>
+      <item>               &lt;lwa_pritm_highlevel&gt; TYPE /agri/s_fmpritm.</item>
+      <item/>
+      <item>*IF sy-uname EQ &apos;T_H.KABABE&apos;</item>
+      <item>*OR sy-uname EQ &apos;T_T.KONNO&apos;.</item>
+      <item>*  BREAK-POINT.</item>
+      <item>*ENDIF.</item>
+      <item/>
+      <item>CREATE OBJECT lref_ownprod</item>
+      <item>  EXPORTING</item>
+      <item>    i_prnum          = i_prnum</item>
+      <item>    i_gjahr          = i_gjahr</item>
+      <item>  EXCEPTIONS</item>
+      <item>    ticket_not_found = 1</item>
+      <item>    OTHERS           = 2.</item>
+      <item/>
+      <item>CALL METHOD /agri/cl_fm_master_ticket=&gt;get_details</item>
+      <item>  EXPORTING</item>
+      <item>    i_prnum          = i_prnum</item>
+      <item>    i_gjahr          = i_gjahr</item>
+      <item>  IMPORTING</item>
+      <item>    es_prhdr         = ls_prhdr</item>
+      <item>    et_pritm         = lt_pritm</item>
+      <item>  EXCEPTIONS</item>
+      <item>    ticket_not_found = 1.</item>
+      <item/>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>DATA(lv_budat) = ls_prhdr-budat.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item/>
+      <item>IF i_idproc = &apos;240&apos;.</item>
+      <item>  cs_item-batch = lref_ownprod-&gt;ms_pritm-zzhbatch.</item>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>ELSEIF i_idproc = &apos;300&apos;.</item>
+      <item>  cs_item-batch = lref_ownprod-&gt;ms_pritm-charg.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>* Header</item>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>* cs_header-pstng_date   = i_budat.</item>
+      <item>cs_header-pstng_date   = lv_budat.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item>cs_header-doc_date     = i_bldat.</item>
+      <item>cs_header-ref_doc_no   = ls_prhdr-zrems.</item>
+      <item>* Item</item>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>* cs_item-prod_date = i_budat.</item>
+      <item>cs_item-prod_date = lv_budat.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item>cs_item-material_long = i_matnr.</item>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>cs_item-material = i_matnr.</item>
+      <item>cs_item-move_mat = i_matnr.</item>
+      <item>cs_item-move_mat_long = i_matnr.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item>cs_item-move_type = mc_move_type_101.</item>
+      <item>cs_item-stck_type = mc_stck_type_f.</item>
+      <item>cs_item-entry_qnt = i_ntgew.</item>
+      <item>cs_item-entry_uom = i_gewei.</item>
+      <item>cs_item-mvt_ind   = mc_mvt_ind_f.</item>
+      <item>cs_item-orderid   = i_aufnr.</item>
+      <item>cs_item-gr_rcpt   = &apos;ABS&apos;.</item>
+      <item>APPEND cs_item TO lt_item_enhanc.</item>
+      <item/>
+      <item>CALL FUNCTION &apos;BAPI_GOODSMVT_CREATE&apos;</item>
+      <item>  EXPORTING</item>
+      <item>    goodsmvt_header  = cs_header</item>
+      <item>    goodsmvt_code    = mc_gm_code_02</item>
+      <item>    testrun          = i_testrun</item>
+      <item>  IMPORTING</item>
+      <item>    goodsmvt_headret = es_matdoc</item>
+      <item>  TABLES</item>
+      <item>    goodsmvt_item    = lt_item_enhanc</item>
+      <item>    return           = ct_return.</item>
+      <item/>
+      <item>READ TABLE ct_return INTO DATA(lwa_return) WITH KEY type = &apos;E&apos;.</item>
+      <item>IF sy-subrc EQ 0.</item>
+      <item>  INSERT INITIAL LINE INTO TABLE lt_msgs ASSIGNING FIELD-SYMBOL(&lt;lwa_msg&gt;).</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    &lt;lwa_msg&gt;-msgid  = lwa_return-id.</item>
+      <item>    &lt;lwa_msg&gt;-msgty  = &apos;I&apos;. &quot;lwa_return-type.</item>
+      <item>    &lt;lwa_msg&gt;-msgno  = lwa_return-number.</item>
+      <item>    &lt;lwa_msg&gt;-msgv1  = lwa_return-message_v1.</item>
+      <item>    &lt;lwa_msg&gt;-msgv2  = lwa_return-message_v2.</item>
+      <item>    &lt;lwa_msg&gt;-msgv3  = lwa_return-message_v3.</item>
+      <item>    &lt;lwa_msg&gt;-msgv4  = lwa_return-message_v4.</item>
+      <item>    &lt;lwa_msg&gt;-lineno = &apos;999999&apos;.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lt_msgs[] IS NOT INITIAL.</item>
+      <item>    CALL FUNCTION &apos;ZABS_FM_MEMORY_MSGS&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        it_messages = lt_msgs.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>  READ TABLE lt_formatted_stack TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY kind        = &apos;FUNCTION&apos;</item>
+      <item>             progname    = &apos;SAPLZFMNTX_RECEIPT&apos;</item>
+      <item>             includename = &apos;LZFMNTX_RECEIPTU01&apos;</item>
+      <item>             event       = &apos;ZFMNTX_PRODUCE_RECEIPT_QTDE&apos;.</item>
+      <item/>
+      <item>  IF sy-subrc NE 0.</item>
+      <item>    MESSAGE ID lwa_return-id TYPE &apos;I&apos; NUMBER lwa_return-number</item>
+      <item>      WITH lwa_return-message_v1 lwa_return-message_v2</item>
+      <item>           lwa_return-message_v3 lwa_return-message_v4.</item>
+      <item>  ENDIF.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>* BAPI Commit</item>
+      <item>*bapi_commit( ).</item>
+      <item>CALL METHOD me-&gt;bapi_commit</item>
+      <item>  EXPORTING</item>
+      <item>    i_wait = &apos;X&apos;.</item>
+      <item/>
+      <item>WAIT UP TO 2 SECONDS.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item/>
+      <item>* Return code</item>
+      <item>READ TABLE ct_return INTO ls_return_enhanc WITH KEY type = &apos;E&apos;.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>  c_subrc = 4.</item>
+      <item>ELSE.</item>
+      <item>  c_subrc = 0.</item>
+      <item>* Add Material Document</item>
+      <item>  CALL METHOD add_material_document</item>
+      <item>    EXPORTING</item>
+      <item>      i_prnum   = i_prnum</item>
+      <item>      i_gjahr   = i_gjahr</item>
+      <item>      i_bukrs   = i_bukrs</item>
+      <item>      i_setproc = i_setproc</item>
+      <item>      i_idproc  = i_idproc</item>
+      <item>      is_matdoc = es_matdoc.</item>
+      <item/>
+      <item>  IF i_idproc = &apos;300&apos;.</item>
+      <item>    READ TABLE lt_pritm ASSIGNING &lt;lwa_pritm&gt; INDEX 1.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      CALL METHOD /agri/cl_fmpr_own_produce=&gt;batch_document_get</item>
+      <item>        EXPORTING</item>
+      <item>          i_mblnr = es_matdoc-mat_doc</item>
+      <item>          i_mjahr = es_matdoc-doc_year</item>
+      <item>        IMPORTING</item>
+      <item>          e_charg = &lt;lwa_pritm&gt;-charg.</item>
+      <item>*-- BOC-T_T.KONNO</item>
+      <item>      IF i_idproc = &apos;300&apos;.</item>
+      <item>        cs_item-batch = lref_ownprod-&gt;ms_pritm-charg.</item>
+      <item>      ENDIF.</item>
+      <item>*-- EOC-T_T.KONNO</item>
+      <item>      IF &lt;lwa_pritm&gt;-charg IS NOT INITIAL.</item>
+      <item>        &lt;lwa_pritm&gt;-updkz  = lref_ownprod-&gt;mc_updkz_update.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>*...BOC-T_T.KONNO</item>
+      <item>*CALL METHOD lref_ownprod-&gt;stamp_prepare</item>
+      <item>*  EXPORTING</item>
+      <item>*    i_tplnr_fl = &lt;lwa_pritm&gt;-tplnr</item>
+      <item>*    i_date     = i_budat</item>
+      <item>*  CHANGING</item>
+      <item>*    c_weeks    = lv_weeks</item>
+      <item>*    c_imovs    = lv_imov</item>
+      <item>*    c_talhao   = lv_talh.</item>
+      <item/>
+      <item>*CALL METHOD lref_ownprod-&gt;get_stamp</item>
+      <item>*  EXPORTING</item>
+      <item>*    i_werks  = lref_ownprod-&gt;ms_prhdr-werks</item>
+      <item>*    i_varie  = i_matnr</item>
+      <item>*    i_weeks  = lv_weeks</item>
+      <item>*    i_imovs  = lv_imov</item>
+      <item>*    i_talhao = lv_talh</item>
+      <item>*  CHANGING</item>
+      <item>*    c_stamp  = &lt;lwa_pritm&gt;-zzcarimbo.</item>
+      <item>*...EOC-T_T.KONNO</item>
+      <item/>
+      <item>    lwa_prdoc_enhanc-x-pritm  = lt_pritm.</item>
+      <item/>
+      <item>    IF lref_ownprod-&gt;ms_prhdr-cltckt = &apos;I&apos;.</item>
+      <item>* Get status / variables</item>
+      <item>      CALL METHOD /agri/cl_fm_master_ticket=&gt;get_details</item>
+      <item>        EXPORTING</item>
+      <item>          i_prnum          = i_prnum</item>
+      <item>          i_gjahr          = i_gjahr</item>
+      <item>        IMPORTING</item>
+      <item>          et_prhrq         = lt_prhrq</item>
+      <item>        EXCEPTIONS</item>
+      <item>          ticket_not_found = 1</item>
+      <item>          OTHERS           = 2.</item>
+      <item/>
+      <item>      READ TABLE lt_prhrq INTO DATA(lwa_prhrq) INDEX 1.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        REFRESH: lt_prhrq.</item>
+      <item>        CALL METHOD /agri/cl_fm_master_ticket=&gt;get_details</item>
+      <item>          EXPORTING</item>
+      <item>            i_prnum          = lwa_prhrq-r_prnum</item>
+      <item>            i_gjahr          = lwa_prhrq-r_gjahr</item>
+      <item>          IMPORTING</item>
+      <item>            et_prhrq         = lt_prhrq</item>
+      <item>            et_pritm         = lt_pritm_highlevel</item>
+      <item>          EXCEPTIONS</item>
+      <item>            ticket_not_found = 1</item>
+      <item>            OTHERS           = 2.</item>
+      <item>      ENDIF.</item>
+      <item>      READ TABLE lt_prhrq INTO DATA(lwa_prhrq_aux)</item>
+      <item>                          WITH KEY r_prnum = lref_ownprod-&gt;ms_prhdr-prnum</item>
+      <item>                                   r_gjahr = lref_ownprod-&gt;ms_prhdr-gjahr.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        READ TABLE lt_pritm_highlevel ASSIGNING &lt;lwa_pritm_highlevel&gt;</item>
+      <item>                                      WITH KEY prnum = lwa_prhrq_aux-prnum</item>
+      <item>                                               gjahr = lwa_prhrq_aux-gjahr</item>
+      <item>                                               pritm = lwa_prhrq_aux-posnr.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          IF &lt;lwa_pritm&gt; IS ASSIGNED.</item>
+      <item/>
+      <item>            CALL METHOD /agri/cl_fm_master_ticket=&gt;get_details</item>
+      <item>              EXPORTING</item>
+      <item>                i_prnum          = &lt;lwa_pritm_highlevel&gt;-prnum</item>
+      <item>                i_gjahr          = &lt;lwa_pritm_highlevel&gt;-gjahr</item>
+      <item>              IMPORTING</item>
+      <item>                es_prhdr         = ls_prhdr_highlevel</item>
+      <item>              EXCEPTIONS</item>
+      <item>                ticket_not_found = 1.</item>
+      <item/>
+      <item>            lwa_prdoc_enhanc-prnum    = &lt;lwa_pritm_highlevel&gt;-prnum.</item>
+      <item>            lwa_prdoc_enhanc-gjahr    = &lt;lwa_pritm_highlevel&gt;-gjahr.</item>
+      <item>            lwa_prdoc_enhanc-updkz    = lref_ownprod-&gt;mc_updkz_update.</item>
+      <item>            &lt;lwa_pritm_highlevel&gt;-charg = &lt;lwa_pritm&gt;-charg.</item>
+      <item>            &lt;lwa_pritm_highlevel&gt;-zzcarimbo = &lt;lwa_pritm&gt;-zzcarimbo.</item>
+      <item>            &lt;lwa_pritm_highlevel&gt;-updkz  = lref_ownprod-&gt;mc_updkz_update.</item>
+      <item>            lwa_prdoc_enhanc-x-pritm  = lt_pritm_highlevel.</item>
+      <item>            lwa_prdoc_enhanc-x-prhdr  = ls_prhdr_highlevel.</item>
+      <item>            APPEND lwa_prdoc_enhanc TO lt_prdoc_enhanc.</item>
+      <item>*              CLEAR: lwa_prdoc_enhanc.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    lwa_prdoc_enhanc-prnum    = i_prnum.</item>
+      <item>    lwa_prdoc_enhanc-gjahr    = i_gjahr.</item>
+      <item>    lwa_prdoc_enhanc-updkz    = lref_ownprod-&gt;mc_updkz_update.</item>
+      <item>    lwa_prdoc_enhanc-x-prhdr  = ls_prhdr.</item>
+      <item>    APPEND lwa_prdoc_enhanc TO lt_prdoc_enhanc.</item>
+      <item/>
+      <item>* Save status / variables</item>
+      <item>    CALL FUNCTION &apos;/AGRI/FMPR_SAVE&apos;</item>
+      <item>      CHANGING</item>
+      <item>        ct_prdoc = lt_prdoc_enhanc</item>
+      <item>*       ct_messages = et_messages</item>
+      <item>      EXCEPTIONS</item>
+      <item>        OTHERS   = 0.</item>
+      <item>  ENDIF.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>EXIT.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FM_DOCUMENT_PROCESS==CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FM_DOCUMENT_PROCESS\ME:CONFIRMATION_QUANT_MATERIAL\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>* Confirmation structures</item>
+      <item>  DATA: lt_operation_x        TYPE STANDARD TABLE OF bapi_order_operation1 INITIAL SIZE 0,</item>
+      <item>        lt_ticket_x           TYPE STANDARD TABLE OF bapi_pp_timeticket INITIAL SIZE 0,</item>
+      <item>        lt_ticket_a_x         TYPE STANDARD TABLE OF bapi_pp_timeticket INITIAL SIZE 0,</item>
+      <item>        lt_goodsmovements     TYPE STANDARD TABLE OF bapi2017_gm_item_create INITIAL SIZE 0,</item>
+      <item>        lt_link_conf_goodsmov TYPE STANDARD TABLE OF bapi_link_conf_goodsmov INITIAL SIZE 0,</item>
+      <item>        ls_tcorussdef_x       TYPE tcorussdef,</item>
+      <item>        ls_return_x           TYPE bapi_coru_return,</item>
+      <item>        ls_return2_x          TYPE bapiret2,</item>
+      <item>        ls_return1_x          TYPE bapiret1,</item>
+      <item>        ls_ordobjs_x          TYPE bapi_pp_order_objects,</item>
+      <item>        ls_propose_x          TYPE bapi_pp_conf_prop,</item>
+      <item>        ls_ticket_x           TYPE bapi_pp_timeticket,</item>
+      <item>        ls_operation_x        TYPE bapi_order_operation1,</item>
+      <item>        lv_hours              TYPE co_ismngeh VALUE &apos;H&apos;,</item>
+      <item>        lv_status_x           TYPE bapiret1,</item>
+      <item>        lv_spcorder_x,</item>
+      <item>        lv_quan_x(12).</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;ls_conmat_x&gt;   TYPE /agri/s_fmconmat,</item>
+      <item>                 &lt;ls_ticket_a_x&gt; TYPE bapi_pp_timeticket,</item>
+      <item>                 &lt;ls_ticket_x&gt;   TYPE bapi_pp_timeticket.</item>
+      <item/>
+      <item>  LOOP AT it_conmat ASSIGNING &lt;ls_conmat_x&gt;.</item>
+      <item>* Get operation details</item>
+      <item>    ls_ordobjs_x-operations = abap_true.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;BAPI_PRODORD_GET_DETAIL&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        number        = &lt;ls_conmat_x&gt;-aufnr</item>
+      <item>        order_objects = ls_ordobjs_x</item>
+      <item>      IMPORTING</item>
+      <item>        return        = ls_return2_x</item>
+      <item>      TABLES</item>
+      <item>        operation     = lt_operation_x.</item>
+      <item/>
+      <item>    IF ls_return2_x IS INITIAL.</item>
+      <item>      READ TABLE lt_operation_x INTO ls_operation_x</item>
+      <item>        WITH KEY operation_number = &lt;ls_conmat_x&gt;-vornr.</item>
+      <item/>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        ls_ticket_x-orderid  = &lt;ls_conmat_x&gt;-aufnr.</item>
+      <item>        ls_ticket_x-sequence = ls_operation_x-sequence_no.</item>
+      <item/>
+      <item>* Only if order is initial</item>
+      <item>        IF &lt;ls_conmat_x&gt;-aufnr IS INITIAL.</item>
+      <item>          lv_spcorder_x = abap_true.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>* Operation</item>
+      <item>        ls_ticket_x-operation       = &lt;ls_conmat_x&gt;-vornr.</item>
+      <item>        ls_ticket_x-postg_date      = is_prhdr-budat.</item>
+      <item>        ls_ticket_x-exec_start_date =</item>
+      <item>        ls_ticket_x-exec_fin_date   = i_bldat.</item>
+      <item/>
+      <item>* Determine quantity based on mode</item>
+      <item>        IF i_mode IS INITIAL.</item>
+      <item>          WRITE i_ntgew TO lv_quan_x UNIT i_gewei NO-GROUPING.</item>
+      <item>          TRANSLATE lv_quan_x USING &apos;,.&apos;.</item>
+      <item>        ELSE.</item>
+      <item>          WRITE &lt;ls_conmat_x&gt;-ntgew TO lv_quan_x UNIT &lt;ls_conmat_x&gt;-gewei NO-GROUPING.</item>
+      <item>          TRANSLATE lv_quan_x USING &apos;,.&apos;.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ls_ticket_x-conf_quan_unit = i_gewei.</item>
+      <item>        ls_ticket_x-yield          = lv_quan_x.</item>
+      <item>        APPEND ls_ticket_x TO lt_ticket_a_x.</item>
+      <item>        CLEAR ls_ticket_x.</item>
+      <item/>
+      <item>* Get proposal activity values</item>
+      <item>        ls_propose_x-activity = abap_true.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;BAPI_PRODORDCONF_GET_TT_PROP&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            propose       = ls_propose_x</item>
+      <item>          IMPORTING</item>
+      <item>            return        = ls_return1_x</item>
+      <item>          TABLES</item>
+      <item>            timetickets   = lt_ticket_a_x</item>
+      <item>            detail_return = ct_return.</item>
+      <item/>
+      <item>        IF ls_return1_x IS INITIAL.</item>
+      <item>          LOOP AT lt_ticket_a_x ASSIGNING &lt;ls_ticket_a_x&gt;.</item>
+      <item>            &lt;ls_ticket_a_x&gt;-postg_date = is_prhdr-budat.</item>
+      <item>          ENDLOOP.</item>
+      <item>          APPEND LINES OF lt_ticket_a_x TO lt_ticket_x.</item>
+      <item>        ENDIF.</item>
+      <item>        CLEAR lt_ticket_a_x.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  LOOP AT lt_ticket_x ASSIGNING &lt;ls_ticket_x&gt;.</item>
+      <item>    DATA(lv_tabix) = sy-tabix.</item>
+      <item>    IF &lt;ls_ticket_x&gt;-conf_acti_unit1 EQ lv_hours.</item>
+      <item>      &lt;ls_ticket_x&gt;-conf_activity1 = &lt;ls_ticket_x&gt;-yield.</item>
+      <item>    ENDIF.</item>
+      <item>    INSERT INITIAL LINE INTO TABLE lt_link_conf_goodsmov</item>
+      <item>      ASSIGNING FIELD-SYMBOL(&lt;ls_conf_goodsmov&gt;).</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      &lt;ls_conf_goodsmov&gt;-index_confirm = lv_tabix.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;BAPI_PRODORDCONF_CREATE_TT&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      testrun            = i_testrun</item>
+      <item>    IMPORTING</item>
+      <item>      return             = lv_status_x</item>
+      <item>    TABLES</item>
+      <item>      timetickets        = lt_ticket_x</item>
+      <item>      link_conf_goodsmov = lt_link_conf_goodsmov</item>
+      <item>      detail_return      = ct_return.</item>
+      <item/>
+      <item>* Commit for BAPIs</item>
+      <item>  bapi_commit( ).</item>
+      <item/>
+      <item>* Only if order is initial</item>
+      <item>  IF NOT lv_spcorder_x IS INITIAL</item>
+      <item>  OR it_conmat[] IS INITIAL.</item>
+      <item>    ls_return_x-type   = &apos;E&apos;.</item>
+      <item>    ls_return_x-id     = &apos;RU&apos;.</item>
+      <item>    ls_return_x-number = &apos;151&apos;.</item>
+      <item>    APPEND ls_return_x TO ct_return.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>* Parameter for RCP</item>
+      <item>  READ TABLE ct_return INTO ls_return_x WITH KEY type = &apos;E&apos;.</item>
+      <item>  IF sy-subrc = 0.</item>
+      <item>    c_subrc = 4.</item>
+      <item>  ELSE.</item>
+      <item>    CLEAR c_subrc.</item>
+      <item>* Confirmation add on structure</item>
+      <item>    CALL METHOD add_confirmation_number</item>
+      <item>      EXPORTING</item>
+      <item>        is_prhdr  = is_prhdr</item>
+      <item>        i_setproc = i_setproc</item>
+      <item>        i_idproc  = i_idproc</item>
+      <item>      CHANGING</item>
+      <item>        ct_return = ct_return.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BDDA7CA7422F2347</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BDDA7CA7422F2347</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>027</LENGTH>
+       <TEXT>Class Own Produce</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_CLASS_OWNPRODUCE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BDDA7CA7422F2347</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

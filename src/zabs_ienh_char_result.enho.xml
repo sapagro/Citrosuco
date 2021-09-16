@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Update Characteristics Results</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>QAPP</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>QAPP</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLQAPP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLQAPP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:SAPLQAPP\FO:QAPPD_PROPOSAL\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: ls_qals_x     TYPE qals,</item>
+      <item>        ls_qaqee_x    TYPE qaqee,</item>
+      <item>        ls_qapo_x     TYPE qapo,</item>
+      <item>        lv_func       TYPE funcnam VALUE &apos;ZABS_FM_CHAR_RESULT&apos;,</item>
+      <item>        lv_prueflos_x TYPE qals-prueflos,</item>
+      <item>        lv_vornr_x    TYPE qaqee-vornr.</item>
+      <item/>
+      <item>*  IF sy-uname EQ &apos;T_H.KABABE&apos;.</item>
+      <item>*    BREAK-POINT.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+      <item>  GET PARAMETER ID &apos;QLS&apos; FIELD lv_prueflos_x.</item>
+      <item>  GET PARAMETER ID &apos;QVO&apos; FIELD lv_vornr_x.</item>
+      <item/>
+      <item>  IF ( sy-tcode EQ &apos;QE01&apos; OR sy-tcode EQ &apos;QE11&apos; )</item>
+      <item>  AND sy-batch IS INITIAL</item>
+      <item>  AND tq79-slwbez EQ &apos;Z28&apos;</item>
+      <item>  AND lv_prueflos_x IS NOT INITIAL</item>
+      <item>  AND lv_vornr_x IS NOT INITIAL.</item>
+      <item>    lv_func = &apos;ZABS_FM_CHAR_RESULT&apos;.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;FUNCTION_EXISTS&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        funcname           = lv_func</item>
+      <item>      EXCEPTIONS</item>
+      <item>        function_not_exist = 1</item>
+      <item>        OTHERS             = 2.</item>
+      <item/>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SELECT SINGLE *</item>
+      <item>        FROM qals</item>
+      <item>        INTO ls_qals_x</item>
+      <item>       WHERE prueflos EQ lv_prueflos_x.</item>
+      <item/>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        ls_qaqee_x-vornr = lv_vornr_x.</item>
+      <item>        CALL FUNCTION &apos;ZABS_FM_CHAR_RESULT&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            is_qals  = ls_qals_x</item>
+      <item>            is_qaqee = ls_qaqee_x</item>
+      <item>            is_qapo  = ls_qapo_x</item>
+      <item>          CHANGING</item>
+      <item>            cs_qappd = qappd.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EDB8889AADEBEF96C00</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EDB8889AADEBEF96C00</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>045</LENGTH>
+       <TEXT>Update Characteristics Results</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_CHAR_RESULT</OBJ_NAME>
+     <CONCEPT>1258893C31F71EDB8889AADEBEF96C00</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

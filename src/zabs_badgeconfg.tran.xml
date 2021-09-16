@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZABS_BADGECONFG</TCODE>
+    <CINFO>Ag==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZABS_BADGECONFG</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>E</SPRSL>
+    <TCODE>ZABS_BADGECONFG</TCODE>
+    <TTEXT>Mobi: Routes Associated to Personnel</TTEXT>
+   </TSTCT>
+   <TSTCP>
+    <TCODE>ZABS_BADGECONFG</TCODE>
+    <PARAM>/*SM30 UPDATE=X;VIEWNAME=ZABS_V_USRPERNR;</PARAM>
+   </TSTCP>
+   <I18N_TPOOL>
+    <TSTCT>
+     <SPRSL>P</SPRSL>
+     <TTEXT>Mobi: Rotas Associadas ao Pessoal</TTEXT>
+    </TSTCT>
+   </I18N_TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <INCLUDES>
+    <SOBJ_NAME>LZABS_FG_CIT_ESTIMATIVATOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZABS_FG_CIT_ESTIMATIVA</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZABS_FM_CIT_ESTIMATIVA</FUNCNAME>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>CS_MDHDR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/S_GLMDHDR</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>CT_MDITM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/T_GLMDITM</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>CT_MDATV</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>/AGRI/T_GLMDATV</TYP>
+      </RSCHA>
+     </CHANGING>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>CS_MDHDR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CT_MDITM</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CT_MDATV</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

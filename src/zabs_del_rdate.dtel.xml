@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_DEL_RDATE</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>ZABS_DOM_RDATE</DOMNAME>
+    <HEADLEN>17</HEADLEN>
+    <SCRLEN1>08</SCRLEN1>
+    <SCRLEN2>17</SCRLEN2>
+    <SCRLEN3>17</SCRLEN3>
+    <DDTEXT>Reprocessing Date</DDTEXT>
+    <REPTEXT>Reprocessing Date</REPTEXT>
+    <SCRTEXT_S>Rep Date</SCRTEXT_S>
+    <SCRTEXT_M>Reprocessing Date</SCRTEXT_M>
+    <SCRTEXT_L>Reprocessing Date</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Data de Reprocessamento</DDTEXT>
+     <REPTEXT>Data de Reprocess</REPTEXT>
+     <SCRTEXT_S>Data Rep</SCRTEXT_S>
+     <SCRTEXT_M>Data de Reprocess</SCRTEXT_M>
+     <SCRTEXT_L>Data de Reprocess</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

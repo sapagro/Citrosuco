@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Implicit Enhancements for Crop Seasons</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLCSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLCSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_MASS_DATA_DISPLAY\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  CS_MASS_DATA_DISPLAY                            *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0C                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.12.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Updating custom additional fields planting date,*</item>
+      <item>*                      planting year and age in months in Crop Season  *</item>
+      <item>*                      Workbench                                       *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  INCLUDE zabs_inc_cs_add_fields_upd.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\TY:LCL_EVENT_HANDLER\ME:ON_TOOLBAR_GRID\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Class Name        :  LCL_EVENT_HANDLER                               *</item>
+      <item>* Include Name      : /AGRI/LGLCSMCLS                                  *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.12.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Adding Dispatch Order in dropdown of create     *</item>
+      <item>*                      button                                          *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Adding Dispatch Order in dropdown of create button.</item>
+      <item>  DATA: ls_user_functions TYPE stb_button.</item>
+      <item/>
+      <item>  IF sender = ref_grid_cs_mass.</item>
+      <item/>
+      <item>    CLEAR ls_user_functions.</item>
+      <item>    ls_user_functions-function = c_fcode-user_function1. &quot;&apos;USF1&apos;</item>
+      <item>    APPEND ls_user_functions TO gt_user_functions.</item>
+      <item/>
+      <item>    CLEAR lref_cs_details.</item>
+      <item>    CREATE OBJECT lref_cs_details.</item>
+      <item>    IF gs_variables-overview_mode NE c_mode_display.</item>
+      <item>      menu_function_add lref_cs_details c_fcode-wbs_create  text-016.</item>
+      <item>      menu_function_add lref_cs_details c_fcode-yord_create text-017.</item>
+      <item>      menu_function_add lref_cs_details c_fcode-mdoc_create  text-018.</item>
+      <item>    ELSE.</item>
+      <item>      menu_function_add lref_cs_details c_fcode-mdoc_create  text-018.</item>
+      <item>      static_context_set e_object-&gt;mt_btnmnu ls_btnmnu</item>
+      <item>                       lref_cs_details c_fcode-create.</item>
+      <item>    ENDIF.</item>
+      <item>    menu_function_add lref_cs_details c_fcode-user_function1 &apos;Ordem Despacho&apos;.</item>
+      <item>    static_context_set e_object-&gt;mt_btnmnu ls_btnmnu</item>
+      <item>                     lref_cs_details c_fcode-create.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:EXTEND_CROP_SEASONS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  EXTEND_CROP_SEASONS                             *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0E                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.17.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  In Crop Season, when user clicks on Extend CS   *</item>
+      <item>*                      give a pop up to enter season and year for the  *</item>
+      <item>*                      Extended CS.                                    *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>INCLUDE zabs_inc_extended_cs_changes.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:FCODE_MEXCS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  FCODE_MEXCS                                     *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0F                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.17.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  User should select only one row                 *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>**--User should select only one row</item>
+      <item>*  DESCRIBE TABLE gt_selected_rows LINES DATA(lv_rows).</item>
+      <item>*  IF lv_rows GT 1.</item>
+      <item>*    MESSAGE e004(zabs_msgcls).</item>
+      <item>*    RETURN.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_MASS_SAVE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  CS_MASS_SAVE                                    *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0C                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.16.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Warning Message regarding Attribute Fileds in CS*</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Local Data Declaration</item>
+      <item>  DATA: lref_descr    TYPE REF TO cl_abap_structdescr,</item>
+      <item>        lwa_glflcmaca TYPE zabs_str_glflcmaca,</item>
+      <item>        lwa_comp      TYPE abap_compdescr.</item>
+      <item/>
+      <item>  IF sy-subrc &lt;&gt; 0.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>*--Fetching fieldname from Custom table</item>
+      <item>  SELECT fieldname</item>
+      <item>    INTO TABLE @DATA(lt_fieldname)</item>
+      <item>    FROM zabst_md_atr_map.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      DELETE ADJACENT DUPLICATES FROM lt_fieldname.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  LOOP AT gt_csdoc_infocus INTO DATA(lwa_csdoc) WHERE x-cshdr-mcycl = abap_true</item>
+      <item>                                                  AND x-cshdr-updkz = zcl_abs_abap_maintain=&gt;c_updkz_insert.</item>
+      <item>*--Get Fieldnames from additional fileds structure of crop season</item>
+      <item>    lref_descr ?= cl_abap_structdescr=&gt;describe_by_data( lwa_glflcmaca ).</item>
+      <item>    LOOP AT lref_descr-&gt;components INTO lwa_comp.</item>
+      <item>      READ TABLE lt_fieldname TRANSPORTING NO FIELDS WITH KEY fieldname = lwa_comp-name.</item>
+      <item>      IF sy-subrc = 0.</item>
+      <item>        MESSAGE ID zcl_abs_abap_maintain=&gt;c_custom_msg_class TYPE c_msg_type-warning</item>
+      <item>        NUMBER &apos;045&apos; WITH lwa_comp-name lwa_csdoc-tplnr_fl INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_HEADER_DATA_CHECK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  CS_HEADER_DATA_CHECK                            *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0C                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Not considering the Crop Seasons which are      *</item>
+      <item>*                      created for replanting                          *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>INCLUDE zabs_inc_header_data_check.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_STYLES_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  CS_STYLES_PREPARE                               *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0C                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Making Yard Material and replanting to edit mode*</item>
+      <item>*                      when application is 1 and deletion indicator is *</item>
+      <item>*                      empty                                           *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Yard Material and replanting in edit mode</item>
+      <item>  IF lwa_flcma_fcat-loevm IS INITIAL AND</item>
+      <item>     lwa_flcma_fcat-class = zcl_abs_abap_maintain=&gt;c_cs_farming_appl.</item>
+      <item>     lwa_style-fieldname = zcl_abs_abap_maintain=&gt;c_cs_af_ymaterial. &quot;&apos;YMATNR&apos;</item>
+      <item>     lwa_style-style = cl_gui_alv_grid=&gt;mc_style_enabled.</item>
+      <item>     INSERT lwa_style INTO TABLE lwa_flcma_fcat-styles.</item>
+      <item>     lwa_style-fieldname = zcl_abs_abap_maintain=&gt;c_cs_af_replanting. &quot;&apos;ZZREPLANT&apos;</item>
+      <item>     lwa_style-style = cl_gui_alv_grid=&gt;mc_style_enabled.</item>
+      <item>     INSERT lwa_style INTO TABLE lwa_flcma_fcat-styles.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:FIELD_VALUE_CONVERSIONS\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  FIELD_VALUE_CONVERSIONS                         *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0F                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.17.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Display View Fields for Crop season workbench   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>INCLUDE zabs_inc_view_fields_update.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:FCODE_MMDCR\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>**User should select only one row</item>
+      <item>*  FIELD-SYMBOLS: &lt;lwa_mass&gt;  TYPE any,</item>
+      <item>*                 &lt;lwa_mcycl&gt; TYPE any,</item>
+      <item>*                 &lt;lwa_class&gt; TYPE any.</item>
+      <item>*</item>
+      <item>*  CHECK gt_selected_rows IS NOT INITIAL.</item>
+      <item>*  DESCRIBE TABLE gt_selected_rows LINES DATA(lv_rows).</item>
+      <item>*  IF lv_rows GT 1.</item>
+      <item>*    MESSAGE e004(zabs_msgcls).</item>
+      <item>*    RETURN.</item>
+      <item>*  ENDIF.</item>
+      <item>*  DATA(lwa_row) = gt_selected_rows[ 1 ].</item>
+      <item>*  ASSIGN &lt;gt_cs_mass&gt;[ lwa_row-index ] TO &lt;lwa_mass&gt;.</item>
+      <item>*  IF &lt;lwa_mass&gt; IS ASSIGNED.</item>
+      <item>*    ASSIGN COMPONENT: &apos;MCYCL&apos; OF STRUCTURE &lt;lwa_mass&gt; TO &lt;lwa_mcycl&gt;,</item>
+      <item>*                      &apos;CLASS&apos; OF STRUCTURE &lt;lwa_mass&gt; TO &lt;lwa_class&gt;.</item>
+      <item>*    IF &lt;lwa_mcycl&gt; IS ASSIGNED.</item>
+      <item>*      IF &lt;lwa_mcycl&gt; IS INITIAL AND</item>
+      <item>*         &lt;lwa_class&gt; EQ zcl_abs_abap_maintain=&gt;c_cs_farming_appl.</item>
+      <item>*       MESSAGE e067(zabs_msgcls).</item>
+      <item>*       RETURN.</item>
+      <item>*      ENDIF.</item>
+      <item>*    ENDIF.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:MASS_INFOCUS_CHECK\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_CROP_SEASONS                          *</item>
+      <item>* Form Name         :  MASS_INFOCUS_CHECK                              *</item>
+      <item>* Include Name      :  /AGRI/LGLCSMF0M                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  09.20.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Do not consider the Replanting Crop Season      *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  INCLUDE zabs_inc_mass_infocus_check.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9B5A6D2807C5463DF</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B5A6D2807C5463DF</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>057</LENGTH>
+       <TEXT>Implicit Enhancements for Crop Seasons</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9B5A6D2807C5463DF</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>057</LENGTH>
+       <TEXT>Melhorias implicitas para Safras</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_CROP_SEASONS</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9B5A6D2807C5463DF</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

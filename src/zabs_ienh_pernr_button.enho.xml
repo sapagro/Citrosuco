@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Add Personnel Number Button</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLRTM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLRTM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLRTM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLRTM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLRTM\TY:LCL_EVENT_HANDLER\ME:ON_TOOLBAR_GRID\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lv_string TYPE string.</item>
+      <item/>
+      <item>  MESSAGE ID &apos;ZABS_MSGCLS&apos; TYPE &apos;S&apos; NUMBER &apos;168&apos;</item>
+      <item>                                INTO lv_string.</item>
+      <item/>
+      <item>  IF sy-dynnr EQ c_screen-users.</item>
+      <item>*      CLEAR e_object-&gt;mt_toolbar.</item>
+      <item>      IF gs_variables-document_mode NE c_mode_display.</item>
+      <item>****Delete PERNR Row</item>
+      <item>        toolbar_button_insert e_object-&gt;mt_toolbar lwa_button space</item>
+      <item>                              &apos;UPER&apos; icon_system_user_menu</item>
+      <item>                              lv_string space.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLRTM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLRTM\IC:/AGRI/LGLRTMF0F\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>FORM fcode_uper.</item>
+      <item/>
+      <item>  CONSTANTS lc_memid TYPE c LENGTH 7 VALUE &apos;ZZROTID&apos;.</item>
+      <item/>
+      <item>  EXPORT lv_dummy FROM /agri/s_glrthdr-route TO MEMORY ID lc_memid.</item>
+      <item>  CALL TRANSACTION &apos;ZABS_BADGECONFG&apos;.</item>
+      <item>  FREE MEMORY ID lc_memid.</item>
+      <item/>
+      <item>ENDFORM.                    &quot;fcode_copy</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDAA7E680E9EC42B35C</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDAA7E680E9EC42B35C</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>041</LENGTH>
+       <TEXT>Add Personnel Number Button</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PERNR_BUTTON</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDAA7E680E9EC42B35C</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

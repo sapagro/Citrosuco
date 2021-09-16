@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Process Dates Prepare</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLCSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLCSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLCSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLCSM\FO:CS_PROCESS_DATES_PREPARE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*--BOC- T_T.KONNO-05.28.21</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack.</item>
+      <item/>
+      <item>  DATA(lv_custom_prog) = abap_false.</item>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item>  READ TABLE lt_formatted_stack INTO DATA(ls_formatted_stack)</item>
+      <item>    WITH KEY progname    = &apos;/A\ZABS_REP_ATUALIZA_SAFRA&apos;</item>
+      <item>             includename = &apos;FORM&apos;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_custom_prog = abap_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF sy-cprog EQ &apos;ZABS_REP_ATUALIZA_SAFRA&apos;</item>
+      <item>  OR lv_custom_prog = abap_true.</item>
+      <item>    lv_custom_prog = abap_true.</item>
+      <item>    SORT lwa_csdoc-x-csprs BY contr seqnr cpros.</item>
+      <item>    LOOP AT lwa_csdoc-x-csprs ASSIGNING FIELD-SYMBOL(&lt;lwa_csprs_x&gt;).</item>
+      <item>      &lt;lwa_csprs_x&gt;-strdt = lwa_csdoc-x-cshdr-datab.</item>
+      <item>      &lt;lwa_csprs_x&gt;-enddt = lwa_csdoc-x-cshdr-datbi.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    gs_variables-data_changed = c_true.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK lv_custom_prog EQ abap_false.</item>
+      <item/>
+      <item>***-- BOC T_T.KONNO-04.16.21</item>
+      <item>***-- Inibir código standard [Erro Processo Manual /AGRI/GLFLCA]</item>
+      <item>**  IF lwa_csdoc-x-cshdr-datab IS NOT INITIAL</item>
+      <item>**  AND lwa_csdoc-x-cshdr-datbi IS NOT INITIAL.</item>
+      <item>**    lv_exhad = lwa_csdoc-x-cshdr-datab.</item>
+      <item>**    lv_datbi = lwa_csdoc-x-cshdr-datbi.</item>
+      <item>**    lv_custom_prog = abap_true.</item>
+      <item>**    gs_variables-data_changed = c_true.</item>
+      <item>**  ENDIF.</item>
+      <item>**</item>
+      <item>**  CHECK lv_custom_prog EQ abap_false.</item>
+      <item>***-- EOC T_T.KONNO-04.16.21</item>
+      <item>*--EOC- T_T.KONNO-05.28.21</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>1258893C31F71EEBA693A6319ED6A35E</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>1258893C31F71EEBA693A6319ED6A35E</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>032</LENGTH>
+       <TEXT>Process Dates Prepare</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PROC_DATES_PREPARE</OBJ_NAME>
+     <CONCEPT>1258893C31F71EEBA693A6319ED6A35E</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

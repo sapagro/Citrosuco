@@ -1,0 +1,719 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Mobile App Odata changes</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_MOBILE_DPC_EXT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_MOBILE_DPC_EXT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_MOBILE_DPC_EXT\ME:GET_TERRAIN_DATA\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item> SELECT * FROM /agri/glrtusr</item>
+      <item>         INTO TABLE lt_rtusr</item>
+      <item>         WHERE bname EQ sy-uname.</item>
+      <item/>
+      <item>  IF lt_rtusr IS NOT INITIAL.</item>
+      <item>    SELECT * FROM /agri/glrtfla</item>
+      <item>    INTO TABLE lt_rtfla</item>
+      <item>    FOR ALL ENTRIES IN lt_rtusr &quot;#EC CI_NO_TRANSFORM</item>
+      <item>    WHERE route EQ lt_rtusr-route.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF lt_rtfla IS NOT INITIAL.</item>
+      <item>    SELECT * FROM /agri/glflot</item>
+      <item>             INTO CORRESPONDING FIELDS OF TABLE lt_flot</item>
+      <item>      FOR ALL ENTRIES IN lt_rtfla                  &quot;#EC CI_NO_TRANSFORM</item>
+      <item>             WHERE tplnr_fl EQ lt_rtfla-tplnr_fl</item>
+      <item>               AND tplvl IN (&apos;1&apos;,&apos;2&apos;).</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SORT lt_flot BY strno.</item>
+      <item/>
+      <item>  LOOP AT lt_flot INTO ls_flot.</item>
+      <item>    MOVE-CORRESPONDING ls_flot TO ls_entityset.</item>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_OUTPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input  = ls_entityset-tplnr_fl</item>
+      <item>      IMPORTING</item>
+      <item>        output = ls_entityset-tplnr_fl.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_CUNIT_OUTPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input          = ls_entityset-msehi</item>
+      <item>        language       = sy-langu</item>
+      <item>      IMPORTING</item>
+      <item>*       LONG_TEXT      =</item>
+      <item>        output         = ls_entityset-msehi</item>
+      <item>*       SHORT_TEXT     =</item>
+      <item>      EXCEPTIONS</item>
+      <item>        unit_not_found = 1</item>
+      <item>        OTHERS         = 2.</item>
+      <item>    IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_OUTPUT&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        input  = ls_entityset-owner</item>
+      <item>      IMPORTING</item>
+      <item>        output = ls_entityset-owner.</item>
+      <item/>
+      <item>    APPEND ls_entityset TO lt_entityset.</item>
+      <item>    CLEAR: ls_entityset.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  lt_orderby = io_tech_request_context-&gt;get_orderby( ).</item>
+      <item>  READ TABLE lt_orderby INTO ls_orderby INDEX 1.</item>
+      <item>  IF sy-subrc EQ 0 AND ls_orderby-order EQ &apos;asc&apos; AND</item>
+      <item>     ls_orderby-property = &apos;STRNO&apos;.</item>
+      <item>    SORT lt_entityset BY strno ASCENDING.</item>
+      <item>    et_entityset = lt_entityset.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF et_entityset IS INITIAL.</item>
+      <item>    et_entityset = lt_entityset.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_MOBILE_DPC_EXT\ME:GET_QUALITY_OPERATIONS\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  DATA : lt_constants TYPE zabs_tty_vkey_const,</item>
+      <item>         ls_constants TYPE zabs_str_vkey_const,</item>
+      <item>         lt_plnty     TYPE RANGE of plnty.</item>
+      <item>&quot;         lv_plnty_val TYPE plnty.</item>
+      <item/>
+      <item>CLEAR: et_entityset.</item>
+      <item>REFRESH: lt_oprn_temp, lt_aufnr.</item>
+      <item/>
+      <item>IF lrt_prueflos IS INITIAL.</item>
+      <item>  RETURN.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF lrt_prueflos IS NOT INITIAL.  &quot;When Single Inspection lot</item>
+      <item>  LOOP AT lrt_prueflos INTO ls_prueflos.</item>
+      <item>    lwa_prueflos = ls_prueflos-low.</item>
+      <item>    CALL FUNCTION &apos;BAPI_INSPLOT_GETOPERATIONS&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        number        = lwa_prueflos</item>
+      <item>      TABLES</item>
+      <item>        inspoper_list = lt_oprn_temp.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lt_oprn_temp IS INITIAL.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SELECT a~aufnr, b~prueflos</item>
+      <item>    INTO TABLE @DATA(lt_fmhdr_qals)</item>
+      <item>    FROM /agri/fmfphdr AS a</item>
+      <item>   INNER JOIN qals          AS b</item>
+      <item>      ON a~aufnr = b~aufnr</item>
+      <item>   WHERE b~prueflos IN @lrt_prueflos</item>
+      <item>     AND b~herkunft EQ &apos;03&apos;.</item>
+      <item/>
+      <item>  IF lt_fmhdr_qals IS INITIAL.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SELECT aufnr, auart</item>
+      <item>      INTO TABLE @DATA(lt_aufnr_tab)</item>
+      <item>      FROM /agri/fmfphdr</item>
+      <item>       FOR ALL ENTRIES IN @lt_fmhdr_qals</item>
+      <item>     WHERE aufnr EQ @lt_fmhdr_qals-aufnr</item>
+      <item>       AND tecom EQ @space</item>
+      <item>       AND autyp EQ &apos;TO&apos;.</item>
+      <item/>
+      <item>  IF lt_aufnr_tab IS INITIAL.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  SELECT aufnr, aufpl</item>
+      <item>    INTO  TABLE @DATA(lt_aufnr_afko)</item>
+      <item>    FROM afko</item>
+      <item>     FOR ALL ENTRIES IN @lt_aufnr_tab</item>
+      <item>   WHERE aufnr = @lt_aufnr_tab-aufnr.</item>
+      <item/>
+      <item>  IF lt_aufnr_afko IS INITIAL.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>*--Get variant table data</item>
+      <item>  CALL METHOD zcl_abs_get_variants=&gt;get_constant_multiple</item>
+      <item>    EXPORTING</item>
+      <item>      iv_mod       = space</item>
+      <item>      iv_objid     = &apos;MOBL&apos;</item>
+      <item>      iv_k1val     = &apos;INSPOP&apos;</item>
+      <item>      iv_k2val     = &apos;PLNTY&apos;</item>
+      <item>    IMPORTING</item>
+      <item>      et_constants = lt_constants.</item>
+      <item/>
+      <item>  LOOP AT lt_constants INTO DATA(lwa_constants).</item>
+      <item>    APPEND VALUE #( low = lwa_constants-cnval1 sign = &apos;I&apos; option = &apos;EQ&apos; )</item>
+      <item>    TO lt_plnty.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>**--Get variant table data</item>
+      <item>*  CALL METHOD zcl_abs_get_variants=&gt;get_constant_single</item>
+      <item>*    EXPORTING</item>
+      <item>*      iv_mod    = space            &quot; Mode</item>
+      <item>*      iv_objid  = &apos;MOBL&apos;</item>
+      <item>*      iv_k1val  = &apos;INSPOP&apos;</item>
+      <item>*      iv_k2val  = &apos;PLNTY&apos;</item>
+      <item>*    IMPORTING</item>
+      <item>*      ev_cnval1 = lv_plnty_val.</item>
+      <item/>
+      <item>  SELECT aufpl, plnty, steus, vornr</item>
+      <item>    INTO TABLE @DATA(lt_oper_final)</item>
+      <item>    FROM afvc</item>
+      <item>     FOR ALL ENTRIES IN @lt_aufnr_afko</item>
+      <item>   WHERE aufpl = @lt_aufnr_afko-aufpl</item>
+      <item>     AND plnty IN @lt_plnty.</item>
+      <item>*     AND steus IN @lt_steus.</item>
+      <item/>
+      <item>  IF lt_oper_final IS INITIAL.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  LOOP AT lt_oprn_temp INTO DATA(lwa_oprn_temp).</item>
+      <item>    READ TABLE lt_oper_final TRANSPORTING NO FIELDS</item>
+      <item>    WITH KEY vornr = lwa_oprn_temp-inspoper.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      MOVE-CORRESPONDING  lwa_oprn_temp TO ls_entityset.</item>
+      <item>      APPEND ls_entityset TO et_entityset.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_GL_MOBILE_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_MOBILE_DPC_EXT=======CP\EX:/AGRI/EP_MOBILE_ODATA_88\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:lt_messages              TYPE /agri/t_gprolog,</item>
+      <item>       ls_fpcom        TYPE /agri/s_fmfpcom,</item>
+      <item>      ls_messages              TYPE /agri/s_gprolog,</item>
+      <item>      lv_msgno                 TYPE symsgno,</item>
+      <item>      lv_subrc         TYPE sy-subrc,</item>
+      <item>      lref_msg_container       TYPE REF TO /iwbep/if_message_container.</item>
+      <item/>
+      <item> lref_msg_container = mo_context-&gt;get_message_container( ).</item>
+      <item/>
+      <item>IF lt_fpcom IS NOT INITIAL.</item>
+      <item>*-- Getting the all the Material based on the qty they posted</item>
+      <item>*      SELECT matnr, werks, xchar</item>
+      <item>*           FROM marc</item>
+      <item>*        INTO TABLE @DATA(lt_marc)</item>
+      <item>*        FOR ALL ENTRIES IN @lt_fpcom</item>
+      <item>*              WHERE matnr EQ @lt_fpcom-matnr</item>
+      <item>*                AND werks EQ @lt_fpcom-werks.</item>
+      <item/>
+      <item>*      SELECT aufnr, lgort</item>
+      <item>*        FROM afpo</item>
+      <item>*        INTO TABLE @DATA(lt_afpo)</item>
+      <item>*        FOR ALL ENTRIES IN @lt_fpcom</item>
+      <item>*                      WHERE aufnr EQ @lt_fpcom-aufnr.</item>
+      <item>*                      AND pwerk EQ @lt_fpcom-werks.</item>
+      <item>     endif.</item>
+      <item/>
+      <item>*    DATA(lt_marc_bt)  = lt_marc[].</item>
+      <item>*    DATA(lt_marc_nbt) = lt_marc[].</item>
+      <item/>
+      <item>*    DELETE lt_marc_bt WHERE xchar IS INITIAL.</item>
+      <item>*    DELETE lt_marc_nbt WHERE xchar IS NOT INITIAL.</item>
+      <item/>
+      <item>*    READ TABLE lt_afpo INTO DATA(ls_afpo) INDEX 1.</item>
+      <item/>
+      <item>*     IF lt_marc_nbt IS NOT INITIAL.</item>
+      <item>**-- Getting the available reserved Quantity for the Storage location non batch</item>
+      <item>*</item>
+      <item>*      SELECT matnr, werks, lgort, charg,</item>
+      <item>*             erfmg</item>
+      <item>*        FROM resb</item>
+      <item>*        INTO TABLE @DATA(lt_resb_nbt)</item>
+      <item>*        FOR ALL ENTRIES IN @lt_marc_nbt</item>
+      <item>*        WHERE xloek NE &apos;X&apos; &quot;space</item>
+      <item>*          AND matnr EQ @lt_marc_nbt-matnr</item>
+      <item>*          AND werks EQ @lt_marc_nbt-werks</item>
+      <item>*          and lgort eq @ls_afpo-lgort.</item>
+      <item>*     IF sy-subrc ne 0.</item>
+      <item>*      ls_messages-msgty = &apos;E&apos;.</item>
+      <item>**      ls_messages-msgv1 = &apos;Result Recorded Successfully&apos;.   &quot;#EC NOTEXT</item>
+      <item>*      ls_messages-msgid = &apos;ZABS_MSGCLS&apos;.</item>
+      <item>*      lv_msgno = &apos;111&apos;.</item>
+      <item>**      lref_msg_container = mo_context-&gt;get_message_container( ).</item>
+      <item>*      lref_msg_container-&gt;add_message(</item>
+      <item>*        EXPORTING           iv_msg_type                       = ls_messages-msgty</item>
+      <item>*                            iv_msg_id                         = ls_messages-msgid</item>
+      <item>*                            iv_msg_number                     = lv_msgno</item>
+      <item>*                            iv_msg_v1                         = ls_messages-msgv1</item>
+      <item>*                            iv_msg_v2                         = ls_messages-msgv2</item>
+      <item>*                            iv_msg_v3                         = ls_messages-msgv3</item>
+      <item>*                            iv_msg_v4                         = ls_messages-msgv4</item>
+      <item>*                            iv_add_to_response_header         = abap_true ).</item>
+      <item>*      exit.</item>
+      <item>*      ENDIF.</item>
+      <item>*    ENDIF.</item>
+      <item>*</item>
+      <item>*     IF lt_marc_bt IS NOT INITIAL.</item>
+      <item>*        SELECT matnr, werks, lgort, charg,</item>
+      <item>*             erfmg</item>
+      <item>*        FROM resb</item>
+      <item>*        INTO TABLE @DATA(lt_resb_bt)</item>
+      <item>*      FOR ALL ENTRIES IN @lt_marc_bt</item>
+      <item>*      WHERE xloek NE &apos;X&apos; &quot;space</item>
+      <item>*        AND matnr EQ @lt_marc_bt-matnr</item>
+      <item>*        AND werks EQ @lt_marc_bt-werks</item>
+      <item>*        and lgort eq @ls_afpo-lgort.</item>
+      <item>*</item>
+      <item>*          DELETE lt_resb_bt WHERE charg IS INITIAL.</item>
+      <item>*</item>
+      <item>*IF sy-subrc ne 0.</item>
+      <item>*      ls_messages-msgty = &apos;E&apos;.</item>
+      <item>**      ls_messages-msgv1 = &apos;Result Recorded Successfully&apos;.   &quot;#EC NOTEXT</item>
+      <item>*      ls_messages-msgid = &apos;ZABS_MSGCLS&apos;.</item>
+      <item>*      lv_msgno = &apos;111&apos;.</item>
+      <item>**      lref_msg_container = mo_context-&gt;get_message_container( ).</item>
+      <item>*      lref_msg_container-&gt;add_message(</item>
+      <item>*        EXPORTING           iv_msg_type                       = ls_messages-msgty</item>
+      <item>*                            iv_msg_id                         = ls_messages-msgid</item>
+      <item>*                            iv_msg_number                     = lv_msgno</item>
+      <item>*                            iv_msg_v1                         = ls_messages-msgv1</item>
+      <item>*                            iv_msg_v2                         = ls_messages-msgv2</item>
+      <item>*                            iv_msg_v3                         = ls_messages-msgv3</item>
+      <item>*                            iv_msg_v4                         = ls_messages-msgv4</item>
+      <item>*                            iv_add_to_response_header         = abap_true ).</item>
+      <item>*      exit.</item>
+      <item>*      ENDIF.</item>
+      <item>*    ENDIF.</item>
+      <item/>
+      <item>IF lt_fpcom IS NOT INITIAL.</item>
+      <item/>
+      <item> SELECT aufnr, rsnum</item>
+      <item>   FROM afko</item>
+      <item>   INTO TABLE @DATA(lt_afko)</item>
+      <item>   FOR ALL ENTRIES IN @lt_fpcom</item>
+      <item>   WHERE aufnr eq @lt_fpcom-aufnr.</item>
+      <item/>
+      <item>   SELECT rsnum, rspos, lgort, charg,</item>
+      <item>          erfmg, aufnr</item>
+      <item>     FROM resb</item>
+      <item>     INTO TABLE @DATA(lt_resb)</item>
+      <item>     FOR ALL ENTRIES IN @lt_afko</item>
+      <item>     WHERE rsnum eq @lt_afko-rsnum.</item>
+      <item>ENDIF.</item>
+      <item>*-- Getting the all the consumption Materials whose qty are maintained</item>
+      <item>        LOOP AT lt_fpcom ASSIGNING &lt;ls_fpcom&gt;.</item>
+      <item/>
+      <item>*          READ TABLE lt_marc INTO DATA(ls_marc)</item>
+      <item>*                               WITH KEY matnr = &lt;ls_fpcom&gt;-matnr</item>
+      <item>*                               werks = &lt;ls_fpcom&gt;-werks</item>
+      <item>*                               BINARY SEARCH.</item>
+      <item>*          IF sy-subrc EQ 0.</item>
+      <item/>
+      <item>*           IF ls_marc-xchar EQ &apos;X&apos;.&quot;c_true. &quot;If Batch-Managed, then pick batch</item>
+      <item>*-- Check for the Stock in the respective Storage location</item>
+      <item>              READ TABLE lt_resb INTO DATA(ls_resb)</item>
+      <item>                                    WITH KEY aufnr = &lt;ls_fpcom&gt;-aufnr</item>
+      <item>                                             rspos = &lt;ls_fpcom&gt;-contr.</item>
+      <item>*                                    BINARY SEARCH.</item>
+      <item>              IF sy-subrc EQ 0.</item>
+      <item>                CLEAR lv_tabix.</item>
+      <item>                lv_tabix = sy-tabix.</item>
+      <item>              ELSE.</item>
+      <item>                CONTINUE.</item>
+      <item>              ENDIF.</item>
+      <item/>
+      <item>              LOOP AT lt_resb INTO ls_resb FROM lv_tabix.</item>
+      <item>                IF ls_resb-aufnr NE &lt;ls_fpcom&gt;-aufnr AND</item>
+      <item>                   ls_resb-rspos NE &lt;ls_fpcom&gt;-contr.</item>
+      <item>*                   ls_resb_bt-werks NE ls_fpcom-werks.</item>
+      <item>                  EXIT.</item>
+      <item>                ENDIF.</item>
+      <item/>
+      <item>                IF ls_resb-erfmg &lt; &lt;ls_fpcom&gt;-lmnga.</item>
+      <item>                  CONTINUE.</item>
+      <item>                ELSE.</item>
+      <item>                  &lt;ls_fpcom&gt;-lgort = ls_resb-lgort.</item>
+      <item>                  &lt;ls_fpcom&gt;-charg = ls_resb-charg.</item>
+      <item>                  EXIT.</item>
+      <item>                ENDIF.</item>
+      <item/>
+      <item>              ENDLOOP.</item>
+      <item/>
+      <item>*                IF &lt;ls_fpcom&gt;-charg IS INITIAL.</item>
+      <item>*      ls_messages-msgty = &apos;E&apos;.</item>
+      <item>**      ls_messages-msgv1 = &apos;Result Recorded Successfully&apos;.   &quot;#EC NOTEXT</item>
+      <item>*      ls_messages-msgid = &apos;ZABS_MSGCLS&apos;.</item>
+      <item>*      lv_msgno = &apos;111&apos;.</item>
+      <item>**      lref_msg_container = mo_context-&gt;get_message_container( ).</item>
+      <item>*      lref_msg_container-&gt;add_message(</item>
+      <item>*        EXPORTING           iv_msg_type                       = ls_messages-msgty</item>
+      <item>*                            iv_msg_id                         = ls_messages-msgid</item>
+      <item>*                            iv_msg_number                     = lv_msgno</item>
+      <item>*                            iv_msg_v1                         = ls_messages-msgv1</item>
+      <item>*                            iv_msg_v2                         = ls_messages-msgv2</item>
+      <item>*                            iv_msg_v3                         = ls_messages-msgv3</item>
+      <item>*                            iv_msg_v4                         = ls_messages-msgv4</item>
+      <item>*                            iv_add_to_response_header         = abap_true ).</item>
+      <item>*exit.</item>
+      <item>*</item>
+      <item>**                CALL METHOD me-&gt;global_message_display</item>
+      <item>**                  EXPORTING</item>
+      <item>**                    iv_language      = lv_spras</item>
+      <item>**                    it_messages      = lt_messages</item>
+      <item>***                   it_return        =</item>
+      <item>**                  IMPORTING</item>
+      <item>**                    et_bapi_messages = et_bapi_messages.</item>
+      <item>*                lv_subrc = 4.</item>
+      <item>*                EXIT.</item>
+      <item>*              ENDIF.</item>
+      <item/>
+      <item>*    ENDIF.</item>
+      <item>*    ENDIF.</item>
+      <item>    ENDLOOP.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_MOBILE_DPC_EXT\ME:GET_WO_ACTIVITIES\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>    check et_entityset is INITIAL.</item>
+      <item>    LOOP AT lt_fpitm ASSIGNING &lt;ls_fpitm&gt;.</item>
+      <item/>
+      <item>      READ TABLE lt_fphdr INTO ls_fphdr</item>
+      <item>        WITH KEY aufnr = &lt;ls_fpitm&gt;-aufnr BINARY SEARCH.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        lv_werk = ls_fphdr-iwerk.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF ls_fphdr-ordlv EQ &apos;A&apos;.</item>
+      <item>        &lt;ls_fpitm&gt;-actdt = sy-datum.</item>
+      <item>        CLEAR ls_fmfpcnf.</item>
+      <item>        MOVE-CORRESPONDING &lt;ls_fpitm&gt; TO ls_fmfpcnf.</item>
+      <item>        ls_fmfpcnf-budat = sy-datum.</item>
+      <item>        ls_fmfpcnf-arbpl_ext = ls_fmfpcnf-arbpl.</item>
+      <item>        ls_fmfpcnf-gicre = &apos;X&apos;.</item>
+      <item/>
+      <item>        IF &lt;ls_fpitm&gt;-gamng GT &lt;ls_fpitm&gt;-gwemg.</item>
+      <item>          ls_fmfpcnf-lmnga = &lt;ls_fpitm&gt;-gamng - &lt;ls_fpitm&gt;-gwemg.</item>
+      <item>        ENDIF.</item>
+      <item>*** propose item_data</item>
+      <item>        CLEAR lwa_tickets.</item>
+      <item>        lwa_tickets-conf_no = ls_fmfpcnf-rueck.</item>
+      <item>        lwa_tickets-yield   = ls_fmfpcnf-lmnga.</item>
+      <item>        APPEND lwa_tickets TO lt_tickets.</item>
+      <item/>
+      <item>        lwa_propose_flags-activity = c_true.</item>
+      <item>        lwa_propose_flags-date_and_time = c_true.</item>
+      <item>        lwa_propose_flags-personnel = c_true.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;BAPI_PRODORDCONF_GET_TT_PROP&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            propose     = lwa_propose_flags</item>
+      <item>          IMPORTING</item>
+      <item>            return      = lwa_return</item>
+      <item>          TABLES</item>
+      <item>            timetickets = lt_tickets.</item>
+      <item/>
+      <item>* CHECK lwa_return-type NE c_msg_type-error.</item>
+      <item>        READ TABLE lt_tickets INTO lwa_tickets INDEX 1.</item>
+      <item>        IF lwa_tickets IS NOT INITIAL.</item>
+      <item>          IF lv_determine IS NOT INITIAL.</item>
+      <item>            CLEAR: ls_fmfpcnf-ism01, ls_fmfpcnf-ism02, ls_fmfpcnf-ism03,</item>
+      <item>                   ls_fmfpcnf-ism04, ls_fmfpcnf-ism05, ls_fmfpcnf-ism06.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>***Duration</item>
+      <item>          IF ls_fmfpcnf-isdd IS INITIAL.</item>
+      <item>            ls_fmfpcnf-isdd = lwa_tickets-exec_start_date.</item>
+      <item>            ls_fmfpcnf-isdz = lwa_tickets-exec_start_time.</item>
+      <item>          ENDIF.</item>
+      <item>          IF ls_fmfpcnf-iedd IS INITIAL.</item>
+      <item>            ls_fmfpcnf-iedd = lwa_tickets-exec_fin_date.</item>
+      <item>            ls_fmfpcnf-iedz = lwa_tickets-exec_fin_time.</item>
+      <item>          ENDIF.</item>
+      <item>***Personal Information</item>
+      <item>          IF ls_fmfpcnf-pernr IS INITIAL.</item>
+      <item>            ls_fmfpcnf-pernr = lwa_tickets-pers_no.</item>
+      <item>          ENDIF.</item>
+      <item>***Activities</item>
+      <item>          IF ls_fmfpcnf-ism01 IS INITIAL.</item>
+      <item>            ls_fmfpcnf-ism01  = lwa_tickets-conf_activity1.</item>
+      <item>            ls_fmfpcnf-leinh1 = lwa_tickets-conf_acti_unit1.</item>
+      <item>          ENDIF.</item>
+      <item>          IF ls_fmfpcnf-ism02 IS INITIAL.</item>
+      <item>            ls_fmfpcnf-ism02  = lwa_tickets-conf_activity2.</item>
+      <item>            ls_fmfpcnf-leinh2 = lwa_tickets-conf_acti_unit2.</item>
+      <item>          ENDIF.</item>
+      <item>          IF ls_fmfpcnf-ism03 IS INITIAL.</item>
+      <item>            ls_fmfpcnf-ism03  = lwa_tickets-conf_activity3.</item>
+      <item>            ls_fmfpcnf-leinh3 = lwa_tickets-conf_acti_unit3.</item>
+      <item>          ENDIF.</item>
+      <item>          IF ls_fmfpcnf-ism04 IS INITIAL.</item>
+      <item>            ls_fmfpcnf-ism04  = lwa_tickets-conf_activity4.</item>
+      <item>            ls_fmfpcnf-leinh4 = lwa_tickets-conf_acti_unit4.</item>
+      <item>          ENDIF.</item>
+      <item>          IF ls_fmfpcnf-ism05 IS INITIAL.</item>
+      <item>            ls_fmfpcnf-ism05  = lwa_tickets-conf_activity5.</item>
+      <item>            ls_fmfpcnf-leinh5 = lwa_tickets-conf_acti_unit5.</item>
+      <item>          ENDIF.</item>
+      <item>          IF ls_fmfpcnf-ism06 IS INITIAL.</item>
+      <item>            ls_fmfpcnf-ism06  = lwa_tickets-conf_activity6.</item>
+      <item>            ls_fmfpcnf-leinh6 = lwa_tickets-conf_acti_unit6.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>***  activities data_display</item>
+      <item>        lv_arbpl = ls_fmfpcnf-arbpl_ext.</item>
+      <item>*      lv_arbpl = &lt;ls_fpitm&gt;-ARBPL.</item>
+      <item>        lv_werk = ls_fphdr-iwerk.</item>
+      <item/>
+      <item>***      CALL FUNCTION &apos;CR_WORKSTATION_READ_ROUTING&apos;</item>
+      <item>***        EXPORTING</item>
+      <item>***          arbpl            = lv_arbpl</item>
+      <item>****         DATE             = SY-DATUM</item>
+      <item>****         ID               = &apos;00000000&apos;</item>
+      <item>****         MSGTY            = &apos;E&apos;</item>
+      <item>****         PLNTY            = &apos;N&apos;</item>
+      <item>***          vgwkz            = &apos;X&apos;</item>
+      <item>***          werks            = lv_werk</item>
+      <item>****         PLNTY_CHK_ALLOWED = &apos; &apos;</item>
+      <item>****         NO_PLNTY_CHECK   =</item>
+      <item>****         EXCEPTION_LOG    = &apos;X&apos;</item>
+      <item>***        IMPORTING</item>
+      <item>***          works            = lwa_rcr01</item>
+      <item>****         PLNTY_NOT_ALLOWED =</item>
+      <item>***        EXCEPTIONS</item>
+      <item>***          not_found        = 1</item>
+      <item>***          type_not_allowed = 2</item>
+      <item>***          wrong_parameters = 3</item>
+      <item>***          OTHERS           = 4.</item>
+      <item>***      IF sy-subrc &lt;&gt; 0.</item>
+      <item>**** Implement suitable error handling here</item>
+      <item>***      ENDIF.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;/AGRI/G_CR_WRKSTN_READ_ROUTING&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            i_arbpl          = lv_arbpl</item>
+      <item>*           I_DATE           = SY-DATUM</item>
+      <item>*           I_ID             = &apos;00000000&apos;</item>
+      <item>*           I_MSGTY          = &apos;E&apos;</item>
+      <item>*           I_PLNTY          = &apos;N&apos;</item>
+      <item>            i_vgwkz          = abap_true</item>
+      <item>            i_werks          = lv_werk</item>
+      <item>*           I_PLNTY_CHK_ALLOWED       = &apos; &apos;</item>
+      <item>*           I_NO_PLNTY_CHECK =</item>
+      <item>*           I_EXCEPTION_LOG  = &apos;X&apos;</item>
+      <item>          IMPORTING</item>
+      <item>            e_works          = lwa_rcr01</item>
+      <item>*           E_PLNTY_NOT_ALLOWED       =</item>
+      <item>          EXCEPTIONS</item>
+      <item>            not_found        = 1</item>
+      <item>            type_not_allowed = 2</item>
+      <item>            wrong_parameters = 3</item>
+      <item>            OTHERS           = 4.</item>
+      <item>        IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item/>
+      <item>        IF lwa_rcr01 IS NOT INITIAL.</item>
+      <item>          ls_fmfpcnf-arbid = lwa_rcr01-arbid.</item>
+      <item>          lv_arbid          = lwa_rcr01-arbid.</item>
+      <item/>
+      <item>***        CALL FUNCTION &apos;CR_WORKCENTER_READ_ACTIVTEXT&apos;</item>
+      <item>***          EXPORTING</item>
+      <item>***            i_arbid   = lv_arbid</item>
+      <item>***            i_date    = sy-datum</item>
+      <item>***          IMPORTING</item>
+      <item>***            e_text    = lwa_text</item>
+      <item>***          EXCEPTIONS</item>
+      <item>***            not_found = 1</item>
+      <item>***            OTHERS    = 2.</item>
+      <item>***        IF sy-subrc &lt;&gt; 0.</item>
+      <item>**** Implement suitable error handling here</item>
+      <item>***        ENDIF.</item>
+      <item/>
+      <item>          CALL FUNCTION &apos;/AGRI/G_CR_WC_READ_ACTIVTEXT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              i_arbid   = lv_arbid</item>
+      <item>              i_date    = sy-datum</item>
+      <item>            IMPORTING</item>
+      <item>              e_text    = lwa_text</item>
+      <item>            EXCEPTIONS</item>
+      <item>              not_found = 1</item>
+      <item>              OTHERS    = 2.</item>
+      <item>          IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          DO 6 TIMES.</item>
+      <item>            lv_index = sy-index.</item>
+      <item>            MOVE-CORRESPONDING ls_fmfpcnf TO lwa_activities_fcat.</item>
+      <item>            CONCATENATE &apos;TEXT&apos; lv_index INTO lv_fieldname.</item>
+      <item>            ASSIGN COMPONENT lv_fieldname OF STRUCTURE lwa_text</item>
+      <item>                                          TO &lt;lv_text&gt;.</item>
+      <item>            CHECK &lt;lv_text&gt; IS ASSIGNED.</item>
+      <item>*            IF &lt;lv_text&gt; IS INITIAL.</item>
+      <item>*              EXIT.</item>
+      <item>*            ENDIF.</item>
+      <item/>
+      <item>            lwa_activities_fcat-text1 = &lt;lv_text&gt;.</item>
+      <item>            CONCATENATE &apos;ISM0&apos; lv_index INTO lv_fieldname.</item>
+      <item>            ASSIGN COMPONENT lv_fieldname OF STRUCTURE ls_fmfpcnf</item>
+      <item>                                           TO &lt;lv_value&gt;.</item>
+      <item>            IF &lt;lv_value&gt; IS ASSIGNED.</item>
+      <item>              lwa_activities_fcat-ismng = &lt;lv_value&gt;.</item>
+      <item>            ENDIF.</item>
+      <item/>
+      <item>            CONCATENATE &apos;LEINH&apos; lv_index INTO lv_fieldname.</item>
+      <item>            ASSIGN COMPONENT lv_fieldname OF STRUCTURE ls_fmfpcnf</item>
+      <item>                                           TO &lt;lv_unit&gt;.</item>
+      <item>            IF &lt;lv_unit&gt; IS ASSIGNED.</item>
+      <item>              lwa_activities_fcat-mngeh = &lt;lv_unit&gt;.</item>
+      <item>            ENDIF.</item>
+      <item>            MOVE-CORRESPONDING lwa_activities_fcat TO ls_entityset.</item>
+      <item>*      MOVE-CORRESPONDING ls_fpitm TO ls_entityset.</item>
+      <item>*      ls_entityset-text1    = lwa_activities_fcat-text1.</item>
+      <item>            ls_entityset-contr    = lv_index.</item>
+      <item>**      ls_entityset-ism01    = lwa_activities_fcat-ismng.&quot;&apos;H&apos;</item>
+      <item>            ls_entityset-vornr = &lt;ls_fpitm&gt;-vornr.</item>
+      <item>            ls_entityset-ism01 = lwa_activities_fcat-ismng.</item>
+      <item>            CONDENSE ls_entityset-ism01.</item>
+      <item/>
+      <item>            CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_OUTPUT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                input  = ls_entityset-aufnr</item>
+      <item>              IMPORTING</item>
+      <item>                output = ls_entityset-aufnr.</item>
+      <item/>
+      <item>            CALL FUNCTION &apos;CONVERSION_EXIT_CUNIT_OUTPUT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                input          = ls_entityset-mngeh</item>
+      <item>*               LANGUAGE       = SY-LANGU</item>
+      <item>              IMPORTING</item>
+      <item>*               LONG_TEXT      =</item>
+      <item>                output         = ls_entityset-mngeh</item>
+      <item>*               SHORT_TEXT     =</item>
+      <item>              EXCEPTIONS</item>
+      <item>                unit_not_found = 1</item>
+      <item>                OTHERS         = 2.</item>
+      <item>            IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>            ENDIF.</item>
+      <item/>
+      <item>            APPEND ls_entityset TO et_entityset.</item>
+      <item>            CLEAR: ls_entityset.</item>
+      <item>          ENDDO.</item>
+      <item/>
+      <item>          CLEAR:lt_tickets.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>/AGRI/ES_GL_MOBILE_ODATA</SPOTNAME>
+     <PROGRAMNAME>/AGRI/CL_MOBILE_DPC_EXT=======CP</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/CL_MOBILE_DPC_EXT=======CP\EX:/AGRI/EP_MOBILE_ODATA_37\EI</FULL_NAME>
+     <SOURCE>
+      <item>  DATA:</item>
+      <item>        lt_defrtt TYPE TABLE OF /agri/glrthdrt,&quot;/agri/gldefrtt,</item>
+      <item>        ls_defrtt TYPE /agri/glrthdrt,&quot;/agri/gldefrtt,</item>
+      <item>        ls_entityset LIKE LINE OF et_entityset,</item>
+      <item>         lt_rtusr     TYPE TABLE OF /agri/glrtusr,</item>
+      <item>         ls_rtusr     TYPE /agri/glrtusr.</item>
+      <item/>
+      <item>SELECT * FROM /agri/glrtusr</item>
+      <item>       INTO TABLE lt_rtusr</item>
+      <item>       WHERE bname EQ sy-uname.</item>
+      <item/>
+      <item>  IF lt_rtusr IS NOT INITIAL.</item>
+      <item>  SELECT * FROM /agri/glrthdrt&quot;/agri/gldefrtt</item>
+      <item>           INTO TABLE lt_defrtt</item>
+      <item>    FOR ALL ENTRIES IN lt_rtusr &quot;#EC CI_NO_TRANSFORM</item>
+      <item>           WHERE route EQ lt_rtusr-route</item>
+      <item>             AND spras EQ sy-langu.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item/>
+      <item>  LOOP AT lt_rtusr INTO ls_rtusr.</item>
+      <item>    ls_entityset-route = ls_rtusr-route.</item>
+      <item>    READ TABLE lt_defrtt INTO ls_defrtt with KEY route = ls_rtusr-route</item>
+      <item>                                                 spras = sy-langu.</item>
+      <item>    IF sy-subrc eq 0.</item>
+      <item>     ls_entityset-descr = ls_defrtt-descr.</item>
+      <item>    ENDIF.</item>
+      <item>*    MOVE-CORRESPONDING ls_defrtt TO ls_entityset.</item>
+      <item>    APPEND ls_entityset TO et_entityset.</item>
+      <item>    CLEAR ls_entityset.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>*** Getting Delta token</item>
+      <item>  CALL METHOD me-&gt;get_delta_token</item>
+      <item>    EXPORTING</item>
+      <item>      io_tech_request_context  = io_tech_request_context</item>
+      <item>      mr_service_document_name = mr_service_document_name</item>
+      <item>      mr_service_version       = mr_service_version</item>
+      <item>      it_entityset             = et_entityset</item>
+      <item>    IMPORTING</item>
+      <item>      es_response_context      = es_response_context.</item>
+      <item/>
+      <item>  exit.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEA88B2892E8B33BE8A</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEA88B2892E8B33BE8A</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>036</LENGTH>
+       <TEXT>Mobile App Odata changes</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_ENH_IMP_MOBILE_ODATA</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEA88B2892E8B33BE8A</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

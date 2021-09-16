@@ -1,0 +1,3 @@
+sap.ui.define(["sap/ui/core/mvc/Controller","com/br/zcol/model/models"],function(t,e){"use strict";return t.extend("com.br.zcol.controller.Master",{onInit:function(){this.oRouter=this.getOwnerComponent().getRouter()},onNavDetail:function(t){var e=this.ge+
+tOwnerComponent().getHelper().getNextUIState(1);var o="undefined";this.oRouter.navTo("Detail",{layout:e.layout,product:o})},onAddFilter:function(t){this._getDialog().open()},_getDialog:function(){if(!this._oDialog){this._oDialog=sap.ui.xmlfragment("com.b+
+r.zcol.view.ValueHelp");this.getView().addDependent(this._oDialog)}return this._oDialog}})});                                                                                                                                                                  

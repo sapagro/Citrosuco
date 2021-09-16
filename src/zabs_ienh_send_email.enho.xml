@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Send Email</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GACM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GACM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGACM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGACM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGACM\FO:BCS_MAIL_PREPARE_N_SEND\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lrt_tcode          TYPE RANGE OF tcode.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;ls_mddoc_infocus_x&gt; TYPE /agri/s_glmd_doc.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item>  ASSIGN (&apos;(/AGRI/SAPLGLMDM)GS_MDDOC_INFOCUS&apos;) TO &lt;ls_mddoc_infocus_x&gt;.</item>
+      <item/>
+      <item>  DO 3 TIMES.</item>
+      <item>    DATA(lv_index) = sy-index.</item>
+      <item>    INSERT INITIAL LINE INTO TABLE lrt_tcode</item>
+      <item>      ASSIGNING FIELD-SYMBOL(&lt;lrs_tcode&gt;).</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      &lt;lrs_tcode&gt; = &apos;IEQ&apos;.</item>
+      <item>      CASE lv_index.</item>
+      <item>        WHEN 1.</item>
+      <item>          &lt;lrs_tcode&gt;-low = &apos;/AGRI/GLMDM&apos;.</item>
+      <item>        WHEN 2.</item>
+      <item>          &lt;lrs_tcode&gt;-low = &apos;/AGRI/GLMD23&apos;.</item>
+      <item>        WHEN 3.</item>
+      <item>          &lt;lrs_tcode&gt;-low = &apos;ZABS_UPLOAD&apos;.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDDO.</item>
+      <item/>
+      <item>  IF sy-tcode EQ &apos;ZABS_ESTIMATIVA&apos;</item>
+      <item>  OR ( ( sy-tcode IN lrt_tcode[] OR sy-batch EQ abap_true ) AND</item>
+      <item>       &lt;ls_mddoc_infocus_x&gt; IS ASSIGNED AND</item>
+      <item>       &lt;ls_mddoc_infocus_x&gt;-x-mdhdr-mdtyp EQ &apos;ZPTA&apos; AND</item>
+      <item>       &lt;ls_mddoc_infocus_x&gt;-x-mdhdr-mpgrp EQ &apos;CIT-ESTIMATIVA&apos; ).</item>
+      <item>    lv_sent_to_all = abap_true.</item>
+      <item>    RETURN.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EEAAACFBE3F085A76F3</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EEAAACFBE3F085A76F3</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>020</LENGTH>
+       <TEXT>Send Email</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_SEND_EMAIL</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EEAAACFBE3F085A76F3</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

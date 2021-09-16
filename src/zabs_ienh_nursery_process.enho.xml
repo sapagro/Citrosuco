@@ -1,0 +1,810 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Nursery Process</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMNSM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMNSM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FCODE_CBCH\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  FCODE_CBCH                                      *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0F                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.21.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Auto batch number generation and popup to enter *</item>
+      <item>*                      the quantity while creating the batch           *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item> INCLUDE zabs_inc_batch.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\TY:LCL_EVENT_HANDLER\ME:ON_DATA_CHANGED\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Method Name       :  On_Data_Changed                                 *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMCLS                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.20.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Grid Refresh                                    *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>* IF gs_variables-cust_scr EQ c_screen-batches AND</item>
+      <item>*    NOT er_data_changed-&gt;mt_mod_cells[] IS INITIAL AND</item>
+      <item>*    sender EQ ref_grid_confirmations.</item>
+      <item/>
+      <item> REFRESH: gt_batches_mod_rows_x, gt_prodord_mod_rows_x.</item>
+      <item> IF ( gs_variables-cust_scr EQ c_screen-batches OR</item>
+      <item>      gs_variables-cust_scr = c_screen-items )</item>
+      <item> AND er_data_changed-&gt;mt_mod_cells[] IS NOT INITIAL.</item>
+      <item>   IF gs_variables-cust_scr EQ c_screen-batches.</item>
+      <item>     APPEND LINES OF er_data_changed-&gt;mt_mod_cells[]</item>
+      <item>       TO gt_batches_mod_rows_x.</item>
+      <item>     SORT gt_batches_mod_rows_x BY row_id.</item>
+      <item>     DELETE ADJACENT DUPLICATES FROM gt_batches_mod_rows_x</item>
+      <item>       COMPARING row_id.</item>
+      <item>   ELSEIF gs_variables-cust_scr = c_screen-items.</item>
+      <item>     APPEND LINES OF er_data_changed-&gt;mt_mod_cells[]</item>
+      <item>       TO gt_prodord_mod_rows_x.</item>
+      <item>     SORT gt_prodord_mod_rows_x BY row_id.</item>
+      <item>     DELETE ADJACENT DUPLICATES FROM gt_prodord_mod_rows_x</item>
+      <item>       COMPARING row_id.</item>
+      <item>   ENDIF.</item>
+      <item/>
+      <item>*--Calling FM to Refresh Grid</item>
+      <item>    CALL FUNCTION &apos;ZABS_FM_SET_GRID_REFRESH&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        iv_grid_refresh = abap_true.</item>
+      <item/>
+      <item>    gs_variables-manual_changes = c_true.</item>
+      <item/>
+      <item>    CALL METHOD cl_gui_cfw=&gt;set_new_ok_code</item>
+      <item>      EXPORTING</item>
+      <item>        new_code = c_fcode-enter.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:COMPONENTS_DATA_CHECK\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  COMPONENTS_DATA_CHECK                           *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0C                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.17.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Checking whether Confirmation Quanttity is      *</item>
+      <item>*                      greater than unrestricted Quantity              *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  IF lwa_fpcom-bwart NE &apos;262&apos;.</item>
+      <item>    IF lwa_fpcom-lmnga &gt; lwa_fpcom-zzclabs.</item>
+      <item>      MESSAGE e014(zabs_msgcls) INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\TY:LCL_EVENT_HANDLER\ME:ON_GRID_TOOLBAR\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Method Name       :  ON_GRID_TOOLBAR                                 *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMCLS                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.19.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Batch Discard Functionality                     *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>INCLUDE zabs_inc_batch_discard_button.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FCODE_CONF\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  FCODE_CONF                                      *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0F                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.27.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Leave to batch screen from Confirmation screen  *</item>
+      <item>*                      when confirmations done                         *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  SET SCREEN 0.</item>
+      <item>  LEAVE SCREEN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:COMPONENTS_DATA_DISPLAY\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  COMPONENTS_DATA_DISPLAY                         *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0C                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.26.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Split the Consumption Quantity as batch wise    *</item>
+      <item>*                      for the batch enabled consumption material      *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>INCLUDE zabs_inc_batch_display.</item>
+      <item/>
+      <item>CHECK 1 = 2.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FCODE_PROCESSING\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  FCODE_PROCESSING                                *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0F                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.24.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  1.Batch Discard functionality.                  *</item>
+      <item>*                      2.Addition of Custom button to change screens   *</item>
+      <item>*                        within batch cunsomptions and Taskorder items *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--For Custom button</item>
+      <item>CASE fcode.</item>
+      <item/>
+      <item>  WHEN c_fcode-user_function1.</item>
+      <item>    IF gs_variables-cust_scr EQ c_screen-batches.</item>
+      <item>      gs_variables-cust_scr = c_screen-items.</item>
+      <item>      gs_variables-task_order_mode = gs_variables-overview_mode.</item>
+      <item>      gs_variables-ordlv    = zcl_abs_abap_maintain=&gt;c_ordlvl_task_process. &quot;&apos;B&apos;</item>
+      <item>    ELSE.</item>
+      <item>      gs_variables-cust_scr = c_screen-batches.</item>
+      <item>      gs_variables-ordlv    = zcl_abs_abap_maintain=&gt;c_ordlvl_process. &quot;&apos;A&apos;</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  WHEN zcl_abs_abap_maintain=&gt;c_fcode_btch_discard or</item>
+      <item>       zcl_abs_abap_maintain=&gt;c_fcode_btch_canc.</item>
+      <item/>
+      <item>    INCLUDE zabs_inc_batch_discard.</item>
+      <item/>
+      <item>  WHEN c_fcode-user_function2.</item>
+      <item>*--Calling FM to get batch characteristics based on selected batch</item>
+      <item>    CALL FUNCTION &apos;ZABS_FM_BATCH_CHARACTERISTICS&apos;</item>
+      <item>      EXPORTING</item>
+      <item>        is_fpdoc_infocus  = gs_fpdoc_infocus</item>
+      <item>        iv_overview_mode  = gs_variables-overview_mode</item>
+      <item>        ref_grid_batches  = ref_grid_batches</item>
+      <item>        it_fmfpcnf        = gt_fmfpcnf</item>
+      <item>      CHANGING</item>
+      <item>        cv_data_change    = gs_variables-document_changed.</item>
+      <item/>
+      <item>ENDCASE.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FIELD_CATALOG_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  FIELD_CATALOG_PREPARE                           *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0F                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.25.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Setting Added Quantity field to Edit Mode       *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Added quantity field in edit mode</item>
+      <item>CASE lv_structure_name.</item>
+      <item>  WHEN c_structure_name-batches.</item>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = zcl_abs_abap_maintain=&gt;c_cust_field_quant. &quot;&apos;ZZGWEMG&apos;</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-edit = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = &apos;ZZCONF&apos;.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-tech = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = &apos;ZZLOEVM&apos;.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-tech = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = &apos;ZZBUDAT&apos;.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-no_out = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  WHEN c_structure_name-components.</item>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = &apos;ZZTASK&apos;.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-tech = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item>*    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>*          WITH KEY fieldname = &apos;CHARG&apos;.</item>
+      <item>*    IF sy-subrc = 0.</item>
+      <item>*      &lt;lwa_fcat&gt;-hotspot = abap_true.</item>
+      <item>*    ENDIF.</item>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = &apos;BWART&apos;.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-edit = abap_true.</item>
+      <item>      &lt;lwa_fcat&gt;-tech = abap_false.</item>
+      <item>    ENDIF.</item>
+      <item>  WHEN c_structure_name-create_orders.</item>
+      <item>    READ TABLE lt_fcat ASSIGNING &lt;lwa_fcat&gt;</item>
+      <item>          WITH KEY fieldname = &apos;VERID&apos;.</item>
+      <item>    IF sy-subrc = 0.</item>
+      <item>      &lt;lwa_fcat&gt;-edit = abap_true.</item>
+      <item>    ENDIF.</item>
+      <item>ENDCASE.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FCODE_EXCLUDES_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  FCODE_EXCLUDES_PREPARE                          *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0F                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.11.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Changing Custom button description from Batches *</item>
+      <item>*                      to Task Orders once the button is pressed and   *</item>
+      <item>*                      vice-versa.                                     *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>   IF gs_fpdoc_infocus IS NOT INITIAL</item>
+      <item>   AND gs_variables-document_mode NE c_mode_create</item>
+      <item>   AND gs_fpdoc_infocus-x-fphdr-ordlv EQ zcl_abs_abap_maintain=&gt;c_ordlvl_task_process. &quot;&apos;B&apos;</item>
+      <item>     IF gs_variables-cust_scr = c_screen-items.</item>
+      <item>       gs_variables-user_function1 = zcl_abs_abap_maintain=&gt;c_userfn_batches. &quot;&apos;Batches&apos;</item>
+      <item>       APPEND c_fcode-create_batch TO lt_fcode_excludes.</item>
+      <item>     ELSEif gs_variables-cust_scr = c_screen-batches.</item>
+      <item>       gs_variables-user_function1 = zcl_abs_abap_maintain=&gt;c_userfn_task_ord. &quot;&apos;Task Orders&apos;</item>
+      <item>       IF gs_fpdoc_infocus-x-fpbch IS NOT INITIAL.</item>
+      <item>         gs_variables-user_function2 = zcl_abs_abap_maintain=&gt;c_userfn_charact. &quot;&apos;Characteristics&apos;</item>
+      <item>         DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function2.</item>
+      <item>       ENDIF.</item>
+      <item>       IF gs_variables-document_mode EQ c_mode_change.</item>
+      <item>         DELETE TABLE lt_fcode_excludes FROM c_fcode-create_batch.</item>
+      <item>       ENDIF.</item>
+      <item>     ENDIF.</item>
+      <item>     DELETE TABLE lt_fcode_excludes FROM c_fcode-user_function1.</item>
+      <item/>
+      <item>   ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\DA:GS_VARIABLES\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMTOP                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.11.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Adding user function to add custom button and   *</item>
+      <item>*                      variable                                        *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Adding user function to add custom button</item>
+      <item> DATA: user_function1(40),</item>
+      <item>       user_function2(40),</item>
+      <item>       cust_scr            TYPE sydynnr VALUE c_screen-batches,</item>
+      <item>       ordlv               TYPE /agri/glordlv.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:SUBSCREEN_AREA_SET_0100\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  subscreen_area_set_0100                         *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0S                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.11.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Passing screen based on customized button       *</item>
+      <item>*                      selection                                       *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Passing screen based on customized button selection</item>
+      <item>  IF gs_compress_data_area-items EQ c_screen_group-off.</item>
+      <item>    gs_variables-subscr_items = gs_variables-cust_scr.</item>
+      <item>  ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:POST_BATCH_CONFIRMATIONS\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  post_batch_confirmations                        *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0P                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Fill the batch characteristic (Date) when       *</item>
+      <item>*                      GRN created                                     *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>* INCLUDE zabs_inc_batch_update.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:ITEMS_DATA_PREPARE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  items_data_prepare                              *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0I                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Prepare the items for task materials            *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item> INCLUDE zabs_inc_nwb_item_data.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:FCODE_DTLS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  fcode_dtls                                      *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0F                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Display consumpions automatically in component  *</item>
+      <item>*                      details screen                                  *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  CLEAR: /agri/s_fmfp_cnf.</item>
+      <item>  READ TABLE gt_fmfpcnf INTO /agri/s_fmfp_cnf INDEX 1.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:TASK_ORDER_DISPLAY\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  task_order_display                              *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0T                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Display consumptions automatically in task      *</item>
+      <item>*                      order confirmation screen                       *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  DATA: lv_subrc_new TYPE sy-subrc.</item>
+      <item/>
+      <item>  CHECK lv_aufnr IS NOT INITIAL.</item>
+      <item>  PERFORM task_order_infocus_set USING lv_aufnr</item>
+      <item>                              CHANGING lv_subrc_new.</item>
+      <item/>
+      <item>  CHECK gs_todoc_infocus IS NOT INITIAL.</item>
+      <item/>
+      <item>*--SOC to display consumptions automatically in task order confirmation screen</item>
+      <item>  CLEAR: /agri/s_fmfp_cnf.</item>
+      <item>  READ TABLE gt_fmfpcnf INTO /agri/s_fmfp_cnf INDEX 1.</item>
+      <item>*--EOC to display consumptions automatically in task order confirmation screen</item>
+      <item>  CLEAR: /agri/s_fmfpitm.</item>
+      <item>  READ TABLE gs_todoc_infocus-x-fpitm INTO /agri/s_fmfpitm</item>
+      <item>                                      INDEX 1.</item>
+      <item>  UNASSIGN &lt;gs_fpdoc_infocus&gt;.</item>
+      <item>  ASSIGN gs_todoc_infocus TO &lt;gs_fpdoc_infocus&gt;.</item>
+      <item>  gs_variables-refresh_confirmation_grid   = c_true.</item>
+      <item>  gs_variables-refresh_components_grid     = c_true.</item>
+      <item>  gs_variables-refresh_activities_grid     = c_true.</item>
+      <item>  CALL SCREEN 401 STARTING AT 18 1 ENDING AT 175 20.</item>
+      <item/>
+      <item>  RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:DOCUMENT_DATA_SET\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  document_data_set                               *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0D                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Populate the item quantity in process order     *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  INCLUDE zabs_inc_doc_data_set.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:CREATE_TASK_ORDERS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_NURSERY_PROCESS                       *</item>
+      <item>* Form Name         :  create_task_orders                              *</item>
+      <item>* Include Name      :  /AGRI/LFMNSMF0C                                 *</item>
+      <item>* Created By        :  Chandrakanth Karanam                            *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  06.18.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Skip consumption materials from components while*</item>
+      <item>*                      creating task orders                            *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>  INCLUDE zabs_inc_task_ord.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:CONTROL_EVENTS_REGISTER_0401\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>  IF ref_grid_components IS NOT INITIAL.</item>
+      <item>        SET HANDLER: ref_event_handler-&gt;on_hotspot_click</item>
+      <item>                     FOR ref_grid_components.</item>
+      <item>  ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\TY:LCL_EVENT_HANDLER\ME:ON_HOTSPOT_CLICK\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>IF sender EQ ref_grid_components.</item>
+      <item>  IF e_column_id EQ &apos;CHARG&apos;.</item>
+      <item>    READ TABLE gt_components INTO DATA(lwa_components) INDEX e_row_id-index.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>      SET PARAMETER ID &apos;MAT&apos; FIELD lwa_components-matnr.</item>
+      <item>      SET PARAMETER ID &apos;CHA&apos; FIELD lwa_components-charg.</item>
+      <item>      CALL METHOD /agri/cl_global_services=&gt;transaction_call_process</item>
+      <item>        EXPORTING</item>
+      <item>          i_tcode                = &apos;MSC3N&apos;</item>
+      <item>          i_skip_first_screen    = c_true</item>
+      <item>        EXCEPTIONS</item>
+      <item>          invalid_parameters     = 1</item>
+      <item>          call_transaction_error = 2</item>
+      <item>          OTHERS                 = 3.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item>ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:ITEMS_DATA_UPDATE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>LOOP AT gs_fpdoc_infocus-x-fpitm INTO DATA(ls_fpitm)</item>
+      <item>                                WHERE updkz EQ &apos;I&apos;</item>
+      <item>                                  AND unpln EQ &apos;X&apos;.</item>
+      <item>  READ TABLE gs_fpdoc_infocus-x-fpcom ASSIGNING FIELD-SYMBOL(&lt;fs_fpcom&gt;)</item>
+      <item>                                       WITH KEY posnr = ls_fpitm-posnr</item>
+      <item>                                                updkz = &apos;I&apos;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>   &lt;fs_fpcom&gt;-zztask = &apos;X&apos;.</item>
+      <item>  ENDIF.</item>
+      <item>ENDLOOP.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:BATCHES_DATA_DISPLAY\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item> DELETE gt_batches_fcat WHERE zzloevm EQ abap_true.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMNSM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMNSM\FO:BATCH_STYLES_PREPARE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>  IF lwa_batch_fcat-zzconf IS INITIAL.</item>
+      <item>   lwa_style-fieldname = &apos;ZZGWEMG&apos;.</item>
+      <item>   lwa_style-style     = cl_gui_alv_grid=&gt;mc_style_disabled.</item>
+      <item>   INSERT lwa_style INTO TABLE lwa_batch_fcat-styles.</item>
+      <item>   CLEAR: lwa_style.</item>
+      <item> ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9A4B4261F2707FAF8</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A4B4261F2707FAF8</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>Nursery Process</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9A4B4261F2707FAF8</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>025</LENGTH>
+       <TEXT>Processo de Viveiros</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_NURSERY_PROCESS</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9A4B4261F2707FAF8</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

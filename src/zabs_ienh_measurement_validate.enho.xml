@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Measurement Validations</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLFLM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLFLM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLFLM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLFLM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLFLM\IC:/AGRI/LGLFLMEVT\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_MEASUREMENT_VALIDATE                  *</item>
+      <item>* Include Name      :  /AGRI/LGLFLMEVT                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Validating Measurement Group                    *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Measurement Group Validation</item>
+      <item>IF sy-ucomm = &apos;CRET&apos; OR sy-ucomm = &apos;NONE&apos;.</item>
+      <item/>
+      <item>      SELECT SINGLE mpgrp</item>
+      <item>        FROM /agri/glmdhdr</item>
+      <item>        INTO @DATA(ls_mpgrp)</item>
+      <item>        WHERE tplnr_fl EQ @gs_fldoc_infocus-tplnr_fl</item>
+      <item>          AND mpgrp    EQ @p_mpgrp.</item>
+      <item>       IF sy-subrc NE 0.</item>
+      <item>        MESSAGE s751(/agri/global).</item>
+      <item>       ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLFLM</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLFLM\FO:FCODE_MDSP\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_IENH_MEASUREMENT_VALIDATE                  *</item>
+      <item>* Form Name         :  atgrp_infocus_save                              *</item>
+      <item>* Include Name      :  /AGRI/LGLAGMF0A                                 *</item>
+      <item>* Created By        :  Jetendra Mantena                                *</item>
+      <item>* Requested by      :  Mario Alfredo                                   *</item>
+      <item>* Created on        :  07.04.2019                                      *</item>
+      <item>* TR                :  C4DK901784                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  Measurement Document selection screen changes   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item>*--Measurement Document selection screen changes</item>
+      <item>  RANGES: lr_tplnr_n FOR /agri/s_glflot-tplnr_fl,</item>
+      <item>          lr_mpgrp FOR /agri/glmdhdr-mpgrp.</item>
+      <item/>
+      <item>  CALL SELECTION-SCREEN 0099 STARTING AT 5 5 ENDING AT 120 12.</item>
+      <item/>
+      <item>     lr_mpgrp-sign = lr_tplnr_n-sign   = &apos;I&apos;.</item>
+      <item>     lr_mpgrp-option = lr_tplnr_n-option = &apos;EQ&apos;.</item>
+      <item>     lr_mpgrp-low = p_mpgrp.</item>
+      <item>     APPEND lr_mpgrp.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_OUTPUT&apos;</item>
+      <item>   EXPORTING</item>
+      <item>     INPUT         = gs_fldoc_infocus-tplnr_fl</item>
+      <item>   IMPORTING</item>
+      <item>     OUTPUT        = lr_tplnr_n-low.</item>
+      <item/>
+      <item>  APPEND lr_tplnr_n.</item>
+      <item/>
+      <item>  SUBMIT /agri/glmd_list_display</item>
+      <item>    WITH so_strno IN lr_tplnr_n</item>
+      <item>    WITH so_mpgrp IN lr_mpgrp</item>
+      <item>    WITH so_mdate IN so_mdate AND RETURN.</item>
+      <item/>
+      <item>  RETURN.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9A6828889302ACCC1</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9A6828889302ACCC1</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>035</LENGTH>
+       <TEXT>Measurement Validations</TEXT>
+      </SOTR_TEXT>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9A6828889302ACCC1</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>035</LENGTH>
+       <TEXT>Validações de medição</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_MEASUREMENT_VALIDATE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9A6828889302ACCC1</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

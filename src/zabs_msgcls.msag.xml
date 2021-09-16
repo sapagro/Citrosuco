@@ -1,0 +1,1993 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZABS_MSGCLS</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>ABS Message Class</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Enter Quantity</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Batch &amp;1 already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Select atleast one row</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Select only one row</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Material does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Dispatch Order can be created only for Dispatch Crops</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Yard Order already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Material already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>No Dispatch Orders found for selected line</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>No data found for selected row</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Yard order creation failed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Yard order &amp;1 created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Can&apos;t delete lines with Yard Order</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Confirmation Quantity should be less than Unrestricted Quantity</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Quantity has been discarded for Batch &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Enetr Value For Attribute &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Value Already Maintained For Attribute &amp; On This Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>First Letter of Identifier should be a Character for &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Same Identifier in the Formula field is not allowed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Identifier already exists for attribute &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Internal Object Number Missing For &amp; Material</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Class Not Maintained For Material &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>There are no Batch Charachteristics for &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Select atleast one Batch</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Batch Characteristics Saved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Select only one row</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Charachteristics doesn&apos;t exist for selected Batch</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Enter discarding quantity for batch &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Discard quantity should be less than delivered quantity for batch &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>No data for given selection</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Enter Start Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Enter End Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Enter Valid Plant</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Enter Valid Crop</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>invalid parameter combination for display</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Enter Measurement Document Attribute Group</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Enter Measurement Document Attribute</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>&amp; Attribute does not exist in group &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Enter Terrain Attribute Group</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>&amp; Attribute Group category should be &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>&amp; Fieldname does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>Enter valid Resource Id</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>Enter valid Work Center</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>Enter fields Resource ID or Work Center</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Create Measurement Docuement for &amp; of Terrain &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>Enter valid season using search help</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Choose a year from drop down</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>Enter file path</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Display Failed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>050</MSGNR>
+     <TEXT>Please enter valid Vendor</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>051</MSGNR>
+     <TEXT>Enter Valid Material</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>Enter Resource ID for work center &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>Enter Work Center for Resource &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>054</MSGNR>
+     <TEXT>Give Description for Resource &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>Enter Equipment for Resource Type B for Resource &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>056</MSGNR>
+     <TEXT>Select either External or Hr Checkbox for Resource &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>057</MSGNR>
+     <TEXT>Give Vendor when External checkbox is selected for Resource &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>058</MSGNR>
+     <TEXT>Give Personnel Number when Hr checkbox is selected for Resource &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>059</MSGNR>
+     <TEXT>Enter valid Vendor for Resource &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>060</MSGNR>
+     <TEXT>Enter Activity ID</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>061</MSGNR>
+     <TEXT>Enter File Path</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>062</MSGNR>
+     <TEXT>Resource &amp; saved successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>063</MSGNR>
+     <TEXT>No changes were made</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>064</MSGNR>
+     <TEXT>Reosource &amp; &amp; is successfully updated</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>065</MSGNR>
+     <TEXT>Reosource &amp; &amp; is successfully deleted</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>066</MSGNR>
+     <TEXT>Reosource &amp; &amp; is successfully inserted</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>067</MSGNR>
+     <TEXT>Measurement Document can be created only for Main Cycle</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>068</MSGNR>
+     <TEXT>Reosource &amp; &amp; already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>069</MSGNR>
+     <TEXT>Enter Description in Portuguese for Activity &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>070</MSGNR>
+     <TEXT>Enter Activity Type for Billable YES for Activity &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>071</MSGNR>
+     <TEXT>Activity &amp; already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>072</MSGNR>
+     <TEXT>Activity &amp; is successfully created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>073</MSGNR>
+     <TEXT>The Mail has been sent successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>074</MSGNR>
+     <TEXT>Only Terrains in the Orders Tab can be confirmed.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>075</MSGNR>
+     <TEXT>Description &amp; for &amp; in &amp; is successfully updated</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>076</MSGNR>
+     <TEXT>Activity &amp; is successfully updated</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>077</MSGNR>
+     <TEXT>Activity &amp; is successfully deleted</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>078</MSGNR>
+     <TEXT>Terrain percentage should not be more than 100% among overlapped seasons</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>079</MSGNR>
+     <TEXT>Terrain should be maintained</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>080</MSGNR>
+     <TEXT>Task Order should be maintained</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>081</MSGNR>
+     <TEXT>Invalid Order for Terrain &amp;1 in Orders tab</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>082</MSGNR>
+     <TEXT>Please maintain valid shift</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>083</MSGNR>
+     <TEXT>Shift should be maintain</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>084</MSGNR>
+     <TEXT>Turma doesn&apos;t exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>085</MSGNR>
+     <TEXT>Please Maintain valid Activity Category for Activity &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>086</MSGNR>
+     <TEXT>SAP User ID &amp;1 not found in Mapping table</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>087</MSGNR>
+     <TEXT>Employee Number not maintained in mapping table for SAP User ID &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>088</MSGNR>
+     <TEXT>Login User &amp;1 is neither Leader not In-Charge</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>089</MSGNR>
+     <TEXT>No turmas found for the leader &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>090</MSGNR>
+     <TEXT>No turmas found for the in-charge &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>091</MSGNR>
+     <TEXT>No employees maintained for the turmas of leader/incharge</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>092</MSGNR>
+     <TEXT>No farms found for the leader/incharge</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>093</MSGNR>
+     <TEXT>No terrains found for the leader/incharge with active harvest orders</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>094</MSGNR>
+     <TEXT>No terrains found for the forms</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>095</MSGNR>
+     <TEXT>No active crop seasons for the terrains</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>096</MSGNR>
+     <TEXT>Accomplishment type is not maintained in variant table</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>097</MSGNR>
+     <TEXT>Task is not maintained in variant table</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>098</MSGNR>
+     <TEXT>No activities maintained for events/productions</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>099</MSGNR>
+     <TEXT>No justification codes maintained</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>100</MSGNR>
+     <TEXT>Successfully Updated</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>101</MSGNR>
+     <TEXT>Loder code &amp;1 is already assigned to the bag group &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>102</MSGNR>
+     <TEXT>Loder code &amp;1 has been assigned to the bag group &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>103</MSGNR>
+     <TEXT>Accomplishment doesn&apos;t exist with the key &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>104</MSGNR>
+     <TEXT>No Region defined for given selection</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>105</MSGNR>
+     <TEXT>There are no terrains defined under given Farm</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>106</MSGNR>
+     <TEXT>No Measurement Documents for given Terrain counter combination</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>107</MSGNR>
+     <TEXT>No Attribute values for given Measurement Documents</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>108</MSGNR>
+     <TEXT>Reject is not possible for &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>109</MSGNR>
+     <TEXT>Gang &amp;1 with posnr &amp;2 is successfully Updated</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>110</MSGNR>
+     <TEXT>Gang &amp;1 is successfully Created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>111</MSGNR>
+     <TEXT>No Stock available for given Storage location</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>112</MSGNR>
+     <TEXT>Maintain a note type in the variant table</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>113</MSGNR>
+     <TEXT>Batch characteristics created successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>114</MSGNR>
+     <TEXT>Batch characteristics updated successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>115</MSGNR>
+     <TEXT>No batches found with the plate &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>116</MSGNR>
+     <TEXT>&amp;1 is closed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>117</MSGNR>
+     <TEXT>&amp; Total Coverage value should always be equal to 100</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>118</MSGNR>
+     <TEXT>No terrains for given equipment &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>119</MSGNR>
+     <TEXT>Equipment &amp; does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>120</MSGNR>
+     <TEXT>Process Order does not exist for equipment &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>121</MSGNR>
+     <TEXT>Task Order &amp; Created Successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>122</MSGNR>
+     <TEXT>No Task Orders for given selection</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>123</MSGNR>
+     <TEXT>Irrigation Order &amp; has been created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>124</MSGNR>
+     <TEXT>Maintain Hydrometer Factor</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>125</MSGNR>
+     <TEXT>Data saved Successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>126</MSGNR>
+     <TEXT>Order number &amp;1 with Shift &amp;2 already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>127</MSGNR>
+     <TEXT>Please maintain number of days in constant table.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>128</MSGNR>
+     <TEXT>Enter valid Reference Field Capacity</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>129</MSGNR>
+     <TEXT>Maintain all editable fields</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>130</MSGNR>
+     <TEXT>No record was found for order &amp;1 in table ZFMPROG_TALHAO.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>131</MSGNR>
+     <TEXT>No dosage record was found for order &amp;1 in table.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>132</MSGNR>
+     <TEXT>There are no number of tanks specified for order &amp;1 in table ZFMACVLCL.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>133</MSGNR>
+     <TEXT>No Farms for given selections</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>134</MSGNR>
+     <TEXT>No Projects for given Farm &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>135</MSGNR>
+     <TEXT>No Terrains for given Project &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>136</MSGNR>
+     <TEXT>Check the Start Date and End Date parameters</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>137</MSGNR>
+     <TEXT>Check the parameter Rcnum (Recipe)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>138</MSGNR>
+     <TEXT>Order Number &amp;1 already exists for Project &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>139</MSGNR>
+     <TEXT>Batch &amp;1 not yet confirmed, discard is not possible</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>140</MSGNR>
+     <TEXT>Enter Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>141</MSGNR>
+     <TEXT>Enter Unit of Measure</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>142</MSGNR>
+     <TEXT>Enter valid Unit of Measure</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>143</MSGNR>
+     <TEXT>Check Column &amp;1 Row &amp;2 of the Excel file.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>144</MSGNR>
+     <TEXT>Terrain Code not informed.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>145</MSGNR>
+     <TEXT>Não existem atributos válidos no arquivo Excel.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>146</MSGNR>
+     <TEXT>Terrain &amp;1 Attribute &amp;2 Value &amp;3 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>147</MSGNR>
+     <TEXT>No Projects for given Farm &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>148</MSGNR>
+     <TEXT>There were problems determining the Terrain. Check Z tables.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>149</MSGNR>
+     <TEXT>Código do Material não informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>150</MSGNR>
+     <TEXT>Verificar Material da Linha &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>151</MSGNR>
+     <TEXT>Verificar Centro da Linha &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>152</MSGNR>
+     <TEXT>Centro não informado.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>153</MSGNR>
+     <TEXT>Centro &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>154</MSGNR>
+     <TEXT>Material &amp;1 inexistente.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>155</MSGNR>
+     <TEXT>Enter valid Measurement Document</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>156</MSGNR>
+     <TEXT>Invalid Measurement Document</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>157</MSGNR>
+     <TEXT>Measurement Document &amp;1 already exists for &amp;2 and &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>158</MSGNR>
+     <TEXT>No Task List Type maintained for given Task Material and Form</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>159</MSGNR>
+     <TEXT>No Orders for given Project</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>160</MSGNR>
+     <TEXT>No Order Numbers for given equipment</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>161</MSGNR>
+     <TEXT>Please maintain Batch Measurement Group</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>162</MSGNR>
+     <TEXT>No Employees maintained</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>163</MSGNR>
+     <TEXT>Enter valid Personnel Number</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>164</MSGNR>
+     <TEXT>Enter valid Vendor</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>165</MSGNR>
+     <TEXT>Enter valid Farm</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>166</MSGNR>
+     <TEXT>Enter valid Fleet</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>167</MSGNR>
+     <TEXT>No activities maintained for Machinery</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>168</MSGNR>
+     <TEXT>Add Badges</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>169</MSGNR>
+     <TEXT>The route &amp;1 already exists and won&apos;t be created again. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>170</MSGNR>
+     <TEXT>The description for route &amp;1 has been created successfully. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>171</MSGNR>
+     <TEXT>The description for route &amp;1 has been modified successfully. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>172</MSGNR>
+     <TEXT>The route &amp;1 has been created successfully. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>173</MSGNR>
+     <TEXT>The terrain &amp;1 doesn&apos;t exist. Please validate. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>174</MSGNR>
+     <TEXT>Terrain &amp;1 for Route &amp;2 was added successfully. Line &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>175</MSGNR>
+     <TEXT>The Terrain &amp;1 already exists in the route. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>176</MSGNR>
+     <TEXT>The Employee Number &amp;1 is Inactive in the system. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>177</MSGNR>
+     <TEXT>The Employee Number &amp;1 was added successfully. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>178</MSGNR>
+     <TEXT>The Employee Number &amp;1 doesn&apos;t exist in the system. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>179</MSGNR>
+     <TEXT>The Vendor Number &amp;1 is set for deletion in the system. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>180</MSGNR>
+     <TEXT>The Vendor Number &amp;1 was added successfully. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>181</MSGNR>
+     <TEXT>The Vendor Number &amp;1 doesn&apos;t exist in the system. Line &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>182</MSGNR>
+     <TEXT>Archive Path: &amp;1 &amp;2 &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>183</MSGNR>
+     <TEXT>Execution Mode: &amp;1 &amp;2 &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>184</MSGNR>
+     <TEXT>No Work Center for given selection</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>185</MSGNR>
+     <TEXT>Document &amp;1 is locked by User &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>186</MSGNR>
+     <TEXT>Accomplishment doesn&apos;t exist with the given key</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>187</MSGNR>
+     <TEXT>Accomplishment already exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>188</MSGNR>
+     <TEXT>Duplicate records in accomplishment &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>189</MSGNR>
+     <TEXT>No Approvers Found for Selected Regions</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>191</MSGNR>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>193</MSGNR>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>194</MSGNR>
+     <TEXT>Lotes com carimbos diferentes não podem ser misturados.Vocêquercontinuar?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>195</MSGNR>
+     <TEXT>Variedades diferentes não podem ser misturadas</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>196</MSGNR>
+     <TEXT>Existem lotes para variedade &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>197</MSGNR>
+     <TEXT>Batch &amp;1 successfully created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>198</MSGNR>
+     <TEXT>There is already measurement document created for the Safra /flowering.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>199</MSGNR>
+     <TEXT>No estimate measurement document created for the season/blossom.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <MSGNR>200</MSGNR>
+     <TEXT>There is already a measurement document created for the harvest.</TEXT>
+    </T100>
+   </T100>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <T100T>
+    <T100T>
+     <SPRSL>P</SPRSL>
+     <ARBGB>ZABS_MSGCLS</ARBGB>
+     <STEXT>Clase de mensaje ABS</STEXT>
+    </T100T>
+   </T100T>
+   <T100_TEXTS>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>001</MSGNR>
+     <TEXT>Digite a quantidade</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>002</MSGNR>
+     <TEXT>Lote &amp;1 já existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>003</MSGNR>
+     <TEXT>Selecione pelo menos uma linha</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>004</MSGNR>
+     <TEXT>Selecione apenas uma linha</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>005</MSGNR>
+     <TEXT>Material não existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>006</MSGNR>
+     <TEXT>A Ordem de Expedição pode ser criada apenas para as Culturas EXPEDIÇÃO</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>007</MSGNR>
+     <TEXT>Ordem de Expedição já existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>008</MSGNR>
+     <TEXT>Material já existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>009</MSGNR>
+     <TEXT>Nenhuma Ordem de Expedição encontrada para a linha selecionada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>010</MSGNR>
+     <TEXT>Nenhum dado encontrado para linha selecionada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>011</MSGNR>
+     <TEXT>Falha na criação de Ordem de Expedição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>012</MSGNR>
+     <TEXT>Ordem de Expedição &amp;1 criada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>013</MSGNR>
+     <TEXT>Não é possível excluir linhas com Ordem de Expedição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>014</MSGNR>
+     <TEXT>A quantidade de confirmação deve ser menor que a quantidade irrestrita</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>015</MSGNR>
+     <TEXT>Quantidade descartada para Lote &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>016</MSGNR>
+     <TEXT>Insira o valor para o atributo &amp; &amp; &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>017</MSGNR>
+     <TEXT>Valor já mantido para atributo &amp; nesta data</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>018</MSGNR>
+     <TEXT>A primeira letra do identificador deve ser um caractere para &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>019</MSGNR>
+     <TEXT>Mesmo identificador no campo Fórmula não é permitido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>020</MSGNR>
+     <TEXT>Identificador já existe para atributo &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>021</MSGNR>
+     <TEXT>Número de objeto interno ausente para material &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>022</MSGNR>
+     <TEXT>Classe não mantida para material &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>023</MSGNR>
+     <TEXT>Não há características de lote para &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>024</MSGNR>
+     <TEXT>Selecione pelo menos um lote</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>025</MSGNR>
+     <TEXT>Características do Lote Salvas</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>026</MSGNR>
+     <TEXT>Selecione apenas uma linha</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>027</MSGNR>
+     <TEXT>Não existem características para o lote selecionado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>028</MSGNR>
+     <TEXT>Insira a quantidade de descarte para lote &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>029</MSGNR>
+     <TEXT>A quantidade descarte deve ser menor que a quantidade fornecida do Lote &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>030</MSGNR>
+     <TEXT>Nenhum dado para parâmetros de seleção</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>031</MSGNR>
+     <TEXT>Insira a data de início</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>032</MSGNR>
+     <TEXT>Insira a data final</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>033</MSGNR>
+     <TEXT>Informe Centro Válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>034</MSGNR>
+     <TEXT>Informe Mestre de Cultura Válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>035</MSGNR>
+     <TEXT>Combinação de parâmetros inválida para exibição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>036</MSGNR>
+     <TEXT>Entrar no grupo de atributos do documento de medição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>037</MSGNR>
+     <TEXT>Entrar o Documento de Medição do Atributo</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>038</MSGNR>
+     <TEXT>O Atributo &amp; não existe no Grupo &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>039</MSGNR>
+     <TEXT>Preencha Grupo de Atributo do Terreno</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>040</MSGNR>
+     <TEXT>&amp; Categoria de Grupo de Atributo deve ser &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>041</MSGNR>
+     <TEXT>&amp; Campo não existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>042</MSGNR>
+     <TEXT>Digite um ID de Reecurso válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>043</MSGNR>
+     <TEXT>Digite Centro de Trabalho válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>044</MSGNR>
+     <TEXT>Digite os campos ID do recurso ou Centro de trabalho</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>045</MSGNR>
+     <TEXT>Criar Documeto de Medição para &amp; do terreno &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>046</MSGNR>
+     <TEXT>Selecione uma safra válida usando a ajuda da pesquisa</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>047</MSGNR>
+     <TEXT>Escolha um ano da lista de seleção</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>048</MSGNR>
+     <TEXT>Digite o diretório do arquivo</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>049</MSGNR>
+     <TEXT>Falha na exibição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>050</MSGNR>
+     <TEXT>Digite fornecedor válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>051</MSGNR>
+     <TEXT>Inserir material válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>052</MSGNR>
+     <TEXT>Insira ID do Recurso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>053</MSGNR>
+     <TEXT>Insira o Centro de Trabalho</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>054</MSGNR>
+     <TEXT>Insira a Descrição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>055</MSGNR>
+     <TEXT>Insira equipamento para o Tipo de Recurso B</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>056</MSGNR>
+     <TEXT>Marque o Checkbox Externo ou HR</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>057</MSGNR>
+     <TEXT>Digite numero Fornecedor somente quando checkbox Externo estiver marcada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>058</MSGNR>
+     <TEXT>Digite numero do pessoal somente quando checkbox HR estiver marcada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>059</MSGNR>
+     <TEXT>Digite um Fornecedor válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>060</MSGNR>
+     <TEXT>Digite ID da Atividade</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>061</MSGNR>
+     <TEXT>Digite o diretório do arquivo</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>062</MSGNR>
+     <TEXT>Recurso &amp; salvo com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>063</MSGNR>
+     <TEXT>Nenhuma alteração foi feita</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>064</MSGNR>
+     <TEXT>O Recurso &amp; &amp; foi atualizado com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>065</MSGNR>
+     <TEXT>O Recurso &amp; &amp; foi excluído com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>066</MSGNR>
+     <TEXT>O Recurso &amp; &amp; foi inserido com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>067</MSGNR>
+     <TEXT>O documento de medição pode ser criado apenas para o ciclo principal</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>068</MSGNR>
+     <TEXT>O Recurso &amp; &amp; já existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>069</MSGNR>
+     <TEXT>Digite a descrição em português</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>070</MSGNR>
+     <TEXT>Digite o tipo de atividade para faturável YES</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>071</MSGNR>
+     <TEXT>Atividade &amp; já existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>072</MSGNR>
+     <TEXT>Atividade &amp; é criada com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>074</MSGNR>
+     <TEXT>Somente Terrenos na aba de Ordens podem ser confirmados.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>075</MSGNR>
+     <TEXT>A descrição &amp; para &amp; em &amp; foi atualizada com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>076</MSGNR>
+     <TEXT>Atividade &amp; é atualizada com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>077</MSGNR>
+     <TEXT>Actividade &amp; é excluída com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>078</MSGNR>
+     <TEXT>Porcentagem terreno não deve ser superior a 100% entre safras sobrepostas</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>079</MSGNR>
+     <TEXT>Terreno deve ser mantido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>080</MSGNR>
+     <TEXT>Ordem Tarefa deve ser mantida</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>081</MSGNR>
+     <TEXT>Ordem inválida para terreno &amp;1 na Aba de Ordens</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>084</MSGNR>
+     <TEXT>O Turma não existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>088</MSGNR>
+     <TEXT>Login User &amp;1 is neither Leader not In-Charge</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>089</MSGNR>
+     <TEXT>Não foram encontrados turmas para o líder &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>090</MSGNR>
+     <TEXT>Não foram encontrados turmas para o Encarregado &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>091</MSGNR>
+     <TEXT>Nenhum empregado mantido para as turmas do líder/encarregado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>092</MSGNR>
+     <TEXT>Nenhuma fazenda encontrada para o líder/Encarregado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>094</MSGNR>
+     <TEXT>Nenhum terreno encontrado para os formulários</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>101</MSGNR>
+     <TEXT>O código do carregador &amp;1 já está atribuído à banca &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>102</MSGNR>
+     <TEXT>O código do codificador &amp;1 foi atribuído à banca &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>105</MSGNR>
+     <TEXT>Não existem talhões para o imóvel</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>106</MSGNR>
+     <TEXT>Não existe documento de medição para o período informado!</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>113</MSGNR>
+     <TEXT>Características de lote criadas com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>114</MSGNR>
+     <TEXT>Características do lote atualizadas com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>116</MSGNR>
+     <TEXT>&amp; está fechado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>117</MSGNR>
+     <TEXT>&amp; O valor da cobertura total deve sempre ser igual a 100</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>118</MSGNR>
+     <TEXT>Não há terrenos para determinado equipamento &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>119</MSGNR>
+     <TEXT>Equipamento &amp; não existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>120</MSGNR>
+     <TEXT>A ordem de processo não existe para equipamentos &amp;</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>121</MSGNR>
+     <TEXT>Ordem de tarefa &amp; criada com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>122</MSGNR>
+     <TEXT>Nenhuma ordem de tarefa para determinada seleção</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>123</MSGNR>
+     <TEXT>Ordem da Irrigação &amp; foi criada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>124</MSGNR>
+     <TEXT>Manter o fator do hidrômetro</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>125</MSGNR>
+     <TEXT>Dados salvos com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>126</MSGNR>
+     <TEXT>O número de Ordem &amp;1 com Shift &amp;2 já existe</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>127</MSGNR>
+     <TEXT>Por favor, mantenha o número de dias na tabela constante.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>128</MSGNR>
+     <TEXT>Insira a Capacidade do campo de referência válida</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>129</MSGNR>
+     <TEXT>Manter todos os campos editáveis</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>130</MSGNR>
+     <TEXT>Nenhum registro foi encontrado para o pedido &amp;1 na tabela ZFMPROG_TALHAO.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>131</MSGNR>
+     <TEXT>Nenhum registro de dosagem foi encontrado para o pedido &amp;1 na tabela.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>132</MSGNR>
+     <TEXT>Não há número de tanques especificado para pedido &amp;1 na tabela ZFMACVLCL.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>133</MSGNR>
+     <TEXT>Nenhuma fazenda para o crachá selecionado</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>136</MSGNR>
+     <TEXT>Verificar os parâmetros Data Inicial e a Data Final</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>137</MSGNR>
+     <TEXT>Verificar o parâmetro Rcnum (Receita)</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>140</MSGNR>
+     <TEXT>Informe a Data</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>141</MSGNR>
+     <TEXT>Informe a Unidade de Medida</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>143</MSGNR>
+     <TEXT>Verificar Coluna &amp;1 Linha &amp;2 do Arquivo Excel.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>144</MSGNR>
+     <TEXT>Código do Terreno não informado.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>145</MSGNR>
+     <TEXT>Não existem atributos válidos no arquivo Excel.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>147</MSGNR>
+     <TEXT>Não há terrenos para determinada fazenda</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>148</MSGNR>
+     <TEXT>Houve problemas na determinação do terreno. Verifique as tabelas Z.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>155</MSGNR>
+     <TEXT>Informe o Documento de Medição</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>156</MSGNR>
+     <TEXT>Documento de Medição Inválido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>157</MSGNR>
+     <TEXT>Documento de Medição &amp;1 existente para &amp;2 e &amp;3</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>161</MSGNR>
+     <TEXT>Favor informar o Grupo de Medições</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>162</MSGNR>
+     <TEXT>Nenhum empregado mantido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>163</MSGNR>
+     <TEXT>Digite um crachá válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>164</MSGNR>
+     <TEXT>Digite fornecedor válido</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>165</MSGNR>
+     <TEXT>Insira uma fazenda válida</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>166</MSGNR>
+     <TEXT>Digite uma frota válida</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>167</MSGNR>
+     <TEXT>Nenhuma atividade mantida para máquinas</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>168</MSGNR>
+     <TEXT>Adicionar Pessoal</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>169</MSGNR>
+     <TEXT>A rota &amp;1 já existe e não será criada novamente. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>170</MSGNR>
+     <TEXT>A descrição da rota &amp;1 foi criada com sucesso. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>171</MSGNR>
+     <TEXT>A descrição da rota &amp;1 foi modificada com sucesso. Linha 2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>172</MSGNR>
+     <TEXT>A rota &amp;1 foi criada com sucesso. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>173</MSGNR>
+     <TEXT>O terreno &amp;1 não existe. Valide. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>174</MSGNR>
+     <TEXT>Terreno &amp;1 para Rota &amp;2 foi adicionado com sucesso. Linha &amp;3</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>175</MSGNR>
+     <TEXT>O Terrain &amp;1 já existe na rota. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>176</MSGNR>
+     <TEXT>O número do funcionário &amp;1 está inativo no sistema. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>177</MSGNR>
+     <TEXT>O número do funcionário &amp;1 foi adicionado com sucesso. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>178</MSGNR>
+     <TEXT>O número do funcionário &amp;1 não existe no sistema. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>179</MSGNR>
+     <TEXT>O número do fornecedor &amp;1 está definido para exclusão no sistema. Linh &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>180</MSGNR>
+     <TEXT>O número do fornecedor &amp;1 foi adicionado com sucesso. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>181</MSGNR>
+     <TEXT>O número do fornecedor &amp;1 não existe no sistema. Linha &amp;2</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>182</MSGNR>
+     <TEXT>Local do arquivo: &amp;1 &amp;2 &amp;3</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>183</MSGNR>
+     <TEXT>Modo de execução: &amp;1 &amp;2 &amp;3</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>184</MSGNR>
+     <TEXT>Nenhum centro de trabalho para determinada seleção</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>186</MSGNR>
+     <TEXT>A realização não existe com a chave fornecida</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>188</MSGNR>
+     <TEXT>Registros duplicados na Folha de realização &amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>189</MSGNR>
+     <TEXT>Aprovadores Não encontrados para as regiões selecionadas.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>197</MSGNR>
+     <TEXT>Lote &amp;1 criado com sucesso</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>198</MSGNR>
+     <TEXT>Já existe documento de medição criado para a Safra/florada.</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>199</MSGNR>
+     <TEXT>Não existe documento de medição de estimativa criado para a safra/florada</TEXT>
+    </item>
+    <item>
+     <SPRSL>P</SPRSL>
+     <MSGNR>200</MSGNR>
+     <TEXT>Já existe documento de medição criado para a safra.</TEXT>
+    </item>
+   </T100_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

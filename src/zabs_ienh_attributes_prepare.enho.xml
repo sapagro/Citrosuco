@@ -1,0 +1,671 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Attributes Prepare</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\IC:/AGRI/LGLMDMF0A\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_ATTR_MASS_DATA_PREPARE</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_attr_mass_data_prepare.</item>
+      <item/>
+      <item>  DATA: lt_terrain         TYPE /agri/t_glfl_doc,</item>
+      <item>        lt_iflotx          TYPE /agri/t_gliflotx,</item>
+      <item>        lt_ihpa            TYPE /agri/t_glihpa,</item>
+      <item>        lt_ihpa_superior   TYPE /agri/t_glihpa,</item>
+      <item>        lt_flppl           TYPE /agri/t_glflppl,</item>
+      <item>        lt_flatg           TYPE /agri/t_glflatg,</item>
+      <item>        lt_flatv           TYPE /agri/t_glflatv,</item>
+      <item>        lt_flcma           TYPE /agri/t_glflcma,</item>
+      <item>        lt_flown           TYPE /agri/t_glflown,</item>
+      <item>        lt_flos            TYPE /agri/t_glflos,</item>
+      <item>        lt_additional_data TYPE zabs_tty_additional_data,</item>
+      <item>        lt_doc_medicao     TYPE zabs_tty_doc_medicao,</item>
+      <item>        lrt_grupo          TYPE RANGE OF /agri/glmpgrp,</item>
+      <item>        lrt_mdocm          TYPE RANGE OF /agri/glmdocm,</item>
+      <item>        lrt_vdate          TYPE RANGE OF /agri/gvdate,</item>
+      <item>        lwa_flhdr          TYPE /agri/s_glflot,</item>
+      <item>        lwa_adrc           TYPE /agri/s_gladrc,</item>
+      <item>        lwa_mdatv          TYPE /agri/s_glmdatv,</item>
+      <item>        lwa_athdr          LIKE LINE OF gt_athdr,</item>
+      <item>        lwa_mdsnp          TYPE /agri/s_glmdsnp,</item>
+      <item>        lwa_mddoc          TYPE /agri/s_glmd_doc,</item>
+      <item>        lwa_attr_values    TYPE /agri/s_glmdatv_fcat,</item>
+      <item>        lv_qtde_plantas    TYPE menge_d,</item>
+      <item>        lv_florada         TYPE atwrt,</item>
+      <item>        lv_atwrt_tmp       TYPE atwrt,</item>
+      <item>        lv_lifnr           TYPE lifnr,</item>
+      <item>        lv_null_date       TYPE sydatum,</item>
+      <item>        lv_p16_0           TYPE p LENGTH 16 DECIMALS 0 VALUE IS INITIAL,</item>
+      <item>        lv_char_intnl      TYPE atinn,</item>
+      <item>        lv_char_extnl      TYPE atnam VALUE &apos;CIT-SAFRA&apos;,</item>
+      <item>        lv_terrain         TYPE /agri/gltplnr_fl,</item>
+      <item>        lv_safra_atwrt     TYPE atwrt,</item>
+      <item>        lv_safra_tela      TYPE atwrt,</item>
+      <item>        lv_superior        TYPE /agri/gltplma.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lrt_vdate&gt;  TYPE ANY TABLE,</item>
+      <item>                 &lt;lv_value&gt;   TYPE any,</item>
+      <item>                 &lt;lwa_mddata&gt; TYPE any.</item>
+      <item/>
+      <item>  ASSIGN (&apos;(/AGRI/GLMD_MASS_PROCESS)SO_VDATE[]&apos;) TO &lt;lrt_vdate&gt;.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lrt_vdate[] = &lt;lrt_vdate&gt;[].</item>
+      <item>    READ TABLE lrt_vdate INTO DATA(lrs_vdate) INDEX 1.</item>
+      <item>    IF sy-subrc EQ 0</item>
+      <item>    AND lrs_vdate-low NE lv_null_date.</item>
+      <item>      SELECT *</item>
+      <item>        FROM zfmfpsafras</item>
+      <item>        INTO TABLE @DATA(lt_safras)</item>
+      <item>       WHERE tipo_safra   EQ &apos;T&apos;</item>
+      <item>         AND inicio_safra LE @lrs_vdate-low</item>
+      <item>         AND fim_safra    GE @lrs_vdate-low.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  READ TABLE lt_safras INTO DATA(ls_safra) INDEX 1.</item>
+      <item>  IF sy-subrc EQ 0.</item>
+      <item>    lv_safra_tela = ls_safra-ano_safra.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  gs_variables-data_changed = c_true.</item>
+      <item>  gs_variables-manual_changes = c_true.</item>
+      <item>  gs_variables-refresh_display_output_table = c_true.</item>
+      <item/>
+      <item>  PERFORM output_table_prepare CHANGING gt_fcat.</item>
+      <item/>
+      <item>  CHECK ref_grid_attributes_mass IS INITIAL OR</item>
+      <item>        gs_variables-refresh_attributes_mass_grid IS NOT INITIAL.</item>
+      <item/>
+      <item>  REFRESH: &lt;gt_mddata&gt;, &lt;gt_mddata_old&gt;.</item>
+      <item/>
+      <item>*-- BOC-T_T.KONNO</item>
+      <item>*-- Conversion from external characteristic name to internal</item>
+      <item>  CALL FUNCTION &apos;CONVERSION_EXIT_ATINN_INPUT&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      input  = lv_char_extnl</item>
+      <item>    IMPORTING</item>
+      <item>      output = lv_char_intnl.</item>
+      <item/>
+      <item>  IF gt_mdsnp[] IS NOT INITIAL.</item>
+      <item>    DO 2 TIMES.</item>
+      <item>      DATA(lv_index) = sy-index.</item>
+      <item>      INSERT INITIAL LINE INTO TABLE lrt_grupo</item>
+      <item>        ASSIGNING FIELD-SYMBOL(&lt;lrs_grupo&gt;).</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lrs_grupo&gt; = &apos;IEQ&apos;.</item>
+      <item>        CASE lv_index.</item>
+      <item>          WHEN 1.</item>
+      <item>            &lt;lrs_grupo&gt;-low = &apos;FAZ-ESTIMATIVA&apos;.</item>
+      <item>          WHEN 2.</item>
+      <item>            &lt;lrs_grupo&gt;-low = &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item>        ENDCASE.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDDO.</item>
+      <item/>
+      <item>*--Fetching Measurement document data based on terrains</item>
+      <item>    SELECT h~mdocm, h~mdtyp, h~tplnr_fl,</item>
+      <item>           h~contr, h~mpgrp, h~kfrst, h~stsma,</item>
+      <item>           h~objnr, h~ustat, h~canceled, v~atzhl,</item>
+      <item>           v~atwrt, v~atflv, c~atinn, c~atnam</item>
+      <item>      FROM /agri/glmdhdr AS h</item>
+      <item>      INNER JOIN /agri/glmdatv AS v</item>
+      <item>      ON v~mdocm EQ h~mdocm</item>
+      <item>      INNER JOIN cabn AS c</item>
+      <item>      ON c~atinn EQ v~atinn</item>
+      <item>      INTO TABLE @DATA(lt_mdhdr)</item>
+      <item>      FOR ALL ENTRIES IN @gt_mdsnp</item>
+      <item>     WHERE h~mdtyp    EQ &apos;ZPTA&apos;</item>
+      <item>       AND h~aslvl    EQ &apos;A&apos;</item>
+      <item>       AND h~tplnr_fl EQ @gt_mdsnp-tplnr_fl</item>
+      <item>       AND h~contr    EQ @gt_mdsnp-contr</item>
+      <item>       AND h~mpgrp    IN @lrt_grupo[]</item>
+      <item>*       AND h~kfrst    EQ @abap_false</item>
+      <item>       AND h~canceled EQ @abap_false.</item>
+      <item/>
+      <item>    IF gv_safra_x IS NOT INITIAL</item>
+      <item>    AND fcode EQ &apos;SEASON&apos;.</item>
+      <item>      lv_safra_atwrt = gv_safra_x.</item>
+      <item/>
+      <item>      LOOP AT gt_mddoc ASSIGNING FIELD-SYMBOL(&lt;lwa_mddoc&gt;).</item>
+      <item>        READ TABLE &lt;lwa_mddoc&gt;-x-mdatv ASSIGNING FIELD-SYMBOL(&lt;lwa_mdatv&gt;)</item>
+      <item>          WITH KEY atinn = lv_char_intnl.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lwa_mdatv&gt;-atwrt = gv_safra_x.</item>
+      <item>        ELSE.</item>
+      <item>          INSERT INITIAL LINE INTO TABLE &lt;lwa_mddoc&gt;-x-mdatv</item>
+      <item>            ASSIGNING &lt;lwa_mdatv&gt;.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            READ TABLE gt_athdr INTO lwa_athdr</item>
+      <item>              WITH KEY atinn = lv_char_intnl BINARY SEARCH.</item>
+      <item>            IF sy-subrc EQ 0.</item>
+      <item>              MOVE-CORRESPONDING lwa_athdr TO &lt;lwa_mdatv&gt;.</item>
+      <item>              &lt;lwa_mdatv&gt;-mdocm = &lt;lwa_mddoc&gt;-mdocm.</item>
+      <item>              &lt;lwa_mdatv&gt;-atwrt = gv_safra_x.</item>
+      <item>              &lt;lwa_mdatv&gt;-updkz = c_updkz_new.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      DATA(lt_valida_safra) = lt_mdhdr[].</item>
+      <item>      DELETE lt_valida_safra WHERE atinn NE lv_char_intnl</item>
+      <item>                                OR atwrt NE lv_safra_atwrt.</item>
+      <item>      LOOP AT lt_valida_safra INTO DATA(lwa_valida_safra).</item>
+      <item>        INSERT INITIAL LINE INTO TABLE lrt_mdocm</item>
+      <item>          ASSIGNING FIELD-SYMBOL(&lt;lwa_mdocm&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lwa_mdocm&gt; = &apos;IEQ&apos;.</item>
+      <item>          &lt;lwa_mdocm&gt;-low = lwa_valida_safra-mdocm.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item>      IF lrt_mdocm[] IS NOT INITIAL.</item>
+      <item>*-- Fetching Measurement document data based on terrains</item>
+      <item>        SELECT h~mdocm, h~mdtyp, h~tplnr_fl,</item>
+      <item>               h~contr, h~mpgrp, h~kfrst, h~stsma,</item>
+      <item>               h~objnr, h~ustat, h~canceled, v~atzhl,</item>
+      <item>               v~atwrt, v~atflv, c~atinn, c~atnam</item>
+      <item>          FROM /agri/glmdhdr AS h</item>
+      <item>          INNER JOIN /agri/glmdatv AS v</item>
+      <item>          ON v~mdocm EQ h~mdocm</item>
+      <item>          INNER JOIN cabn AS c</item>
+      <item>          ON c~atinn EQ v~atinn</item>
+      <item>          INTO TABLE @lt_mdhdr</item>
+      <item>         WHERE h~mdocm IN @lrt_mdocm[].</item>
+      <item>      ELSE.</item>
+      <item>        REFRESH lt_mdhdr.</item>
+      <item>      ENDIF.</item>
+      <item>    ELSE.</item>
+      <item>      IF lv_safra_tela IS NOT INITIAL.</item>
+      <item>        DATA(lt_mdhdr_aux) = lt_mdhdr[].</item>
+      <item>        DELETE lt_mdhdr_aux WHERE atnam NE &apos;CIT-SAFRA&apos;.</item>
+      <item>        DELETE lt_mdhdr_aux WHERE atwrt NE lv_safra_tela.</item>
+      <item>        SORT lt_mdhdr_aux BY mdocm.</item>
+      <item/>
+      <item>        LOOP AT lt_mdhdr INTO DATA(ls_mdhdr).</item>
+      <item>          READ TABLE lt_mdhdr_aux INTO DATA(ls_mdhdr_aux)</item>
+      <item>            WITH KEY mdocm = ls_mdhdr-mdocm BINARY SEARCH.</item>
+      <item>          IF sy-subrc NE 0.</item>
+      <item>            DELETE lt_mdhdr WHERE mdocm = ls_mdhdr-mdocm.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    lt_mdhdr_aux[] = lt_mdhdr[].</item>
+      <item>    DELETE lt_mdhdr_aux WHERE atnam NE &apos;CIT-FLORADA&apos;.</item>
+      <item>    DELETE lt_mdhdr_aux WHERE atwrt IS INITIAL.</item>
+      <item>    SORT lt_mdhdr_aux BY atwrt    ASCENDING</item>
+      <item>                         tplnr_fl ASCENDING</item>
+      <item>                         mdocm    DESCENDING.</item>
+      <item>    DELETE ADJACENT DUPLICATES FROM lt_mdhdr_aux COMPARING atwrt tplnr_fl.</item>
+      <item>    DELETE lt_mdhdr WHERE atnam NE &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item>    SORT: lt_mdhdr BY mdocm,</item>
+      <item>          lt_mdhdr_aux BY tplnr_fl contr.</item>
+      <item>  ENDIF.</item>
+      <item>*-- EOC-T_T.KONNO</item>
+      <item/>
+      <item>  IF gt_mddoc IS NOT INITIAL.</item>
+      <item>    LOOP AT gt_mddoc INTO lwa_mddoc.</item>
+      <item>      APPEND INITIAL LINE TO &lt;gt_mddata&gt; ASSIGNING &lt;lwa_mddata&gt;.</item>
+      <item>      MOVE-CORRESPONDING lwa_mddoc-x-mdhdr TO &lt;lwa_mddata&gt;.</item>
+      <item/>
+      <item>      READ TABLE gt_gen_data_x ASSIGNING FIELD-SYMBOL(&lt;lwa_gen_data&gt;)</item>
+      <item>        WITH KEY tplnr_fl = lwa_mddoc-x-mdhdr-tplnr_fl</item>
+      <item>                 contr    = lwa_mddoc-x-mdhdr-contr.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        ASSIGN COMPONENT &apos;PLTXT&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO FIELD-SYMBOL(&lt;lv_field_value&gt;).</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-pltxt.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;PARTNER&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CONDENSE &lt;lwa_gen_data&gt;-partner NO-GAPS.</item>
+      <item>          DATA(lv_strlen) = STRLEN( &lt;lwa_gen_data&gt;-partner ).</item>
+      <item>          IF lv_strlen LE 10.</item>
+      <item>            lv_lifnr = &lt;lwa_gen_data&gt;-partner.</item>
+      <item>            CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_OUTPUT&apos;</item>
+      <item>              EXPORTING</item>
+      <item>                input  = lv_lifnr</item>
+      <item>              IMPORTING</item>
+      <item>                output = lv_lifnr.</item>
+      <item>            &lt;lv_field_value&gt; = lv_lifnr.</item>
+      <item>          ELSE.</item>
+      <item>            &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-partner.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;NAME1&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-name1.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;YMATNR&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-ymatnr.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;GYEAR&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-gyear.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;MAKTX&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-maktx.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;MENGE&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-menge.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>*        ASSIGN COMPONENT &apos;FLORADA1&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>*          TO &lt;lv_field_value&gt;.</item>
+      <item>*        IF sy-subrc EQ 0.</item>
+      <item>*          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-florada1.</item>
+      <item>*        ENDIF.</item>
+      <item>*</item>
+      <item>*        ASSIGN COMPONENT &apos;FLORADA2&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>*          TO &lt;lv_field_value&gt;.</item>
+      <item>*        IF sy-subrc EQ 0.</item>
+      <item>*          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-florada2.</item>
+      <item>*        ENDIF.</item>
+      <item>*</item>
+      <item>*        ASSIGN COMPONENT &apos;FLORADA3&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>*          TO &lt;lv_field_value&gt;.</item>
+      <item>*        IF sy-subrc EQ 0.</item>
+      <item>*          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-florada3.</item>
+      <item>*        ENDIF.</item>
+      <item>*</item>
+      <item>*        ASSIGN COMPONENT &apos;TOTAL&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>*          TO &lt;lv_field_value&gt;.</item>
+      <item>*        IF sy-subrc EQ 0.</item>
+      <item>*          &lt;lv_field_value&gt; = &lt;lwa_gen_data&gt;-total.</item>
+      <item>*        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;FLORADA1&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CLEAR &lt;lv_field_value&gt;.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;FLORADA2&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CLEAR &lt;lv_field_value&gt;.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;FLORADA3&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CLEAR &lt;lv_field_value&gt;.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        ASSIGN COMPONENT &apos;TOTAL&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>          TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CLEAR &lt;lv_field_value&gt;.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE lt_mdhdr_aux INTO DATA(lwa_mdhdr_aux)</item>
+      <item>          WITH KEY tplnr_fl = lwa_mddoc-x-mdhdr-tplnr_fl</item>
+      <item>                   contr    = lwa_mddoc-x-mdhdr-contr BINARY SEARCH.</item>
+      <item>          WHILE sy-subrc EQ 0.</item>
+      <item>            DATA(lv_tabix) = sy-tabix + 1.</item>
+      <item>            READ TABLE lt_mdhdr INTO DATA(lwa_mdhdr)</item>
+      <item>              WITH KEY mdocm = lwa_mdhdr_aux-mdocm BINARY SEARCH.</item>
+      <item>            IF sy-subrc EQ 0.</item>
+      <item>            CASE lwa_mdhdr_aux-atwrt.</item>
+      <item>              WHEN &apos;1&apos;.</item>
+      <item>                ASSIGN COMPONENT &apos;FLORADA1&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                  TO FIELD-SYMBOL(&lt;lv_florada&gt;).</item>
+      <item>                IF sy-subrc NE 0.</item>
+      <item>                  UNASSIGN &lt;lv_florada&gt;.</item>
+      <item>                ENDIF.</item>
+      <item>              WHEN &apos;2&apos;.</item>
+      <item>                ASSIGN COMPONENT &apos;FLORADA2&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                  TO &lt;lv_florada&gt;.</item>
+      <item>                IF sy-subrc NE 0.</item>
+      <item>                  UNASSIGN &lt;lv_florada&gt;.</item>
+      <item>                ENDIF.</item>
+      <item>              WHEN &apos;3&apos;.</item>
+      <item>                ASSIGN COMPONENT &apos;FLORADA3&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                  TO &lt;lv_florada&gt;.</item>
+      <item>                IF sy-subrc NE 0.</item>
+      <item>                  UNASSIGN &lt;lv_florada&gt;.</item>
+      <item>                ENDIF.</item>
+      <item>            ENDCASE.</item>
+      <item/>
+      <item>            IF &lt;lv_florada&gt; IS ASSIGNED.</item>
+      <item>              &lt;lv_florada&gt; = lwa_mdhdr-atflv.</item>
+      <item>              ASSIGN COMPONENT &apos;TOTAL&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                TO FIELD-SYMBOL(&lt;lv_total&gt;).</item>
+      <item>              IF sy-subrc EQ 0.</item>
+      <item>                ADD &lt;lv_florada&gt; TO &lt;lv_total&gt;.</item>
+      <item>              ENDIF.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item>          READ TABLE lt_mdhdr_aux INTO lwa_mdhdr_aux</item>
+      <item>            INDEX lv_tabix COMPARING tplnr_fl contr.</item>
+      <item>        ENDWHILE.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      LOOP AT gt_athdr INTO lwa_athdr.</item>
+      <item>        ASSIGN COMPONENT lwa_athdr-atnam OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                                         TO &lt;lv_value&gt;.</item>
+      <item>        CHECK sy-subrc EQ 0.</item>
+      <item>        CLEAR lwa_mdatv.</item>
+      <item>        READ TABLE lwa_mddoc-x-mdatv INTO lwa_mdatv</item>
+      <item>                                       WITH KEY atinn = lwa_athdr-atinn.</item>
+      <item>        PERFORM attribute_display_prepare USING lwa_athdr</item>
+      <item>                                                lwa_mdatv</item>
+      <item>                                       CHANGING lwa_attr_values.</item>
+      <item>        IF lwa_athdr-atfor EQ c_atfor-char.</item>
+      <item>          &lt;lv_value&gt; = lwa_attr_values-atwrt.</item>
+      <item>        ELSE.</item>
+      <item>          IF lwa_athdr-attab IS INITIAL</item>
+      <item>          AND lwa_athdr-atfel IS INITIAL.</item>
+      <item>            IF lwa_athdr-atfor NE c_atfor-date.</item>
+      <item>              &lt;lv_value&gt; = lwa_attr_values-atwrt.</item>
+      <item>            ELSE.</item>
+      <item>              CALL FUNCTION &apos;CTCV_CONVERT_FLOAT_TO_DATE&apos;</item>
+      <item>                EXPORTING</item>
+      <item>                  float = lwa_attr_values-atflv</item>
+      <item>                IMPORTING</item>
+      <item>                  date  = lv_atwrt_tmp.</item>
+      <item/>
+      <item>              &lt;lv_value&gt; = lv_atwrt_tmp.</item>
+      <item>            ENDIF.</item>
+      <item>          ELSE.</item>
+      <item>            IF lwa_athdr-atfor NE c_atfor-date.</item>
+      <item>              &lt;lv_value&gt; = lwa_attr_values-atflv.</item>
+      <item>            ELSE.</item>
+      <item>              CALL FUNCTION &apos;CTCV_CONVERT_FLOAT_TO_DATE&apos;</item>
+      <item>                EXPORTING</item>
+      <item>                  float = lwa_attr_values-atflv</item>
+      <item>                IMPORTING</item>
+      <item>                  date  = lv_atwrt_tmp.</item>
+      <item/>
+      <item>              &lt;lv_value&gt; = lv_atwrt_tmp.</item>
+      <item/>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        CLEAR: lwa_attr_values, lv_atwrt_tmp.</item>
+      <item>      ENDLOOP.</item>
+      <item>      PERFORM attr_mass_styles_prepare USING lwa_mddoc-x-mdhdr</item>
+      <item>                                       CHANGING &lt;lwa_mddata&gt;.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>  ELSE.</item>
+      <item/>
+      <item>    SORT gt_glflcma_x BY tplnr_fl contr.</item>
+      <item/>
+      <item>    LOOP AT gt_mdsnp INTO lwa_mdsnp.</item>
+      <item>      IF lv_terrain NE lwa_mdsnp-tplnr_fl</item>
+      <item>      AND lwa_mdsnp-tplnr_fl IS NOT INITIAL.</item>
+      <item>        REFRESH: lt_terrain, lt_iflotx, lt_ihpa, lt_flppl,</item>
+      <item>                 lt_flatg, lt_flatv, lt_flcma, lt_flown,</item>
+      <item>                 lt_flos, lt_additional_data, lt_doc_medicao.</item>
+      <item>        CLEAR: lwa_flhdr, lwa_adrc, lv_qtde_plantas.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;ZABS_TERRAIN_READ&apos;</item>
+      <item>          EXPORTING</item>
+      <item>            iv_terrain         = lwa_mdsnp-tplnr_fl</item>
+      <item>          IMPORTING</item>
+      <item>            et_terrain         = lt_terrain</item>
+      <item>            es_flhdr           = lwa_flhdr</item>
+      <item>            es_adrc            = lwa_adrc</item>
+      <item>            et_iflotx          = lt_iflotx</item>
+      <item>            et_ihpa            = lt_ihpa</item>
+      <item>            et_flppl           = lt_flppl</item>
+      <item>            et_flatg           = lt_flatg</item>
+      <item>            et_flatv           = lt_flatv</item>
+      <item>            et_flcma           = lt_flcma</item>
+      <item>            et_flown           = lt_flown</item>
+      <item>            et_flos            = lt_flos</item>
+      <item>            et_additional_data = lt_additional_data</item>
+      <item>            et_doc_medicao     = lt_doc_medicao</item>
+      <item>            ev_qtde_plantas    = lv_qtde_plantas.</item>
+      <item/>
+      <item>        IF lv_superior NE lwa_flhdr-tplma.</item>
+      <item>          REFRESH lt_ihpa_superior.</item>
+      <item>          lv_superior = lwa_flhdr-tplma.</item>
+      <item/>
+      <item>          CALL FUNCTION &apos;ZABS_TERRAIN_READ&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              iv_terrain = lwa_flhdr-tplma</item>
+      <item>            IMPORTING</item>
+      <item>              et_ihpa    = lt_ihpa_superior.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      APPEND INITIAL LINE TO &lt;gt_mddata&gt; ASSIGNING &lt;lwa_mddata&gt;.</item>
+      <item>      MOVE-CORRESPONDING lwa_mdsnp TO &lt;lwa_mddata&gt;.</item>
+      <item/>
+      <item>      READ TABLE lt_mdhdr_aux INTO lwa_mdhdr_aux</item>
+      <item>        WITH KEY tplnr_fl = lwa_mdsnp-tplnr_fl</item>
+      <item>                 contr    = lwa_mdsnp-contr BINARY SEARCH.</item>
+      <item>      WHILE sy-subrc EQ 0.</item>
+      <item>        lv_tabix = sy-tabix + 1.</item>
+      <item>        READ TABLE lt_mdhdr INTO lwa_mdhdr</item>
+      <item>          WITH KEY mdocm = lwa_mdhdr_aux-mdocm BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CASE lwa_mdhdr_aux-atwrt.</item>
+      <item>            WHEN &apos;1&apos;.</item>
+      <item>              ASSIGN COMPONENT &apos;FLORADA1&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                TO &lt;lv_florada&gt;.</item>
+      <item>              IF sy-subrc NE 0.</item>
+      <item>                UNASSIGN &lt;lv_florada&gt;.</item>
+      <item>              ENDIF.</item>
+      <item>            WHEN &apos;2&apos;.</item>
+      <item>              ASSIGN COMPONENT &apos;FLORADA2&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                TO &lt;lv_florada&gt;.</item>
+      <item>              IF sy-subrc NE 0.</item>
+      <item>                UNASSIGN &lt;lv_florada&gt;.</item>
+      <item>              ENDIF.</item>
+      <item>            WHEN &apos;3&apos;.</item>
+      <item>              ASSIGN COMPONENT &apos;FLORADA3&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>                TO &lt;lv_florada&gt;.</item>
+      <item>              IF sy-subrc NE 0.</item>
+      <item>                UNASSIGN &lt;lv_florada&gt;.</item>
+      <item>              ENDIF.</item>
+      <item>          ENDCASE.</item>
+      <item/>
+      <item>          IF &lt;lv_florada&gt; IS ASSIGNED.</item>
+      <item>            &lt;lv_florada&gt; = lwa_mdhdr-atflv.</item>
+      <item>            ASSIGN COMPONENT &apos;TOTAL&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>              TO &lt;lv_total&gt;.</item>
+      <item>            IF sy-subrc EQ 0.</item>
+      <item>              ADD &lt;lv_florada&gt; TO &lt;lv_total&gt;.</item>
+      <item>            ENDIF.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>        READ TABLE lt_mdhdr_aux INTO lwa_mdhdr_aux</item>
+      <item>          INDEX lv_tabix COMPARING tplnr_fl contr.</item>
+      <item>      ENDWHILE.</item>
+      <item/>
+      <item>      ASSIGN COMPONENT &apos;PLTXT&apos; OF STRUCTURE &lt;lwa_mddata&gt;</item>
+      <item>        TO &lt;lv_field_value&gt;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lv_field_value&gt; = lwa_flhdr-pltxt.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE lt_ihpa_superior INTO DATA(lwa_ihpa)</item>
+      <item>        WITH KEY parvw = &apos;LF&apos;. &quot;Parceiro FO</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        ASSIGN COMPONENT &apos;PARTNER&apos; OF STRUCTURE &lt;lwa_mddata&gt; TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_OUTPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = lwa_ihpa-lifnr</item>
+      <item>            IMPORTING</item>
+      <item>              output = lwa_ihpa-lifnr.</item>
+      <item/>
+      <item>          &lt;lv_field_value&gt; = lwa_ihpa-lifnr.</item>
+      <item>        ENDIF.</item>
+      <item>        ASSIGN COMPONENT &apos;NAME1&apos; OF STRUCTURE &lt;lwa_mddata&gt; TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = lwa_ihpa-name.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      READ TABLE gt_glflcma_x INTO DATA(lwa_glflcma_x)</item>
+      <item>        WITH KEY tplnr_fl = lwa_mdsnp-tplnr_fl</item>
+      <item>                 contr    = lwa_mdsnp-contr BINARY SEARCH.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        ASSIGN COMPONENT &apos;YMATNR&apos; OF STRUCTURE &lt;lwa_mddata&gt; TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = lwa_glflcma_x-ymatnr.</item>
+      <item>        ENDIF.</item>
+      <item>        ASSIGN COMPONENT &apos;GYEAR&apos; OF STRUCTURE &lt;lwa_mddata&gt; TO &lt;lv_field_value&gt;.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          &lt;lv_field_value&gt; = lwa_glflcma_x-datab(4).</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        READ TABLE gt_makt_x INTO DATA(lwa_makt_x)</item>
+      <item>          WITH KEY matnr = lwa_glflcma_x-ymatnr BINARY SEARCH.</item>
+      <item>        IF sy-subrc EQ 0.</item>
+      <item>          ASSIGN COMPONENT &apos;MAKTX&apos; OF STRUCTURE &lt;lwa_mddata&gt; TO &lt;lv_field_value&gt;.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            &lt;lv_field_value&gt; = lwa_makt_x-maktx.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      ASSIGN COMPONENT &apos;MENGE&apos; OF STRUCTURE &lt;lwa_mddata&gt; TO &lt;lv_field_value&gt;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lv_field_value&gt; = lv_qtde_plantas.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      PERFORM attr_mass_styles_prepare USING lwa_mddoc-x-mdhdr</item>
+      <item>                                 CHANGING &lt;lwa_mddata&gt;.</item>
+      <item>      lv_terrain = lwa_mdsnp-tplnr_fl.</item>
+      <item/>
+      <item>      INSERT INITIAL LINE INTO TABLE gt_gen_data_x ASSIGNING &lt;lwa_gen_data&gt;.</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        MOVE-CORRESPONDING &lt;lwa_mddata&gt; TO &lt;lwa_gen_data&gt;.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  APPEND LINES OF &lt;gt_mddata&gt; TO &lt;gt_mddata_old&gt;.</item>
+      <item>  SORT &lt;gt_mddata_old&gt; BY (&apos;MDOCM&apos;).</item>
+      <item/>
+      <item>  CLEAR: gv_answer_x, gv_safra_x.</item>
+      <item/>
+      <item>ENDFORM.</item>
+      <item/>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_ATTRIBUTES_PREPARE</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_attributes_prepare .</item>
+      <item/>
+      <item>  DATA: lwa_athdr       TYPE /agri/s_gathdr,</item>
+      <item>        lwa_mdatv       TYPE /agri/s_glmdatv,</item>
+      <item>        lwa_attr_values TYPE /agri/s_glmdatv_fcat,</item>
+      <item>        lwa_attr_groups LIKE LINE OF gt_attr_groups,</item>
+      <item>        lwa_ataoa       TYPE /agri/s_gataoa.</item>
+      <item/>
+      <item>  REFRESH: gt_attr_values.</item>
+      <item>  LOOP AT gt_attr_groups INTO lwa_attr_groups.</item>
+      <item>    LOOP AT lwa_attr_groups-ataoa INTO lwa_ataoa.</item>
+      <item/>
+      <item>      READ TABLE gt_athdr INTO lwa_athdr</item>
+      <item>                          WITH KEY atinn = lwa_ataoa-atinn</item>
+      <item>                        BINARY SEARCH.</item>
+      <item>      CHECK sy-subrc EQ 0 AND</item>
+      <item>            lwa_athdr-atvie IS INITIAL AND</item>
+      <item>            lwa_athdr-aprop NE c_attr_property-hide.</item>
+      <item/>
+      <item>      IF gs_variables-document_mode EQ c_mode_display.</item>
+      <item/>
+      <item>        READ TABLE gs_mddoc_infocus-x-mdatv INTO lwa_mdatv</item>
+      <item>              WITH KEY mdocm = gs_mddoc_infocus-x-mdhdr-mdocm</item>
+      <item>                       atinn = lwa_athdr-atinn</item>
+      <item>            BINARY SEARCH.</item>
+      <item>        CHECK sy-subrc EQ 0.</item>
+      <item>      ELSE.</item>
+      <item>        READ TABLE gs_mddoc_infocus-x-mdatv INTO lwa_mdatv</item>
+      <item>              WITH KEY mdocm = gs_mddoc_infocus-x-mdhdr-mdocm</item>
+      <item>                       atinn = lwa_athdr-atinn.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      PERFORM attribute_display_prepare USING lwa_athdr</item>
+      <item>                                              lwa_mdatv</item>
+      <item>                                     CHANGING lwa_attr_values.</item>
+      <item/>
+      <item>      APPEND lwa_attr_values TO gt_attr_values.</item>
+      <item>      CLEAR: lwa_attr_values, lwa_mdatv.</item>
+      <item/>
+      <item>    ENDLOOP.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>ENDFORM.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDA85B91BD91DF17DDF</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDA85B91BD91DF17DDF</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>028</LENGTH>
+       <TEXT>Attributes Prepare</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_ATTRIBUTES_PREPARE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDA85B91BD91DF17DDF</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

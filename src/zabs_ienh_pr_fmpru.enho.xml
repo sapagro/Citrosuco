@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Update Produce receipt</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/FMPRU</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/FMPRU</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLFMPRU</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLFMPRU</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLFMPRU\FO:TABLES_COMPLETE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>DATA:   ls_gtart_enhanc    TYPE /agri/fmgtart,</item>
+      <item>        ls_messages_enhanc TYPE /agri/s_gprolog.</item>
+      <item/>
+      <item>  FIELD-SYMBOLS: &lt;lwa_prdoc_enhanc&gt; TYPE /agri/s_fmpr_doc.</item>
+      <item/>
+      <item>  LOOP AT lt_prdoc ASSIGNING &lt;lwa_prdoc_enhanc&gt; WHERE updkz NE space.</item>
+      <item>    CLEAR lv_failed.</item>
+      <item>    CASE &lt;lwa_prdoc_enhanc&gt;-x-prhdr-updkz.</item>
+      <item>      WHEN c_updkz_new.</item>
+      <item/>
+      <item>* Get Document Class Settings</item>
+      <item>        PERFORM ticket_number_settings USING &lt;lwa_prdoc_enhanc&gt;-x-prhdr-bukrs</item>
+      <item>                                             &lt;lwa_prdoc_enhanc&gt;-x-prhdr-gtart</item>
+      <item>                                             &lt;lwa_prdoc_enhanc&gt;-x-prhdr-fldty</item>
+      <item>                                             &lt;lwa_prdoc_enhanc&gt;-x-prhdr-clref</item>
+      <item>                                    CHANGING ls_gtart_enhanc</item>
+      <item>                                             lv_failed.</item>
+      <item>        IF lv_failed EQ c_true.</item>
+      <item>          ls_messages_enhanc-msgid = &apos;/AGRI/FMPR&apos;.</item>
+      <item>          ls_messages_enhanc-msgno = &apos;163&apos;.</item>
+      <item>          ls_messages_enhanc-msgty = &apos;E&apos;.</item>
+      <item>          ls_messages_enhanc-msgv1 = &lt;lwa_prdoc_enhanc&gt;-x-prhdr-bukrs.</item>
+      <item>          ls_messages_enhanc-msgv2 = &lt;lwa_prdoc_enhanc&gt;-x-prhdr-gtart.</item>
+      <item>          ls_messages_enhanc-msgv3 = &lt;lwa_prdoc_enhanc&gt;-x-prhdr-fldty.</item>
+      <item>          ls_messages_enhanc-msgv4 = &lt;lwa_prdoc_enhanc&gt;-x-prhdr-clref.</item>
+      <item>          APPEND ls_messages_enhanc TO lt_messages.</item>
+      <item>          CLEAR: ls_messages_enhanc.</item>
+      <item>          CONTINUE.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item/>
+      <item>        if &lt;lwa_prdoc_enhanc&gt;-x-prhdr-CLTCKT = &apos;I&apos;.</item>
+      <item>        CLEAR: ls_gtart_enhanc-nrcase.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>* Determine Ticket Number</item>
+      <item>        CASE ls_gtart_enhanc-nrcase.</item>
+      <item>          WHEN space. &quot; Internal NR</item>
+      <item>            PERFORM ticket_number_generate USING ls_gtart_enhanc-numki</item>
+      <item>                                                 &lt;lwa_prdoc_enhanc&gt;-gjahr</item>
+      <item>                                        CHANGING &lt;lwa_prdoc_enhanc&gt;-prnum</item>
+      <item>                                                 lv_failed.</item>
+      <item>            IF lv_failed EQ c_true.</item>
+      <item>              ls_messages_enhanc-msgid = sy-msgid.</item>
+      <item>              ls_messages_enhanc-msgno = sy-msgno.</item>
+      <item>              ls_messages_enhanc-msgty = sy-msgty.</item>
+      <item>              ls_messages_enhanc-msgv1 = sy-msgv1.</item>
+      <item>              ls_messages_enhanc-msgv2 = sy-msgv2.</item>
+      <item>              ls_messages_enhanc-msgv3 = sy-msgv3.</item>
+      <item>              ls_messages_enhanc-msgv4 = sy-msgv4.</item>
+      <item>              APPEND ls_messages_enhanc TO lt_messages.</item>
+      <item>              CLEAR: ls_messages_enhanc.</item>
+      <item>              CONTINUE.</item>
+      <item>            ENDIF.</item>
+      <item>            PERFORM pr_enqueue USING &lt;lwa_prdoc_enhanc&gt;-prnum</item>
+      <item>                                     sy-subrc.</item>
+      <item>          WHEN &apos;E&apos;.   &quot; External NR</item>
+      <item>            PERFORM ticket_number_generate USING ls_gtart_enhanc-numke</item>
+      <item>                                                 &lt;lwa_prdoc_enhanc&gt;-gjahr</item>
+      <item>                                        CHANGING &lt;lwa_prdoc_enhanc&gt;-prnum</item>
+      <item>                                                 lv_failed.</item>
+      <item>            IF lv_failed EQ c_true.</item>
+      <item>              ls_messages_enhanc-msgid = sy-msgid.</item>
+      <item>              ls_messages_enhanc-msgno = sy-msgno.</item>
+      <item>              ls_messages_enhanc-msgty = sy-msgty.</item>
+      <item>              ls_messages_enhanc-msgv1 = sy-msgv1.</item>
+      <item>              ls_messages_enhanc-msgv2 = sy-msgv2.</item>
+      <item>              ls_messages_enhanc-msgv3 = sy-msgv3.</item>
+      <item>              ls_messages_enhanc-msgv4 = sy-msgv4.</item>
+      <item>              APPEND ls_messages_enhanc TO lt_messages.</item>
+      <item>              CLEAR: ls_messages_enhanc.</item>
+      <item>              CONTINUE.</item>
+      <item>            ENDIF.</item>
+      <item>            PERFORM pr_enqueue USING &lt;lwa_prdoc_enhanc&gt;-prnum</item>
+      <item>                                     sy-subrc.</item>
+      <item>          WHEN &apos;M&apos;.   &quot; Manual (Free Input)</item>
+      <item>* All validations was made in the workbench</item>
+      <item>        ENDCASE.</item>
+      <item/>
+      <item>      WHEN OTHERS.</item>
+      <item>        IF &lt;lwa_prdoc_enhanc&gt;-x-prhdr-updkz IS INITIAL AND NOT</item>
+      <item>           &lt;lwa_prdoc_enhanc&gt;-x IS INITIAL.</item>
+      <item>          &lt;lwa_prdoc_enhanc&gt;-x-prhdr-updkz = c_updkz_update.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>    ENDCASE.</item>
+      <item/>
+      <item>* Check ticket&apos;s batch</item>
+      <item>    IF &lt;lwa_prdoc_enhanc&gt;-x-prref IS INITIAL.</item>
+      <item>      PERFORM reference_batch_default USING &lt;lwa_prdoc_enhanc&gt;-prnum</item>
+      <item>                                            &lt;lwa_prdoc_enhanc&gt;-gjahr</item>
+      <item>                                            &lt;lwa_prdoc_enhanc&gt;-x-prhdr-updkz</item>
+      <item>                                   CHANGING &lt;lwa_prdoc_enhanc&gt;-x-prref-charg</item>
+      <item>                                            &lt;lwa_prdoc_enhanc&gt;-x-prref-updkz.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    PERFORM pr_number_replace USING &lt;lwa_prdoc_enhanc&gt;</item>
+      <item>                                    lref_text.</item>
+      <item/>
+      <item>    admin_data_fill &lt;lwa_prdoc_enhanc&gt;-x-prhdr.</item>
+      <item/>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  SORT lt_prdoc BY prnum.</item>
+      <item/>
+      <item>  EXIT.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81ED9BEE657577F89E95C</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81ED9BEE657577F89E95C</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>033</LENGTH>
+       <TEXT>Update Produce receipt</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_PR_FMPRU</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81ED9BEE657577F89E95C</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

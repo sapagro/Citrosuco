@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Schedule and Create Task Orders</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>CLAS</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/CL_FMSC_DPC_EXT</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>CLAS</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/CL_FMSC_DPC_EXT</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/CL_FMSC_DPC_EXT=========CP</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/CL_FMSC_DPC_EXT=========CP</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\TY:/AGRI/CL_FMSC_DPC_EXT\IN:/IWBEP/IF_MGW_APPL_SRV_RUNTIME\ME:CHANGESET_PROCESS\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>************************************************************************</item>
+      <item>*  Confidential property of Citrosuco                                  *</item>
+      <item>*  All Rights Reserved                                                 *</item>
+      <item>************************************************************************</item>
+      <item>* Enhancement Name  :  ZABS_EI_FMSC_ODATA                              *</item>
+      <item>* Class Name        :  /AGRI/CL_FMSC_DPC_EXT                           *</item>
+      <item>* Method Name       :  CHANGESET_PROCESS                               *</item>
+      <item>* Created By        :  Anuj Harshe                                     *</item>
+      <item>* Requested by      :  Jonathan Rubiano Leiton                         *</item>
+      <item>* Created on        :  21.10.2019                                      *</item>
+      <item>* TR                :  C4DK903073                                      *</item>
+      <item>* Version           :  001                                             *</item>
+      <item>* Description       :  When the orders are locked by other user,       *</item>
+      <item>*                      the system should display error message not     *</item>
+      <item>*                      info message.                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>*  Modification Log:                                                   *</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>* MOD#|Date(MM.DD.YYYY)|Changed By| TR#       |Description             *</item>
+      <item>*                                                                      *</item>
+      <item>*&amp;--------------------------------------------------------------------&amp;*</item>
+      <item/>
+      <item/>
+      <item>*-- Data Declarations</item>
+      <item>*-- Internal Tables</item>
+      <item>    DATA: lt_fpdoc1     TYPE /agri/t_fmfp_doc,</item>
+      <item>          lt_fpitm1     TYPE /agri/t_fmfpitm,</item>
+      <item>          lt_task_data1 TYPE /agri/cl_fmsc_mpc=&gt;tt_fmschdr,</item>
+      <item>          lt_messages1  TYPE /agri/t_gprolog.</item>
+      <item/>
+      <item>*--  Work Areas</item>
+      <item>    DATA: lwa_changeset_request1  TYPE /iwbep/if_mgw_appl_types=&gt;ty_s_changeset_request,</item>
+      <item>          lwa_changeset_response1 TYPE /iwbep/if_mgw_appl_types=&gt;ty_s_changeset_response,</item>
+      <item>          lwa_fpdoc1              TYPE /agri/s_fmfp_doc,</item>
+      <item>          lwa_fpitm1              TYPE /agri/s_fmfpitm,</item>
+      <item>          ls_message              TYPE /agri/s_gprolog,</item>
+      <item>          lwa_task_data1          TYPE /agri/cl_fmsc_mpc=&gt;ts_fmschdr,</item>
+      <item>          lo_msg_container1       TYPE REF TO /iwbep/if_message_container,</item>
+      <item>          lref_update_context1    TYPE REF TO /iwbep/if_mgw_req_entity_u.</item>
+      <item/>
+      <item>*-- Variables</item>
+      <item>    DATA: lv_entity_type1 TYPE string,</item>
+      <item>          lv_msgno1       TYPE symsgno,</item>
+      <item>          lv_cprog_http1  TYPE syst-cprog,</item>
+      <item>          lv_msg_target1  TYPE /iwbep/sup_mc_message_target, &quot;bapi_msg,</item>
+      <item>          lv_cprog1       TYPE syst-cprog VALUE &apos;/AGRI/FMFP_CREATE_TASKORDER&apos;.</item>
+      <item/>
+      <item>    lo_msg_container1 = mo_context-&gt;get_message_container( ).</item>
+      <item/>
+      <item>*** Data Process</item>
+      <item>    LOOP AT it_changeset_request INTO lwa_changeset_request1.</item>
+      <item>      CLEAR lv_entity_type1.</item>
+      <item>      lref_update_context1 ?= lwa_changeset_request1-request_context.</item>
+      <item>      lv_entity_type1 = lref_update_context1-&gt;get_entity_type_name( ).</item>
+      <item/>
+      <item>      IF NOT ( lv_entity_type1  EQ  &apos;FmscHdr&apos;).</item>
+      <item/>
+      <item>        RAISE EXCEPTION TYPE /iwbep/cx_mgw_tech_exception</item>
+      <item>          EXPORTING</item>
+      <item>            textid      = /iwbep/cx_mgw_tech_exception=&gt;operation_not_supported</item>
+      <item>            operation   = &apos;UPDATE_ENTITY&apos;</item>
+      <item>            entity_type = lv_entity_type1.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      lwa_changeset_response1-operation_no = lwa_changeset_request1-operation_no.</item>
+      <item/>
+      <item>      CASE lv_entity_type1.</item>
+      <item>        WHEN &apos;FmscHdr&apos;.</item>
+      <item>          lwa_changeset_request1-entry_provider-&gt;read_entry_data(   &quot;#EC CI_FLDEXT_OK</item>
+      <item>                                          IMPORTING es_data = lwa_task_data1 ).</item>
+      <item/>
+      <item>          IF lwa_task_data1 IS NOT INITIAL.</item>
+      <item>            APPEND lwa_task_data1 TO lt_task_data1.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          copy_data_to_ref( EXPORTING is_data = lwa_task_data1  &quot;#EC CI_FLDEXT_OK</item>
+      <item>                           CHANGING  cr_data = lwa_changeset_response1-entity_data ).</item>
+      <item>          CLEAR:lwa_task_data1.</item>
+      <item>        WHEN OTHERS.</item>
+      <item>      ENDCASE.</item>
+      <item/>
+      <item>      INSERT lwa_changeset_response1 INTO TABLE ct_changeset_response.</item>
+      <item>    ENDLOOP.</item>
+      <item/>
+      <item>    IF lt_task_data1 IS NOT INITIAL.</item>
+      <item>      LOOP AT lt_task_data1 INTO lwa_task_data1.</item>
+      <item>        IF lwa_task_data1-aufnr IS NOT INITIAL.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ALPHA_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = lwa_task_data1-aufnr</item>
+      <item>            IMPORTING</item>
+      <item>              output = lwa_task_data1-aufnr.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_task_data1-meinh IS NOT INITIAL.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_CUNIT_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input          = lwa_task_data1-meinh</item>
+      <item>              language       = sy-langu</item>
+      <item>            IMPORTING</item>
+      <item>              output         = lwa_task_data1-meinh</item>
+      <item>            EXCEPTIONS</item>
+      <item>              unit_not_found = 1</item>
+      <item>              OTHERS         = 2.</item>
+      <item>          IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_task_data1-tplnr_fl IS NOT INITIAL.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ABSFL_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input      = lwa_task_data1-tplnr_fl</item>
+      <item>            IMPORTING</item>
+      <item>              output     = lwa_task_data1-tplnr_fl</item>
+      <item>            EXCEPTIONS</item>
+      <item>              not_found  = 1</item>
+      <item>              not_active = 2</item>
+      <item>              OTHERS     = 3.</item>
+      <item>          IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>          ENDIF.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>        IF lwa_task_data1-matnr IS NOT INITIAL.</item>
+      <item>          CALL FUNCTION &apos;/AGRI/G_CONV_EXIT_MATN1_INPUT&apos;  &quot;#EC CI_FLDEXT_OK</item>
+      <item>            EXPORTING</item>
+      <item>              i_input  = lwa_task_data1-matnr</item>
+      <item>            IMPORTING</item>
+      <item>              e_output = lwa_task_data1-matnr.</item>
+      <item>        ENDIF.</item>
+      <item/>
+      <item>***        IF lwa_task_data-sappl NE c_special_appl-chemical.</item>
+      <item>        MOVE-CORRESPONDING lwa_task_data1 TO lwa_fpitm1.</item>
+      <item>        APPEND lwa_fpitm1 TO lt_fpitm1.</item>
+      <item>        CLEAR:lwa_fpitm1,lwa_task_data1.</item>
+      <item>***        ENDIF.</item>
+      <item>      ENDLOOP.</item>
+      <item/>
+      <item/>
+      <item>      IF lt_fpitm1 IS NOT INITIAL.</item>
+      <item>        lv_cprog_http1 = sy-cprog.</item>
+      <item>        sy-cprog = lv_cprog1.</item>
+      <item/>
+      <item>        CALL FUNCTION &apos;/AGRI/FMFP_TASK_ORDER_CREATE&apos;</item>
+      <item>          EXPORTING</item>
+      <item>*           I_SAVE_MESSAGES   = &apos; &apos;</item>
+      <item>*           i_commit_work     = &apos;X&apos;</item>
+      <item>            it_fpitm          = lt_fpitm1</item>
+      <item>          IMPORTING</item>
+      <item>            et_todoc          = lt_fpdoc1</item>
+      <item>            et_messages       = lt_messages1</item>
+      <item>          EXCEPTIONS</item>
+      <item>            inconsistent_data = 1</item>
+      <item>            no_data           = 2</item>
+      <item>            OTHERS            = 3.</item>
+      <item>        IF sy-subrc &lt;&gt; 0.</item>
+      <item>* Implement suitable error handling here</item>
+      <item>        ENDIF.</item>
+      <item>        sy-cprog = lv_cprog_http1.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item/>
+      <item>      IF lt_messages1 IS NOT INITIAL.</item>
+      <item>        LOOP AT lt_messages1 INTO ls_message.</item>
+      <item>          CLEAR:lv_msgno1.</item>
+      <item>          lv_msgno1 = ls_message-msgno.</item>
+      <item>          lv_msg_target1 = ls_message-context.</item>
+      <item/>
+      <item>          IF ls_message-msgID = &apos;/AGRI/FMFP&apos; AND ls_message-msgno = &apos;037&apos;.</item>
+      <item>            ls_message-msgty = &apos;E&apos;.</item>
+      <item>          ENDIF.</item>
+      <item/>
+      <item>          lo_msg_container1-&gt;add_message(</item>
+      <item>          EXPORTING iv_msg_type               = ls_message-msgty</item>
+      <item>                    iv_msg_id                 = ls_message-msgid</item>
+      <item>                    iv_msg_number             = lv_msgno1</item>
+      <item>                    iv_msg_v1                 = ls_message-msgv1</item>
+      <item>                    iv_msg_v2                 = ls_message-msgv2</item>
+      <item>                    iv_msg_v3                 = ls_message-msgv3</item>
+      <item>                    iv_msg_v4                 = ls_message-msgv4</item>
+      <item>                    iv_message_target         = lv_msg_target1</item>
+      <item>                    iv_add_to_response_header = abap_true ).</item>
+      <item>        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>RETURN.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EE9BCFE4FF8B2F29E5A</CONCEPT>
+      <CREA_LAN>E</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EE9BCFE4FF8B2F29E5A</CONCEPT>
+       <LANGU>E</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>047</LENGTH>
+       <TEXT>Schedule and Create Task Orders</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_EI_FMSC_ODATA</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EE9BCFE4FF8B2F29E5A</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

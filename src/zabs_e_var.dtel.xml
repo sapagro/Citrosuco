@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZABS_E_VAR</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <HEADLEN>30</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>30</SCRLEN3>
+    <DDTEXT>Formula Variable</DDTEXT>
+    <REPTEXT>Formula Variable</REPTEXT>
+    <SCRTEXT_S>Form Varia</SCRTEXT_S>
+    <SCRTEXT_M>Formula Variable</SCRTEXT_M>
+    <SCRTEXT_L>Formula Variable</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000050</LENG>
+    <OUTPUTLEN>000050</OUTPUTLEN>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>P</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>P</DDLANGUAGE>
+     <DDTEXT>Variável de fórmula</DDTEXT>
+     <REPTEXT>Variável de fórmula</REPTEXT>
+     <SCRTEXT_S>Var fórmul</SCRTEXT_S>
+     <SCRTEXT_M>Variável de fórmula</SCRTEXT_M>
+     <SCRTEXT_L>Variável de fórmula</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

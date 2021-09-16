@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Measurement Document Save</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>/AGRI/GLMDM</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>/AGRI/GLMDM</ORG_MAIN_NAME>
+    <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>/AGRI/SAPLGLMDM</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:/AGRI/SAPLGLMDM\IC:/AGRI/LGLMDMF0M\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>*</item>
+      <item>FORM zabs_mddoc_infocus_save CHANGING lt_messages TYPE /agri/t_gprolog</item>
+      <item>                                      lv_subrc    TYPE sy-subrc</item>
+      <item>                                      lt_mddoc    TYPE /agri/t_glmd_doc.</item>
+      <item/>
+      <item>  TYPES: BEGIN OF ly_atributos_x,</item>
+      <item>           safra   TYPE atinn,</item>
+      <item>           florada TYPE atinn,</item>
+      <item>         END OF ly_atributos_x.</item>
+      <item/>
+      <item>  DATA: lrt_atinn_x  TYPE RANGE OF atinn,</item>
+      <item>        ls_message   TYPE /agri/s_gprolog,</item>
+      <item>        ls_atributos TYPE ly_atributos_x.</item>
+      <item/>
+      <item>  PERFORM document_check USING c_true</item>
+      <item>                      CHANGING lv_subrc.</item>
+      <item>  IF lv_subrc NE 0.</item>
+      <item>    EXIT.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>*-- BOC-T_T.KONNO-04.16.21</item>
+      <item>  DATA(lv_save_x) = abap_true.</item>
+      <item/>
+      <item>  IF gs_mddoc_infocus-x-mdhdr-updkz EQ &apos;I&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mdtyp EQ &apos;ZTYP&apos;</item>
+      <item>  AND gs_mddoc_infocus-x-mdhdr-mpgrp EQ &apos;FAZ-COMPLEXIDADE&apos;.</item>
+      <item>    lv_save_x = abap_false.</item>
+      <item/>
+      <item>    DO 2 TIMES.</item>
+      <item>      DATA(lv_index) = sy-index.</item>
+      <item/>
+      <item>      INSERT INITIAL LINE INTO table lrt_atinn_x</item>
+      <item>        ASSIGNING FIELD-SYMBOL(&lt;lrs_atinn_x&gt;).</item>
+      <item>      IF sy-subrc EQ 0.</item>
+      <item>        &lt;lrs_atinn_x&gt; = &apos;IEQ&apos;.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      CASE lv_index.</item>
+      <item>        WHEN 1.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ATINN_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = &apos;CIT-SAFRA&apos;</item>
+      <item>            IMPORTING</item>
+      <item>              output = ls_atributos-safra.</item>
+      <item/>
+      <item>          IF &lt;lrs_atinn_x&gt; IS ASSIGNED.</item>
+      <item>            &lt;lrs_atinn_x&gt;-low = ls_atributos-safra.</item>
+      <item>          ENDIF.</item>
+      <item>        WHEN 2.</item>
+      <item>          CALL FUNCTION &apos;CONVERSION_EXIT_ATINN_INPUT&apos;</item>
+      <item>            EXPORTING</item>
+      <item>              input  = &apos;CIT-FLORADA&apos;</item>
+      <item>            IMPORTING</item>
+      <item>              output = ls_atributos-florada.</item>
+      <item/>
+      <item>          IF &lt;lrs_atinn_x&gt; IS ASSIGNED.</item>
+      <item>            &lt;lrs_atinn_x&gt;-low = ls_atributos-florada.</item>
+      <item>          ENDIF.</item>
+      <item>      ENDCASE.</item>
+      <item>    ENDDO.</item>
+      <item/>
+      <item>    SELECT h~mdocm, h~mdtyp, h~aslvl, h~tplnr_fl,</item>
+      <item>           h~contr, h~cmnum, h~equnr, h~mpgrp,</item>
+      <item>           h~mdate, h~mtime, v~atzhl, v~atwrt, v~atflv,</item>
+      <item>           c~atinn, q~value AS atinn_out, c~atnam</item>
+      <item>      INTO TABLE @DATA(lt_glmdatv_x)</item>
+      <item>      FROM /agri/glmdhdr AS h</item>
+      <item>      INNER JOIN /agri/glmdatv AS v</item>
+      <item>      ON v~mdocm EQ h~mdocm</item>
+      <item>      INNER JOIN cabn AS c</item>
+      <item>      ON c~atinn EQ v~atinn</item>
+      <item>      LEFT OUTER JOIN /agri/fm_qmsmpl AS q</item>
+      <item>      ON q~datum EQ c~adatu &quot;creates field atinn_out char40</item>
+      <item>     WHERE h~mdtyp    EQ &apos;ZPTA&apos; &quot;Medições ao nível de safra</item>
+      <item>       AND h~tplnr_fl EQ @gs_mddoc_infocus-x-mdhdr-tplnr_fl</item>
+      <item>       AND h~mpgrp    EQ &apos;FAZ-ESTIMATIVA&apos;</item>
+      <item>       AND h~kfrst    EQ @/agri/cl_fmpr_process_ticket=&gt;mc_kfrst</item>
+      <item>       AND h~canceled EQ @abap_false</item>
+      <item>       AND v~atinn    IN @lrt_atinn_x[].</item>
+      <item/>
+      <item>*    IF 1 = 2.</item>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO DATA(ls_safra_new)</item>
+      <item>        WITH KEY atinn = ls_atributos-safra.</item>
+      <item/>
+      <item>      READ TABLE gs_mddoc_infocus-x-mdatv INTO DATA(ls_florada_new)</item>
+      <item>        WITH KEY atinn = ls_atributos-florada.</item>
+      <item/>
+      <item>      IF ls_safra_new-atwrt IS NOT INITIAL</item>
+      <item>      AND ls_florada_new-atwrt IS NOT INITIAL.</item>
+      <item>        DATA(lt_safras_x) = lt_glmdatv_x[].</item>
+      <item>        DELETE lt_safras_x WHERE atinn NE ls_atributos-safra</item>
+      <item>                              OR atwrt NE ls_safra_new-atwrt.</item>
+      <item>        DATA(lt_floradas_x) = lt_glmdatv_x[].</item>
+      <item>        DELETE lt_floradas_x WHERE atinn NE ls_atributos-florada</item>
+      <item>                                OR atwrt NE ls_florada_new-atwrt.</item>
+      <item/>
+      <item>        SORT: lt_safras_x BY mdocm,</item>
+      <item>              lt_floradas_x BY mdocm.</item>
+      <item/>
+      <item>        LOOP AT lt_safras_x INTO DATA(ls_safra_x).</item>
+      <item>          READ TABLE lt_floradas_x INTO DATA(ls_florada_x)</item>
+      <item>            WITH KEY mdocm = ls_safra_x-mdocm BINARY SEARCH.</item>
+      <item>          IF sy-subrc EQ 0.</item>
+      <item>            lv_save_x = abap_true.</item>
+      <item>            EXIT.</item>
+      <item>          ENDIF.</item>
+      <item>        ENDLOOP.</item>
+      <item>      ENDIF.</item>
+      <item/>
+      <item>      IF lv_save_x = abap_false.</item>
+      <item>*-- Não existe Docto. de Estimativa p/ Talhão &amp;1/Safra &amp;2/Florada &amp;3!</item>
+      <item>        MESSAGE e360(zfmfp) INTO sy-msgli.</item>
+      <item>        message_simple space.</item>
+      <item>      ENDIF.</item>
+      <item>*    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CHECK lv_save_x = abap_true.</item>
+      <item>*-- EOC-T_T.KONNO-04.16.21</item>
+      <item/>
+      <item>  IF gs_variables-document_mode EQ c_mode_create AND</item>
+      <item>     ( gs_mddoc_infocus-x-mdhdr-aslvl EQ c_measurement_level-irrigation</item>
+      <item>  OR   gs_mddoc_infocus-x-mdhdr-aslvl EQ c_measurement_level-terrain ).</item>
+      <item/>
+      <item>    PERFORM split_measurements_for_terrain CHANGING lt_mddoc.</item>
+      <item>    IF lt_mddoc IS INITIAL.</item>
+      <item>      lv_subrc = 4.</item>
+      <item>      MESSAGE ID &apos;/AGRI/GLMD&apos; TYPE &apos;E&apos; NUMBER &apos;054&apos;</item>
+      <item>                                         INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>      EXIT.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>  ELSE.</item>
+      <item>*{   INSERT         C4DK903770                                        1</item>
+      <item/>
+      <item>  IF ref_status_handler IS INITIAL.</item>
+      <item>    CREATE OBJECT ref_status_handler.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/G_STATUS_FLOWOUTCOME_SET&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_objnr     = gs_mddoc_infocus-x-mdhdr-objnr</item>
+      <item>      iref_object = ref_status_handler</item>
+      <item>    IMPORTING</item>
+      <item>      et_messages = lt_messages.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/G_STATUSPROF_TRIGGER_SET&apos;</item>
+      <item>    EXPORTING</item>
+      <item>      i_objnr     = gs_mddoc_infocus-x-mdhdr-objnr</item>
+      <item>      iref_object = ref_status_handler.</item>
+      <item/>
+      <item>  PERFORM status_update.</item>
+      <item/>
+      <item>  IF NOT lt_messages IS INITIAL.</item>
+      <item>    LOOP AT lt_messages INTO ls_message.</item>
+      <item>      MESSAGE ID ls_message-msgid TYPE ls_message-msgty</item>
+      <item>         NUMBER ls_message-msgno WITH ls_message-msgv1</item>
+      <item>         ls_message-msgv2 ls_message-msgv3 ls_message-msgv4</item>
+      <item>                    INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>*}   INSERT</item>
+      <item/>
+      <item>    APPEND gs_mddoc_infocus TO lt_mddoc.</item>
+      <item/>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  CALL FUNCTION &apos;/AGRI/GLMD_SAVE&apos;</item>
+      <item>    EXPORTING</item>
+      <item>*     I_SET_UPDATE_TASK = &apos;X&apos;</item>
+      <item>*     I_COMMIT_WORK     = &apos;X&apos;</item>
+      <item>      iref_text         = ref_text</item>
+      <item>    CHANGING</item>
+      <item>      ct_mddoc          = lt_mddoc</item>
+      <item>      ct_messages       = lt_messages</item>
+      <item>    EXCEPTIONS</item>
+      <item>      no_change         = 1</item>
+      <item>      OTHERS            = 2.</item>
+      <item/>
+      <item>  lv_subrc  = sy-subrc.</item>
+      <item>  LOOP AT lt_messages INTO ls_message.</item>
+      <item>    MESSAGE ID ls_message-msgid TYPE ls_message-msgty</item>
+      <item>       NUMBER ls_message-msgno WITH ls_message-msgv1</item>
+      <item>       ls_message-msgv2 ls_message-msgv3 ls_message-msgv4</item>
+      <item>                  INTO sy-msgli.</item>
+      <item>    message_simple space.</item>
+      <item>  ENDLOOP.</item>
+      <item/>
+      <item>  IF lv_subrc NE 0.</item>
+      <item>    IF lv_subrc EQ 1.</item>
+      <item>      MESSAGE ID &apos;/AGRI/GLOBAL&apos; TYPE c_msg_type-success NUMBER &apos;322&apos;</item>
+      <item>                                                        INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ELSE.</item>
+      <item>      MESSAGE ID &apos;/AGRI/GLMD&apos; TYPE c_msg_type-error NUMBER &apos;011&apos;</item>
+      <item>                              WITH gs_mddoc_infocus-x-mdhdr-mdocm</item>
+      <item>                              INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDIF.</item>
+      <item>  ELSE.</item>
+      <item>    LOOP AT lt_mddoc INTO gs_mddoc_infocus.</item>
+      <item>      PERFORM message_context_set USING gs_mddoc_infocus-x-mdhdr.</item>
+      <item>      MESSAGE ID &apos;/AGRI/GLMD&apos; TYPE c_msg_type-success NUMBER &apos;006&apos;</item>
+      <item>         WITH gs_mddoc_infocus-x-mdhdr-mdocm INTO sy-msgli.</item>
+      <item>      message_simple space.</item>
+      <item>    ENDLOOP.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZABS_MDDOC_INFOCUS_SAVE</item>
+      <item/>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*&amp;      Form  ZABS_MD_HEADER_UPDATE</item>
+      <item>*&amp;---------------------------------------------------------------------*</item>
+      <item>*       text</item>
+      <item>*----------------------------------------------------------------------*</item>
+      <item>FORM zabs_md_header_update  USING ls_old_header TYPE /agri/s_glmdhdr</item>
+      <item>                         CHANGING ls_header     TYPE /agri/s_glmdhdr</item>
+      <item>                                  lv_subrc      TYPE sy-subrc.</item>
+      <item/>
+      <item>*-- Local Declarations</item>
+      <item>  DATA: lt_stack           TYPE cl_abap_get_call_stack=&gt;call_stack_internal,</item>
+      <item>        lt_formatted_stack TYPE cl_abap_get_call_stack=&gt;formatted_entry_stack,</item>
+      <item>        lt_constants       TYPE zabs_tty_vkey_const.</item>
+      <item/>
+      <item>  lt_stack = cl_abap_get_call_stack=&gt;get_call_stack( ).</item>
+      <item>  lt_formatted_stack = cl_abap_get_call_stack=&gt;format_call_stack_with_struct( lt_stack ).</item>
+      <item/>
+      <item>*-- Populate the status profile based on the measurement document type</item>
+      <item>*-- and measurement group maintained in variant table</item>
+      <item>  IF  ls_header-updkz EQ c_updkz_new</item>
+      <item>  AND ls_header-mpgrp IS NOT INITIAL.</item>
+      <item>*  AND ls_header-stsma IS INITIAL.</item>
+      <item>    CALL METHOD zcl_abs_get_variants=&gt;get_constant_multiple</item>
+      <item>      EXPORTING</item>
+      <item>        iv_objid     = zcl_abs_abap_maintain=&gt;c_objid_md_status_profile</item>
+      <item>        iv_k1val     = zcl_abs_abap_maintain=&gt;c_key_measurement_type</item>
+      <item>        iv_k2val     = ls_header-mdtyp</item>
+      <item>      IMPORTING</item>
+      <item>        et_constants = lt_constants.</item>
+      <item/>
+      <item>    READ TABLE lt_constants INTO DATA(ls_constants)</item>
+      <item>          WITH KEY cnval1 = ls_header-mpgrp.</item>
+      <item>    IF sy-subrc EQ 0.</item>
+      <item>     DATA(lv_stsma) = ls_constants-cnval2.</item>
+      <item>    ENDIF.</item>
+      <item/>
+      <item>    IF ls_header-mdtyp EQ &apos;ZPTA&apos;</item>
+      <item>    AND ls_header-mpgrp EQ &apos;CIT-ESTIMATIVA&apos;.</item>
+      <item>      lv_stsma = &apos;ZSTF_LIB&apos;.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_old_header-mdtyp NE ls_header-mdtyp.</item>
+      <item>     PERFORM authority_check USING ls_header</item>
+      <item>                                   c_authorization_activity-create</item>
+      <item>                                   c_msg_type-error</item>
+      <item>                          CHANGING lv_subrc.</item>
+      <item>     IF lv_subrc &lt;&gt; 0.</item>
+      <item>       CLEAR gs_variables-document_mode.</item>
+      <item>       EXIT.</item>
+      <item>     ENDIF.</item>
+      <item/>
+      <item>     PERFORM mdoc_type_control_read USING ls_header-mdtyp</item>
+      <item>                                 CHANGING lv_subrc.</item>
+      <item>     IF lv_subrc NE 0.</item>
+      <item>       EXIT.</item>
+      <item>     ENDIF.</item>
+      <item>     MOVE-CORRESPONDING gs_tglmdtyp TO ls_header.</item>
+      <item>     PERFORM text_maintain USING ls_header-txtgr</item>
+      <item>                                 c_object-text_object</item>
+      <item>                        CHANGING gs_variables-data_changed.</item>
+      <item>   ENDIF.</item>
+      <item/>
+      <item>  IF  ls_header-updkz EQ c_updkz_new</item>
+      <item>  AND ls_header-mpgrp IS NOT INITIAL.</item>
+      <item>    ls_header-stsma = lv_stsma.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header-muser IS INITIAL.</item>
+      <item>    ls_header-muser = sy-uname.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header-mdate IS INITIAL.</item>
+      <item>    ls_header-mdate = sy-datum.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header-mtime IS INITIAL.</item>
+      <item>    ls_header-mtime = sy-uzeit.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>  IF ls_header NE ls_old_header.</item>
+      <item>    gs_variables-data_changed = c_true.</item>
+      <item>    IF ls_header-updkz NE c_updkz_new.</item>
+      <item>      ls_header-updkz = c_updkz_update.</item>
+      <item>    ENDIF.</item>
+      <item>    MOVE-CORRESPONDING ls_header TO gs_mddoc_infocus-x-mdhdr.</item>
+      <item>    IF ls_header-updkz EQ c_updkz_new AND</item>
+      <item>      gs_mddoc_infocus-x-mdhdr-objnr IS INITIAL.</item>
+      <item>      PERFORM status_object_create USING gs_mddoc_infocus-x-mdhdr-stsma</item>
+      <item>                                CHANGING gs_mddoc_infocus-x-mdhdr-objnr.</item>
+      <item/>
+      <item>      PERFORM status_update.</item>
+      <item>    ENDIF.</item>
+      <item>  ENDIF.</item>
+      <item/>
+      <item>ENDFORM.                    &quot; ZABS_MD_HEADER_UPDATE</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>12F6C031E8F81EDA85BAA29B35527E26</CONCEPT>
+      <CREA_LAN>P</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AAI=</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>12F6C031E8F81EDA85BAA29B35527E26</CONCEPT>
+       <LANGU>P</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>038</LENGTH>
+       <TEXT>Measurement Document Save</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHO</OBJECT>
+     <OBJ_NAME>ZABS_IENH_MDDOC_INFOCUS_SAVE</OBJ_NAME>
+     <CONCEPT>12F6C031E8F81EDA85BAA29B35527E26</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>
